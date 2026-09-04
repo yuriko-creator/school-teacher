@@ -3,367 +3,1243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Правила безопасности в компьютерном классе и действия при чрезвычайных ситуациях.">
 <title>Безопасность в школе и с компьютером</title>
+
 <style>
-  :root{
-    --bg:#f7f6f2;
-    --paper:#fffdf8;
-    --ink:#202020;
-    --muted:#66635e;
-    --accent:#e9b84f;
-    --accent-dark:#b77d12;
-    --line:#dedbd3;
-    --shadow:0 18px 50px rgba(30,25,15,.08);
-    --radius:24px;
+/* =========================================================
+   1. ОСНОВНЫЕ НАСТРОЙКИ
+   ========================================================= */
+
+:root {
+  --bg: #f5f3ee;
+  --surface: #fffdf8;
+  --surface-soft: #f0ede5;
+  --text: #202020;
+  --text-soft: #5d5a54;
+  --accent: #e4ad3f;
+  --accent-dark: #996812;
+  --border: #ddd8ce;
+  --radius: 24px;
+  --shadow: 0 18px 50px rgba(30, 25, 15, 0.08);
+  --content-width: 1120px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+strong {
+  font-weight: 750;
+}
+
+/* =========================================================
+   2. КОНТЕЙНЕР
+   ========================================================= */
+
+main {
+  width: min(var(--content-width), calc(100% - 40px));
+  margin: 0 auto;
+  padding: 42px 0 80px;
+}
+
+/* =========================================================
+   3. HERO
+   img-1: image/img-1.jpg
+   ========================================================= */
+
+.hero {
+  position: relative;
+  min-height: min(760px, 82vh);
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+
+  padding: clamp(55px, 8vw, 105px) clamp(28px, 7vw, 82px);
+
+  border-radius: 32px;
+  background: #252525;
+  box-shadow: var(--shadow);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  z-index: -2;
+
+  background:
+    url("image/img-1.jpg")
+    center center / cover no-repeat;
+
+  filter: blur(1.5px);
+  transform: scale(1.025);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.57) 48%,
+      rgba(0, 0, 0, 0.30) 100%
+    );
+}
+
+.hero-content {
+  max-width: 850px;
+  padding-top: clamp(30px, 8vh, 100px);
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 8px 14px;
+  margin-bottom: 24px;
+
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 999px;
+
+  color: #fff;
+  background: rgba(0,0,0,.22);
+
+  font-size: .82rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "●";
+  margin-right: 8px;
+  color: var(--accent);
+}
+
+.hero h1 {
+  max-width: 900px;
+  margin: 0;
+
+  color: #fff;
+  font-size: clamp(3.4rem, 7.2vw, 6.9rem);
+  line-height: .95;
+  letter-spacing: -.065em;
+  font-weight: 850;
+
+  text-shadow: 0 4px 22px rgba(0,0,0,.28);
+}
+
+.hero-lead {
+  max-width: 760px;
+  margin-top: 30px;
+
+  color: rgba(255,255,255,.90);
+  font-size: clamp(1.12rem, 2vw, 1.42rem);
+  line-height: 1.55;
+
+  text-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+
+/* =========================================================
+   4. ОСНОВНЫЕ ШАГИ
+   ========================================================= */
+
+.steps {
+  margin-top: 34px;
+}
+
+.step {
+  position: relative;
+  overflow: hidden;
+
+  padding: clamp(30px, 5vw, 52px);
+  margin-bottom: 28px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255,253,248,.94);
+  box-shadow: var(--shadow);
+}
+
+.step-number {
+  display: block;
+  margin-bottom: 10px;
+
+  color: var(--accent-dark);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.step h2 {
+  max-width: 900px;
+  margin: 0 0 25px;
+
+  font-size: clamp(2rem, 3.7vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.step-intro {
+  max-width: 850px;
+  margin-bottom: 22px;
+
+  color: var(--text-soft);
+  font-size: 1.08rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.card {
+  padding: 22px;
+
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: rgba(255,255,255,.68);
+}
+
+.card h3 {
+  margin: 0 0 9px;
+
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.card p {
+  color: var(--text-soft);
+  font-size: 1rem;
+}
+
+.card ul {
+  margin: 10px 0 0;
+  padding-left: 1.2em;
+  color: var(--text-soft);
+}
+
+.card li + li {
+  margin-top: 7px;
+}
+
+.single {
+  max-width: 880px;
+}
+
+.callout {
+  margin-top: 18px;
+  padding: 20px 22px;
+
+  border: 1px solid #e2d4b4;
+  border-radius: 17px;
+
+  background: #f2ead7;
+  color: #433d31;
+  font-weight: 650;
+}
+
+/* =========================================================
+   5. img-3 — ВЕЩИ НА РАБОЧЕМ МЕСТЕ
+   ========================================================= */
+
+.supplies {
+  isolation: isolate;
+}
+
+.supplies::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    url("image/img-3.jpg")
+    center center / cover no-repeat;
+
+  opacity: .16;
+  filter: blur(2px);
+  transform: scale(1.02);
+}
+
+.supplies::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: rgba(255,253,248,.68);
+}
+
+/* =========================================================
+   6. img-2 — ПРАВИЛЬНАЯ ПОСАДКА
+   ========================================================= */
+
+.seating {
+  isolation: isolate;
+}
+
+.seating::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    url("image/img-2.jpg")
+    center center / cover no-repeat;
+
+  opacity: .16;
+  filter: blur(1.5px);
+  transform: scale(1.02);
+}
+
+.seating::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: rgba(255,253,248,.69);
+}
+
+/* =========================================================
+   7. img-4 — ЧРЕЗВЫЧАЙНЫЕ СИТУАЦИИ
+   ========================================================= */
+
+.emergency {
+  isolation: isolate;
+
+  color: #fff;
+  border-color: rgba(75,35,18,.35);
+  background: #342119;
+}
+
+.emergency::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  z-index: -2;
+
+  background:
+    url("image/img-4.jpg")
+    center center / cover no-repeat;
+
+  filter: blur(2px);
+  transform: scale(1.025);
+}
+
+.emergency::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(35, 14, 6, .84),
+      rgba(35, 14, 6, .57)
+    );
+}
+
+.emergency .step-number {
+  color: #ffd77e;
+}
+
+.emergency .step-intro {
+  color: rgba(255,255,255,.86);
+}
+
+.emergency .card {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(25,12,7,.47);
+}
+
+.emergency .card h3 {
+  color: #fff;
+}
+
+.emergency .card p,
+.emergency .card ul {
+  color: rgba(255,255,255,.86);
+}
+
+.emergency .callout {
+  border-color: rgba(255,215,126,.35);
+  background: rgba(255,215,126,.12);
+  color: #fff4d7;
+}
+
+/* =========================================================
+   8. ЗАКЛЮЧЕНИЕ + img-5
+   ========================================================= */
+
+.final {
+  position: relative;
+  min-height: 470px;
+  overflow: hidden;
+  isolation: isolate;
+
+  display: block;
+  padding: clamp(55px, 8vw, 90px) clamp(25px, 8vw, 90px);
+
+  border-radius: 32px;
+  text-align: center;
+
+  color: #fff;
+  background: #263027;
+  box-shadow: var(--shadow);
+}
+
+.final::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  z-index: -2;
+
+  background:
+    url("image/img-5.jpg")
+    center center / cover no-repeat;
+
+  filter: blur(2px);
+  transform: scale(1.025);
+}
+
+.final::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: rgba(15,25,18,.59);
+}
+
+.final h2 {
+  max-width: 850px;
+  margin: 0 auto 24px;
+
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1.03;
+  letter-spacing: -.05em;
+
+  text-shadow: 0 4px 18px rgba(0,0,0,.3);
+}
+
+.final p {
+  max-width: 750px;
+  margin: 0 auto;
+
+  color: rgba(255,255,255,.9);
+  font-size: 1.05rem;
+}
+
+.final .quote {
+  margin-top: 22px;
+
+  color: #fff;
+  font-weight: 800;
+}
+
+/* =========================================================
+   9. FOOTER
+   ========================================================= */
+
+footer {
+  padding-top: 26px;
+  margin-top: 55px;
+
+  border-top: 1px solid var(--border);
+
+  color: #88837a;
+  text-align: center;
+  font-size: .84rem;
+}
+
+/* =========================================================
+   10. ПЛАНШЕТ
+   ========================================================= */
+
+@media (max-width: 900px) {
+  main {
+    width: min(100% - 30px, var(--content-width));
   }
 
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;
-    color:var(--ink);
+  .hero {
+    min-height: 70vh;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   11. ТЕЛЕФОН
+   ВАЖНО:
+   здесь сетки/сложные раскладки превращаются в block.
+   Никакого flex/grid для карточек на телефоне.
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  body {
+    font-size: 16px;
+  }
+
+  main {
+    width: calc(100% - 20px);
+    padding: 10px 0 45px;
+  }
+
+  .hero {
+    min-height: 84vh;
+    padding: 32px 22px 42px;
+    border-radius: 20px;
+  }
+
+  .hero::before {
+    filter: blur(3px);
+    background-position: 58% center;
+  }
+
+  .hero::after {
     background:
-      radial-gradient(circle at 10% 0%, rgba(233,184,79,.14), transparent 28rem),
-      radial-gradient(circle at 100% 15%, rgba(90,130,170,.08), transparent 30rem),
-      var(--bg);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", Arial, sans-serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
+      linear-gradient(
+        180deg,
+        rgba(0,0,0,.72),
+        rgba(0,0,0,.54)
+      );
   }
 
-  main{
-    width:min(1120px, calc(100% - 40px));
-    margin:0 auto;
-    padding:72px 0 110px;
+  .hero-content {
+    padding-top: 12vh;
   }
 
-  .hero{
-    min-height:70vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:55px 0 75px;
+  .eyebrow {
+    margin-bottom: 20px;
+    font-size: .75rem;
   }
 
-  .eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    width:max-content;
-    padding:8px 13px;
-    margin-bottom:24px;
-    border:1px solid var(--line);
-    border-radius:999px;
-    background:rgba(255,253,248,.72);
-    color:var(--muted);
-    font-size:.82rem;
-    font-weight:700;
-    letter-spacing:.08em;
-    text-transform:uppercase;
+  .hero h1 {
+    font-size: clamp(3rem, 15vw, 4.8rem);
+    line-height: .94;
   }
 
-  .eyebrow::before{
-    content:"";
-    width:8px;height:8px;
-    border-radius:50%;
-    background:var(--accent);
-    box-shadow:0 0 0 4px rgba(233,184,79,.17);
+  .hero-lead {
+    margin-top: 22px;
+    font-size: 1.08rem;
+    line-height: 1.55;
   }
 
-  h1{
-    max-width:930px;
-    margin:0;
-    font-size:clamp(3.2rem, 7vw, 6.8rem);
-    line-height:.96;
-    letter-spacing:-.065em;
-    font-weight:800;
+  .steps {
+    margin-top: 18px;
   }
 
-  .lead{
-    max-width:760px;
-    margin:30px 0 0;
-    color:var(--muted);
-    font-size:clamp(1.1rem, 2vw, 1.45rem);
-    line-height:1.5;
+  .step {
+    padding: 27px 18px 21px;
+    margin-bottom: 16px;
+    border-radius: 18px;
   }
 
-  .steps{
-    display:flex;
-    flex-direction:column;
-    gap:34px;
+  .step-number {
+    font-size: .76rem;
   }
 
-  .step{
-    position:relative;
-    padding:38px clamp(24px, 5vw, 64px);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    background:rgba(255,253,248,.86);
-    box-shadow:var(--shadow);
-    overflow:hidden;
+  .step h2 {
+    margin-bottom: 18px;
+    font-size: 2rem;
+    line-height: 1.08;
   }
 
-  .step::after{
-    content:"";
-    position:absolute;
-    width:170px;height:170px;
-    right:-75px;top:-85px;
-    border-radius:50%;
-    background:rgba(233,184,79,.10);
-    pointer-events:none;
+  .step-intro {
+    font-size: 1.04rem;
   }
 
-  .step-number{
-    display:block;
-    margin-bottom:10px;
-    color:var(--accent-dark);
-    font-size:.85rem;
-    font-weight:800;
-    letter-spacing:.12em;
-    text-transform:uppercase;
+  /*
+    Именно BLOCK, как ты просил.
+    Каждая карточка занимает всю ширину.
+  */
+  .cards {
+    display: block;
   }
 
-  h2{
-    position:relative;
-    z-index:1;
-    margin:0 0 24px;
-    font-size:clamp(1.8rem, 3.5vw, 3rem);
-    line-height:1.05;
-    letter-spacing:-.035em;
+  .card {
+    display: block;
+    width: 100%;
+    margin-bottom: 11px;
+    padding: 18px;
+    border-radius: 14px;
   }
 
-  .cards{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:16px;
+  .card:last-child {
+    margin-bottom: 0;
   }
 
-  .card{
-    position:relative;
-    z-index:1;
-    padding:22px 22px 24px;
-    border:1px solid var(--line);
-    border-radius:17px;
-    background:rgba(255,255,255,.55);
+  .card h3 {
+    font-size: 1.08rem;
   }
 
-  .card h3{
-    margin:0 0 9px;
-    font-size:1.05rem;
-    line-height:1.25;
+  .card p,
+  .card li {
+    font-size: 1rem;
+    line-height: 1.58;
   }
 
-  .card p{
-    margin:0;
-    color:#56534d;
-    font-size:1rem;
+  .single {
+    max-width: none;
   }
 
-  .single{
-    max-width:820px;
+  .callout {
+    padding: 17px 18px;
+    font-size: 1rem;
   }
 
-  .callout{
-    margin-top:16px;
-    padding:22px 24px;
-    border-radius:17px;
-    background:#f1ead9;
-    border:1px solid #e1d5b9;
-    color:#403b31;
-    font-weight:650;
+  .seating::before,
+  .supplies::before {
+    opacity: .11;
+    filter: blur(2.5px);
   }
 
-  .emergency{
-    background:#fffaf0;
-    border-color:#e5cf9a;
+  .emergency {
+    padding-top: 29px;
+    padding-bottom: 21px;
   }
 
-  .final{
-    padding:80px 10px 25px;
-    text-align:center;
+  .emergency::before {
+    filter: blur(3px);
+    background-position: center;
   }
 
-  .final h2{
-    max-width:850px;
-    margin:0 auto 22px;
-    font-size:clamp(2rem,5vw,4.2rem);
+  .emergency::after {
+    background: rgba(35,14,6,.70);
   }
 
-  .final p{
-    max-width:730px;
-    margin:0 auto;
-    color:var(--muted);
+  .final {
+    min-height: 420px;
+    padding: 58px 20px;
+    border-radius: 20px;
   }
 
-  footer{
-    margin-top:70px;
-    padding-top:24px;
-    border-top:1px solid var(--line);
-    color:#8a867e;
-    text-align:center;
-    font-size:.82rem;
+  .final::before {
+    filter: blur(3px);
   }
 
-  @media (max-width:760px){
-    main{
-      width:min(100% - 24px, 1120px);
-      padding-top:28px;
+  .final h2 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+  }
+
+  .final p {
+    font-size: 1rem;
+  }
+
+  footer {
+    margin-top: 35px;
+    font-size: .78rem;
+  }
+}
+
+/* =========================================================
+   12. ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero h1 {
+    font-size: 2.9rem;
+  }
+
+  .hero {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .step {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .step h2 {
+    font-size: 1.82rem;
+  }
+}
+
+/* =========================================================
+   13. ДОСТУПНОСТЬ
+   ========================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+  .step,
+  .hero,
+  .final {
+    animation: appear .65s ease both;
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
     }
 
-    .hero{
-      min-height:72vh;
-      padding:30px 6px 60px;
-    }
-
-    h1{
-      font-size:clamp(3rem, 15vw, 5rem);
-      letter-spacing:-.07em;
-    }
-
-    .lead{
-      margin-top:22px;
-      font-size:1.05rem;
-    }
-
-    .steps{gap:18px}
-
-    .step{
-      padding:28px 18px 20px;
-      border-radius:19px;
-    }
-
-    h2{
-      margin-bottom:18px;
-      font-size:2rem;
-    }
-
-    .cards{
-      grid-template-columns:1fr;
-      gap:11px;
-    }
-
-    .card{
-      padding:18px;
-      border-radius:14px;
-    }
-
-    .callout{
-      padding:18px;
-    }
-
-    .final{
-      padding-top:55px;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
+}
 
-  @media (prefers-reduced-motion:no-preference){
-    .step{
-      animation:rise .7s ease both;
-    }
-    .step:nth-child(2){animation-delay:.04s}
-    .step:nth-child(3){animation-delay:.08s}
-    .step:nth-child(4){animation-delay:.12s}
-    .step:nth-child(5){animation-delay:.16s}
-    .step:nth-child(6){animation-delay:.20s}
-    .step:nth-child(7){animation-delay:.24s}
-    .step:nth-child(8){animation-delay:.28s}
-    @keyframes rise{
-      from{opacity:0;transform:translateY(16px)}
-      to{opacity:1;transform:none}
-    }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
+}
 </style>
 </head>
+
 <body>
+
 <main>
-  <section class="hero">
-    <div class="eyebrow">Школьная безопасность</div>
-    <h1>Безопасность в школе и с компьютером</h1>
-    <p class="lead">Короткий и ясный гид для учеников: как сидеть за компьютером, как вести себя в классе и что делать в экстренной ситуации.</p>
-  </section>
 
-  <section class="steps">
+  <!-- =====================================================
+       HERO
+       ===================================================== -->
+
+  <header class="hero">
+    <div class="hero-content">
+
+      <div class="eyebrow">Школьная безопасность</div>
+
+      <h1>
+        Безопасность в школе и с компьютером
+      </h1>
+
+      <p class="hero-lead">
+        Простые правила, которые помогут безопасно работать
+        за компьютером, беречь оборудование и правильно
+        действовать в чрезвычайной ситуации.
+      </p>
+
+    </div>
+  </header>
+
+
+  <!-- =====================================================
+       ШАГИ
+       ===================================================== -->
+
+  <section class="steps" aria-label="Правила безопасности">
+
+
+    <!-- ШАГ 1 -->
+
     <article class="step">
+
       <span class="step-number">Шаг 1</span>
-      <h2>Входишь — значит, дисциплина включена</h2>
+
+      <h2>
+        Входишь в компьютерный класс — начинай с дисциплины
+      </h2>
+
+      <p class="step-intro">
+        Компьютерный класс — это учебное помещение, где одновременно
+        нужно соблюдать правила поведения, электробезопасности
+        и бережного обращения с техникой.
+      </p>
+
       <div class="cards">
-        <div class="card"><h3>Вход без суеты</h3><p>Заходи спокойно, не толкайся. Жди разрешения учителя перед посадкой и включением техники.</p></div>
-        <div class="card"><h3>Вещи — в порядке</h3><p>Не оставляй куртки и рюкзаки на столах или у монитора — это мешает и опасно для техники.</p></div>
+
+        <div class="card">
+          <h3>Заходи спокойно</h3>
+          <p>
+            Не бегай, не толкайся и не пытайся первым занять компьютер.
+            Спокойно зайди в кабинет и займи своё рабочее место.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Работай только с разрешения учителя</h3>
+          <p>
+            Не включай компьютер, проектор или другое оборудование
+            самостоятельно. Перед началом работы дождись указаний учителя.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Не отвлекай других</h3>
+          <p>
+            Не бегай между столами, не играй во время урока,
+            не отвлекай одноклассников и не занимайся посторонними делами.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Бережно относись к технике</h3>
+          <p>
+            Компьютер — сложное электронное устройство.
+            Не ударяй по клавиатуре, не дёргай кабели и не перемещай
+            оборудование без разрешения.
+          </p>
+        </div>
+
       </div>
+
     </article>
 
-    <article class="step">
+
+    <!-- ШАГ 2 / img-3 -->
+
+    <article class="step supplies">
+
       <span class="step-number">Шаг 2</span>
-      <h2>«Только то, что нужно» — никаких опасных предметов</h2>
-      <div class="single">
-        <p>В кабинете запрещены острые предметы, химия, еда и напитки. Работай чистыми и сухими руками — так сохраняется здоровье и техника.</p>
-        <div class="callout">Правило простое: если предмет не помогает уроку — не приносите его в кабинет.</div>
+
+      <h2>
+        На рабочем месте должно быть только необходимое
+      </h2>
+
+      <p class="step-intro">
+        Чем меньше лишних предметов находится рядом с компьютером,
+        тем безопаснее и удобнее работать.
+      </p>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Что можно оставить на столе</h3>
+          <p>
+            Для обычного урока достаточно тетради, ручки или карандаша
+            и тех материалов, которые попросил учитель.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Рюкзак и верхнюю одежду — в сторону</h3>
+          <p>
+            Не клади сумки, рюкзаки и одежду рядом с системным блоком,
+            монитором и кабелями. Они могут помешать работе или привести
+            к падению оборудования.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Никакой еды и напитков</h3>
+          <p>
+            Не ешь и не пей возле компьютера. Пролитая жидкость может
+            повредить оборудование и создать опасную ситуацию.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Только сухие руки</h3>
+          <p>
+            Перед работой убедись, что руки сухие. Не прикасайся
+            к электрическим устройствам мокрыми руками.
+          </p>
+        </div>
+
       </div>
+
+      <div class="callout">
+        <strong>Запомни:</strong>
+        компьютерный стол — не место для еды, напитков,
+        лишних вещей и посторонних предметов.
+      </div>
+
     </article>
 
+
+    <!-- ШАГ 3 -->
+
     <article class="step">
+
       <span class="step-number">Шаг 3</span>
-      <h2>Проверяй рабочее место до старта</h2>
+
+      <h2>
+        Перед началом работы проверь своё место
+      </h2>
+
+      <p class="step-intro">
+        Небольшая проверка перед включением компьютера помогает
+        заметить неисправность ещё до начала работы.
+      </p>
+
       <div class="cards">
-        <div class="card"><h3>Внешний осмотр</h3><p>Проверь монитор, клавиатуру и мышь на повреждения. Сообщи учителю о любых дефектах.</p></div>
-        <div class="card"><h3>Провода и маршруты</h3><p>Кабели не должны свисать по проходам — они создают риск споткнуться и повредить оборудование.</p></div>
+
+        <div class="card">
+          <h3>Осмотри оборудование</h3>
+          <p>
+            Посмотри, нет ли трещин, повреждений корпуса,
+            сломанных деталей или других заметных неисправностей.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Проверь провода</h3>
+          <p>
+            Убедись, что кабели не повреждены и не лежат так,
+            чтобы за них можно было случайно зацепиться.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Обнаружил неисправность?</h3>
+          <p>
+            Не пытайся исправить её самостоятельно.
+            Не включай оборудование и сразу сообщи учителю.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Не трогай розетки и разъёмы</h3>
+          <p>
+            Вилки, розетки, штекеры и соединительные кабели
+            нельзя трогать или перемещать без разрешения учителя.
+          </p>
+        </div>
+
       </div>
+
     </article>
 
-    <article class="step">
+
+    <!-- ШАГ 4 / img-2 -->
+
+    <article class="step seating">
+
       <span class="step-number">Шаг 4</span>
-      <h2>Зрение и посадка — защита без слов</h2>
-      <div class="single">
-        <p>Сиди на расстоянии 60–70 см от экрана, держи спину прямо. Делай перерывы: упражнения для глаз каждые 20–30 минут. При боли — остановись и скажи взрослому.</p>
+
+      <h2>
+        Правильная посадка защищает зрение и спину
+      </h2>
+
+      <p class="step-intro">
+        Во время работы за компьютером важно не только правильно
+        обращаться с техникой, но и правильно организовать своё место.
+      </p>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Расстояние до экрана</h3>
+          <p>
+            Держи экран примерно в 60–70 см от глаз.
+            Не придвигайся к монитору слишком близко.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Спина и ноги</h3>
+          <p>
+            Сиди прямо, опирайся на спинку стула.
+            Старайся не сутулиться и не работать в неудобной позе.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Экран перед тобой</h3>
+          <p>
+            Монитор должен находиться прямо перед тобой,
+            чтобы не приходилось постоянно поворачивать голову.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Делай перерывы</h3>
+          <p>
+            При появлении усталости глаз или дискомфорта прекрати работу
+            и сообщи учителю. Во время разрешённых перерывов полезно
+            выполнять упражнения для снятия зрительного напряжения.
+          </p>
+        </div>
+
       </div>
+
     </article>
 
+
+    <!-- ШАГ 5 -->
+
     <article class="step">
+
       <span class="step-number">Шаг 5</span>
-      <h2>Правила «не трогай» во время работы</h2>
+
+      <h2>
+        Во время работы не вмешивайся в работу компьютера
+      </h2>
+
       <div class="cards">
-        <div class="card"><h3>Не вмешивайся в электронику</h3><p>Не включай и не отключай технику самостоятельно. Не открывай системный блок и не ковыряй контакты.</p></div>
-        <div class="card"><h3>Свобода вентиляции</h3><p>Не закрывай вентиляционные отверстия — техника перегреется, это опасно.</p></div>
+
+        <div class="card">
+          <h3>Не открывай системный блок</h3>
+          <p>
+            Внутри компьютера находятся электрические компоненты.
+            Самостоятельно открывать корпус и пытаться что-либо ремонтировать
+            запрещено.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Не трогай кабели</h3>
+          <p>
+            Не вытаскивай штекеры, не переставляй провода и не подключай
+            неизвестные устройства без разрешения учителя.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Не закрывай вентиляцию</h3>
+          <p>
+            Не клади тетради и другие предметы на вентиляционные отверстия
+            компьютера. Оборудованию нужен нормальный доступ воздуха.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Выполняй только заданную работу</h3>
+          <p>
+            Не устанавливай программы, не меняй системные настройки
+            и не подключай сторонние устройства без разрешения учителя.
+          </p>
+        </div>
+
       </div>
+
     </article>
 
+
+    <!-- ШАГ 6 -->
+
     <article class="step">
+
       <span class="step-number">Шаг 6</span>
-      <h2>Если что-то пошло не так — остановись сразу</h2>
+
+      <h2>
+        Если компьютер ведёт себя необычно — остановись
+      </h2>
+
+      <p class="step-intro">
+        Неисправность лучше обнаружить и сообщить о ней сразу,
+        чем пытаться самостоятельно разобраться с опасной ситуацией.
+      </p>
+
       <div class="cards">
-        <div class="card"><h3>Признаки проблемы</h3><p>При запахе гари, треске, дыме или сбоях — это сигнал немедленно остановиться.</p></div>
-        <div class="card"><h3>Действуй сразу</h3><p>Выключи оборудование, отойди и сообщи учителю немедленно.</p></div>
-        <div class="card"><h3>Если стало плохо</h3><p>При головокружении, рези в глазах или другом недомогании покинь рабочее место и вызови помощь.</p></div>
+
+        <div class="card">
+          <h3>Запах гари</h3>
+          <p>
+            Немедленно прекрати работу, не трогай оборудование
+            и сообщи учителю.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Искры, дым или необычный звук</h3>
+          <p>
+            Не пытайся выяснить причину самостоятельно.
+            Отойди от оборудования и немедленно предупреди учителя.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Компьютер неожиданно отключился</h3>
+          <p>
+            Не пытайся несколько раз подряд включать его.
+            Сообщи учителю и дождись дальнейших указаний.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Стало плохо</h3>
+          <p>
+            Если появились головная боль, головокружение, резь в глазах
+            или другое недомогание — прекрати работу и сообщи взрослому.
+          </p>
+        </div>
+
       </div>
+
+      <div class="callout">
+        <strong>Главное правило:</strong>
+        заметил проблему — не экспериментируй, не ремонтируй
+        и не скрывай её. Сразу сообщи учителю.
+      </div>
+
     </article>
+
+
+    <!-- ШАГ 7 / img-4 -->
 
     <article class="step emergency">
+
       <span class="step-number">Шаг 7</span>
-      <h2>Чрезвычайные ситуации — огонь и электрический ток</h2>
+
+      <h2>
+        Чрезвычайная ситуация: действуй спокойно и по инструкции
+      </h2>
+
+      <p class="step-intro">
+        При пожаре, задымлении, поражении электрическим током
+        или другой опасной ситуации самое важное — не паниковать
+        и немедленно сообщить взрослому.
+      </p>
+
       <div class="cards">
-        <div class="card"><h3>Пожар</h3><p>Не паникуй. Ищи взрослого и следуй его инструкциям. В ином случае следуй по плану эвакуации (размещен на стенах в школе) к выходу.</p></div>
-        <div class="card"><h3>Электротравма</h3><p>Сначала отключи ток. Не прикасайся голыми руками — используй непроводящий предмет и сразу зовите взрослого.</p></div>
+
+        <div class="card">
+          <h3>🔥 Если начался пожар</h3>
+          <p>
+            Немедленно сообщи учителю. Действуй по его указаниям
+            и по плану эвакуации. Не возвращайся за вещами
+            и не пытайся самостоятельно справиться с большим пожаром.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>🚨 Если в помещении дым</h3>
+          <p>
+            Не задерживайся в опасной зоне. Следуй указаниям учителя
+            и организованно покинь помещение по безопасному маршруту.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>⚡ Если человека ударило током</h3>
+          <p>
+            Не прикасайся к пострадавшему голыми руками,
+            пока источник электричества может оставаться под напряжением.
+            Немедленно позови учителя или другого взрослого.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>💡 При неисправности электропитания</h3>
+          <p>
+            Не пытайся самостоятельно разбирать оборудование,
+            искать неисправность в розетке или чинить провод.
+            Сообщи учителю и выполняй его инструкции.
+          </p>
+        </div>
+
       </div>
+
+      <div class="callout">
+        <strong>Важно:</strong>
+        при чрезвычайной ситуации ученик не должен рисковать собой,
+        пытаясь стать пожарным или электриком. Главная задача —
+        сообщить взрослому, действовать организованно и безопасно
+        покинуть опасную зону.
+      </div>
+
     </article>
+
+
+    <!-- ШАГ 8 -->
 
     <article class="step">
+
       <span class="step-number">Шаг 8</span>
-      <h2>После урока — выключи правильно и уйди спокойно</h2>
+
+      <h2>
+        Закончил работу — оставь место готовым для следующего ученика
+      </h2>
+
       <div class="cards">
-        <div class="card"><h3>Правильное завершение</h3><p>Закрой программы и выключай технику только с разрешения учителя. Следуй инструкциям по завершению работы.</p></div>
-        <div class="card"><h3>Порядок на столе</h3><p>Убери стол, проверь кабели, проветрите помещение и подготовь место для следующего пользователя.</p></div>
+
+        <div class="card">
+          <h3>Закрой программы</h3>
+          <p>
+            Заверши работу и сохрани результаты так, как объяснил учитель.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Выключай технику правильно</h3>
+          <p>
+            Выключай компьютер и другое оборудование только
+            в соответствии с инструкцией учителя.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Наведи порядок</h3>
+          <p>
+            Убери тетради и письменные принадлежности,
+            оставь стол чистым и не оставляй мусор.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Уходи спокойно</h3>
+          <p>
+            Не толкайся и не беги между столами.
+            Дождись разрешения учителя покинуть кабинет.
+          </p>
+        </div>
+
       </div>
+
     </article>
+
   </section>
+
+
+  <!-- =====================================================
+       ЗАКЛЮЧЕНИЕ / img-5
+       ===================================================== -->
 
   <section class="final">
-    <h2>Соблюдай эти шаги и никакие проблемы не возникнут.</h2>
-    <p><strong>Главное:</strong> слушай и следуй указаниям старших или учителей (они всегда знают что делать).</p>
-    <p style="margin-top:18px;font-weight:800;">— «Техника безопасности составлена не просто так»</p>
+
+    <h2>
+      Безопасность начинается с обычной внимательности.
+    </h2>
+
+    <p>
+      Соблюдай правила, бережно относись к технике,
+      слушай учителя и не пытайся самостоятельно устранять
+      неисправности. Если что-то кажется опасным —
+      остановись и сообщи взрослому.
+    </p>
+
+    <p class="quote">
+      «Техника безопасности составлена не просто так».
+    </p>
+
   </section>
 
-  <footer>Безопасность в школе и с компьютером</footer>
+
+  <footer>
+    Безопасность в школе и с компьютером
+  </footer>
+
 </main>
+
 </body>
 </html>
