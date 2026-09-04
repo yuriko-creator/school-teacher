@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Домашнее задание по технике безопасности в компьютерном классе.">
+  <title>Домашнее задание — Техника безопасности</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5d687b;
+      --border: #dce3ee;
+      --accent: #315efb;
+      --shadow: 0 10px 30px rgba(31, 47, 79, 0.08);
+      --radius: 20px;
+      --max-width: 920px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    .intro {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 38px 42px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .intro p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .tasks {
+      display: block;
+    }
+
+    .task {
+      display: block;
+      margin-bottom: 14px;
+      padding: 24px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .task:last-child {
+      margin-bottom: 0;
+    }
+
+    .task-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-right: 14px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--accent);
+      font-weight: 800;
+      vertical-align: middle;
+      flex: 0 0 auto;
+    }
+
+    .task-text {
+      display: inline;
+      font-size: clamp(1.15rem, 2.3vw, 1.5rem);
+      font-weight: 650;
+      vertical-align: middle;
+    }
+
+    .note {
+      margin-top: 26px;
+      padding: 22px 26px;
+      border-left: 5px solid var(--accent);
+      background: var(--surface);
+      border-radius: 12px;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .note strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+      }
+
+      main {
+        width: min(100% - 20px, var(--max-width));
+        padding: 24px 0 40px;
+      }
+
+      .intro {
+        padding: 28px 22px;
+        margin-bottom: 16px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+      }
+
+      .task {
+        margin-bottom: 10px;
+        padding: 20px 18px;
+        border-radius: 14px;
+      }
+
+      .task-number {
+        width: 34px;
+        height: 34px;
+        margin-right: 10px;
+      }
+
+      .task-text {
+        font-size: 1.12rem;
+        line-height: 1.45;
+      }
+
+      .note {
+        margin-top: 18px;
+        padding: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div class="label">Домашнее задание</div>
+      <h1 id="page-title">Техника безопасности в компьютерном классе</h1>
+      <p>
+        Прочитай каждое утверждение и письменно ответь, можно так поступать в компьютерном классе или нельзя.
+      </p>
+    </section>
+
+    <section class="tasks" aria-label="Утверждения для домашнего задания">
+      <article class="task">
+        <span class="task-number">1</span>
+        <span class="task-text">Можно ли заходить в компьютерный класс с бутербродом?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">2</span>
+        <span class="task-text">Можно ли заходить в компьютерный класс с тетрадкой?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">3</span>
+        <span class="task-text">Можно ли кататься на стуле в компьютерном классе?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">4</span>
+        <span class="task-text">Можно ли включать компьютер без ведома учителя?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">5</span>
+        <span class="task-text">Можно ли делать с компьютером всё, что хочешь, не предупредив учителя?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">6</span>
+        <span class="task-text">Можно ли тыкать пальцами в монитор?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">7</span>
+        <span class="task-text">Можно ли выходить из класса без разрешения учителя?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">8</span>
+        <span class="task-text">Можно ли оставлять рабочее место в беспорядке, уходя из класса?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">9</span>
+        <span class="task-text">Можно ли удалять что-то с компьютера без ведома учителя?</span>
+      </article>
+
+      <article class="task">
+        <span class="task-number">10</span>
+        <span class="task-text">Можно ли украсть мышку из компьютерного класса?</span>
+      </article>
+    </section>
+
+    <div class="note">
+      <strong>Ответ:</strong> для каждого пункта напиши «можно» или «нельзя» и, по возможности, кратко объясни свой ответ.
+    </div>
+  </main>
+</body>
+</html>
