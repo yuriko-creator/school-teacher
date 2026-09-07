@@ -1296,18 +1296,38 @@ footer{
      HARDWARE / SOFTWARE — PHONE
      ===================================================== */
 
-  /*
-   * Карточки аппаратного и программного обеспечения
-   * принудительно превращаем в блочные элементы.
-   * Каждая занимает всю ширину контейнера.
-   */
-  .definition-card{
+  /* Родитель карточек больше не использует Grid */
+  .two-col.equal{
+    display:block;
+    width:100%;
+  }
+
+  /* Каждая карточка занимает всю ширину */
+  .two-col.equal > .definition-card{
     display:block;
     width:100%;
     min-width:0;
     max-width:100%;
     padding:27px 22px;
-    margin-bottom:16px;
+  }
+
+  /* Расстояние между аппаратным и программным обеспечением */
+  .two-col.equal > .definition-card + .definition-card{
+    margin-top:22px;
+  }
+
+  .definition-card h3,
+  .definition-card p{
+    display:block;
+    width:100%;
+  }
+
+  .definition-card h3{
+    font-size:1.42rem;
+  }
+
+  .definition-card p{
+    font-size:1rem;
   }
 
   .definition-card h3,
