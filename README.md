@@ -1,3 +1,12 @@
-# School-teacher
+# Школьный учитель
 
-This repository is intended to deliver educational material to children without the need for them to download presentations, textbooks, etc. They will be able to access the link at any time (provided they have internet access) and study the theoretical material or master the practical aspects.
+## Основное
+Этот репозиторий предназначен для открытия доступа школьникам к учебным материалам без необходимости скачивать его для изучения (только в крайнем случае). Идея состоит в создании хранилища, к элементам которого преподаватели будут давать ссылки школьникам. Так получится уменьшить нагрузку на самих детей.
+
+## Что внутри?
+Тут собраны материалы для обучения по таким программам:
+- курс «Информатика» 5 класс;
+- курс «Информатика» 7 класс;
+- курс «Информатика» 8 класс;
+- курс «Компьютерная графика» 10 класс;
+- курс «Компьютерная графика» 11 класс.
