@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Учебный сайт по информатике для 6 класса. Разнообразие компьютеров: персональные, ноутбуки, смартфоны, серверы, суперкомпьютеры и встроенные системы.">
+<title>Разнообразие компьютеров — 6 класс</title>
+
+<style>
+    :root {
+        --bg: #f4f7fb;
+        --surface: #ffffff;
+        --surface-soft: #eef4fb;
+        --text: #172033;
+        --muted: #61708a;
+        --accent: #315efb;
+        --accent-dark: #2145c7;
+        --accent-soft: #e7edff;
+        --line: #dce4f0;
+        --shadow: 0 14px 35px rgba(34, 54, 86, 0.10);
+        --radius: 22px;
+        --max: 1120px;
+    }
+
+    * {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.65;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    /* ===== Hero ===== */
+
+    .hero {
+        min-height: 520px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        color: white;
+        background:
+            linear-gradient(90deg, rgba(11, 22, 45, 0.90), rgba(11, 22, 45, 0.55)),
+            url("https://commons.wikimedia.org/wiki/Special:FilePath/Desktop_personal_computer.jpg")
+            center / cover no-repeat;
+    }
+
+    .hero-inner {
+        width: min(var(--max), calc(100% - 44px));
+        margin: 0 auto;
+        padding: 80px 0;
+    }
+
+    .eyebrow {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 7px 13px;
+        border: 1px solid rgba(255,255,255,0.28);
+        border-radius: 999px;
+        background: rgba(255,255,255,0.10);
+        font-size: 0.9rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .hero h1 {
+        max-width: 850px;
+        margin: 0;
+        font-size: clamp(2.6rem, 6vw, 5.2rem);
+        line-height: 1.03;
+    }
+
+    .hero p {
+        max-width: 760px;
+        margin: 24px 0 0;
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+        color: rgba(255,255,255,0.90);
+    }
+
+    .hero-button {
+        display: inline-block;
+        margin-top: 28px;
+        padding: 13px 20px;
+        border-radius: 13px;
+        text-decoration: none;
+        font-weight: 700;
+        background: white;
+        color: var(--accent-dark);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.20);
+    }
+
+    /* ===== Общие секции ===== */
+
+    main {
+        overflow: hidden;
+    }
+
+    .section {
+        width: min(var(--max), calc(100% - 44px));
+        margin: 0 auto;
+        padding: 82px 0;
+    }
+
+    .section + .section {
+        border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+        max-width: 800px;
+        margin-bottom: 34px;
+    }
+
+    .section-number {
+        color: var(--accent);
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        margin: 7px 0 12px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.12;
+    }
+
+    h3 {
+        line-height: 1.2;
+    }
+
+    .lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+    }
+
+    /* ===== Intro ===== */
+
+    .idea-box {
+        padding: 28px;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, #e9efff, #f7f9ff);
+        border: 1px solid #d6e0ff;
+    }
+
+    .idea-box strong {
+        color: var(--accent-dark);
+    }
+
+    .question {
+        margin-top: 18px;
+        padding: 18px 20px;
+        border-left: 5px solid var(--accent);
+        border-radius: 0 14px 14px 0;
+        background: var(--surface);
+        box-shadow: 0 8px 22px rgba(34,54,86,0.07);
+        font-weight: 700;
+    }
+
+    /* ===== Cards ===== */
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    .card {
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    .card-image {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        background: var(--surface-soft);
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .card-tag {
+        display: inline-block;
+        margin-bottom: 9px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        color: var(--accent-dark);
+        background: var(--accent-soft);
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+
+    .card h3 {
+        margin: 0 0 10px;
+        font-size: 1.45rem;
+    }
+
+    .card p {
+        margin: 0 0 14px;
+        color: var(--muted);
+    }
+
+    .card ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .card li + li {
+        margin-top: 6px;
+    }
+
+    /* ===== Highlight ===== */
+
+    .highlight {
+        margin-top: 30px;
+        padding: 27px;
+        border-radius: var(--radius);
+        background: #172033;
+        color: white;
+    }
+
+    .highlight h3 {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
+
+    .highlight p {
+        margin-bottom: 0;
+        color: #dce5f7;
+    }
+
+    /* ===== Comparison ===== */
+
+    .table-wrap {
+        overflow-x: auto;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+    }
+
+    table {
+        width: 100%;
+        min-width: 760px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+    }
+
+    th {
+        background: var(--surface-soft);
+        color: var(--accent-dark);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* ===== World ===== */
+
+    .world-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .world-item {
+        padding: 22px;
+        border-radius: 18px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+    }
+
+    .world-icon {
+        font-size: 2rem;
+    }
+
+    .world-item h3 {
+        margin: 10px 0 7px;
+    }
+
+    .world-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+    }
+
+    /* ===== Summary ===== */
+
+    .summary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+
+    .summary-card {
+        padding: 28px;
+        border-radius: var(--radius);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+    }
+
+    .summary-card h3 {
+        margin-top: 0;
+    }
+
+    .summary-card ul {
+        margin-bottom: 0;
+        padding-left: 21px;
+    }
+
+    /* ===== Итоговые вопросы ===== */
+
+    .questions-box {
+        margin-top: 28px;
+        padding: 30px;
+        border-radius: var(--radius);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+    }
+
+    .questions-box h3 {
+        margin: 7px 0 6px;
+        font-size: 1.65rem;
+    }
+
+    .questions-box > p {
+        margin-top: 0;
+        color: var(--muted);
+    }
+
+    .questions-box ol {
+        margin: 22px 0 0;
+        padding-left: 28px;
+    }
+
+    .questions-box li {
+        padding: 11px 0 11px 8px;
+    }
+
+    .questions-box li::marker {
+        color: var(--accent);
+        font-weight: 800;
+    }
+
+    /* ===== Footer ===== */
+
+    footer {
+        padding: 35px 22px;
+        background: #111827;
+        color: #b9c4d7;
+        text-align: center;
+    }
+
+    footer strong {
+        color: white;
+    }
+
+    /* ===== Адаптивность ===== */
+
+    @media (max-width: 850px) {
+        .cards,
+        .summary,
+        .world-grid {
+            display: block;
+        }
+
+        .card,
+        .summary-card,
+        .world-item {
+            width: 100%;
+            margin-bottom: 22px;
+        }
+
+        .world-item:last-child,
+        .card:last-child,
+        .summary-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .section {
+            padding: 65px 0;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .hero {
+            min-height: 470px;
+        }
+
+        .hero-inner {
+            width: calc(100% - 30px);
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 12vw, 4rem);
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+
+        .section {
+            width: calc(100% - 30px);
+            padding: 55px 0;
+        }
+
+        .idea-box,
+        .summary-card,
+        .questions-box,
+        .highlight {
+            padding: 22px;
+        }
+
+        .card-body {
+            padding: 22px;
+        }
+
+        .card-image {
+            height: 210px;
+        }
+
+        .questions-box li {
+            padding-left: 4px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="eyebrow">Информатика · 6 класс</div>
+
+        <h1>Разнообразие компьютеров</h1>
+
+        <p>
+            Компьютеры окружают нас повсюду. Они могут сильно отличаться
+            по размеру, мощности, внешнему виду и назначению — от смартфона
+            в кармане до суперкомпьютера.
+        </p>
+
+        <a class="hero-button" href="#intro">Начать изучение ↓</a>
+    </div>
+</section>
+
+<main>
+
+<section class="section" id="intro">
+    <div class="section-heading">
+        <div class="section-number">01 · Введение</div>
+        <h2>Почему компьютеры такие разные?</h2>
+        <p class="lead">
+            Компьютер — это устройство, которое предназначено для работы
+            с информацией: её получения, обработки, хранения и передачи.
+        </p>
+    </div>
+
+    <div class="idea-box">
+        <p>
+            На первый взгляд смартфон, ноутбук, сервер и суперкомпьютер
+            выглядят совершенно по-разному. Но все они являются
+            <strong>компьютерами</strong>.
+        </p>
+
+        <p>
+            Разница заключается прежде всего в том, <strong>какие задачи
+            должен выполнять компьютер</strong> и в каких условиях он будет
+            использоваться.
+        </p>
+
+        <div class="question">
+            💡 Подумай: нужен ли одинаково мощный компьютер человеку,
+            который пишет документы, и учёному, который моделирует
+            сложные природные процессы?
+        </div>
+    </div>
+</section>
+
+<section class="section" id="personal">
+    <div class="section-heading">
+        <div class="section-number">02 · Виды компьютеров</div>
+        <h2>Какие бывают компьютеры?</h2>
+        <p class="lead">
+            Рассмотрим несколько основных видов компьютеров
+            и выясним, чем они отличаются друг от друга.
+        </p>
+    </div>
+
+    <div class="cards">
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Desktop_personal_computer.jpg"
+                 alt="Настольный персональный компьютер">
+
+            <div class="card-body">
+                <span class="card-tag">Персональные</span>
+
+                <h3>Настольный компьютер</h3>
+
+                <p>
+                    Компьютер, который обычно постоянно находится
+                    на рабочем месте.
+                </p>
+
+                <ul>
+                    <li>высокая производительность;</li>
+                    <li>удобен для длительной работы;</li>
+                    <li>можно заменять и добавлять комплектующие;</li>
+                    <li>используется для учёбы, работы, игр и творчества.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Laptop_computer.jpg"
+                 alt="Ноутбук">
+
+            <div class="card-body">
+                <span class="card-tag">Портативные</span>
+
+                <h3>Ноутбук</h3>
+
+                <p>
+                    Портативный компьютер, который объединяет экран,
+                    клавиатуру и основные компоненты в одном корпусе.
+                </p>
+
+                <ul>
+                    <li>можно переносить с места на место;</li>
+                    <li>работает от аккумулятора;</li>
+                    <li>занимает меньше места, чем настольный ПК;</li>
+                    <li>подходит для учёбы, работы и развлечений.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Smart-phone.jpg"
+                 alt="Смартфон">
+
+            <div class="card-body">
+                <span class="card-tag">Мобильные</span>
+
+                <h3>Смартфон</h3>
+
+                <p>
+                    Небольшое вычислительное устройство, которое
+                    помещается в карман и может выполнять множество задач.
+                </p>
+
+                <ul>
+                    <li>очень компактный;</li>
+                    <li>работает от аккумулятора;</li>
+                    <li>имеет сенсорный экран;</li>
+                    <li>используется для связи, интернета и приложений.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Servers_in_a_Rack.jpg"
+                 alt="Серверы в стойке">
+
+            <div class="card-body">
+                <span class="card-tag">Сетевые</span>
+
+                <h3>Сервер</h3>
+
+                <p>
+                    Компьютер, который предоставляет данные, программы
+                    или сетевые услуги другим компьютерам и устройствам.
+                </p>
+
+                <ul>
+                    <li>работает с большим количеством запросов;</li>
+                    <li>может хранить большие объёмы данных;</li>
+                    <li>обычно рассчитан на длительную и стабильную работу;</li>
+                    <li>используется в организациях и информационных сетях.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Supercomputer.jpg"
+                 alt="Суперкомпьютер">
+
+            <div class="card-body">
+                <span class="card-tag">Сверхмощные</span>
+
+                <h3>Суперкомпьютер</h3>
+
+                <p>
+                    Высокопроизводительная вычислительная система
+                    для задач, требующих огромного количества вычислений.
+                </p>
+
+                <ul>
+                    <li>очень высокая вычислительная производительность;</li>
+                    <li>сложная система обработки и хранения данных;</li>
+                    <li>используется для научных расчётов и моделирования;</li>
+                    <li>применяется в исследованиях и прогнозировании.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="card">
+            <img class="card-image"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Beckhoff_Automation_Embedded_PC.jpg"
+                 alt="Встроенный промышленный компьютер">
+
+            <div class="card-body">
+                <span class="card-tag">Специализированные</span>
+
+                <h3>Встроенный компьютер</h3>
+
+                <p>
+                    Компьютерная система, являющаяся частью другого
+                    устройства и выполняющая определённые задачи.
+                </p>
+
+                <ul>
+                    <li>может быть очень маленькой;</li>
+                    <li>обычно выполняет ограниченный набор функций;</li>
+                    <li>может работать автоматически;</li>
+                    <li>встречается в автомобилях, бытовой технике и промышленности.</li>
+                </ul>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<section class="section" id="compare">
+    <div class="section-heading">
+        <div class="section-number">03 · Сравнение</div>
+
+        <h2>Один компьютер — одна задача?</h2>
+
+        <p class="lead">
+            Нет. Но разные компьютеры оптимизированы под разные условия работы.
+        </p>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Вид</th>
+                    <th>Главная особенность</th>
+                    <th>Мобильность</th>
+                    <th>Для чего нужен</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><strong>Настольный ПК</strong></td>
+                    <td>Производительность и возможность модернизации</td>
+                    <td>Низкая</td>
+                    <td>Учёба, работа, игры, творчество</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Ноутбук</strong></td>
+                    <td>Сочетание компьютера и портативности</td>
+                    <td>Высокая</td>
+                    <td>Учёба, работа, общение, творчество</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Смартфон</strong></td>
+                    <td>Компактность и автономность</td>
+                    <td>Очень высокая</td>
+                    <td>Связь, интернет, приложения, фото и видео</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Сервер</strong></td>
+                    <td>Обслуживание пользователей и сетевых сервисов</td>
+                    <td>Не является главным требованием</td>
+                    <td>Хранение данных, сайты, сети, сервисы</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Суперкомпьютер</strong></td>
+                    <td>Огромная вычислительная мощность</td>
+                    <td>Нет</td>
+                    <td>Научные расчёты, моделирование, прогнозирование</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Встроенный компьютер</strong></td>
+                    <td>Работа внутри другого устройства</td>
+                    <td>Зависит от устройства</td>
+                    <td>Управление конкретными функциями</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="highlight">
+        <h3>Запомни</h3>
+
+        <p>
+            При сравнении компьютеров важно смотреть не только на размер.
+            Главные вопросы: <strong>что компьютер должен делать, для кого
+            он работает и в каких условиях используется?</strong>
+        </p>
+    </div>
+</section>
+
+<section class="section" id="world">
+    <div class="section-heading">
+        <div class="section-number">04 · Компьютеры вокруг нас</div>
+
+        <h2>Где мы встречаем компьютеры?</h2>
+
+        <p class="lead">
+            Многие компьютерные системы настолько привычны,
+            что мы уже не замечаем их.
+        </p>
+    </div>
+
+    <div class="world-grid">
+
+        <article class="world-item">
+            <div class="world-icon">🏠</div>
+            <h3>Быт</h3>
+            <p>
+                Телевизоры, роботы-пылесосы, умная техника
+                и другие устройства.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">🚗</div>
+            <h3>Транспорт</h3>
+            <p>
+                Автомобили и другие транспортные системы
+                используют компьютеры для управления и контроля.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">🏥</div>
+            <h3>Медицина</h3>
+            <p>
+                Компьютеры помогают хранить данные, проводить
+                исследования и управлять оборудованием.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">🔬</div>
+            <h3>Наука</h3>
+            <p>
+                Суперкомпьютеры выполняют сложные расчёты
+                и моделируют процессы.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">🏭</div>
+            <h3>Промышленность</h3>
+            <p>
+                Встроенные и специализированные системы управляют
+                станками и производственными процессами.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">📚</div>
+            <h3>Образование</h3>
+            <p>
+                Персональные компьютеры, ноутбуки и планшеты
+                используются для обучения и создания проектов.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">🌐</div>
+            <h3>Интернет</h3>
+            <p>
+                Серверы хранят данные и обеспечивают работу
+                сайтов, приложений и сетевых сервисов.
+            </p>
+        </article>
+
+        <article class="world-item">
+            <div class="world-icon">📱</div>
+            <h3>Связь</h3>
+            <p>
+                Смартфоны и сетевое оборудование помогают людям
+                обмениваться информацией.
+            </p>
+        </article>
+
+    </div>
+</section>
+
+<section class="section" id="check">
+
+    <div class="section-heading">
+        <div class="section-number">05 · Итоги урока</div>
+
+        <h2>Что мы узнали?</h2>
+
+        <p class="lead">
+            Подведём итог и попробуем самостоятельно объяснить
+            главное из сегодняшнего урока.
+        </p>
+    </div>
+
+    <div class="summary">
+
+        <div class="summary-card">
+            <h3>Главное за урок</h3>
+
+            <ul>
+                <li>Компьютеры бывают разных видов и размеров.</li>
+
+                <li>
+                    Они отличаются производительностью,
+                    мобильностью и назначением.
+                </li>
+
+                <li>
+                    Настольные компьютеры удобны для стационарной
+                    работы и модернизации.
+                </li>
+
+                <li>
+                    Ноутбуки сочетают возможности компьютера
+                    с портативностью.
+                </li>
+
+                <li>
+                    Смартфоны — компактные многофункциональные
+                    вычислительные устройства.
+                </li>
+
+                <li>
+                    Серверы предоставляют данные и сетевые услуги
+                    другим пользователям и устройствам.
+                </li>
+
+                <li>
+                    Суперкомпьютеры предназначены для очень сложных
+                    и масштабных вычислений.
+                </li>
+
+                <li>
+                    Встроенные компьютеры являются частью других
+                    устройств и выполняют специальные задачи.
+                </li>
+            </ul>
+        </div>
+
+        <div class="summary-card">
+            <h3>Что важно запомнить?</h3>
+
+            <p>
+                Компьютер выбирают не только по внешнему виду или размеру.
+                В первую очередь учитывают задачу, которую он должен выполнять.
+            </p>
+
+            <p>
+                Поэтому для повседневного общения удобен смартфон,
+                для работы или учёбы может подойти ноутбук,
+                для сетевых сервисов нужен сервер, а для сложных
+                научных расчётов — суперкомпьютер.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="questions-box">
+
+        <div class="section-number">Закрепление</div>
+
+        <h3>Ответь на вопросы</h3>
+
+        <p>
+            Ответы можно дать устно или записать в тетрадь.
+        </p>
+
+        <ol>
+            <li>
+                Что такое компьютер и для работы с чем он предназначен?
+            </li>
+
+            <li>
+                Почему существует так много разновидностей компьютеров?
+            </li>
+
+            <li>
+                Чем настольный компьютер отличается от ноутбука?
+            </li>
+
+            <li>
+                Какие преимущества имеют мобильные компьютерные устройства?
+            </li>
+
+            <li>
+                Для чего используются серверы?
+            </li>
+
+            <li>
+                Какие задачи могут решать суперкомпьютеры?
+            </li>
+
+            <li>
+                Что такое встроенный компьютер?
+                Приведи два примера устройств, в которых он может находиться.
+            </li>
+
+            <li>
+                Какими характеристиками можно сравнивать разные виды компьютеров?
+            </li>
+
+            <li>
+                Почему один компьютер не может быть одинаково удобен
+                и эффективен для всех задач?
+            </li>
+        </ol>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    <strong>Информатика · 6 класс</strong><br>
+    Учебный материал «Разнообразие компьютеров»
+</footer>
+
+</body>
+</html>
