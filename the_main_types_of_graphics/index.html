@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Учебный материал для 11 класса: основные виды компьютерной графики и цветовые модели.">
+  <title>Компьютерная графика и цвет — 11 класс</title>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121a2e;
+      --card: #151f36;
+      --card-light: #1b2742;
+      --text: #f4f7ff;
+      --muted: #aab5cc;
+      --line: rgba(255,255,255,.11);
+      --cyan: #53d8ff;
+      --violet: #9d7cff;
+      --pink: #ff78b7;
+      --yellow: #ffd66b;
+      --green: #70e0ad;
+      --shadow: 0 24px 60px rgba(0,0,0,.28);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(83,216,255,.12), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(157,124,255,.13), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(8,12,26,.95), rgba(8,12,26,.70), rgba(8,12,26,.35)),
+        url("https://commons.wikimedia.org/wiki/Special:FilePath/Color_icon_white_v2.svg");
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 340px;
+      height: 340px;
+      background: rgba(83,216,255,.14);
+      right: 7%;
+      top: 12%;
+    }
+
+    .hero::after {
+      width: 280px;
+      height: 280px;
+      background: rgba(255,120,183,.12);
+      right: 25%;
+      bottom: -80px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      padding: 90px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(83,216,255,.35);
+      border-radius: 999px;
+      background: rgba(83,216,255,.08);
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan);
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+      max-width: 900px;
+      margin-bottom: 28px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: #c6d0e3;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .hero-note {
+      margin-top: 30px;
+      padding-left: 18px;
+      border-left: 3px solid var(--cyan);
+      color: #e8edfa;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 70px 0 90px;
+    }
+
+    section {
+      margin-bottom: 90px;
+      scroll-margin-top: 30px;
+    }
+
+    .section-heading {
+      margin-bottom: 34px;
+    }
+
+    .section-number {
+      color: var(--cyan);
+      font-weight: 800;
+      font-size: .9rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      margin-bottom: 12px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 800px;
+      font-size: 1.05rem;
+    }
+
+    .definition {
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(83,216,255,.09), rgba(157,124,255,.07)),
+        var(--card);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .definition::after {
+      content: "GRAPHICS";
+      position: absolute;
+      right: -18px;
+      bottom: -30px;
+      font-size: 5rem;
+      font-weight: 900;
+      color: rgba(255,255,255,.025);
+      letter-spacing: -.06em;
+    }
+
+    .definition strong {
+      color: var(--cyan);
+    }
+
+    .application-grid,
+    .type-grid,
+    .color-grid,
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .application-grid {
+      margin-top: 22px;
+    }
+
+    .mini-card,
+    .info-card,
+    .color-card,
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 16px 40px rgba(0,0,0,.16);
+    }
+
+    .mini-card {
+      padding: 24px;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .mini-card:hover,
+    .info-card:hover,
+    .color-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(83,216,255,.35);
+    }
+
+    .mini-card b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.05rem;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .type-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-card {
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .info-card img {
+      height: 260px;
+      object-fit: cover;
+      background: #0d1426;
+    }
+
+    .info-body {
+      padding: 28px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(157,124,255,.12);
+      color: #c9baff;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .info-body h3 {
+      font-size: 1.55rem;
+      margin-bottom: 10px;
+    }
+
+    .info-body p {
+      color: var(--muted);
+    }
+
+    .pros-cons {
+      margin-top: 18px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .pros-cons div {
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.045);
+      font-size: .92rem;
+    }
+
+    .pros {
+      border-left: 3px solid var(--green);
+    }
+
+    .cons {
+      border-left: 3px solid var(--pink);
+    }
+
+    .compare-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 18px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: rgba(83,216,255,.08);
+      color: var(--cyan);
+      font-size: .88rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    td {
+      color: #d5dced;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .concept-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .flow-item {
+      padding: 22px;
+      min-height: 145px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      position: relative;
+    }
+
+    .flow-item .num {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--violet);
+      margin-bottom: 18px;
+    }
+
+    .flow-item h3 {
+      margin-bottom: 5px;
+    }
+
+    .flow-item p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .pixel-demo {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .pixel-image {
+      min-height: 330px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.12) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.12) 1px, transparent 1px),
+        linear-gradient(135deg, #ff4b5c, #ffc857 45%, #4dd7ff);
+      background-size: 22px 22px, 22px 22px, auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+    }
+
+    .pixel-image span {
+      background: rgba(8,12,26,.78);
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+    }
+
+    .explanation {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .formula {
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #0b1223;
+      border: 1px solid var(--line);
+      font-family: Consolas, monospace;
+      color: var(--cyan);
+      text-align: center;
+      font-size: 1.15rem;
+    }
+
+    .color-card {
+      padding: 30px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .color-card.rgb {
+      background:
+        radial-gradient(circle at 25% 35%, rgba(255,0,0,.35), transparent 24%),
+        radial-gradient(circle at 70% 35%, rgba(0,255,0,.28), transparent 24%),
+        radial-gradient(circle at 50% 75%, rgba(0,110,255,.36), transparent 26%),
+        var(--card);
+    }
+
+    .color-card.cmyk {
+      background:
+        radial-gradient(circle at 25% 35%, rgba(0,220,255,.30), transparent 24%),
+        radial-gradient(circle at 70% 35%, rgba(255,0,130,.28), transparent 24%),
+        radial-gradient(circle at 50% 75%, rgba(255,235,0,.30), transparent 26%),
+        var(--card);
+    }
+
+    .color-card h3 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .color-card .subtitle {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .channels {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .channel {
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      font-weight: 800;
+    }
+
+    .hsb {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      background:
+        linear-gradient(135deg, rgba(255,214,107,.08), rgba(255,120,183,.07)),
+        var(--card);
+    }
+
+    .hsb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .hsb-item {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.045);
+      margin-bottom: 15px;
+    }
+
+    .hsb-item strong {
+      color: var(--yellow);
+      font-size: 1.1rem;
+    }
+
+    .hsb-item p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .add-sub {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .mix-card {
+      padding: 30px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+
+    .mix-card.add {
+      border-top: 4px solid var(--cyan);
+    }
+
+    .mix-card.sub {
+      border-top: 4px solid var(--pink);
+    }
+
+    .mix-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.45rem;
+    }
+
+    .mix-card p {
+      color: var(--muted);
+    }
+
+    .mix-equation {
+      margin-top: 18px;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .spectrum {
+      margin-top: 24px;
+      height: 80px;
+      border-radius: 18px;
+      background: linear-gradient(90deg,
+        #ff0000 0%,
+        #ffff00 17%,
+        #00ff00 34%,
+        #00ffff 50%,
+        #0000ff 67%,
+        #ff00ff 84%,
+        #ff0000 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .question-box {
+      padding: 34px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(83,216,255,.25);
+      background:
+        linear-gradient(135deg, rgba(83,216,255,.10), rgba(157,124,255,.08)),
+        var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .question-box h3 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 12px;
+    }
+
+    .question-box p {
+      color: #c8d2e6;
+    }
+
+    .questions {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      counter-reset: question;
+    }
+
+    .question {
+      counter-increment: question;
+      padding: 20px 20px 20px 58px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      position: relative;
+      color: #dce3f2;
+    }
+
+    .question::before {
+      content: counter(question);
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--violet);
+      color: #fff;
+      font-weight: 900;
+      font-size: .82rem;
+    }
+
+    .summary-grid {
+      margin-top: 24px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .summary-card {
+      padding: 26px;
+    }
+
+    .summary-card strong {
+      display: block;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .summary-card p {
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 32px 0 45px;
+      border-top: 1px solid var(--line);
+      color: #8793ab;
+      text-align: center;
+      font-size: .92rem;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        width: min(var(--max), calc(100% - 30px));
+      }
+
+      .application-grid,
+      .type-grid,
+      .color-grid,
+      .pixel-demo,
+      .add-sub,
+      .questions {
+        grid-template-columns: 1fr;
+      }
+
+      .concept-flow,
+      .hsb-grid,
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        min-height: 560px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      body {
+        font-size: 15px;
+      }
+
+      .container {
+        width: calc(100% - 22px);
+      }
+
+      main {
+        padding: 48px 0 60px;
+      }
+
+      section {
+        margin-bottom: 62px;
+      }
+
+      .hero {
+        min-height: 520px;
+      }
+
+      .hero-content {
+        padding: 70px 0;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 14vw, 4.3rem);
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .definition,
+      .info-body,
+      .color-card,
+      .hsb,
+      .mix-card,
+      .question-box,
+      .summary-card,
+      .explanation {
+        padding: 22px;
+      }
+
+      .application-grid,
+      .type-grid,
+      .color-grid,
+      .concept-flow,
+      .pixel-demo,
+      .add-sub,
+      .questions,
+      .hsb-grid,
+      .summary-grid {
+        display: block;
+      }
+
+      .mini-card,
+      .info-card,
+      .color-card,
+      .flow-item,
+      .pixel-image,
+      .explanation,
+      .hsb,
+      .mix-card,
+      .question,
+      .summary-card {
+        width: 100%;
+        margin-bottom: 14px;
+      }
+
+      .info-card img {
+        height: 220px;
+      }
+
+      .pixel-image {
+        min-height: 250px;
+      }
+
+      .flow-item {
+        min-height: auto;
+      }
+
+      .spectrum {
+        height: 60px;
+      }
+
+      th, td {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">Информатика · 11 класс</div>
+        <h1>Основные виды <span class="gradient-text">графики</span> и цвет</h1>
+        <p>
+          Как компьютер создаёт изображение? Почему фотография и логотип
+          ведут себя по-разному при увеличении? И почему экран работает с RGB,
+          а принтер — с CMYK?
+        </p>
+        <div class="hero-note">
+          В этом уроке мы разберём не только виды компьютерной графики,
+          но и сам принцип цифрового представления цвета.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">01 · Основы</div>
+          <h2>Что такое компьютерная графика?</h2>
+          <p>Графика — это не просто картинка на экране. Это способ представить визуальную информацию в цифровой форме.</p>
+        </div>
+
+        <div class="definition">
+          <p>
+            <strong>Компьютерная графика</strong> — область информатики,
+            связанная с созданием, хранением, обработкой и отображением
+            изображений с помощью компьютерных средств.
+          </p>
+          <br>
+          <p>
+            Сегодня компьютерная графика используется практически везде:
+            от рекламы и дизайна до медицины, инженерного проектирования,
+            кино, игр и научной визуализации.
+          </p>
+        </div>
+
+        <div class="application-grid">
+          <div class="mini-card"><b>🎨 Дизайн</b><span>Логотипы, интерфейсы, иллюстрации и макеты.</span></div>
+          <div class="mini-card"><b>🎬 Кино и анимация</b><span>Визуальные эффекты, персонажи и виртуальные сцены.</span></div>
+          <div class="mini-card"><b>🎮 Игры</b><span>2D- и 3D-миры, объекты, эффекты и освещение.</span></div>
+          <div class="mini-card"><b>🏗 Инженерия</b><span>Чертежи, модели, проектирование и симуляции.</span></div>
+          <div class="mini-card"><b>🧬 Медицина</b><span>Визуализация данных и результатов исследований.</span></div>
+          <div class="mini-card"><b>🔬 Наука</b><span>Графики, модели, карты и научная визуализация.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">02 · Классификация</div>
+          <h2>Четыре способа увидеть графику</h2>
+          <p>
+            Растровая, векторная и фрактальная графика различаются прежде всего
+            способом формирования изображения. 3D описывает представление объектов
+            в трёхмерном пространстве.
+          </p>
+        </div>
+
+        <div class="type-grid">
+
+          <article class="info-card">
+            <img src="images/img-1.jpg" alt="Монитор с изображением">
+            <div class="info-body">
+              <span class="tag">Пиксели</span>
+              <h3>Растровая графика</h3>
+              <p>
+                Изображение состоит из множества пикселей. Каждый пиксель имеет
+                положение и определённый цвет. Такой способ особенно хорошо
+                подходит для фотографий и сложных цветовых переходов.
+              </p>
+              <div class="pros-cons">
+                <div class="pros">✓ Высокая детализация и естественные цвета</div>
+                <div class="cons">× При сильном увеличении становятся видны пиксели</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <img src="images/img-2.jpg" alt="Пример векторной графики">
+            <div class="info-body">
+              <span class="tag">Объекты</span>
+              <h3>Векторная графика</h3>
+              <p>
+                Изображение описывается геометрическими объектами: линиями,
+                кривыми, многоугольниками и другими примитивами. Их параметры
+                задаются математически.
+              </p>
+              <div class="pros-cons">
+                <div class="pros">✓ Масштабирование без потери качества</div>
+                <div class="cons">× Сложнее представить фотореалистичную сцену</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <img src="images/img-3.jpg" alt="Фрактал Мандельброта">
+            <div class="info-body">
+              <span class="tag">Алгоритм</span>
+              <h3>Фрактальная графика</h3>
+              <p>
+                Изображение строится на основе математических закономерностей.
+                Сравнительно простые правила могут порождать очень сложные
+                структуры, часто обладающие свойством самоподобия.
+              </p>
+              <div class="pros-cons">
+                <div class="pros">✓ Сложные структуры можно получить алгоритмически</div>
+                <div class="cons">× Требует математического описания и вычислений</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <img src="images/img-4.jpg" alt="Трёхмерная компьютерная графика">
+            <div class="info-body">
+              <span class="tag">3D-пространство</span>
+              <h3>Трёхмерная графика</h3>
+              <p>
+                Объекты создаются в виртуальном пространстве с координатами,
+                геометрией, текстурами и освещением. Затем сцена визуализируется
+                с нужной точки зрения.
+              </p>
+              <div class="pros-cons">
+                <div class="pros">✓ Объёмные модели и реалистичная визуализация</div>
+                <div class="cons">× Создание сложных сцен требует ресурсов и времени</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">03 · Сравнение</div>
+          <h2>Что меняется вместе со способом представления?</h2>
+          <p>Один и тот же визуальный результат можно получить разными способами — но свойства получившегося файла будут различаться.</p>
+        </div>
+
+        <div class="compare-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Характеристика</th>
+                <th>Растровая</th>
+                <th>Векторная</th>
+                <th>Фрактальная</th>
+                <th>3D</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Основа</td>
+                <td>Пиксели</td>
+                <td>Геометрические объекты</td>
+                <td>Математические правила</td>
+                <td>Объекты в 3D-пространстве</td>
+              </tr>
+              <tr>
+                <td>Масштабирование</td>
+                <td>Есть ограничение качества</td>
+                <td>Без потери качества</td>
+                <td>Зависит от алгоритма</td>
+                <td>Пересчёт сцены</td>
+              </tr>
+              <tr>
+                <td>Лучшее применение</td>
+                <td>Фотографии</td>
+                <td>Логотипы и схемы</td>
+                <td>Математические структуры</td>
+                <td>Модели и виртуальные сцены</td>
+              </tr>
+              <tr>
+                <td>Главная идея</td>
+                <td>«Из чего состоит картинка?»</td>
+                <td>«Из каких объектов она построена?»</td>
+                <td>«По какому правилу она создана?»</td>
+                <td>«Как объект выглядит в пространстве?»</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">04 · Растр</div>
+          <h2>Пиксель: минимальная точка изображения</h2>
+          <p>
+            Растровое изображение можно представить как прямоугольную сетку,
+            в каждой ячейке которой записан цвет.
+          </p>
+        </div>
+
+        <div class="pixel-demo">
+          <div class="pixel-image">
+            <span>Увеличиваем изображение → видим пиксели</span>
+          </div>
+
+          <div class="explanation">
+            <h3>Разрешение и глубина цвета</h3>
+            <p>
+              <strong>Разрешение</strong> — количество пикселей по горизонтали
+              и вертикали. Например, изображение 1920 × 1080 содержит
+              2 073 600 пикселей.
+            </p>
+            <br>
+            <p>
+              <strong>Глубина цвета</strong> показывает, сколько бит используется
+              для кодирования цвета одного пикселя.
+            </p>
+
+            <div class="formula">
+              N = 2<sup>i</sup>
+            </div>
+
+            <p>
+              Здесь <strong>i</strong> — число бит на цвет, а <strong>N</strong> —
+              количество возможных вариантов. Поэтому 8 бит позволяют представить
+              256 градаций серого.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">05 · Трёхмерный мир</div>
+          <h2>Как строится 3D-сцена?</h2>
+          <p>В 3D-графике изображение начинается не с готовых пикселей, а с описания объектов виртуального пространства.</p>
+        </div>
+
+        <div class="concept-flow">
+          <div class="flow-item">
+            <div class="num">01</div>
+            <h3>Модель</h3>
+            <p>Создаётся геометрическая форма объекта.</p>
+          </div>
+          <div class="flow-item">
+            <div class="num">02</div>
+            <h3>Материалы</h3>
+            <p>Задаются цвет, текстура и свойства поверхности.</p>
+          </div>
+          <div class="flow-item">
+            <div class="num">03</div>
+            <h3>Свет</h3>
+            <p>Определяется освещение и взаимодействие света с объектами.</p>
+          </div>
+          <div class="flow-item">
+            <div class="num">04</div>
+            <h3>Рендеринг</h3>
+            <p>Сцена преобразуется в итоговое изображение.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">06 · Цвет</div>
+          <h2>Как компьютер хранит цвет?</h2>
+          <p>
+            Цвет в цифровой системе — это числовая информация. Один и тот же
+            визуальный цвет можно описывать разными моделями в зависимости
+            от устройства и задачи.
+          </p>
+        </div>
+
+        <div class="color-grid">
+
+          <article class="color-card rgb">
+            <h3>RGB</h3>
+            <div class="subtitle">Red · Green · Blue</div>
+            <p>
+              Аддитивная модель. Цвет формируется смешиванием света трёх
+              компонентов — красного, зелёного и синего. Чем больше света
+              добавляется, тем ближе результат к белому.
+            </p>
+            <div class="channels">
+              <span class="channel">R — красный</span>
+              <span class="channel">G — зелёный</span>
+              <span class="channel">B — синий</span>
+            </div>
+          </article>
+
+          <article class="color-card cmyk">
+            <h3>CMYK</h3>
+            <div class="subtitle">Cyan · Magenta · Yellow · Key/Black</div>
+            <p>
+              Субтрактивная модель. Она используется главным образом в печати,
+              где краски поглощают часть падающего света. Чёрный компонент
+              позволяет получить глубокие тёмные тона и улучшить печатный результат.
+            </p>
+            <div class="channels">
+              <span class="channel">C — голубой</span>
+              <span class="channel">M — пурпурный</span>
+              <span class="channel">Y — жёлтый</span>
+              <span class="channel">K — чёрный</span>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="hsb">
+          <h3>HSB / HSV — цвет глазами человека</h3>
+          <p>
+            Эти модели удобны тем, что описывают цвет через характеристики,
+            которые человеку проще воспринимать при выборе и настройке цвета.
+          </p>
+
+          <div class="hsb-grid">
+            <div class="hsb-item">
+              <strong>H — Hue</strong>
+              <p>Цветовой тон: какой именно цвет перед нами.</p>
+            </div>
+            <div class="hsb-item">
+              <strong>S — Saturation</strong>
+              <p>Насыщенность: насколько цвет чистый или приближается к серому.</p>
+            </div>
+            <div class="hsb-item">
+              <strong>B / V</strong>
+              <p>Яркость или значение: насколько светлым выглядит цвет.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">07 · Свет и краска</div>
+          <h2>Аддитивное и субтрактивное смешение</h2>
+          <p>
+            Главное различие можно сформулировать очень просто:
+            <strong>экран добавляет свет, а печать работает с красителями.</strong>
+          </p>
+        </div>
+
+        <div class="add-sub">
+          <div class="mix-card add">
+            <h3>RGB → добавляем свет</h3>
+            <p>
+              Красный, зелёный и синий свет смешиваются. При максимальной
+              интенсивности всех трёх компонентов получается белый цвет.
+            </p>
+            <div class="mix-equation">R + G + B → белый</div>
+          </div>
+
+          <div class="mix-card sub">
+            <h3>CMYK → поглощаем свет</h3>
+            <p>
+              Голубой, пурпурный и жёлтый красители поглощают разные части
+              спектра. В полиграфии дополнительно используется чёрный.
+            </p>
+            <div class="mix-equation">C + M + Y + K → печатное изображение</div>
+          </div>
+        </div>
+
+        <div class="spectrum" aria-label="Цветовой спектр"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">08 · Цветовой охват</div>
+          <h2>Почему цвет на экране и на бумаге может отличаться?</h2>
+          <p>
+            Разные устройства способны воспроизводить разные диапазоны цветов.
+            Поэтому экран, камера и принтер могут показать один и тот же файл
+            немного по-разному.
+          </p>
+        </div>
+
+        <div class="definition">
+          <p>
+            <strong>Цветовой охват</strong> — множество цветов, которое способно
+            воспроизвести конкретное устройство или цветовая система.
+          </p>
+          <br>
+          <p>
+            На результат влияют характеристики монитора, принтера, бумаги,
+            чернил, выбранной цветовой модели и цветовых профилей. Поэтому
+            подготовка изображения к экрану и подготовка макета к печати —
+            не всегда одно и то же.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">09 · Закрепление</div>
+          <h2>Проверьте, как вы поняли материал</h2>
+          <p>Ответьте на вопросы своими словами. Важно не просто назвать термин, а объяснить принцип.</p>
+        </div>
+
+        <div class="questions">
+          <div class="question">Чем растровое изображение принципиально отличается от векторного?</div>
+          <div class="question">Что такое пиксель и какую информацию он хранит?</div>
+          <div class="question">Что произойдёт с растровым изображением при сильном увеличении?</div>
+          <div class="question">Почему логотип удобно создавать в векторном формате?</div>
+          <div class="question">На каком принципе строится фрактальная графика?</div>
+          <div class="question">Чем 3D-графика отличается от обычного 2D-представления?</div>
+          <div class="question">Что такое разрешение изображения?</div>
+          <div class="question">Что показывает глубина цвета?</div>
+          <div class="question">Что означают буквы RGB?</div>
+          <div class="question">Почему RGB называют аддитивной моделью?</div>
+          <div class="question">Для чего применяется CMYK?</div>
+          <div class="question">В чём разница между аддитивным и субтрактивным смешением?</div>
+          <div class="question">Что обозначают H, S и B/V в HSB/HSV?</div>
+          <div class="question">Почему один и тот же цвет может выглядеть по-разному на экране и при печати?</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-number">10 · Итоги</div>
+          <h2>Главное, что нужно запомнить</h2>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <strong>Растр</strong>
+            <p>Изображение состоит из пикселей. Особенно хорошо подходит для фотографий.</p>
+          </div>
+          <div class="summary-card">
+            <strong>Вектор</strong>
+            <p>Изображение описывается геометрическими объектами. Удобен для логотипов и схем.</p>
+          </div>
+          <div class="summary-card">
+            <strong>Фракталы</strong>
+            <p>Изображение формируется математическими правилами и алгоритмами.</p>
+          </div>
+          <div class="summary-card">
+            <strong>3D</strong>
+            <p>Объекты создаются в трёхмерном пространстве и затем визуализируются.</p>
+          </div>
+          <div class="summary-card">
+            <strong>RGB</strong>
+            <p>Аддитивная модель света: красный + зелёный + синий.</p>
+          </div>
+          <div class="summary-card">
+            <strong>CMYK</strong>
+            <p>Субтрактивная модель для печати: голубой, пурпурный, жёлтый и чёрный.</p>
+          </div>
+        </div>
+
+        <div class="question-box" style="margin-top: 24px;">
+          <h3>Главная мысль урока</h3>
+          <p>
+            Вид графики и цветовую модель выбирают не случайно:
+            они зависят от того, <strong>как создаётся изображение,
+            для чего оно предназначено и где оно будет воспроизводиться</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      Информатика · 11 класс · «Основные виды графики. Цвет в компьютерной графике»
+    </div>
+  </footer>
+
+</body>
+</html>
