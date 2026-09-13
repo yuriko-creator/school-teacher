@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Введение в информатику и компьютерные технологии — 8 класс</title>
+
+    <style>
+
+        /* =========================================================
+           ОСНОВНЫЕ НАСТРОЙКИ
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f7fb;
+            color: #26344a;
+            line-height: 1.65;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            padding: 62px 0 55px;
+
+            background:
+                radial-gradient(
+                    circle at 12% 20%,
+                    rgba(255,255,255,.16) 0 75px,
+                    transparent 76px
+                ),
+                radial-gradient(
+                    circle at 90% 75%,
+                    rgba(255,255,255,.12) 0 120px,
+                    transparent 121px
+                ),
+                linear-gradient(
+                    135deg,
+                    #315fc9,
+                    #563eb4
+                );
+
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 880px;
+        }
+
+        .class-label {
+            display: inline-block;
+
+            padding: 6px 15px;
+            margin-bottom: 17px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,.16);
+            border: 1px solid rgba(255,255,255,.25);
+
+            font-size: .9rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+
+            font-size: clamp(2rem, 6vw, 3.5rem);
+
+            line-height: 1.12;
+            letter-spacing: -.03em;
+        }
+
+        .hero-subtitle {
+            max-width: 780px;
+
+            margin: 0;
+
+            font-size: clamp(1.05rem, 2.5vw, 1.28rem);
+
+            opacity: .94;
+        }
+
+
+        /* =========================================================
+           ОСНОВНЫЕ СЕКЦИИ
+        ========================================================= */
+
+        main {
+            padding: 35px 0 75px;
+        }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            margin: 0 0 18px;
+
+            font-size: clamp(1.55rem, 4vw, 2.15rem);
+
+            line-height: 1.2;
+
+            color: #243b69;
+        }
+
+        .section-title span {
+            color: #5879d9;
+        }
+
+        .card {
+            padding: 27px;
+
+            background: white;
+
+            border-radius: 20px;
+
+            border: 1px solid #e5eaf2;
+
+            box-shadow:
+                0 8px 28px rgba(37,55,91,.07);
+        }
+
+        .card + .card {
+            margin-top: 18px;
+        }
+
+        .lead {
+            font-size: 1.08rem;
+        }
+
+        .note {
+            margin-top: 18px;
+
+            padding: 16px 18px;
+
+            border-left: 4px solid #5879d9;
+
+            border-radius: 10px;
+
+            background: #f1f5ff;
+        }
+
+
+        /* =========================================================
+           ЦЕЛЬ
+        ========================================================= */
+
+        .goal {
+            display: flex;
+
+            gap: 18px;
+
+            align-items: flex-start;
+        }
+
+        .goal-icon {
+            flex: 0 0 54px;
+
+            width: 54px;
+            height: 54px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 16px;
+
+            background: #edf2ff;
+
+            font-size: 1.7rem;
+        }
+
+
+        /* =========================================================
+           СПИСКИ
+        ========================================================= */
+
+        ul {
+            margin: 12px 0 0;
+
+            padding-left: 23px;
+        }
+
+        li + li {
+            margin-top: 7px;
+        }
+
+        .check-list {
+            list-style: none;
+
+            padding-left: 0;
+        }
+
+        .check-list li {
+            position: relative;
+
+            padding-left: 32px;
+        }
+
+        .check-list li::before {
+            content: "✓";
+
+            position: absolute;
+
+            left: 0;
+            top: 1px;
+
+            width: 23px;
+            height: 23px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: #e8f7ee;
+
+            color: #26935b;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           ИНФОРМАЦИЯ И ДАННЫЕ
+        ========================================================= */
+
+        .info-forms {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 13px;
+
+            margin-top: 22px;
+        }
+
+        .info-form {
+            padding: 18px 12px;
+
+            text-align: center;
+
+            border-radius: 16px;
+
+            background: #f7f9fd;
+
+            border: 1px solid #e4e9f2;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .info-form:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(40,55,90,.09);
+        }
+
+        .info-icon {
+            font-size: 2rem;
+
+            margin-bottom: 7px;
+        }
+
+        .info-form strong {
+            display: block;
+
+            color: #30466f;
+        }
+
+        .info-form small {
+            color: #718096;
+        }
+
+
+        /* =========================================================
+           ИНФОРМАЦИОННЫЕ ПРОЦЕССЫ
+        ========================================================= */
+
+        .process-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+
+            margin-top: 22px;
+        }
+
+        .process {
+            position: relative;
+
+            padding: 20px 14px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            background: #f7f9fd;
+
+            border: 1px solid #e3e8f1;
+        }
+
+        .process-number {
+            width: 32px;
+            height: 32px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: #eaf0ff;
+
+            color: #4c67bc;
+
+            font-weight: 800;
+        }
+
+        .process-icon {
+            font-size: 1.8rem;
+
+            margin-bottom: 7px;
+        }
+
+        .process strong {
+            display: block;
+
+            color: #30466f;
+        }
+
+        .process p {
+            margin: 5px 0 0;
+
+            font-size: .86rem;
+
+            color: #718096;
+        }
+
+
+        /* =========================================================
+           СХЕМА ПРОЦЕССОВ
+        ========================================================= */
+
+        .process-flow {
+            margin-top: 23px;
+
+            padding: 22px;
+
+            border-radius: 19px;
+
+            background: #202d46;
+
+            color: white;
+
+            text-align: center;
+
+            font-weight: 700;
+        }
+
+        .flow-item {
+            display: inline-block;
+
+            padding: 8px 13px;
+
+            border-radius: 9px;
+
+            background: rgba(255,255,255,.08);
+        }
+
+        .flow-arrow {
+            margin: 0 8px;
+
+            color: #9fb2ed;
+
+            font-size: 1.2rem;
+        }
+
+
+        /* =========================================================
+           КОМПЬЮТЕР
+        ========================================================= */
+
+        .computer-cycle {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 22px;
+        }
+
+        .cycle-item {
+            padding: 22px 16px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            background: #f7f9fd;
+
+            border: 1px solid #e2e7ef;
+        }
+
+        .cycle-icon {
+            font-size: 2rem;
+
+            margin-bottom: 7px;
+        }
+
+        .cycle-item strong {
+            display: block;
+
+            color: #30466f;
+        }
+
+        .cycle-item p {
+            margin: 5px 0 0;
+
+            font-size: .9rem;
+
+            color: #718096;
+        }
+
+
+        /* =========================================================
+           HARDWARE / SOFTWARE
+        ========================================================= */
+
+        .hs-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .hs-card {
+            padding: 25px;
+
+            border-radius: 20px;
+
+            border: 1px solid;
+        }
+
+        .hardware {
+            background: #eef4ff;
+
+            border-color: #d7e3ff;
+        }
+
+        .software {
+            background: #f3f0ff;
+
+            border-color: #e0d8ff;
+        }
+
+        .hs-heading {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 13px;
+        }
+
+        .hs-icon {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            flex: 0 0 48px;
+
+            border-radius: 14px;
+
+            background: white;
+
+            font-size: 1.5rem;
+        }
+
+        .hs-heading h3 {
+            margin: 0;
+
+            color: #30466f;
+        }
+
+        .hs-heading span {
+            font-size: .82rem;
+
+            color: #758198;
+        }
+
+        .hs-list {
+            margin: 0;
+
+            padding-left: 20px;
+        }
+
+
+        /* =========================================================
+           ГРУППЫ HARDWARE
+        ========================================================= */
+
+        .hardware-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 20px;
+        }
+
+        .hardware-item {
+            padding: 20px 16px;
+
+            border-radius: 17px;
+
+            background: white;
+
+            border: 1px solid #e4e9f1;
+
+            box-shadow:
+                0 5px 17px rgba(40,55,90,.05);
+        }
+
+        .hardware-item .big-icon {
+            font-size: 2rem;
+
+            margin-bottom: 7px;
+        }
+
+        .hardware-item h3 {
+            margin: 0 0 5px;
+
+            color: #30466f;
+
+            font-size: 1.05rem;
+        }
+
+        .hardware-item p {
+            margin: 0;
+
+            color: #718096;
+
+            font-size: .9rem;
+        }
+
+
+        /* =========================================================
+           SOFTWARE
+        ========================================================= */
+
+        .software-types {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .software-type {
+            padding: 21px;
+
+            border-radius: 17px;
+
+            background: white;
+
+            border: 1px solid #e5e0f4;
+        }
+
+        .software-type h3 {
+            margin: 0 0 7px;
+
+            color: #4c3f82;
+        }
+
+        .software-type p {
+            margin: 0;
+
+            color: #718096;
+
+            font-size: .92rem;
+        }
+
+        .software-tag {
+            display: inline-block;
+
+            margin-bottom: 9px;
+
+            padding: 5px 9px;
+
+            border-radius: 7px;
+
+            background: #eeeaff;
+
+            color: #5d4a9d;
+
+            font-size: .76rem;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           ВЗАИМОДЕЙСТВИЕ HARDWARE / SOFTWARE
+        ========================================================= */
+
+        .interaction {
+            margin-top: 20px;
+
+            padding: 23px;
+
+            border-radius: 19px;
+
+            background: #202d46;
+
+            color: white;
+        }
+
+        .interaction-row {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .interaction-box {
+            padding: 13px 17px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.09);
+
+            font-weight: 700;
+        }
+
+        .interaction-arrow {
+            color: #a7b8ed;
+
+            font-size: 1.3rem;
+        }
+
+
+        /* =========================================================
+           СОВРЕМЕННЫЕ ТЕХНОЛОГИИ
+        ========================================================= */
+
+        .technology-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 20px;
+        }
+
+        .technology {
+            position: relative;
+
+            padding: 22px 18px;
+
+            min-height: 155px;
+
+            border-radius: 18px;
+
+            background: white;
+
+            border: 1px solid #e3e8f0;
+
+            box-shadow:
+                0 5px 17px rgba(40,55,90,.05);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .technology:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(40,55,90,.1);
+        }
+
+        .tech-icon {
+            font-size: 2rem;
+
+            margin-bottom: 8px;
+        }
+
+        .technology h3 {
+            margin: 0 0 5px;
+
+            color: #30466f;
+
+            font-size: 1rem;
+        }
+
+        .technology p {
+            margin: 0;
+
+            color: #718096;
+
+            font-size: .87rem;
+        }
+
+
+        /* =========================================================
+           ПРИМЕНЕНИЕ
+        ========================================================= */
+
+        .application-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 20px;
+        }
+
+        .application {
+            padding: 19px;
+
+            border-radius: 17px;
+
+            background: #f8f9fc;
+
+            border: 1px solid #e4e9f1;
+        }
+
+        .application-icon {
+            font-size: 1.9rem;
+
+            margin-bottom: 7px;
+        }
+
+        .application strong {
+            display: block;
+
+            color: #30466f;
+        }
+
+        .application p {
+            margin: 4px 0 0;
+
+            color: #718096;
+
+            font-size: .88rem;
+        }
+
+
+        /* =========================================================
+           ИНФОРМАЦИОННАЯ БЕЗОПАСНОСТЬ
+        ========================================================= */
+
+        .security {
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff8eb,
+                    #fff2f2
+                );
+
+            border: 1px solid #f0dfc5;
+        }
+
+        .security-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .security-item {
+            padding: 21px;
+
+            border-radius: 17px;
+
+            background: rgba(255,255,255,.78);
+
+            border: 1px solid #eadfd2;
+        }
+
+        .security-icon {
+            font-size: 1.9rem;
+
+            margin-bottom: 7px;
+        }
+
+        .security-item h3 {
+            margin: 0 0 6px;
+
+            color: #604b37;
+        }
+
+        .security-item p {
+            margin: 0;
+
+            color: #766b60;
+
+            font-size: .9rem;
+        }
+
+
+        /* =========================================================
+           ПРАВИЛА БЕЗОПАСНОСТИ
+        ========================================================= */
+
+        .safety-list {
+            list-style: none;
+
+            padding: 0;
+
+            margin-top: 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 11px;
+        }
+
+        .safety-list li {
+            position: relative;
+
+            padding: 13px 15px 13px 43px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.7);
+        }
+
+        .safety-list li::before {
+            content: "✓";
+
+            position: absolute;
+
+            left: 14px;
+            top: 12px;
+
+            color: #bb7b27;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           ГЛАВНОЕ
+        ========================================================= */
+
+        .remember {
+            padding: 30px;
+
+            border-radius: 22px;
+
+            background: #202d46;
+
+            color: white;
+
+            box-shadow:
+                0 12px 30px rgba(24,36,59,.17);
+        }
+
+        .remember .section-title {
+            color: white;
+        }
+
+        .remember-list {
+            list-style: none;
+
+            padding: 0;
+
+            margin: 20px 0 0;
+        }
+
+        .remember-list li {
+            position: relative;
+
+            padding: 13px 15px 13px 43px;
+
+            margin-bottom: 10px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.07);
+        }
+
+        .remember-list li::before {
+            content: "★";
+
+            position: absolute;
+
+            left: 15px;
+
+            color: #ffd76a;
+        }
+
+
+        /* =========================================================
+           ВОПРОСЫ
+        ========================================================= */
+
+        .questions {
+            counter-reset: questions;
+        }
+
+        .question {
+            counter-increment: questions;
+
+            position: relative;
+
+            padding: 18px 18px 18px 57px;
+
+            margin-bottom: 12px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            border: 1px solid #e4e9f1;
+
+            font-weight: 600;
+        }
+
+        .question::before {
+            content: counter(questions);
+
+            position: absolute;
+
+            left: 16px;
+            top: 16px;
+
+            width: 29px;
+            height: 29px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: #edf2ff;
+
+            color: #4f68b9;
+
+            font-size: .85rem;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           ИТОГ
+        ========================================================= */
+
+        .summary {
+            text-align: center;
+
+            padding: 35px 26px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eaf8f0,
+                    #eef6ff
+                );
+
+            border: 1px solid #d9e9e0;
+        }
+
+        .summary h2 {
+            margin-top: 0;
+
+            color: #2e5b48;
+        }
+
+        .summary p {
+            max-width: 790px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding: 28px 0;
+
+            background: #1d2739;
+
+            color: #aeb8c9;
+
+            font-size: .85rem;
+        }
+
+
+        /* =========================================================
+           АДАПТИВНОСТЬ
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .info-forms {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .process-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .hardware-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .technology-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .application-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .computer-cycle {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .hs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .software-types {
+                grid-template-columns: 1fr;
+            }
+
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .safety-list {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+                width:
+                    min(
+                        100% - 22px,
+                        1100px
+                    );
+            }
+
+            .hero {
+                padding:
+                    42px 0 40px;
+            }
+
+            main {
+                padding-top: 25px;
+            }
+
+            .card {
+                padding: 20px;
+
+                border-radius: 17px;
+            }
+
+            .goal {
+                display: block;
+            }
+
+            .goal-icon {
+                margin-bottom: 12px;
+            }
+
+            .info-forms,
+            .process-grid,
+            .computer-cycle,
+            .hardware-grid,
+            .technology-grid,
+            .application-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-flow {
+                line-height: 2;
+            }
+
+            .flow-item {
+                display: block;
+
+                margin: 5px 0;
+            }
+
+            .flow-arrow {
+                display: block;
+            }
+
+            .interaction-row {
+                flex-direction: column;
+            }
+
+            .interaction-arrow {
+                transform:
+                    rotate(90deg);
+            }
+
+            .remember {
+                padding: 24px 20px;
+
+                border-radius: 18px;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            h1 {
+                font-size: 1.9rem;
+            }
+
+            .section-title {
+                font-size: 1.45rem;
+            }
+
+            .card {
+                padding: 17px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<header class="hero">
+
+    <div class="container hero-content">
+
+        <div class="class-label">
+            Информатика • 8 класс
+        </div>
+
+        <h1>
+            Введение в информатику
+            и компьютерные технологии
+        </h1>
+
+        <p class="hero-subtitle">
+            Разберёмся, что изучает информатика,
+            как компьютер работает с информацией
+            и какую роль современные компьютерные технологии
+            играют в жизни общества.
+        </p>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<div class="container">
+
+
+<!-- =========================================================
+     ЦЕЛЬ
+========================================================= -->
+
+<section>
+
+    <div class="card goal">
+
+        <div class="goal-icon">
+            🎯
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                Цель урока
+            </h2>
+
+            <p class="lead">
+                Сформировать первоначальное систематизированное
+                представление об информатике, информационных процессах,
+                компьютере и современных компьютерных технологиях.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ПЛАНИРУЕМЫЕ РЕЗУЛЬТАТЫ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        Что мы должны узнать?
+    </h2>
+
+    <div class="card">
+
+        <ul class="check-list">
+
+            <li>
+                Понимать понятие информатики.
+            </li>
+
+            <li>
+                Понимать роль информации в деятельности человека
+                и общества.
+            </li>
+
+            <li>
+                Знать основные информационные процессы.
+            </li>
+
+            <li>
+                Понимать назначение компьютера как средства
+                работы с информацией.
+            </li>
+
+            <li>
+                Различать аппаратное и программное обеспечение.
+            </li>
+
+            <li>
+                Иметь представление об основных направлениях
+                компьютерных технологий.
+            </li>
+
+            <li>
+                Понимать роль компьютерных технологий
+                в различных сферах деятельности.
+            </li>
+
+            <li>
+                Иметь представление об информационной безопасности.
+            </li>
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ИНФОРМАТИКА
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        1. Что такое <span>информатика?</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="lead">
+
+            <strong>Информатика</strong> —
+            область науки и техники, связанная
+            с информацией, способами её получения,
+            хранения, обработки, передачи и использования.
+
+        </p>
+
+        <p>
+            Информатика изучает не только компьютеры.
+            Её важнейший объект — <strong>информация</strong>
+            и способы работы с ней.
+        </p>
+
+        <div class="note">
+
+            💡
+            <strong>Основные задачи информатики:</strong>
+
+            получение информации,
+            хранение,
+            обработка,
+            передача
+            и использование информации.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ИНФОРМАЦИЯ И ДАННЫЕ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        2. Информация и данные
+    </h2>
+
+    <div class="card">
+
+        <p>
+            <strong>Информация</strong> — сведения,
+            которые человек или компьютер может получать,
+            воспринимать, обрабатывать и использовать.
+        </p>
+
+        <p>
+            Информация может быть представлена
+            в разных формах.
+        </p>
+
+
+        <div class="info-forms">
+
+            <div class="info-form">
+
+                <div class="info-icon">📝</div>
+
+                <strong>Текстовая</strong>
+
+                <small>
+                    слова, предложения, документы
+                </small>
+
+            </div>
+
+
+            <div class="info-form">
+
+                <div class="info-icon">🔢</div>
+
+                <strong>Числовая</strong>
+
+                <small>
+                    числа, расчёты, таблицы
+                </small>
+
+            </div>
+
+
+            <div class="info-form">
+
+                <div class="info-icon">🖼️</div>
+
+                <strong>Графическая</strong>
+
+                <small>
+                    изображения, схемы
+                </small>
+
+            </div>
+
+
+            <div class="info-form">
+
+                <div class="info-icon">🔊</div>
+
+                <strong>Звуковая</strong>
+
+                <small>
+                    речь, музыка, звуки
+                </small>
+
+            </div>
+
+
+            <div class="info-form">
+
+                <div class="info-icon">🎬</div>
+
+                <strong>Видео</strong>
+
+                <small>
+                    движущиеся изображения
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+
+            <strong>Данные</strong> —
+            информация, представленная в форме,
+            пригодной для хранения, передачи
+            и обработки техническими средствами.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ИНФОРМАЦИОННЫЕ ПРОЦЕССЫ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        3. Информационные процессы
+    </h2>
+
+    <div class="card">
+
+        <p>
+            Работа с информацией включает несколько
+            взаимосвязанных процессов.
+        </p>
+
+
+        <div class="process-grid">
+
+            <div class="process">
+
+                <div class="process-number">1</div>
+
+                <div class="process-icon">
+                    📥
+                </div>
+
+                <strong>
+                    Получение
+                </strong>
+
+                <p>
+                    Получение новой информации.
+                </p>
+
+            </div>
+
+
+            <div class="process">
+
+                <div class="process-number">2</div>
+
+                <div class="process-icon">
+                    💾
+                </div>
+
+                <strong>
+                    Хранение
+                </strong>
+
+                <p>
+                    Сохранение информации.
+                </p>
+
+            </div>
+
+
+            <div class="process">
+
+                <div class="process-number">3</div>
+
+                <div class="process-icon">
+                    ⚙️
+                </div>
+
+                <strong>
+                    Обработка
+                </strong>
+
+                <p>
+                    Изменение и преобразование данных.
+                </p>
+
+            </div>
+
+
+            <div class="process">
+
+                <div class="process-number">4</div>
+
+                <div class="process-icon">
+                    📡
+                </div>
+
+                <strong>
+                    Передача
+                </strong>
+
+                <p>
+                    Перемещение информации.
+                </p>
+
+            </div>
+
+
+            <div class="process">
+
+                <div class="process-number">5</div>
+
+                <div class="process-icon">
+                    💡
+                </div>
+
+                <strong>
+                    Использование
+                </strong>
+
+                <p>
+                    Применение полученной информации.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-flow">
+
+            <span class="flow-item">
+                Получение
+            </span>
+
+            <span class="flow-arrow">
+                →
+            </span>
+
+            <span class="flow-item">
+                Обработка
+            </span>
+
+            <span class="flow-arrow">
+                →
+            </span>
+
+            <span class="flow-item">
+                Хранение
+            </span>
+
+            <span class="flow-arrow">
+                →
+            </span>
+
+            <span class="flow-item">
+                Передача
+            </span>
+
+            <span class="flow-arrow">
+                →
+            </span>
+
+            <span class="flow-item">
+                Использование
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     КОМПЬЮТЕР
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        4. Компьютер как средство
+        обработки информации
+    </h2>
+
+    <div class="card">
+
+        <p class="lead">
+
+            <strong>Компьютер</strong> —
+            универсальное устройство для работы
+            с различными видами информации.
+
+        </p>
+
+        <p>
+            Компьютер может работать с текстами,
+            числами, изображениями, звуком,
+            видео и другими данными.
+        </p>
+
+
+        <div class="computer-cycle">
+
+            <div class="cycle-item">
+
+                <div class="cycle-icon">
+                    📥
+                </div>
+
+                <strong>
+                    Ввод
+                </strong>
+
+                <p>
+                    Информация поступает
+                    в компьютер.
+                </p>
+
+            </div>
+
+
+            <div class="cycle-item">
+
+                <div class="cycle-icon">
+                    ⚙️
+                </div>
+
+                <strong>
+                    Обработка
+                </strong>
+
+                <p>
+                    Компьютер выполняет
+                    операции с данными.
+                </p>
+
+            </div>
+
+
+            <div class="cycle-item">
+
+                <div class="cycle-icon">
+                    💾
+                </div>
+
+                <strong>
+                    Хранение
+                </strong>
+
+                <p>
+                    Данные сохраняются
+                    в памяти.
+                </p>
+
+            </div>
+
+
+            <div class="cycle-item">
+
+                <div class="cycle-icon">
+                    📤
+                </div>
+
+                <strong>
+                    Вывод
+                </strong>
+
+                <p>
+                    Результат становится
+                    доступен пользователю.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-flow">
+
+            Ввод
+            <span class="flow-arrow">→</span>
+
+            Обработка
+            <span class="flow-arrow">→</span>
+
+            Хранение
+            <span class="flow-arrow">→</span>
+
+            Вывод
+
+        </div>
+
+
+        <div class="note">
+
+            👤
+            <strong>Пользователь</strong>
+            ставит задачу.
+
+            <strong>Программы</strong>
+            определяют, какие действия выполнить.
+
+            <strong>Аппаратные средства</strong>
+            обеспечивают выполнение этих действий.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HARDWARE
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        5. Аппаратное обеспечение
+        <span>(Hardware)</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="lead">
+
+            <strong>Аппаратное обеспечение (Hardware)</strong> —
+            физические устройства и компоненты компьютера,
+            которые можно увидеть и потрогать.
+
+        </p>
+
+
+        <div class="hardware-grid">
+
+            <div class="hardware-item">
+
+                <div class="big-icon">
+                    ⌨️
+                </div>
+
+                <h3>
+                    Устройства ввода
+                </h3>
+
+                <p>
+                    Клавиатура, мышь,
+                    микрофон, камера.
+                </p>
+
+            </div>
+
+
+            <div class="hardware-item">
+
+                <div class="big-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Устройства обработки
+                </h3>
+
+                <p>
+                    Процессор и другие
+                    компоненты обработки.
+                </p>
+
+            </div>
+
+
+            <div class="hardware-item">
+
+                <div class="big-icon">
+                    💾
+                </div>
+
+                <h3>
+                    Устройства хранения
+                </h3>
+
+                <p>
+                    SSD, HDD и другие
+                    накопители.
+                </p>
+
+            </div>
+
+
+            <div class="hardware-item">
+
+                <div class="big-icon">
+                    🖥️
+                </div>
+
+                <h3>
+                    Устройства вывода
+                </h3>
+
+                <p>
+                    Монитор, принтер,
+                    колонки.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <h3 style="margin-top:30px;">
+            Основные компоненты компьютера
+        </h3>
+
+
+        <div class="note">
+
+            <strong>Процессор</strong> — выполняет вычисления
+            и обрабатывает данные.
+
+            <br><br>
+
+            <strong>Оперативная память</strong> —
+            хранит данные и программы во время работы компьютера.
+
+            <br><br>
+
+            <strong>Накопители</strong> —
+            предназначены для долговременного хранения информации.
+
+            <br><br>
+
+            <strong>Материнская плата</strong> —
+            связывает основные компоненты компьютера.
+
+            <br><br>
+
+            <strong>Видеокарта</strong> —
+            отвечает за обработку и формирование изображения.
+
+            <br><br>
+
+            <strong>Устройства ввода и вывода</strong> —
+            обеспечивают взаимодействие компьютера с пользователем.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SOFTWARE
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        6. Программное обеспечение
+        <span>(Software)</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="lead">
+
+            <strong>Программное обеспечение (Software)</strong> —
+            совокупность программ, которые позволяют компьютеру
+            выполнять различные задачи.
+
+        </p>
+
+
+        <div class="software-types">
+
+            <div class="software-type">
+
+                <span class="software-tag">
+                    Системное
+                </span>
+
+                <h3>
+                    Системное ПО
+                </h3>
+
+                <p>
+                    Обеспечивает работу компьютера
+                    и взаимодействие пользователя
+                    с аппаратными средствами.
+                </p>
+
+                <p>
+                    Например:
+                    операционная система.
+                </p>
+
+            </div>
+
+
+            <div class="software-type">
+
+                <span class="software-tag">
+                    Прикладное
+                </span>
+
+                <h3>
+                    Прикладное ПО
+                </h3>
+
+                <p>
+                    Предназначено для решения
+                    пользовательских задач.
+                </p>
+
+                <p>
+                    Например:
+                    текстовые редакторы,
+                    браузеры, графические редакторы.
+                </p>
+
+            </div>
+
+
+            <div class="software-type">
+
+                <span class="software-tag">
+                    Инструментальное
+                </span>
+
+                <h3>
+                    Инструментальное ПО
+                </h3>
+
+                <p>
+                    Используется для создания
+                    и разработки программ.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="interaction">
+
+            <div class="interaction-row">
+
+                <div class="interaction-box">
+                    👤 Пользователь
+                </div>
+
+                <div class="interaction-arrow">
+                    ↔
+                </div>
+
+                <div class="interaction-box">
+                    💻 Аппаратное обеспечение
+                </div>
+
+                <div class="interaction-arrow">
+                    ↔
+                </div>
+
+                <div class="interaction-box">
+                    🧩 Программное обеспечение
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+
+            💡
+            <strong>Операционная система</strong>
+            является основой программной среды компьютера.
+            Она управляет ресурсами компьютера
+            и обеспечивает взаимодействие пользователя,
+            программ и аппаратных средств.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     КОМПЬЮТЕРНЫЕ ТЕХНОЛОГИИ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        7. Современные компьютерные технологии
+    </h2>
+
+    <div class="card">
+
+        <p class="lead">
+
+            <strong>Компьютерные технологии</strong> —
+            технологии, использующие компьютеры
+            и программные средства для работы
+            с информацией.
+
+        </p>
+
+
+        <div class="technology-grid">
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    Компьютерные сети
+                </h3>
+
+                <p>
+                    Соединяют компьютеры
+                    и позволяют обмениваться данными.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🌍
+                </div>
+
+                <h3>
+                    Интернет
+                </h3>
+
+                <p>
+                    Глобальная сеть,
+                    связывающая множество устройств.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    ☁️
+                </div>
+
+                <h3>
+                    Облачные технологии
+                </h3>
+
+                <p>
+                    Позволяют использовать
+                    данные и сервисы через сеть.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🎨
+                </div>
+
+                <h3>
+                    Компьютерная графика
+                </h3>
+
+                <p>
+                    Создание и обработка
+                    цифровых изображений.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    Искусственный интеллект
+                </h3>
+
+                <p>
+                    Технологии создания систем,
+                    выполняющих интеллектуальные задачи.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🦾
+                </div>
+
+                <h3>
+                    Робототехника
+                </h3>
+
+                <p>
+                    Создание и применение
+                    управляемых автоматических устройств.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🗄️
+                </div>
+
+                <h3>
+                    Информационные системы
+                </h3>
+
+                <p>
+                    Системы для сбора,
+                    хранения и обработки информации.
+                </p>
+
+            </div>
+
+
+            <div class="technology">
+
+                <div class="tech-icon">
+                    🎬
+                </div>
+
+                <h3>
+                    Мультимедийные технологии
+                </h3>
+
+                <p>
+                    Объединяют текст,
+                    графику, звук и видео.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ПРИМЕНЕНИЕ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        8. Где применяются компьютерные технологии?
+    </h2>
+
+    <div class="card">
+
+        <p>
+            Компьютерные технологии используются
+            практически во всех сферах деятельности человека.
+        </p>
+
+
+        <div class="application-grid">
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🎓
+                </div>
+
+                <strong>
+                    Образование
+                </strong>
+
+                <p>
+                    Электронные учебники,
+                    образовательные платформы.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🔬
+                </div>
+
+                <strong>
+                    Наука
+                </strong>
+
+                <p>
+                    Моделирование, расчёты,
+                    анализ данных.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🏥
+                </div>
+
+                <strong>
+                    Медицина
+                </strong>
+
+                <p>
+                    Диагностика, хранение
+                    медицинских данных.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🏭
+                </div>
+
+                <strong>
+                    Производство
+                </strong>
+
+                <p>
+                    Автоматизация
+                    и управление процессами.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    💰
+                </div>
+
+                <strong>
+                    Экономика
+                </strong>
+
+                <p>
+                    Расчёты, анализ данных,
+                    электронные платежи.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    📡
+                </div>
+
+                <strong>
+                    Связь
+                </strong>
+
+                <p>
+                    Обмен сообщениями,
+                    аудио и видео.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🎭
+                </div>
+
+                <strong>
+                    Культура
+                </strong>
+
+                <p>
+                    Цифровое искусство,
+                    музыка, кино.
+                </p>
+
+            </div>
+
+
+            <div class="application">
+
+                <div class="application-icon">
+                    🏠
+                </div>
+
+                <strong>
+                    Повседневная жизнь
+                </strong>
+
+                <p>
+                    Общение, покупки,
+                    навигация и развлечения.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+
+            Компьютерные технологии изменяют способы
+            <strong>получения, обработки и передачи информации</strong>,
+            делая многие процессы быстрее и удобнее.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ИНФОРМАЦИОННАЯ БЕЗОПАСНОСТЬ
+========================================================= -->
+
+<section>
+
+    <div class="card security">
+
+        <h2 class="section-title">
+            9. Информационная безопасность
+        </h2>
+
+        <p class="lead">
+
+            <strong>Информационная безопасность</strong> —
+            защита информации и информационных систем
+            от различных угроз.
+
+        </p>
+
+
+        <div class="security-grid">
+
+            <div class="security-item">
+
+                <div class="security-icon">
+                    🔑
+                </div>
+
+                <h3>
+                    Защита данных
+                </h3>
+
+                <p>
+                    Необходимо защищать пароли,
+                    личные сведения и другие важные данные.
+                </p>
+
+            </div>
+
+
+            <div class="security-item">
+
+                <div class="security-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Защита устройств
+                </h3>
+
+                <p>
+                    Компьютеры и другие устройства
+                    необходимо защищать от вредоносных программ.
+                </p>
+
+            </div>
+
+
+            <div class="security-item">
+
+                <div class="security-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Основные угрозы
+                </h3>
+
+                <p>
+                    Вредоносные программы,
+                    мошенничество, утечка данных
+                    и другие опасности.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <h3 style="margin-top:28px;">
+            Правила безопасного поведения
+        </h3>
+
+
+        <ul class="safety-list">
+
+            <li>
+                Не сообщать посторонним свои пароли.
+            </li>
+
+            <li>
+                Ответственно относиться
+                к персональным данным.
+            </li>
+
+            <li>
+                Использовать безопасные сетевые ресурсы.
+            </li>
+
+            <li>
+                Не открывать подозрительные ссылки
+                и файлы.
+            </li>
+
+            <li>
+                Использовать защитные средства
+                компьютера.
+            </li>
+
+            <li>
+                Ответственно относиться
+                к цифровой информации.
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ГЛАВНОЕ
+========================================================= -->
+
+<section>
+
+    <div class="remember">
+
+        <h2 class="section-title">
+            Главное, что нужно запомнить
+        </h2>
+
+
+        <ul class="remember-list">
+
+            <li>
+                <strong>Информатика</strong> изучает информацию
+                и способы работы с ней.
+            </li>
+
+            <li>
+                Основные информационные процессы —
+                получение, хранение, обработка,
+                передача и использование информации.
+            </li>
+
+            <li>
+                <strong>Компьютер</strong> является универсальным
+                средством работы с информацией.
+            </li>
+
+            <li>
+                Работа компьютера с информацией включает
+                ввод, обработку, хранение и вывод.
+            </li>
+
+            <li>
+                <strong>Hardware</strong> — аппаратное обеспечение,
+                физические компоненты компьютера.
+            </li>
+
+            <li>
+                <strong>Software</strong> — программное обеспечение,
+                то есть программы.
+            </li>
+
+            <li>
+                Аппаратное и программное обеспечение
+                работают совместно.
+            </li>
+
+            <li>
+                Современные компьютерные технологии включают
+                сети, Интернет, облачные технологии,
+                компьютерную графику, искусственный интеллект,
+                робототехнику и другие направления.
+            </li>
+
+            <li>
+                Компьютерные технологии применяются
+                в образовании, науке, медицине,
+                производстве, экономике, связи,
+                культуре и повседневной жизни.
+            </li>
+
+            <li>
+                Информационная безопасность необходима
+                для защиты информации и персональных данных.
+            </li>
+
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ЗАКРЕПЛЕНИЕ
+========================================================= -->
+
+<section>
+
+    <h2 class="section-title">
+        Закрепление материала
+    </h2>
+
+    <p>
+        Попробуй ответить на вопросы самостоятельно.
+    </p>
+
+
+    <div class="questions">
+
+        <div class="question">
+            Что изучает информатика?
+        </div>
+
+        <div class="question">
+            Что такое информация и данные?
+        </div>
+
+        <div class="question">
+            Какие информационные процессы существуют?
+        </div>
+
+        <div class="question">
+            Почему компьютер называют универсальным
+            средством обработки информации?
+        </div>
+
+        <div class="question">
+            Что относится к аппаратному обеспечению?
+        </div>
+
+        <div class="question">
+            Что относится к программному обеспечению?
+        </div>
+
+        <div class="question">
+            Как связаны аппаратное и программное обеспечение?
+        </div>
+
+        <div class="question">
+            Какие современные компьютерные технологии известны?
+        </div>
+
+        <div class="question">
+            В каких сферах применяются компьютерные технологии?
+        </div>
+
+        <div class="question">
+            Почему важна информационная безопасность?
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ИТОГ
+========================================================= -->
+
+<section>
+
+    <div class="summary">
+
+        <h2>
+            🎓 Итог урока
+        </h2>
+
+        <p>
+
+            Информатика помогает понять,
+            как человек и компьютер работают
+            с информацией.
+
+            Компьютерная система объединяет
+            аппаратные и программные средства,
+            которые позволяют получать,
+            обрабатывать, хранить и передавать данные.
+
+            Современные компьютерные технологии
+            применяются практически во всех сферах
+            жизни общества, поэтому важно не только
+            уметь пользоваться ими, но и соблюдать
+            правила информационной безопасности.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        Учебный материал по информатике • 8 класс
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>
