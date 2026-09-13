@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ввод информации. Клавиатура — 5 класс</title>
+
+    <style>
+        /* =========================================================
+           ОСНОВНЫЕ НАСТРОЙКИ
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f7fb;
+            color: #26344a;
+            line-height: 1.65;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            padding: 58px 0 52px;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,.18) 0 70px, transparent 71px),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,.14) 0 100px, transparent 101px),
+                linear-gradient(135deg, #3768d8, #6a49c8);
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .class-label {
+            display: inline-block;
+            padding: 6px 14px;
+            margin-bottom: 16px;
+            border-radius: 30px;
+            background: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.28);
+            font-size: .9rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            line-height: 1.12;
+            letter-spacing: -.03em;
+        }
+
+        .hero-subtitle {
+            max-width: 760px;
+            margin: 0;
+            font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+            opacity: .94;
+        }
+
+        /* =========================================================
+           ОБЩИЕ СЕКЦИИ
+        ========================================================= */
+
+        main {
+            padding: 34px 0 70px;
+        }
+
+        section {
+            margin-bottom: 34px;
+        }
+
+        .section-title {
+            margin: 0 0 18px;
+            font-size: clamp(1.55rem, 4vw, 2.15rem);
+            color: #243b69;
+            line-height: 1.2;
+        }
+
+        .section-title span {
+            color: #5879d9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 8px 28px rgba(37, 55, 91, .08);
+            border: 1px solid #e7ecf4;
+        }
+
+        .card + .card {
+            margin-top: 18px;
+        }
+
+        .lead {
+            font-size: 1.08rem;
+        }
+
+        .note {
+            margin-top: 18px;
+            padding: 16px 18px;
+            border-left: 4px solid #5879d9;
+            border-radius: 10px;
+            background: #f1f5ff;
+        }
+
+        /* =========================================================
+           ЦЕЛИ
+        ========================================================= */
+
+        .goal {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .goal-icon {
+            flex: 0 0 54px;
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: #edf2ff;
+            font-size: 1.7rem;
+        }
+
+        /* =========================================================
+           СПИСКИ
+        ========================================================= */
+
+        ul {
+            margin: 12px 0 0;
+            padding-left: 23px;
+        }
+
+        li + li {
+            margin-top: 7px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 23px;
+            height: 23px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e8f7ee;
+            color: #26935b;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           УСТРОЙСТВА ВВОДА
+        ========================================================= */
+
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .device {
+            padding: 20px;
+            border-radius: 17px;
+            background: #f7f9fd;
+            border: 1px solid #e5eaf3;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .device:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(43, 63, 100, .1);
+        }
+
+        .device-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .device h3 {
+            margin: 0 0 5px;
+            font-size: 1.05rem;
+            color: #2e4675;
+        }
+
+        .device p {
+            margin: 0;
+            font-size: .93rem;
+            color: #66748b;
+        }
+
+        /* =========================================================
+           ВВОД VS ХРАНЕНИЕ
+        ========================================================= */
+
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .compare-box {
+            padding: 22px;
+            border-radius: 18px;
+        }
+
+        .compare-box.input {
+            background: #eef4ff;
+            border: 1px solid #d9e4ff;
+        }
+
+        .compare-box.storage {
+            background: #f3f8f4;
+            border: 1px solid #dcecdf;
+        }
+
+        .compare-box h3 {
+            margin-top: 0;
+        }
+
+        .flow {
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 18px;
+            background: #202d46;
+            color: white;
+            text-align: center;
+            font-weight: 700;
+            font-size: clamp(.9rem, 2.5vw, 1.1rem);
+        }
+
+        .flow span {
+            display: inline-block;
+            margin: 0 7px;
+            color: #aebef4;
+        }
+
+        /* =========================================================
+           ФОТО КЛАВИАТУРЫ
+        ========================================================= */
+
+        .keyboard-photo {
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 18px;
+            background: #eef1f5;
+        }
+
+        .keyboard-photo img {
+            width: 100%;
+        }
+
+        .caption {
+            padding: 10px 14px;
+            font-size: .82rem;
+            color: #6c788b;
+            background: #f8f9fb;
+        }
+
+        .caption a {
+            color: #4e68aa;
+        }
+
+        /* =========================================================
+           ГРУППЫ КЛАВИШ
+        ========================================================= */
+
+        .key-groups {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .key-group {
+            padding: 23px;
+            border-radius: 19px;
+            background: white;
+            border: 1px solid #e2e7f0;
+            box-shadow: 0 5px 18px rgba(40, 55, 88, .05);
+        }
+
+        .group-number {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #edf2ff;
+            color: #4c66bc;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .key-group h3 {
+            margin: 0 0 7px;
+            color: #30466f;
+        }
+
+        .key-group p {
+            margin: 0;
+            color: #69768b;
+            font-size: .95rem;
+        }
+
+        .keys {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 13px;
+        }
+
+        .key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            min-height: 32px;
+            padding: 5px 10px;
+            border-radius: 7px;
+            background: #27344b;
+            color: white;
+            box-shadow: 0 3px 0 #151d2c;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        .key.wide {
+            min-width: 80px;
+        }
+
+        /* =========================================================
+           ИНТЕРАКТИВНАЯ КЛАВИАТУРА
+        ========================================================= */
+
+        .keyboard-demo {
+            padding: 20px;
+            border-radius: 20px;
+            background: #1d2739;
+            overflow-x: auto;
+        }
+
+        .keyboard {
+            min-width: 620px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .demo-key {
+            flex: 1;
+            min-width: 38px;
+            height: 43px;
+            border: 0;
+            border-radius: 7px;
+            background: #36435b;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #111927;
+            transition: .12s;
+        }
+
+        .demo-key:hover {
+            transform: translateY(-2px);
+            background: #4d6080;
+        }
+
+        .demo-key:active,
+        .demo-key.active {
+            transform: translateY(3px);
+            box-shadow: none;
+            background: #6681d7;
+        }
+
+        .demo-key.w2 {
+            flex: 2;
+        }
+
+        .demo-key.w3 {
+            flex: 3;
+        }
+
+        .demo-key.w4 {
+            flex: 4;
+        }
+
+        .demo-key.w5 {
+            flex: 5;
+        }
+
+        .keyboard-message {
+            margin-top: 15px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 12px;
+            background: #f0f4ff;
+            color: #334a82;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* =========================================================
+           ОСНОВНЫЕ КЛАВИШИ
+        ========================================================= */
+
+        .important-keys {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .important-key {
+            padding: 18px;
+            border-radius: 16px;
+            background: #f8f9fc;
+            border: 1px solid #e5e9f1;
+        }
+
+        .important-key .key-name {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-bottom: 8px;
+            border-radius: 7px;
+            background: #27344b;
+            color: white;
+            font-weight: 700;
+            font-size: .86rem;
+        }
+
+        .important-key strong {
+            display: block;
+            color: #30466f;
+            margin-bottom: 3px;
+        }
+
+        .important-key p {
+            margin: 0;
+            font-size: .92rem;
+            color: #69768b;
+        }
+
+        /* =========================================================
+           КУРСОР
+        ========================================================= */
+
+        .cursor-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 18px;
+            background: #fff8e8;
+            border: 1px solid #f2e2bb;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 20px;
+            margin-left: 3px;
+            vertical-align: middle;
+            background: #26344a;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           ПРАКТИЧЕСКАЯ РАБОТА
+        ========================================================= */
+
+        .practice {
+            background: linear-gradient(135deg, #edf5ff, #f4f0ff);
+            border: 1px solid #dfe6f8;
+        }
+
+        .practice-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .practice-icon {
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: #ffffff;
+            font-size: 1.6rem;
+            box-shadow: 0 5px 14px rgba(50, 70, 110, .08);
+        }
+
+        .practice h3 {
+            margin: 0;
+            color: #30466f;
+        }
+
+        .steps {
+            counter-reset: practice;
+            list-style: none;
+            padding: 0;
+            margin-top: 22px;
+        }
+
+        .steps li {
+            counter-increment: practice;
+            position: relative;
+            padding: 14px 14px 14px 52px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,.78);
+            border-radius: 13px;
+        }
+
+        .steps li::before {
+            content: counter(practice);
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #5a71cb;
+            color: white;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           ЗАПОМИНАЕМ
+        ========================================================= */
+
+        .remember {
+            background: #202d46;
+            color: white;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 12px 30px rgba(24, 36, 59, .18);
+        }
+
+        .remember .section-title {
+            color: white;
+        }
+
+        .remember-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        .remember-list li {
+            position: relative;
+            padding: 13px 15px 13px 43px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.07);
+        }
+
+        .remember-list li::before {
+            content: "★";
+            position: absolute;
+            left: 15px;
+            color: #ffd76a;
+        }
+
+        /* =========================================================
+           ВОПРОСЫ
+        ========================================================= */
+
+        .questions {
+            counter-reset: questions;
+        }
+
+        .question {
+            counter-increment: questions;
+            position: relative;
+            padding: 18px 18px 18px 57px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            background: white;
+            border: 1px solid #e4e9f1;
+            font-weight: 600;
+        }
+
+        .question::before {
+            content: counter(questions);
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            width: 29px;
+            height: 29px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #edf2ff;
+            color: #4f68b9;
+            font-size: .85rem;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           ИТОГ
+        ========================================================= */
+
+        .summary {
+            text-align: center;
+            padding: 34px 26px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #eaf8f0, #eef6ff);
+            border: 1px solid #d9e9e0;
+        }
+
+        .summary h2 {
+            margin-top: 0;
+            color: #2e5b48;
+        }
+
+        .summary p {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding: 28px 0;
+            background: #1d2739;
+            color: #aeb8c9;
+            font-size: .85rem;
+        }
+
+        footer a {
+            color: #d2dcf7;
+        }
+
+        /* =========================================================
+           АДАПТИВНОСТЬ
+        ========================================================= */
+
+        @media (max-width: 800px) {
+            .device-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .key-groups {
+                grid-template-columns: 1fr;
+            }
+
+            .important-keys {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 22px, 1100px);
+            }
+
+            .hero {
+                padding: 40px 0 38px;
+            }
+
+            main {
+                padding-top: 24px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 17px;
+            }
+
+            .device-grid,
+            .compare {
+                grid-template-columns: 1fr;
+            }
+
+            .device-grid {
+                gap: 12px;
+            }
+
+            .device {
+                padding: 17px;
+            }
+
+            .goal {
+                display: block;
+            }
+
+            .goal-icon {
+                margin-bottom: 12px;
+            }
+
+            .flow {
+                line-height: 2.2;
+            }
+
+            .flow span {
+                display: block;
+                line-height: 1;
+            }
+
+            .remember {
+                padding: 24px 20px;
+                border-radius: 18px;
+            }
+
+            .practice-title {
+                display: block;
+            }
+
+            .practice-icon {
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.9rem;
+            }
+
+            .section-title {
+                font-size: 1.45rem;
+            }
+
+            .card {
+                padding: 17px;
+            }
+
+            .key {
+                min-width: 34px;
+                padding: 4px 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="hero">
+    <div class="container hero-content">
+
+        <div class="class-label">Информатика • 5 класс</div>
+
+        <h1>Ввод информации в память компьютера. Клавиатура</h1>
+
+        <p class="hero-subtitle">
+            Узнаем, как информация попадает в компьютер,
+            познакомимся с клавиатурой и научимся использовать основные клавиши.
+        </p>
+
+    </div>
+</header>
+
+
+<main>
+
+<div class="container">
+
+    <!-- ЦЕЛЬ -->
+
+    <section>
+        <div class="card goal">
+
+            <div class="goal-icon">🎯</div>
+
+            <div>
+                <h2 class="section-title">Цель урока</h2>
+
+                <p class="lead">
+                    Сформировать первоначальное представление о вводе информации
+                    в компьютер, познакомиться с клавиатурой, её назначением
+                    и основными группами клавиш.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ЧТО ДОЛЖНЫ ЗНАТЬ -->
+
+    <section>
+
+        <h2 class="section-title">Что мы должны узнать и уметь?</h2>
+
+        <div class="card">
+
+            <ul class="check-list">
+
+                <li>Понимать, что такое ввод информации.</li>
+
+                <li>Знать основные устройства ввода информации.</li>
+
+                <li>Знать назначение клавиатуры.</li>
+
+                <li>Знать основные группы клавиш клавиатуры.</li>
+
+                <li>Понимать назначение основных клавиш.</li>
+
+                <li>Различать ввод и хранение информации.</li>
+
+                <li>Уметь выполнять простейшие действия с клавиатурой.</li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- АКТУАЛИЗАЦИЯ -->
+
+    <section>
+
+        <h2 class="section-title">1. Вспоминаем знакомое</h2>
+
+        <div class="card">
+
+            <p>
+                Прежде чем говорить о клавиатуре, вспомним несколько важных
+                понятий.
+            </p>
+
+            <ul>
+
+                <li><strong>Информация</strong> — сведения об окружающем мире и различных объектах.</li>
+
+                <li><strong>Виды информации</strong> — текстовая, числовая, графическая, звуковая и другие.</li>
+
+                <li><strong>Устройства компьютера</strong> — части компьютера, предназначенные для выполнения определённых задач.</li>
+
+                <li><strong>Устройства ввода</strong> — устройства, с помощью которых информация поступает в компьютер.</li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- ВВОД -->
+
+    <section>
+
+        <h2 class="section-title">2. Что такое <span>ввод информации?</span></h2>
+
+        <div class="card">
+
+            <p class="lead">
+                <strong>Ввод информации</strong> — это передача данных
+                от пользователя или другого источника в компьютер.
+            </p>
+
+            <p>
+                Например, когда мы набираем текст на клавиатуре,
+                компьютер получает введённые нами буквы.
+                Когда говорим в микрофон — компьютер получает звук.
+            </p>
+
+            <div class="device-grid">
+
+                <div class="device">
+                    <div class="device-icon">⌨️</div>
+                    <h3>Клавиатура</h3>
+                    <p>Ввод текста, цифр и символов.</p>
+                </div>
+
+                <div class="device">
+                    <div class="device-icon">🖱️</div>
+                    <h3>Мышь</h3>
+                    <p>Управление указателем и выбор объектов.</p>
+                </div>
+
+                <div class="device">
+                    <div class="device-icon">🎤</div>
+                    <h3>Микрофон</h3>
+                    <p>Ввод звуковой информации.</p>
+                </div>
+
+                <div class="device">
+                    <div class="device-icon">📷</div>
+                    <h3>Веб-камера</h3>
+                    <p>Ввод изображения и видео.</p>
+                </div>
+
+                <div class="device">
+                    <div class="device-icon">📄</div>
+                    <h3>Сканер</h3>
+                    <p>Ввод изображения с бумажного документа.</p>
+                </div>
+
+                <div class="device">
+                    <div class="device-icon">👆</div>
+                    <h3>Сенсорный экран</h3>
+                    <p>Ввод команд прикосновением к экрану.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ВВОД И ХРАНЕНИЕ -->
+
+    <section>
+
+        <h2 class="section-title">3. Ввод и хранение — это не одно и то же</h2>
+
+        <div class="card">
+
+            <div class="compare">
+
+                <div class="compare-box input">
+
+                    <h3>📥 Ввод</h3>
+
+                    <p>
+                        Информация <strong>поступает в компьютер</strong>.
+                    </p>
+
+                    <p>
+                        Например: мы нажимаем клавишу
+                        <strong>А</strong>, и компьютер получает этот символ.
+                    </p>
+
+                </div>
+
+                <div class="compare-box storage">
+
+                    <h3>💾 Хранение</h3>
+
+                    <p>
+                        Информация <strong>сохраняется</strong> в памяти
+                        компьютера, чтобы её можно было использовать позже.
+                    </p>
+
+                    <p>
+                        Например: сохранение созданного документа.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="flow">
+                Пользователь
+                <span>→</span>
+                устройство ввода
+                <span>→</span>
+                компьютер
+                <span>→</span>
+                память
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- КЛАВИАТУРА -->
+
+    <section>
+
+        <h2 class="section-title">4. Клавиатура</h2>
+
+        <div class="card">
+
+            <p class="lead">
+                <strong>Клавиатура</strong> — устройство ввода информации,
+                предназначенное прежде всего для ввода текста, чисел
+                и различных символов.
+            </p>
+
+            <p>
+                С помощью клавиатуры можно вводить:
+            </p>
+
+            <ul>
+
+                <li>буквы;</li>
+                <li>цифры;</li>
+                <li>знаки препинания;</li>
+                <li>специальные символы;</li>
+                <li>команды и сочетания клавиш.</li>
+
+            </ul>
+
+
+            <div class="keyboard-photo">
+
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Computer_keyboard.jpg"
+                    alt="Компьютерная клавиатура">
+
+                <div class="caption">
+
+                    Клавиатура.
+                    Изображение: Joe lope /
+                    <a
+                        href="https://commons.wikimedia.org/wiki/File:Computer_keyboard.jpg"
+                        target="_blank"
+                        rel="noopener">
+                        Wikimedia Commons
+                    </a>,
+                    CC BY-SA 4.0.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ГРУППЫ КЛАВИШ -->
+
+    <section>
+
+        <h2 class="section-title">5. Основные группы клавиш</h2>
+
+        <div class="key-groups">
+
+            <div class="key-group">
+
+                <div class="group-number">1</div>
+
+                <h3>Буквенно-цифровые</h3>
+
+                <p>
+                    Используются для ввода букв, цифр, знаков и символов.
+                </p>
+
+                <div class="keys">
+                    <span class="key">А</span>
+                    <span class="key">Б</span>
+                    <span class="key">В</span>
+                    <span class="key">Г</span>
+                    <span class="key">Д</span>
+                    <span class="key">1</span>
+                    <span class="key">2</span>
+                    <span class="key">3</span>
+                </div>
+
+            </div>
+
+
+            <div class="key-group">
+
+                <div class="group-number">2</div>
+
+                <h3>Функциональные</h3>
+
+                <p>
+                    Выполняют специальные функции в программах.
+                    Обычно обозначаются клавишами F1–F12.
+                </p>
+
+                <div class="keys">
+                    <span class="key">F1</span>
+                    <span class="key">F2</span>
+                    <span class="key">F3</span>
+                    <span class="key">F4</span>
+                    <span class="key">F5</span>
+                    <span class="key">F6</span>
+                </div>
+
+            </div>
+
+
+            <div class="key-group">
+
+                <div class="group-number">3</div>
+
+                <h3>Клавиши управления</h3>
+
+                <p>
+                    Используются для выполнения команд и управления
+                    работой программ.
+                </p>
+
+                <div class="keys">
+                    <span class="key">Ctrl</span>
+                    <span class="key">Alt</span>
+                    <span class="key">Shift</span>
+                    <span class="key">Enter</span>
+                    <span class="key">Esc</span>
+                </div>
+
+            </div>
+
+
+            <div class="key-group">
+
+                <div class="group-number">4</div>
+
+                <h3>Клавиши перемещения</h3>
+
+                <p>
+                    Позволяют перемещать курсор или переходить
+                    по содержимому документа.
+                </p>
+
+                <div class="keys">
+                    <span class="key">↑</span>
+                    <span class="key">↓</span>
+                    <span class="key">←</span>
+                    <span class="key">→</span>
+                </div>
+
+            </div>
+
+
+            <div class="key-group">
+
+                <div class="group-number">5</div>
+
+                <h3>Цифровой блок</h3>
+
+                <p>
+                    Предназначен для удобного ввода чисел
+                    и выполнения некоторых арифметических действий.
+                </p>
+
+                <div class="keys">
+                    <span class="key">7</span>
+                    <span class="key">8</span>
+                    <span class="key">9</span>
+                    <span class="key">4</span>
+                    <span class="key">5</span>
+                    <span class="key">6</span>
+                    <span class="key">1</span>
+                    <span class="key">2</span>
+                    <span class="key">3</span>
+                    <span class="key">0</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ИНТЕРАКТИВНАЯ КЛАВИАТУРА -->
+
+    <section>
+
+        <h2 class="section-title">6. Познакомимся с клавиатурой</h2>
+
+        <div class="card">
+
+            <p>
+                Нажми на любую клавишу на виртуальной клавиатуре.
+                Посмотри, что она делает.
+            </p>
+
+            <div class="keyboard-demo">
+
+                <div class="keyboard">
+
+                    <div class="keyboard-row">
+                        <button class="demo-key" data-info="F1 — функциональная клавиша.">F1</button>
+                        <button class="demo-key" data-info="F2 — функциональная клавиша.">F2</button>
+                        <button class="demo-key" data-info="F3 — функциональная клавиша.">F3</button>
+                        <button class="demo-key" data-info="F4 — функциональная клавиша.">F4</button>
+                        <button class="demo-key" data-info="F5 — функциональная клавиша.">F5</button>
+                        <button class="demo-key" data-info="F6 — функциональная клавиша.">F6</button>
+                        <button class="demo-key" data-info="F7 — функциональная клавиша.">F7</button>
+                        <button class="demo-key" data-info="F8 — функциональная клавиша.">F8</button>
+                        <button class="demo-key" data-info="F9 — функциональная клавиша.">F9</button>
+                        <button class="demo-key" data-info="F10 — функциональная клавиша.">F10</button>
+                        <button class="demo-key" data-info="F11 — функциональная клавиша.">F11</button>
+                        <button class="demo-key" data-info="F12 — функциональная клавиша.">F12</button>
+                    </div>
+
+                    <div class="keyboard-row">
+                        <button class="demo-key" data-info="Цифровая клавиша.">1</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">2</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">3</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">4</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">5</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">6</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">7</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">8</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">9</button>
+                        <button class="demo-key" data-info="Цифровая клавиша.">0</button>
+                        <button class="demo-key w2" data-info="Backspace — удаляет символ слева от курсора.">Backspace</button>
+                    </div>
+
+                    <div class="keyboard-row">
+                        <button class="demo-key w2" data-info="Tab — переход к следующему элементу или отступ в тексте.">Tab</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Й</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ц</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">У</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">К</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Е</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Н</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Г</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ш</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Щ</button>
+                    </div>
+
+                    <div class="keyboard-row">
+                        <button class="demo-key w2" data-info="Caps Lock — переключает режим ввода заглавных букв.">Caps Lock</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ф</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ы</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">В</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">А</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">П</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Р</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">О</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Л</button>
+                        <button class="demo-key w2" data-info="Enter — переход на новую строку или подтверждение действия.">Enter</button>
+                    </div>
+
+                    <div class="keyboard-row">
+                        <button class="demo-key w2" data-info="Shift — используется для заглавных букв и верхних символов клавиш.">Shift</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Я</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ч</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">С</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">М</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">И</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Т</button>
+                        <button class="demo-key" data-info="Буквенная клавиша.">Ь</button>
+                        <button class="demo-key w2" data-info="Delete — удаляет символ справа от курсора или выбранный объект.">Delete</button>
+                    </div>
+
+                    <div class="keyboard-row">
+                        <button class="demo-key" data-info="Ctrl — используется вместе с другими клавишами для выполнения команд.">Ctrl</button>
+                        <button class="demo-key" data-info="Alt — используется вместе с другими клавишами для выполнения команд.">Alt</button>
+                        <button class="demo-key w5" data-info="Space — пробел между словами.">Space</button>
+                        <button class="demo-key" data-info="← — перемещение курсора влево.">←</button>
+                        <button class="demo-key" data-info="↑ — перемещение курсора вверх.">↑</button>
+                        <button class="demo-key" data-info="↓ — перемещение курсора вниз.">↓</button>
+                        <button class="demo-key" data-info="→ — перемещение курсора вправо.">→</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="keyboard-message" id="keyboardMessage">
+                Нажми на клавишу, чтобы узнать её назначение.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ОСНОВНЫЕ КЛАВИШИ -->
+
+    <section>
+
+        <h2 class="section-title">7. Основные клавиши</h2>
+
+        <div class="card">
+
+            <div class="important-keys">
+
+                <div class="important-key">
+                    <span class="key-name">Space</span>
+                    <strong>Пробел</strong>
+                    <p>Создаёт промежуток между словами.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Enter</span>
+                    <strong>Переход на новую строку</strong>
+                    <p>Также может использоваться для подтверждения действия.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Backspace</span>
+                    <strong>Удаление слева</strong>
+                    <p>Удаляет символ, расположенный слева от курсора.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Delete</span>
+                    <strong>Удаление справа</strong>
+                    <p>Удаляет символ справа от курсора или выбранный объект.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Shift</span>
+                    <strong>Заглавные буквы</strong>
+                    <p>Используется для ввода заглавных букв и верхних символов клавиш.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Caps Lock</span>
+                    <strong>Режим заглавных букв</strong>
+                    <p>Переключает режим постоянного ввода заглавных букв.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">↑ ↓ ← →</span>
+                    <strong>Перемещение</strong>
+                    <p>Перемещают курсор по тексту.</p>
+                </div>
+
+                <div class="important-key">
+                    <span class="key-name">Ctrl + ... / Alt + ...</span>
+                    <strong>Команды</strong>
+                    <p>Используются вместе с другими клавишами для выполнения команд.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- КУРСОР -->
+
+    <section>
+
+        <h2 class="section-title">8. Что такое курсор?</h2>
+
+        <div class="card">
+
+            <p>
+                При вводе текста компьютер должен показывать,
+                <strong>где появится следующий символ</strong>.
+                Для этого используется курсор.
+            </p>
+
+            <div class="cursor-box">
+
+                <strong>Например:</strong>
+
+                <p>
+                    Сегодня мы изучаем информатику<span class="cursor"></span>
+                </p>
+
+                <p>
+                    Вертикальная мигающая черта показывает место,
+                    куда будет введён следующий символ.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ПРАКТИЧЕСКАЯ РАБОТА -->
+
+    <section>
+
+        <div class="card practice">
+
+            <div class="practice-title">
+
+                <div class="practice-icon">⌨️</div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Практическая работа
+                    </h2>
+
+                    <h3>
+                        «Ввод и редактирование текста с помощью клавиатуры»
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <ol class="steps">
+
+                <li>
+                    Запусти текстовый редактор.
+                </li>
+
+                <li>
+                    Введи предложенный учителем текст с помощью клавиатуры.
+                </li>
+
+                <li>
+                    Используй <strong>Space</strong> для разделения слов.
+                </li>
+
+                <li>
+                    Используй <strong>Enter</strong> для перехода на новую строку.
+                </li>
+
+                <li>
+                    Попробуй исправить ошибку с помощью
+                    <strong>Backspace</strong>.
+                </li>
+
+                <li>
+                    Удали символ справа от курсора с помощью
+                    <strong>Delete</strong>.
+                </li>
+
+                <li>
+                    Используй <strong>Shift</strong> для ввода заглавной буквы.
+                </li>
+
+                <li>
+                    Включи и выключи режим заглавных букв с помощью
+                    <strong>Caps Lock</strong>.
+                </li>
+
+                <li>
+                    Перемещай курсор по тексту с помощью
+                    <strong>стрелок</strong>.
+                </li>
+
+                <li>
+                    Исправь несколько специально допущенных ошибок в тексте.
+                </li>
+
+            </ol>
+
+            <div class="note">
+                💡 <strong>Важно:</strong> клавиатура вводит информацию
+                в компьютер. Она не предназначена для хранения информации.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ГЛАВНОЕ -->
+
+    <section>
+
+        <div class="remember">
+
+            <h2 class="section-title">
+                Главное, что нужно запомнить
+            </h2>
+
+            <ul class="remember-list">
+
+                <li>
+                    <strong>Ввод информации</strong> — это передача данных в компьютер.
+                </li>
+
+                <li>
+                    Клавиатура — одно из основных устройств ввода информации.
+                </li>
+
+                <li>
+                    С помощью клавиатуры можно вводить буквы, цифры и различные символы.
+                </li>
+
+                <li>
+                    Клавиши делятся на несколько основных групп:
+                    буквенно-цифровые, функциональные, управляющие,
+                    клавиши перемещения и цифровой блок.
+                </li>
+
+                <li>
+                    <strong>Backspace</strong> удаляет символ слева от курсора,
+                    а <strong>Delete</strong> — справа.
+                </li>
+
+                <li>
+                    <strong>Space</strong> создаёт пробел, а
+                    <strong>Enter</strong> позволяет перейти на новую строку.
+                </li>
+
+                <li>
+                    <strong>Shift</strong> используется для отдельных заглавных букв,
+                    а <strong>Caps Lock</strong> включает режим постоянного ввода заглавных букв.
+                </li>
+
+                <li>
+                    Ввод, обработка и хранение информации — разные процессы.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- ВОПРОСЫ -->
+
+    <section>
+
+        <h2 class="section-title">Закрепление материала</h2>
+
+        <p>
+            Попробуй ответить на вопросы самостоятельно.
+        </p>
+
+        <div class="questions">
+
+            <div class="question">
+                Что такое ввод информации?
+            </div>
+
+            <div class="question">
+                Какие устройства относятся к устройствам ввода?
+            </div>
+
+            <div class="question">
+                Для чего предназначена клавиатура?
+            </div>
+
+            <div class="question">
+                Какую информацию можно вводить с помощью клавиатуры?
+            </div>
+
+            <div class="question">
+                Какие основные группы клавиш существуют?
+            </div>
+
+            <div class="question">
+                Для чего используются функциональные клавиши?
+            </div>
+
+            <div class="question">
+                Для чего используются клавиши управления?
+            </div>
+
+            <div class="question">
+                Чем Backspace отличается от Delete?
+            </div>
+
+            <div class="question">
+                Для чего нужны Shift, Caps Lock и стрелки?
+            </div>
+
+            <div class="question">
+                Чем ввод информации отличается от её хранения?
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ИТОГ -->
+
+    <section>
+
+        <div class="summary">
+
+            <h2>🎓 Итог урока</h2>
+
+            <p>
+                Сегодня мы узнали, что ввод информации — это передача
+                данных в компьютер. Познакомились с клавиатурой,
+                её группами клавиш и назначением основных клавиш.
+                Теперь мы умеем вводить и редактировать текст,
+                перемещать курсор и исправлять ошибки с помощью клавиатуры.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <div>
+            Учебный материал по информатике • 5 класс
+        </div>
+
+        <div style="margin-top: 6px;">
+            Изображение клавиатуры:
+            <a
+                href="https://commons.wikimedia.org/wiki/File:Computer_keyboard.jpg"
+                target="_blank"
+                rel="noopener">
+                Wikimedia Commons
+            </a>
+            • CC BY-SA 4.0
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+    /* =========================================================
+       ИНТЕРАКТИВНАЯ КЛАВИАТУРА
+    ========================================================= */
+
+    const demoKeys = document.querySelectorAll(".demo-key");
+    const message = document.getElementById("keyboardMessage");
+
+    demoKeys.forEach(key => {
+
+        key.addEventListener("click", () => {
+
+            demoKeys.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            key.classList.add("active");
+
+            message.textContent = key.dataset.info;
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
