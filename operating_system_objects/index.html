@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Объекты операционной системы — 6 класс</title>
+
+    <style>
+        /* ==============================
+           ОСНОВНЫЕ НАСТРОЙКИ
+        ============================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #202938;
+            line-height: 1.65;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ==============================
+           КОНТЕЙНЕР
+        ============================== */
+
+        .container {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* ==============================
+           HERO
+        ============================== */
+
+        .hero {
+            margin-top: 28px;
+            margin-bottom: 28px;
+            padding: 56px 48px;
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255,255,255,.22) 0 70px, transparent 71px),
+                radial-gradient(circle at 15% 85%, rgba(255,255,255,.12) 0 90px, transparent 91px),
+                linear-gradient(135deg, #3846c8, #5865e8 55%, #7b6ee8);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(55, 67, 180, .20);
+        }
+
+        .hero::after {
+            content: "📁";
+            position: absolute;
+            right: 55px;
+            bottom: -15px;
+            font-size: 150px;
+            opacity: .14;
+            transform: rotate(-8deg);
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 7px 13px;
+            margin-bottom: 18px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.16);
+            border: 1px solid rgba(255,255,255,.22);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: .4px;
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            font-size: clamp(32px, 5vw, 58px);
+            line-height: 1.08;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            max-width: 760px;
+            font-size: 19px;
+            color: rgba(255,255,255,.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==============================
+           НАВИГАЦИЯ
+        ============================== */
+
+        .lesson-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .lesson-nav a {
+            text-decoration: none;
+            background: white;
+            border: 1px solid #e1e6f0;
+            padding: 9px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #46536b;
+            transition: .2s ease;
+        }
+
+        .lesson-nav a:hover {
+            transform: translateY(-2px);
+            border-color: #6570e8;
+            color: #4b55c9;
+            box-shadow: 0 5px 15px rgba(65, 75, 180, .10);
+        }
+
+        /* ==============================
+           СЕКЦИИ
+        ============================== */
+
+        section {
+            margin-bottom: 28px;
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid #e5e9f1;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 25px rgba(32, 44, 75, .055);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .section-number {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #eef0ff;
+            color: #4d58d4;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(23px, 3vw, 31px);
+            line-height: 1.2;
+            color: #202a40;
+        }
+
+        .section-intro {
+            color: #5d687b;
+            margin-bottom: 20px;
+        }
+
+        /* ==============================
+           ЦЕЛЬ
+        ============================== */
+
+        .goal {
+            background: linear-gradient(135deg, #fff8e8, #fffdf7);
+            border: 1px solid #f1dfaa;
+        }
+
+        .goal-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .goal h2 {
+            margin-bottom: 10px;
+        }
+
+        /* ==============================
+           СПИСКИ
+        ============================== */
+
+        .clean-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .clean-list li {
+            position: relative;
+            padding: 13px 16px 13px 43px;
+            background: #f7f9fd;
+            border-radius: 14px;
+            color: #424d61;
+        }
+
+        .clean-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            background: #e8ebff;
+            color: #515bd1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ==============================
+           ОБЪЕКТЫ
+        ============================== */
+
+        .object-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .object-card {
+            padding: 25px;
+            border-radius: 21px;
+            border: 1px solid #e5e9f3;
+            background: #fbfcff;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .object-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(43, 55, 90, .08);
+        }
+
+        .object-icon {
+            width: 62px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            font-size: 32px;
+            margin-bottom: 15px;
+            background: #eef0ff;
+        }
+
+        .object-card:nth-child(2) .object-icon {
+            background: #eaf9ef;
+        }
+
+        .object-card:nth-child(3) .object-icon {
+            background: #fff3df;
+        }
+
+        .object-card:nth-child(4) .object-icon {
+            background: #eaf5ff;
+        }
+
+        .object-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #283248;
+        }
+
+        .object-card p {
+            color: #606b7d;
+        }
+
+        /* ==============================
+           ФАЙЛЫ И ПАПКИ
+        ============================== */
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .compare-card {
+            padding: 25px;
+            border-radius: 20px;
+            background: #f8f9ff;
+            border: 1px solid #e1e5f6;
+        }
+
+        .compare-card.folder {
+            background: #fffaf0;
+            border-color: #f0dfb7;
+        }
+
+        .compare-card .big-icon {
+            font-size: 50px;
+            margin-bottom: 8px;
+        }
+
+        .compare-card h3 {
+            margin-bottom: 10px;
+            font-size: 23px;
+        }
+
+        .example {
+            margin-top: 15px;
+            padding: 13px 15px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.8);
+            font-size: 14px;
+            color: #596477;
+        }
+
+        code {
+            background: #edf0f7;
+            color: #39425a;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        /* ==============================
+           ЯРЛЫК
+        ============================== */
+
+        .shortcut-box {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 25px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f1efff, #f9f8ff);
+            border: 1px solid #dedafb;
+        }
+
+        .shortcut-symbol {
+            position: relative;
+            font-size: 58px;
+            min-width: 75px;
+            text-align: center;
+        }
+
+        .shortcut-symbol::after {
+            content: "↗";
+            position: absolute;
+            left: 6px;
+            bottom: -5px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #515bd1;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        /* ==============================
+           ОКНА
+        ============================== */
+
+        .window-demo {
+            border: 1px solid #d9dfeb;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(32, 42, 65, .08);
+            margin-top: 20px;
+        }
+
+        .window-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 15px;
+            background: #edf0f5;
+        }
+
+        .window-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #b6bdca;
+        }
+
+        .window-title {
+            margin-left: 7px;
+            font-size: 14px;
+            color: #657084;
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 25px;
+            background: white;
+        }
+
+        .window-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .window-button {
+            padding: 9px 14px;
+            border-radius: 9px;
+            background: #f0f3f8;
+            color: #566176;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           ДЕЙСТВИЯ
+        ============================== */
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .action {
+            text-align: center;
+            padding: 17px 10px;
+            border-radius: 15px;
+            background: #f7f8fc;
+            border: 1px solid #e6e9f1;
+        }
+
+        .action-icon {
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .action strong {
+            display: block;
+            color: #364158;
+            font-size: 15px;
+        }
+
+        /* ==============================
+           ПРАКТИКА
+        ============================== */
+
+        .practice {
+            background: linear-gradient(135deg, #eafaf2, #f8fffb);
+            border: 1px solid #cdebdc;
+        }
+
+        .practice-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .practice-title span {
+            font-size: 34px;
+        }
+
+        .steps {
+            counter-reset: practice;
+            list-style: none;
+            display: grid;
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .steps li {
+            counter-increment: practice;
+            position: relative;
+            padding: 16px 18px 16px 58px;
+            background: rgba(255,255,255,.75);
+            border: 1px solid #d9eee2;
+            border-radius: 15px;
+        }
+
+        .steps li::before {
+            content: counter(practice);
+            position: absolute;
+            left: 15px;
+            top: 13px;
+            width: 31px;
+            height: 31px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #49a873;
+            color: white;
+            font-weight: bold;
+        }
+
+        .warning {
+            margin-top: 18px;
+            padding: 15px 17px;
+            border-radius: 13px;
+            background: #fff8e8;
+            border: 1px solid #f0ddb0;
+            color: #695a35;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           ЗАКРЕПЛЕНИЕ
+        ============================== */
+
+        .questions {
+            display: grid;
+            gap: 12px;
+        }
+
+        .question {
+            padding: 17px 20px;
+            border-left: 5px solid #6872df;
+            background: #f7f8fd;
+            border-radius: 0 14px 14px 0;
+            color: #414c61;
+        }
+
+        .question strong {
+            color: #2f3950;
+        }
+
+        /* ==============================
+           ИТОГ
+        ============================== */
+
+        .summary {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #202a48, #343e69);
+            color: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(31, 42, 72, .18);
+        }
+
+        .summary-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .summary h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .summary p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: rgba(255,255,255,.82);
+        }
+
+        /* ==============================
+           ТЕРМИНЫ
+        ============================== */
+
+        .terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .term {
+            padding: 9px 13px;
+            border-radius: 999px;
+            background: #eef0ff;
+            color: #4c56c9;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ==============================
+           ФУТЕР
+        ============================== */
+
+        footer {
+            text-align: center;
+            color: #8791a3;
+            font-size: 13px;
+            padding: 12px 0 35px;
+        }
+
+        /* ==============================
+           МОБИЛЬНАЯ АДАПТАЦИЯ
+        ============================== */
+
+        @media (max-width: 760px) {
+
+            .container {
+                width: min(100% - 20px, 1120px);
+            }
+
+            .hero {
+                margin-top: 10px;
+                padding: 34px 24px;
+                border-radius: 23px;
+            }
+
+            .hero::after {
+                right: -8px;
+                bottom: -20px;
+                font-size: 105px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+                max-width: 90%;
+            }
+
+            .hero p {
+                font-size: 16px;
+                max-width: 92%;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .lesson-nav a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .section-card {
+                padding: 22px 18px;
+                border-radius: 20px;
+            }
+
+            .section-title {
+                align-items: flex-start;
+            }
+
+            .section-title h2 {
+                font-size: 23px;
+            }
+
+            .object-grid,
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .shortcut-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .window-buttons {
+                flex-direction: column;
+            }
+
+            .window-button {
+                text-align: center;
+            }
+
+            .summary {
+                padding: 32px 20px;
+                border-radius: 21px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .clean-list li {
+                padding-left: 40px;
+            }
+
+            .object-card {
+                padding: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ============================
+         ГЛАВНЫЙ БЛОК
+    ============================= -->
+
+    <header class="hero">
+        <div class="hero-label">ИНФОРМАТИКА • 6 КЛАСС</div>
+
+        <h1>Объекты операционной системы</h1>
+
+        <p>
+            Разберёмся, что такое файлы, папки, ярлыки и окна,
+            зачем они нужны и какие действия можно с ними выполнять.
+        </p>
+    </header>
+
+
+    <!-- ============================
+         НАВИГАЦИЯ
+    ============================= -->
+
+    <nav class="lesson-nav">
+        <a href="#objects">Объекты</a>
+        <a href="#files">Файлы</a>
+        <a href="#folders">Папки</a>
+        <a href="#shortcuts">Ярлыки</a>
+        <a href="#windows">Окна</a>
+        <a href="#actions">Действия</a>
+        <a href="#practice">Практика</a>
+        <a href="#summary">Итог</a>
+    </nav>
+
+
+    <!-- ============================
+         ЦЕЛЬ
+    ============================= -->
+
+    <section>
+        <div class="section-card goal">
+
+            <div class="goal-icon">🎯</div>
+
+            <h2>Цель урока</h2>
+
+            <p>
+                Научиться понимать основные объекты операционной системы,
+                знать их назначение и выполнять простейшие действия
+                с файлами и папками.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- ============================
+         ОБЪЕКТЫ
+    ============================= -->
+
+    <section id="objects">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">1</div>
+                <h2>Что такое объект операционной системы?</h2>
+            </div>
+
+            <p class="section-intro">
+                Во время работы с компьютером мы постоянно взаимодействуем
+                с различными элементами системы. Такие элементы можно
+                рассматривать как объекты операционной системы.
+            </p>
+
+            <div class="object-grid">
+
+                <div class="object-card">
+                    <div class="object-icon">📄</div>
+                    <h3>Файл</h3>
+                    <p>
+                        Объект, в котором хранится определённая информация:
+                        текст, фотография, музыка, программа и т. д.
+                    </p>
+                </div>
+
+                <div class="object-card">
+                    <div class="object-icon">📁</div>
+                    <h3>Папка</h3>
+                    <p>
+                        Объект для организации и хранения файлов
+                        и других папок.
+                    </p>
+                </div>
+
+                <div class="object-card">
+                    <div class="object-icon">↗️</div>
+                    <h3>Ярлык</h3>
+                    <p>
+                        Специальный объект, который позволяет быстро
+                        обратиться к другому объекту.
+                    </p>
+                </div>
+
+                <div class="object-card">
+                    <div class="object-icon">🪟</div>
+                    <h3>Окно</h3>
+                    <p>
+                        Область интерфейса, через которую пользователь
+                        взаимодействует с программой или объектом.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ФАЙЛЫ
+    ============================= -->
+
+    <section id="files">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">2</div>
+                <h2>Файлы</h2>
+            </div>
+
+            <p class="section-intro">
+                Файл — это объект, предназначенный для хранения
+                информации на компьютере.
+            </p>
+
+            <div class="comparison">
+
+                <div class="compare-card">
+
+                    <div class="big-icon">📄</div>
+
+                    <h3>Имя файла</h3>
+
+                    <p>
+                        Позволяет отличать один файл от другого.
+                        Например:
+                    </p>
+
+                    <div class="example">
+                        <code>Мой_рисунок.png</code>
+                    </div>
+
+                </div>
+
+                <div class="compare-card">
+
+                    <div class="big-icon">🏷️</div>
+
+                    <h3>Тип файла</h3>
+
+                    <p>
+                        Обычно определяется расширением и указывает
+                        на формат содержащейся информации.
+                    </p>
+
+                    <div class="example">
+                        <code>.txt</code> — текстовый файл<br>
+                        <code>.jpg</code> — изображение<br>
+                        <code>.mp3</code> — аудиофайл
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ПАПКИ
+    ============================= -->
+
+    <section id="folders">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">3</div>
+                <h2>Папки</h2>
+            </div>
+
+            <p class="section-intro">
+                Папки помогают организовать файлы так, чтобы нужную
+                информацию было проще найти.
+            </p>
+
+            <div class="comparison">
+
+                <div class="compare-card folder">
+
+                    <div class="big-icon">📁</div>
+
+                    <h3>Папка</h3>
+
+                    <p>
+                        В папке можно хранить файлы и другие папки.
+                    </p>
+
+                    <div class="example">
+                        📁 Школа<br>
+                        └── 📁 Информатика<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;└── 📄 Урок.txt
+                    </div>
+
+                </div>
+
+                <div class="compare-card">
+
+                    <div class="big-icon">🗂️</div>
+
+                    <h3>Вложенная папка</h3>
+
+                    <p>
+                        Папка, находящаяся внутри другой папки.
+                        Это позволяет создавать удобную структуру хранения.
+                    </p>
+
+                    <div class="example">
+                        Папки можно объединять в несколько уровней.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ЯРЛЫКИ
+    ============================= -->
+
+    <section id="shortcuts">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">4</div>
+                <h2>Ярлыки</h2>
+            </div>
+
+            <div class="shortcut-box">
+
+                <div class="shortcut-symbol">
+                    📁
+                </div>
+
+                <div>
+                    <h3>Ярлык — это быстрый путь к объекту</h3>
+
+                    <p>
+                        Ярлык не является копией самого файла или папки.
+                        Он позволяет быстро открыть объект,
+                        к которому он относится.
+                    </p>
+
+                    <p style="margin-top: 10px;">
+                        Поэтому удаление ярлыка не означает удаление
+                        исходного объекта.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ОКНА
+    ============================= -->
+
+    <section id="windows">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">5</div>
+                <h2>Окна</h2>
+            </div>
+
+            <p class="section-intro">
+                Окно — один из основных элементов графического интерфейса.
+                Через окна пользователь взаимодействует с программами,
+                файлами и папками.
+            </p>
+
+            <div class="window-demo">
+
+                <div class="window-bar">
+
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+
+                    <span class="window-title">
+                        Проводник
+                    </span>
+
+                </div>
+
+                <div class="window-content">
+
+                    <div class="window-buttons">
+
+                        <div class="window-button">
+                            📁 Открыть
+                        </div>
+
+                        <div class="window-button">
+                            ➖ Свернуть
+                        </div>
+
+                        <div class="window-button">
+                            ⬜ Развернуть
+                        </div>
+
+                        <div class="window-button">
+                            ✕ Закрыть
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p style="margin-top: 18px; color: #626d80;">
+                Размер и положение окна можно изменять, а между
+                несколькими открытыми окнами можно переключаться.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ДЕЙСТВИЯ
+    ============================= -->
+
+    <section id="actions">
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">6</div>
+                <h2>Основные действия с объектами</h2>
+            </div>
+
+            <p class="section-intro">
+                С файлами, папками и другими объектами можно выполнять
+                различные действия.
+            </p>
+
+            <div class="actions-grid">
+
+                <div class="action">
+                    <div class="action-icon">➕</div>
+                    <strong>Создать</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">📂</div>
+                    <strong>Открыть</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">✋</div>
+                    <strong>Выбрать</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">↔️</div>
+                    <strong>Переместить</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">📋</div>
+                    <strong>Копировать</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">✏️</div>
+                    <strong>Переименовать</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">🗑️</div>
+                    <strong>Удалить</strong>
+                </div>
+
+                <div class="action">
+                    <div class="action-icon">♻️</div>
+                    <strong>Восстановить</strong>
+                </div>
+
+            </div>
+
+            <div class="warning">
+                💡 <strong>Важно:</strong> копирование создаёт дополнительную
+                копию объекта, а перемещение изменяет его расположение.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ПРАКТИЧЕСКАЯ РАБОТА
+    ============================= -->
+
+    <section id="practice">
+
+        <div class="section-card practice">
+
+            <div class="section-title practice-title">
+                <span>💻</span>
+
+                <div>
+                    <div class="section-number" style="display:none;">
+                        7
+                    </div>
+
+                    <h2>Практическая работа</h2>
+                </div>
+            </div>
+
+            <p>
+                Выполни последовательность действий с файлами
+                и папками.
+            </p>
+
+            <ol class="steps">
+
+                <li>
+                    Создай новую папку с названием
+                    <strong>Информатика</strong>.
+                </li>
+
+                <li>
+                    Внутри неё создай папку
+                    <strong>Урок</strong>.
+                </li>
+
+                <li>
+                    Переименуй папку <strong>Урок</strong>,
+                    например, в <strong>Мой урок</strong>.
+                </li>
+
+                <li>
+                    Создай или сохрани любой небольшой файл
+                    в папке <strong>Мой урок</strong>.
+                </li>
+
+                <li>
+                    Скопируй файл в другую папку.
+                </li>
+
+                <li>
+                    Перемести исходный файл в другое место.
+                </li>
+
+                <li>
+                    Удали один из созданных объектов.
+                </li>
+
+                <li>
+                    Открой корзину и при необходимости восстанови
+                    удалённый объект.
+                </li>
+
+            </ol>
+
+            <div class="warning">
+                ⚠️ Для практической работы используй только учебные
+                файлы и папки, чтобы случайно не изменить важные данные.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ЗАКРЕПЛЕНИЕ
+    ============================= -->
+
+    <section>
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">8</div>
+                <h2>Проверь себя</h2>
+            </div>
+
+            <div class="questions">
+
+                <div class="question">
+                    <strong>1.</strong>
+                    Что такое объект операционной системы?
+                </div>
+
+                <div class="question">
+                    <strong>2.</strong>
+                    Чем файл отличается от папки?
+                </div>
+
+                <div class="question">
+                    <strong>3.</strong>
+                    Для чего используются папки?
+                </div>
+
+                <div class="question">
+                    <strong>4.</strong>
+                    Для чего нужен ярлык?
+                </div>
+
+                <div class="question">
+                    <strong>5.</strong>
+                    Какие основные действия можно выполнять
+                    с объектами?
+                </div>
+
+                <div class="question">
+                    <strong>6.</strong>
+                    Чем копирование отличается от перемещения?
+                </div>
+
+                <div class="question">
+                    <strong>7.</strong>
+                    Что происходит с объектом после его удаления?
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ИТОГ
+    ============================= -->
+
+    <section id="summary">
+
+        <div class="summary">
+
+            <div class="summary-icon">🧠</div>
+
+            <h2>Итог урока</h2>
+
+            <p>
+                Операционная система работает с различными объектами.
+                Основные из них — файлы, папки, ярлыки и окна.
+                Файлы хранят информацию, папки помогают её организовывать,
+                ярлыки обеспечивают быстрый доступ к объектам,
+                а окна позволяют взаимодействовать с программами
+                и данными.
+            </p>
+
+            <p style="margin-top: 14px;">
+                С объектами можно создавать, открывать, выбирать,
+                копировать, перемещать, переименовывать, удалять
+                и восстанавливать их.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         ОСНОВНЫЕ ПОНЯТИЯ
+    ============================= -->
+
+    <section>
+
+        <div class="section-card">
+
+            <div class="section-title">
+                <div class="section-number">★</div>
+                <h2>Основные понятия</h2>
+            </div>
+
+            <div class="terms">
+
+                <span class="term">Объект ОС</span>
+                <span class="term">Файл</span>
+                <span class="term">Папка</span>
+                <span class="term">Ярлык</span>
+                <span class="term">Окно</span>
+                <span class="term">Имя файла</span>
+                <span class="term">Тип файла</span>
+                <span class="term">Копирование</span>
+                <span class="term">Перемещение</span>
+                <span class="term">Переименование</span>
+                <span class="term">Удаление</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================
+         FOOTER
+    ============================= -->
+
+    <footer>
+        Информатика • 6 класс • Объекты операционной системы
+    </footer>
+
+</div>
+
+</body>
+</html>

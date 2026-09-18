@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Управление компьютером. Программы — 5 класс</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --bg: #f4f7ff;
+        --white: #ffffff;
+        --text: #1d2942;
+        --muted: #66738c;
+        --blue: #4b6fff;
+        --blue-dark: #3454d1;
+        --cyan: #32c6df;
+        --purple: #8167e8;
+        --green: #35b985;
+        --orange: #ffab4a;
+        --pink: #ef6e9b;
+        --border: #e2e8f5;
+        --shadow: 0 15px 40px rgba(54, 76, 125, 0.10);
+        --radius: 24px;
+        --max-width: 1120px;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background:
+            radial-gradient(circle at 5% 0%, rgba(75,111,255,0.10), transparent 28%),
+            radial-gradient(circle at 95% 10%, rgba(129,103,232,0.10), transparent 27%),
+            var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    .container {
+        width: min(var(--max-width), calc(100% - 40px));
+        margin: 0 auto;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+        min-height: 570px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(20, 32, 73, 0.96),
+                rgba(34, 59, 126, 0.84),
+                rgba(54, 91, 154, 0.48)
+            ),
+            url("https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1800&q=85");
+
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        width: 390px;
+        height: 390px;
+        border-radius: 50%;
+        background: rgba(75, 111, 255, 0.28);
+        filter: blur(30px);
+        right: -130px;
+        top: -130px;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(50, 198, 223, 0.18);
+        filter: blur(25px);
+        left: -120px;
+        bottom: -150px;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 820px;
+        padding: 85px 0;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        padding: 8px 15px;
+        margin-bottom: 22px;
+
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.27);
+        background: rgba(255,255,255,0.10);
+
+        font-size: 0.86rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #70e9ff;
+        box-shadow: 0 0 15px #70e9ff;
+    }
+
+    h1 {
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+        margin-bottom: 25px;
+    }
+
+    .hero-title-accent {
+        color: #72e9ff;
+    }
+
+    .hero-description {
+        max-width: 720px;
+        color: #e5edff;
+        font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+
+    .hero-note {
+        margin-top: 28px;
+        max-width: 710px;
+
+        padding: 16px 19px;
+
+        border-left: 4px solid #70e9ff;
+        border-radius: 0 15px 15px 0;
+        background: rgba(255,255,255,0.09);
+
+        color: #f0f5ff;
+        font-weight: 650;
+    }
+
+    /* =========================
+       GENERAL
+    ========================= */
+
+    main {
+        padding: 75px 0 85px;
+    }
+
+    section {
+        margin-bottom: 82px;
+        scroll-margin-top: 30px;
+    }
+
+    .section-heading {
+        margin-bottom: 30px;
+    }
+
+    .section-number {
+        margin-bottom: 7px;
+
+        color: var(--blue);
+        font-size: 0.84rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        margin-bottom: 11px;
+
+        font-size: clamp(2rem, 4.5vw, 3.15rem);
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+        max-width: 800px;
+        color: var(--muted);
+        font-size: 1.03rem;
+    }
+
+    /* =========================
+       INTRO
+    ========================= */
+
+    .intro-card {
+        padding: 34px;
+
+        border: 1px solid #d3e0ff;
+        border-radius: var(--radius);
+
+        background: linear-gradient(135deg, #edf4ff, #ffffff);
+
+        box-shadow: var(--shadow);
+    }
+
+    .intro-card strong {
+        color: var(--blue-dark);
+    }
+
+    .intro-question {
+        margin-top: 22px;
+
+        padding: 18px 20px;
+
+        border-radius: 17px;
+        background: white;
+
+        color: #3b4b69;
+        font-weight: 700;
+
+        border: 1px solid var(--border);
+    }
+
+    /* =========================
+       CONTROL
+    ========================= */
+
+    .control-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .control-card {
+        position: relative;
+
+        padding: 27px;
+
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+
+        box-shadow: var(--shadow);
+
+        overflow: hidden;
+    }
+
+    .control-card::after {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        right: -35px;
+        top: -35px;
+        background: rgba(75,111,255,0.08);
+    }
+
+    .icon {
+        width: 53px;
+        height: 53px;
+
+        display: grid;
+        place-items: center;
+
+        margin-bottom: 17px;
+
+        border-radius: 17px;
+        background: #edf2ff;
+
+        font-size: 1.55rem;
+    }
+
+    .control-card h3 {
+        margin-bottom: 8px;
+        font-size: 1.28rem;
+    }
+
+    .control-card p {
+        color: var(--muted);
+        font-size: 0.95rem;
+    }
+
+    /* =========================
+       INPUT DEVICES
+    ========================= */
+
+    .devices {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        margin-top: 22px;
+    }
+
+    .device {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+
+        padding: 21px;
+
+        border: 1px solid var(--border);
+        border-radius: 20px;
+
+        background: white;
+        box-shadow: 0 10px 28px rgba(54,76,125,0.07);
+    }
+
+    .device-icon {
+        flex: 0 0 55px;
+
+        width: 55px;
+        height: 55px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 16px;
+        background: #f0f4ff;
+
+        font-size: 1.6rem;
+    }
+
+    .device h3 {
+        margin-bottom: 3px;
+        font-size: 1.08rem;
+    }
+
+    .device p {
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    /* =========================
+       PROGRAMS
+    ========================= */
+
+    .program-intro {
+        margin-bottom: 22px;
+
+        padding: 28px;
+
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, #fff7ec, #ffffff);
+        border: 1px solid #f2dfc5;
+
+        box-shadow: var(--shadow);
+    }
+
+    .program-types {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .program-card {
+        position: relative;
+
+        padding: 30px;
+
+        border-radius: var(--radius);
+        background: white;
+        border: 1px solid var(--border);
+
+        box-shadow: var(--shadow);
+    }
+
+    .program-card.system {
+        border-top: 5px solid var(--purple);
+    }
+
+    .program-card.applied {
+        border-top: 5px solid var(--green);
+    }
+
+    .program-label {
+        display: inline-block;
+
+        margin-bottom: 14px;
+        padding: 6px 11px;
+
+        border-radius: 999px;
+
+        font-size: 0.75rem;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .system .program-label {
+        color: #6347ce;
+        background: #f0ebff;
+    }
+
+    .applied .program-label {
+        color: #16835d;
+        background: #e6f8f1;
+    }
+
+    .program-card h3 {
+        margin-bottom: 10px;
+        font-size: 1.55rem;
+    }
+
+    .program-card p {
+        color: var(--muted);
+    }
+
+    .examples {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        margin-top: 18px;
+    }
+
+    .example {
+        padding: 7px 11px;
+
+        border-radius: 10px;
+
+        background: #f5f7fb;
+        color: #4d5c77;
+
+        font-size: 0.82rem;
+        font-weight: 700;
+    }
+
+    /* =========================
+       OS
+    ========================= */
+
+    .os-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .os-visual {
+        min-height: 340px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 35px;
+
+        border-radius: var(--radius);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(31,47,91,0.95),
+                rgba(65,86,150,0.90)
+            ),
+            url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80");
+
+        background-size: cover;
+        background-position: center;
+
+        color: white;
+        box-shadow: var(--shadow);
+    }
+
+    .os-visual .big-icon {
+        font-size: 4rem;
+        margin-bottom: 15px;
+    }
+
+    .os-visual h3 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
+    .os-visual p {
+        color: #dce5fa;
+    }
+
+    .os-info {
+        padding: 32px;
+
+        border-radius: var(--radius);
+        background: white;
+        border: 1px solid var(--border);
+
+        box-shadow: var(--shadow);
+    }
+
+    .os-info h3 {
+        font-size: 1.55rem;
+        margin-bottom: 12px;
+    }
+
+    .os-info p {
+        color: var(--muted);
+    }
+
+    .os-list {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .os-list li {
+        position: relative;
+        padding: 10px 0 10px 32px;
+        border-bottom: 1px solid #edf0f6;
+    }
+
+    .os-list li:last-child {
+        border-bottom: none;
+    }
+
+    .os-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 9px;
+
+        width: 23px;
+        height: 23px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+        background: #e7f7f0;
+        color: var(--green);
+
+        font-size: 0.75rem;
+        font-weight: 900;
+    }
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .actions {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+    }
+
+    .action {
+        min-height: 135px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 18px;
+
+        text-align: center;
+
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 19px;
+
+        box-shadow: 0 9px 25px rgba(54,76,125,0.07);
+    }
+
+    .action-icon {
+        font-size: 1.7rem;
+        margin-bottom: 8px;
+    }
+
+    .action h3 {
+        font-size: 1rem;
+    }
+
+    .action p {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 0.78rem;
+    }
+
+    /* =========================
+       PRACTICE
+    ========================= */
+
+    .practice {
+        position: relative;
+
+        padding: 32px;
+
+        border: 2px solid #bed2ff;
+        border-radius: var(--radius);
+
+        background: linear-gradient(135deg, #f1f6ff, #ffffff);
+
+        box-shadow: var(--shadow);
+    }
+
+    .practice-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        margin-bottom: 15px;
+    }
+
+    .practice-icon {
+        width: 51px;
+        height: 51px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 16px;
+        background: var(--blue);
+
+        color: white;
+        font-size: 1.35rem;
+    }
+
+    .practice h3 {
+        font-size: 1.55rem;
+    }
+
+    .practice > p {
+        color: var(--muted);
+    }
+
+    .practice ol {
+        padding-left: 23px;
+        margin-top: 18px;
+    }
+
+    .practice li {
+        margin: 10px 0;
+    }
+
+    .practice strong {
+        color: var(--blue-dark);
+    }
+
+    .practice-note {
+        margin-top: 20px;
+
+        padding: 16px;
+
+        border-radius: 15px;
+        border-left: 4px solid var(--orange);
+
+        background: #fff5e9;
+    }
+
+    /* =========================
+       QUESTIONS
+    ========================= */
+
+    .questions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+
+        counter-reset: question;
+    }
+
+    .question {
+        position: relative;
+
+        counter-increment: question;
+
+        min-height: 76px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 16px 18px 16px 62px;
+
+        border-radius: 18px;
+        border: 1px solid var(--border);
+
+        background: white;
+
+        box-shadow: 0 9px 25px rgba(54,76,125,0.06);
+    }
+
+    .question::before {
+        content: counter(question);
+
+        position: absolute;
+        left: 17px;
+
+        width: 31px;
+        height: 31px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+
+        background: #e9efff;
+        color: var(--blue-dark);
+
+        font-size: 0.82rem;
+        font-weight: 900;
+    }
+
+    /* =========================
+       SUMMARY
+    ========================= */
+
+    .summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .summary-card {
+        padding: 24px;
+
+        border-radius: 22px;
+        border: 1px solid var(--border);
+
+        background: white;
+
+        box-shadow: var(--shadow);
+    }
+
+    .summary-card strong {
+        display: block;
+
+        margin-bottom: 7px;
+
+        color: var(--blue);
+        font-size: 1.12rem;
+    }
+
+    .summary-card p {
+        color: var(--muted);
+        font-size: 0.93rem;
+    }
+
+    .final {
+        margin-top: 20px;
+        padding: 29px;
+
+        border-radius: var(--radius);
+
+        background: linear-gradient(135deg, #edf4ff, #f4efff);
+
+        border: 1px solid #d7e1f5;
+    }
+
+    .final h3 {
+        margin-bottom: 8px;
+        font-size: 1.5rem;
+    }
+
+    .final p {
+        color: #53617b;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        padding: 30px 0 42px;
+
+        border-top: 1px solid var(--border);
+
+        text-align: center;
+
+        color: #75829b;
+        font-size: 0.9rem;
+    }
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .container {
+            width: min(var(--max-width), calc(100% - 30px));
+        }
+
+        .control-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .program-types,
+        .os-box {
+            grid-template-columns: 1fr;
+        }
+
+        .actions {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .summary {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 650px) {
+
+        body {
+            font-size: 15px;
+        }
+
+        .container {
+            width: calc(100% - 22px);
+        }
+
+        main {
+            padding: 50px 0 60px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        .hero {
+            min-height: 540px;
+        }
+
+        .hero-content {
+            padding: 70px 0;
+        }
+
+        h1 {
+            font-size: clamp(2.7rem, 14vw, 4rem);
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .intro-card,
+        .program-card,
+        .os-info,
+        .os-visual,
+        .practice,
+        .final {
+            padding: 23px;
+        }
+
+        /*
+         * ВАЖНО:
+         * На телефоне все основные блоки идут
+         * строго друг за другом.
+         */
+
+        .control-grid,
+        .devices,
+        .program-types,
+        .os-box,
+        .actions,
+        .questions,
+        .summary {
+            display: block;
+        }
+
+        .control-card,
+        .device,
+        .program-card,
+        .action,
+        .question,
+        .summary-card {
+            width: 100%;
+            margin-bottom: 14px;
+        }
+
+        .device {
+            align-items: flex-start;
+        }
+
+        .os-visual {
+            min-height: 300px;
+            margin-bottom: 14px;
+        }
+
+        .actions .action {
+            min-height: 105px;
+        }
+
+        .practice-heading {
+            align-items: flex-start;
+        }
+
+        .question {
+            min-height: 72px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+    <div class="container">
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                Информатика · 5 класс
+            </div>
+
+            <h1>
+                Управление компьютером.
+                <span class="hero-title-accent">Программы</span>
+            </h1>
+
+            <p class="hero-description">
+                Как человек управляет компьютером?
+                Что такое программа и зачем компьютеру нужна операционная система?
+            </p>
+
+            <div class="hero-note">
+                Сегодня разберёмся, как человек взаимодействует с компьютером,
+                какую роль играют программы и как правильно выполнять основные действия.
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<main>
+
+<!-- =========================
+     01
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                01 · Начинаем
+            </div>
+
+            <h2>
+                Что значит управлять компьютером?
+            </h2>
+
+            <p>
+                Компьютер выполняет действия не самостоятельно:
+                пользователь сообщает ему, что нужно сделать.
+            </p>
+        </div>
+
+        <div class="intro-card">
+
+            <p>
+                <strong>Управление компьютером</strong> — это выполнение
+                пользователем действий и команд, с помощью которых он
+                взаимодействует с компьютером.
+            </p>
+
+            <div class="intro-question">
+                💡 Представь: ты хочешь открыть игру, написать текст
+                или посмотреть фотографию. Компьютер должен получить
+                от тебя определённые команды.
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     02
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                02 · Управление
+            </div>
+
+            <h2>
+                Как человек управляет компьютером?
+            </h2>
+
+            <p>
+                Для взаимодействия с компьютером используются специальные
+                устройства и команды.
+            </p>
+        </div>
+
+        <div class="control-grid">
+
+            <div class="control-card">
+                <div class="icon">🖱️</div>
+
+                <h3>
+                    Мышь
+                </h3>
+
+                <p>
+                    Позволяет перемещать указатель, выбирать объекты,
+                    открывать программы и выполнять команды.
+                </p>
+            </div>
+
+            <div class="control-card">
+                <div class="icon">⌨️</div>
+
+                <h3>
+                    Клавиатура
+                </h3>
+
+                <p>
+                    Используется для ввода текста, чисел, символов
+                    и выполнения различных команд.
+                </p>
+            </div>
+
+            <div class="control-card">
+                <div class="icon">👆</div>
+
+                <h3>
+                    Сенсорное управление
+                </h3>
+
+                <p>
+                    На некоторых устройствах управление происходит
+                    прикосновением к экрану.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     03
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                03 · Устройства
+            </div>
+
+            <h2>
+                Устройства помогают отдавать команды
+            </h2>
+
+            <p>
+                Разные устройства позволяют передавать компьютеру
+                разные виды информации и команды.
+            </p>
+        </div>
+
+        <div class="devices">
+
+            <div class="device">
+                <div class="device-icon">🖱️</div>
+
+                <div>
+                    <h3>Мышь</h3>
+                    <p>
+                        Управление указателем и выбор объектов.
+                    </p>
+                </div>
+            </div>
+
+            <div class="device">
+                <div class="device-icon">⌨️</div>
+
+                <div>
+                    <h3>Клавиатура</h3>
+                    <p>
+                        Ввод текста, чисел, символов и команд.
+                    </p>
+                </div>
+            </div>
+
+            <div class="device">
+                <div class="device-icon">🎙️</div>
+
+                <div>
+                    <h3>Микрофон</h3>
+                    <p>
+                        Ввод звука и речи.
+                    </p>
+                </div>
+            </div>
+
+            <div class="device">
+                <div class="device-icon">📷</div>
+
+                <div>
+                    <h3>Камера</h3>
+                    <p>
+                        Ввод изображений и видео.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     04
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                04 · Программы
+            </div>
+
+            <h2>
+                Что такое программа?
+            </h2>
+
+            <p>
+                Компьютер выполняет действия благодаря программам.
+            </p>
+        </div>
+
+        <div class="program-intro">
+
+            <p>
+                <strong>Программа</strong> — это последовательность
+                команд, которую компьютер выполняет для решения определённой задачи.
+            </p>
+
+            <p style="margin-top:10px; color:#66738c;">
+                Например, одна программа помогает рисовать,
+                другая — работать с текстом, третья — воспроизводить музыку.
+            </p>
+
+        </div>
+
+        <div class="program-types">
+
+            <div class="program-card system">
+
+                <span class="program-label">
+                    Системные
+                </span>
+
+                <h3>
+                    Системные программы
+                </h3>
+
+                <p>
+                    Обеспечивают работу самого компьютера
+                    и взаимодействие пользователя с его устройствами.
+                </p>
+
+                <div class="examples">
+                    <span class="example">Операционная система</span>
+                    <span class="example">Драйверы</span>
+                    <span class="example">Системные службы</span>
+                </div>
+
+            </div>
+
+
+            <div class="program-card applied">
+
+                <span class="program-label">
+                    Прикладные
+                </span>
+
+                <h3>
+                    Прикладные программы
+                </h3>
+
+                <p>
+                    Помогают пользователю решать конкретные задачи:
+                    создавать тексты, рисовать, смотреть видео и многое другое.
+                </p>
+
+                <div class="examples">
+                    <span class="example">Текстовый редактор</span>
+                    <span class="example">Графический редактор</span>
+                    <span class="example">Браузер</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     05
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                05 · Операционная система
+            </div>
+
+            <h2>
+                Главный помощник компьютера
+            </h2>
+
+            <p>
+                Операционная система организует работу компьютера
+                и помогает пользователю взаимодействовать с ним.
+            </p>
+        </div>
+
+        <div class="os-box">
+
+            <div class="os-visual">
+
+                <div class="big-icon">
+                    💻
+                </div>
+
+                <h3>
+                    Операционная система
+                </h3>
+
+                <p>
+                    Связывает пользователя, программы
+                    и аппаратные устройства компьютера.
+                </p>
+
+            </div>
+
+
+            <div class="os-info">
+
+                <h3>
+                    Что она делает?
+                </h3>
+
+                <p>
+                    Без операционной системы обычная работа
+                    пользователя с компьютером была бы невозможна
+                    или значительно сложнее.
+                </p>
+
+                <ul class="os-list">
+
+                    <li>
+                        Управляет устройствами компьютера.
+                    </li>
+
+                    <li>
+                        Обеспечивает запуск программ.
+                    </li>
+
+                    <li>
+                        Позволяет работать с файлами и папками.
+                    </li>
+
+                    <li>
+                        Обеспечивает взаимодействие пользователя
+                        с компьютером.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     06
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                06 · Действия
+            </div>
+
+            <h2>
+                Основные действия пользователя
+            </h2>
+
+            <p>
+                Большинство действий при работе с компьютером
+                можно представить как последовательность простых команд.
+            </p>
+        </div>
+
+        <div class="actions">
+
+            <div class="action">
+                <div class="action-icon">👆</div>
+                <h3>Выбрать</h3>
+                <p>Указать нужный объект.</p>
+            </div>
+
+            <div class="action">
+                <div class="action-icon">📂</div>
+                <h3>Открыть</h3>
+                <p>Запустить объект или программу.</p>
+            </div>
+
+            <div class="action">
+                <div class="action-icon">↔️</div>
+                <h3>Переместить</h3>
+                <p>Изменить положение объекта.</p>
+            </div>
+
+            <div class="action">
+                <div class="action-icon">🔄</div>
+                <h3>Переключиться</h3>
+                <p>Перейти к другой программе.</p>
+            </div>
+
+            <div class="action">
+                <div class="action-icon">✖️</div>
+                <h3>Закрыть</h3>
+                <p>Завершить работу с программой.</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     07 PRACTICE
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                07 · Практика
+            </div>
+
+            <h2>
+                Практическая работа
+            </h2>
+
+            <p>
+                Выполни несколько простых действий, чтобы закрепить материал.
+            </p>
+        </div>
+
+        <div class="practice">
+
+            <div class="practice-heading">
+
+                <div class="practice-icon">
+                    🖱️
+                </div>
+
+                <h3>
+                    Управляем программой
+                </h3>
+
+            </div>
+
+            <p>
+                Открой любую доступную программу и выполни следующие действия:
+            </p>
+
+            <ol>
+
+                <li>
+                    Запусти выбранную программу.
+                </li>
+
+                <li>
+                    Найди окно программы и рассмотрите его элементы.
+                </li>
+
+                <li>
+                    Используй мышь или клавиатуру для выполнения
+                    нескольких действий.
+                </li>
+
+                <li>
+                    Если открыто несколько окон, переключись
+                    между ними.
+                </li>
+
+                <li>
+                    Сверни окно программы и снова открой его.
+                </li>
+
+                <li>
+                    Заверши работу с программой.
+                </li>
+
+            </ol>
+
+            <div class="practice-note">
+
+                💡 <strong>Попробуй самостоятельно:</strong>
+                открой две разные программы и попробуй быстро
+                переключаться между ними.
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     08 QUESTIONS
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                08 · Закрепление
+            </div>
+
+            <h2>
+                Проверь себя
+            </h2>
+
+            <p>
+                Попробуй ответить на вопросы своими словами.
+            </p>
+        </div>
+
+        <div class="questions">
+
+            <div class="question">
+                Что такое управление компьютером?
+            </div>
+
+            <div class="question">
+                Какие устройства используются для управления компьютером?
+            </div>
+
+            <div class="question">
+                Что такое программа?
+            </div>
+
+            <div class="question">
+                Для чего нужны программы?
+            </div>
+
+            <div class="question">
+                Что такое операционная система?
+            </div>
+
+            <div class="question">
+                Какие задачи выполняет операционная система?
+            </div>
+
+            <div class="question">
+                Чем системные программы отличаются от прикладных?
+            </div>
+
+            <div class="question">
+                Какие основные действия можно выполнять с программами?
+            </div>
+
+            <div class="question">
+                Для чего нужно переключение между программами?
+            </div>
+
+            <div class="question">
+                Чем программа отличается от устройства компьютера?
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     09 SUMMARY
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="section-number">
+                09 · Итог урока
+            </div>
+
+            <h2>
+                Главное, что нужно запомнить
+            </h2>
+        </div>
+
+        <div class="summary">
+
+            <div class="summary-card">
+                <strong>Управление</strong>
+
+                <p>
+                    Пользователь управляет компьютером
+                    с помощью устройств и команд.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <strong>Программа</strong>
+
+                <p>
+                    Программа содержит команды,
+                    которые компьютер выполняет.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <strong>Операционная система</strong>
+
+                <p>
+                    Организует работу компьютера
+                    и связывает пользователя, программы и устройства.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <strong>Системные программы</strong>
+
+                <p>
+                    Обеспечивают работу самого компьютера
+                    и его основных компонентов.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <strong>Прикладные программы</strong>
+
+                <p>
+                    Помогают человеку выполнять
+                    конкретные задачи.
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <strong>Основные действия</strong>
+
+                <p>
+                    Выбрать, открыть, переместить,
+                    переключиться и закрыть.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="final">
+
+            <h3>
+                💡 Главная мысль урока
+            </h3>
+
+            <p>
+                Компьютер выполняет команды пользователя с помощью программ.
+                Операционная система организует работу компьютера,
+                а прикладные программы помогают решать конкретные задачи.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+        Информатика · 5 класс · «Управление компьютером. Программы для компьютера»
+    </div>
+
+</footer>
+
+</body>
+</html>

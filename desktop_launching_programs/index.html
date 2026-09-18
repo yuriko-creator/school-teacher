@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Рабочий стол. Запуск программ</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef2f7;
+            color: #1d2633;
+            line-height: 1.65;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ---------- ОСНОВНОЙ КОНТЕЙНЕР ---------- */
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            margin: 28px auto 24px;
+            padding: 54px 50px;
+            border-radius: 28px;
+            background:
+                linear-gradient(135deg, #172033 0%, #243653 55%, #315477 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(30, 50, 80, 0.18);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50%;
+            right: -80px;
+            top: -100px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            right: 70px;
+            bottom: -120px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .class-badge {
+            display: inline-block;
+            padding: 7px 14px;
+            margin-bottom: 18px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.16);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 0.4px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 6vw, 58px);
+            line-height: 1.08;
+            margin-bottom: 18px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero p {
+            color: #dce7f5;
+            font-size: 18px;
+            max-width: 680px;
+        }
+
+        /* ---------- НАВИГАЦИЯ ---------- */
+
+        .contents {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 26px;
+            border: 1px solid #dde4ec;
+            box-shadow: 0 8px 25px rgba(30, 50, 80, 0.06);
+        }
+
+        .contents-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .contents-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            list-style: none;
+        }
+
+        .contents-list a {
+            text-decoration: none;
+            color: #315477;
+            background: #edf3f9;
+            padding: 7px 12px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .contents-list a:hover {
+            background: #dce8f4;
+            transform: translateY(-1px);
+        }
+
+        /* ---------- СЕКЦИИ ---------- */
+
+        .section {
+            background: white;
+            border: 1px solid #dde4ec;
+            border-radius: 22px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 25px rgba(30, 50, 80, 0.055);
+            scroll-margin-top: 20px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: #e7eef6;
+            color: #315477;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: clamp(24px, 4vw, 31px);
+            line-height: 1.2;
+            margin-bottom: 12px;
+            color: #182536;
+        }
+
+        .section-intro {
+            color: #657384;
+            margin-bottom: 22px;
+        }
+
+        /* ---------- КАРТОЧКИ ---------- */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: #f7f9fc;
+            border: 1px solid #e2e8ef;
+            border-radius: 16px;
+            padding: 21px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #263b53;
+        }
+
+        .card p {
+            color: #566576;
+        }
+
+        /* ---------- АКЦЕНТНЫЕ БЛОКИ ---------- */
+
+        .info-box {
+            border-left: 5px solid #315477;
+            background: #edf4fa;
+            border-radius: 12px;
+            padding: 19px 20px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #203c58;
+        }
+
+        .warning-box {
+            border-left: 5px solid #c18b32;
+            background: #fff7e8;
+            border-radius: 12px;
+            padding: 19px 20px;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            border-left: 5px solid #4d8a68;
+            background: #edf8f1;
+            border-radius: 12px;
+            padding: 19px 20px;
+            margin: 20px 0;
+        }
+
+        /* ---------- ИКОНКИ ---------- */
+
+        .mini-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7eef6;
+            border-radius: 12px;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        /* ---------- СХЕМА ---------- */
+
+        .desktop-scheme {
+            background: #172033;
+            border-radius: 18px;
+            padding: 24px;
+            color: white;
+            margin: 22px 0;
+        }
+
+        .scheme-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #e8f1fb;
+        }
+
+        .scheme-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .scheme-item {
+            background: #263650;
+            border: 1px solid #3b4d69;
+            border-radius: 12px;
+            padding: 16px 10px;
+            text-align: center;
+        }
+
+        .scheme-item span {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 6px;
+        }
+
+        .scheme-item small {
+            color: #d4deeb;
+        }
+
+        /* ---------- ИЛЛЮСТРАЦИЯ ---------- */
+
+        .image-block {
+            margin: 22px 0;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #edf1f5;
+            border: 1px solid #dce3eb;
+        }
+
+        .image-block img {
+            width: 100%;
+            height: 330px;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            padding: 11px 15px;
+            font-size: 13px;
+            color: #697687;
+            background: #f8fafc;
+        }
+
+        /* ---------- ПАНЕЛЬ ЗАДАЧ ---------- */
+
+        .taskbar-demo {
+            margin: 22px 0;
+            border-radius: 17px;
+            overflow: hidden;
+            border: 1px solid #cdd6e1;
+            background: #111827;
+        }
+
+        .fake-screen {
+            height: 250px;
+            padding: 22px;
+            background:
+                radial-gradient(circle at 70% 30%, rgba(94, 149, 198, 0.35), transparent 28%),
+                linear-gradient(135deg, #263d59, #17263b);
+            position: relative;
+        }
+
+        .fake-icon {
+            width: 62px;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .fake-icon-symbol {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.13);
+            margin: 0 auto 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .fake-taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            min-height: 45px;
+            background: rgba(12,18,28,0.88);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 12px;
+        }
+
+        .task-icon {
+            width: 33px;
+            height: 33px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 7px;
+            color: white;
+        }
+
+        /* ---------- СПИСОК ---------- */
+
+        .clean-list {
+            list-style: none;
+            display: grid;
+            gap: 9px;
+        }
+
+        .clean-list li {
+            position: relative;
+            padding-left: 26px;
+            color: #4f5e6f;
+        }
+
+        .clean-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #315477;
+            font-weight: bold;
+        }
+
+        /* ---------- ПОСЛЕДОВАТЕЛЬНОСТЬ ---------- */
+
+        .steps {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 16px;
+            border-radius: 13px;
+            background: #f6f8fb;
+            border: 1px solid #e3e8ee;
+        }
+
+        .step-number {
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 9px;
+            background: #315477;
+            color: white;
+            font-weight: bold;
+        }
+
+        .step p {
+            color: #536274;
+        }
+
+        /* ---------- СРАВНЕНИЕ ---------- */
+
+        .comparison {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            padding: 13px 14px;
+            border: 1px solid #dce3eb;
+            text-align: left;
+        }
+
+        th {
+            background: #eaf0f6;
+            color: #263c55;
+        }
+
+        td {
+            color: #556474;
+            background: white;
+        }
+
+        /* ---------- ЗАКРЕПЛЕНИЕ ---------- */
+
+        .questions {
+            display: grid;
+            gap: 12px;
+            margin-top: 18px;
+            counter-reset: questions;
+        }
+
+        .question {
+            counter-increment: questions;
+            padding: 17px 18px 17px 52px;
+            border: 1px solid #dfe5ec;
+            background: #f8fafc;
+            border-radius: 13px;
+            position: relative;
+        }
+
+        .question::before {
+            content: counter(questions);
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            width: 25px;
+            height: 25px;
+            border-radius: 7px;
+            background: #315477;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ---------- ИТОГ ---------- */
+
+        .summary {
+            background:
+                linear-gradient(135deg, #172033, #2c4562);
+            color: white;
+            border-radius: 22px;
+            padding: 34px;
+            margin-bottom: 25px;
+            box-shadow: 0 12px 30px rgba(20, 35, 55, 0.15);
+        }
+
+        .summary h2 {
+            color: white;
+            margin-bottom: 13px;
+        }
+
+        .summary p {
+            color: #dbe5f0;
+        }
+
+        .summary-points {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .summary-point {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 13px;
+            padding: 15px;
+            color: #e5edf6;
+        }
+
+        /* ---------- ТЕРМИНЫ ---------- */
+
+        .terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .term {
+            padding: 8px 12px;
+            background: #edf2f7;
+            border: 1px solid #dce3eb;
+            border-radius: 9px;
+            color: #40546b;
+            font-size: 14px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            text-align: center;
+            color: #758294;
+            padding: 20px 0 35px;
+            font-size: 14px;
+        }
+
+        /* ---------- АДАПТИВ ---------- */
+
+        @media (max-width: 800px) {
+
+            .hero {
+                padding: 40px 28px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .scheme-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .summary-points {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                font-size: 15px;
+            }
+
+            .container {
+                width: min(100% - 20px, 1100px);
+            }
+
+            .hero {
+                margin-top: 10px;
+                padding: 34px 22px;
+                border-radius: 20px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .contents {
+                padding: 20px;
+                border-radius: 17px;
+            }
+
+            /*
+             * На мобильном все элементы идут
+             * строго друг за другом.
+             */
+
+            .contents-list {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .contents-list a {
+                width: 100%;
+            }
+
+            .section {
+                padding: 23px 19px;
+                border-radius: 18px;
+            }
+
+            .cards {
+                display: flex;
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .scheme-row {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .scheme-item {
+                width: 100%;
+            }
+
+            .image-block img {
+                height: 220px;
+            }
+
+            .taskbar-demo {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .fake-screen {
+                height: 220px;
+            }
+
+            .summary {
+                padding: 25px 20px;
+                border-radius: 18px;
+            }
+
+            .summary-points {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .summary-point {
+                width: 100%;
+            }
+
+            .step {
+                width: 100%;
+            }
+
+            .comparison {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HERO ================= -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <div class="class-badge">
+                7 класс · Информатика
+            </div>
+
+            <h1>
+                Рабочий стол.<br>
+                Запуск программ
+            </h1>
+
+            <p>
+                Познакомимся с рабочим столом операционной системы,
+                панелью задач, значками и основными способами запуска
+                программ.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= СОДЕРЖАНИЕ ================= -->
+
+    <nav class="contents">
+
+        <div class="contents-title">
+            Что изучим
+        </div>
+
+        <ul class="contents-list">
+
+            <li>
+                <a href="#desktop">
+                    Рабочий стол
+                </a>
+            </li>
+
+            <li>
+                <a href="#icons">
+                    Значки и ярлыки
+                </a>
+            </li>
+
+            <li>
+                <a href="#taskbar">
+                    Панель задач
+                </a>
+            </li>
+
+            <li>
+                <a href="#menu">
+                    Меню приложений
+                </a>
+            </li>
+
+            <li>
+                <a href="#launch">
+                    Запуск программ
+                </a>
+            </li>
+
+            <li>
+                <a href="#windows">
+                    Работа с окнами
+                </a>
+            </li>
+
+            <li>
+                <a href="#practice">
+                    Закрепление
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= 1 ================= -->
+
+    <section class="section" id="desktop">
+
+        <div class="section-number">1</div>
+
+        <h2>
+            Рабочий стол операционной системы
+        </h2>
+
+        <p class="section-intro">
+            После запуска операционной системы пользователь видит
+            основную область, с которой начинается работа с компьютером.
+            Она называется рабочим столом.
+        </p>
+
+        <div class="info-box">
+
+            <strong>Рабочий стол</strong> — это основная область
+            интерфейса операционной системы, на которой размещаются
+            значки, ярлыки и другие элементы управления.
+            
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="mini-icon">🖥️</div>
+
+                <h3>
+                    Фон рабочего стола
+                </h3>
+
+                <p>
+                    Изображение или цвет, которое используется
+                    в качестве фона рабочей области.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">📁</div>
+
+                <h3>
+                    Значки
+                </h3>
+
+                <p>
+                    Небольшие графические изображения,
+                    обозначающие программы, файлы, папки
+                    и другие объекты.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">🔗</div>
+
+                <h3>
+                    Ярлыки
+                </h3>
+
+                <p>
+                    Элементы, которые позволяют быстро получить
+                    доступ к программе, файлу или папке.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">▰</div>
+
+                <h3>
+                    Панель задач
+                </h3>
+
+                <p>
+                    Элемент интерфейса, который помогает запускать
+                    программы и переключаться между ними.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="image-block">
+
+            <img
+                src="image.png"
+                alt="Ноутбук с рабочей областью"
+            >
+
+            <div class="image-caption">
+                Компьютерный интерфейс — основная среда взаимодействия
+                пользователя с операционной системой.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 2 ================= -->
+
+    <section class="section" id="icons">
+
+        <div class="section-number">2</div>
+
+        <h2>
+            Значки и ярлыки
+        </h2>
+
+        <p class="section-intro">
+            На рабочем столе могут находиться различные значки.
+            Они помогают быстро определить, с каким объектом
+            работает пользователь.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="mini-icon">📄</div>
+
+                <h3>
+                    Значок файла
+                </h3>
+
+                <p>
+                    Представляет определённый файл и позволяет
+                    открыть его с помощью подходящей программы.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">📂</div>
+
+                <h3>
+                    Значок папки
+                </h3>
+
+                <p>
+                    Используется для доступа к папке,
+                    в которой могут находиться файлы и другие папки.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">⚙️</div>
+
+                <h3>
+                    Значок программы
+                </h3>
+
+                <p>
+                    Может использоваться для запуска установленной
+                    программы.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">🔗</div>
+
+                <h3>
+                    Ярлык
+                </h3>
+
+                <p>
+                    Это ссылка на объект. Удаление ярлыка обычно
+                    не удаляет сам объект, на который он указывает.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="warning-box">
+
+            <strong>Важно:</strong>
+            значок и ярлык — не всегда одно и то же.
+            Ярлык предназначен для быстрого доступа к другому объекту.
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 3 ================= -->
+
+    <section class="section" id="taskbar">
+
+        <div class="section-number">3</div>
+
+        <h2>
+            Панель задач
+        </h2>
+
+        <p class="section-intro">
+            Панель задач помогает управлять запущенными программами
+            и быстро переходить от одного окна к другому.
+        </p>
+
+        <div class="taskbar-demo">
+
+            <div class="fake-screen">
+
+                <div class="fake-icon">
+
+                    <div class="fake-icon-symbol">
+                        📁
+                    </div>
+
+                    Папка
+
+                </div>
+
+                <div class="fake-icon">
+
+                    <div class="fake-icon-symbol">
+                        🌐
+                    </div>
+
+                    Браузер
+
+                </div>
+
+                <div class="fake-taskbar">
+
+                    <div class="task-icon">
+                        ⊞
+                    </div>
+
+                    <div class="task-icon">
+                        📁
+                    </div>
+
+                    <div class="task-icon">
+                        🌐
+                    </div>
+
+                    <div class="task-icon">
+                        📝
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    Запущенные программы
+                </h3>
+
+                <p>
+                    На панели задач могут отображаться программы,
+                    которые сейчас открыты.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Переключение
+                </h3>
+
+                <p>
+                    Нажимая на элементы панели задач, пользователь
+                    может переходить между открытыми окнами.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Запуск
+                </h3>
+
+                <p>
+                    С помощью панели задач и меню приложений
+                    можно находить и запускать программы.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Состояние системы
+                </h3>
+
+                <p>
+                    В разных операционных системах панель задач
+                    также может отображать системные сведения.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 4 ================= -->
+
+    <section class="section" id="menu">
+
+        <div class="section-number">4</div>
+
+        <h2>
+            Меню приложений
+        </h2>
+
+        <p class="section-intro">
+            Если нужной программы нет на рабочем столе,
+            её можно найти через меню приложений операционной системы.
+        </p>
+
+        <div class="info-box">
+
+            <strong>Меню приложений</strong> содержит список
+            установленных программ и предоставляет доступ
+            к ним.
+
+        </div>
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">1</div>
+
+                <p>
+                    Открыть меню приложений операционной системы.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">2</div>
+
+                <p>
+                    Найти нужную программу в списке
+                    или воспользоваться поиском.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">3</div>
+
+                <p>
+                    Выбрать программу для запуска.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 5 ================= -->
+
+    <section class="section" id="launch">
+
+        <div class="section-number">5</div>
+
+        <h2>
+            Запуск программ
+        </h2>
+
+        <p class="section-intro">
+            Одну и ту же программу можно запустить разными способами.
+            Конкретные возможности зависят от операционной системы.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="mini-icon">🔗</div>
+
+                <h3>
+                    Через ярлык
+                </h3>
+
+                <p>
+                    Найти ярлык программы и выполнить по нему
+                    двойной щелчок мышью.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">▦</div>
+
+                <h3>
+                    Через меню приложений
+                </h3>
+
+                <p>
+                    Открыть меню приложений, найти программу
+                    и выбрать её.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">🔎</div>
+
+                <h3>
+                    Через поиск
+                </h3>
+
+                <p>
+                    Ввести название программы в поисковое поле
+                    операционной системы.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="mini-icon">📄</div>
+
+                <h3>
+                    Через файл
+                </h3>
+
+                <p>
+                    Открыть файл, связанный с определённой
+                    программой. Операционная система может
+                    автоматически запустить соответствующее приложение.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="success-box">
+
+            <strong>Запомни:</strong>
+            запуск программы — это команда операционной системе
+            начать выполнение этой программы.
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 6 ================= -->
+
+    <section class="section" id="windows">
+
+        <div class="section-number">6</div>
+
+        <h2>
+            Работа с запущенными программами
+        </h2>
+
+        <p class="section-intro">
+            После запуска программы обычно появляется её окно.
+            С окнами можно выполнять основные действия.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    Развернуть
+                </h3>
+
+                <p>
+                    Увеличить окно так, чтобы оно занимало
+                    доступную рабочую область.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Свернуть
+                </h3>
+
+                <p>
+                    Убрать окно с экрана, не закрывая программу.
+                    Программа продолжает работать.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Переключиться
+                </h3>
+
+                <p>
+                    Перейти к другому запущенному приложению,
+                    например через панель задач.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Закрыть
+                </h3>
+
+                <p>
+                    Завершить работу с окном программы.
+                    При этом программа обычно прекращает работу.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="desktop-scheme">
+
+            <div class="scheme-title">
+                Состояния окна программы
+            </div>
+
+            <div class="scheme-row">
+
+                <div class="scheme-item">
+                    <span>🖥️</span>
+                    <small>Развёрнуто</small>
+                </div>
+
+                <div class="scheme-item">
+                    <span>➖</span>
+                    <small>Свернуто</small>
+                </div>
+
+                <div class="scheme-item">
+                    <span>🔄</span>
+                    <small>Переключение</small>
+                </div>
+
+                <div class="scheme-item">
+                    <span>✕</span>
+                    <small>Закрытие</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= 7 ================= -->
+
+    <section class="section" id="practice">
+
+        <div class="section-number">7</div>
+
+        <h2>
+            Закрепление материала
+        </h2>
+
+        <p class="section-intro">
+            Попробуй ответить на вопросы своими словами.
+            Главное — понять принцип работы, а не просто запомнить определения.
+        </p>
+
+        <div class="questions">
+
+            <div class="question">
+                Что такое рабочий стол операционной системы?
+            </div>
+
+            <div class="question">
+                Какие основные элементы могут находиться
+                на рабочем столе?
+            </div>
+
+            <div class="question">
+                Чем значок отличается от ярлыка?
+            </div>
+
+            <div class="question">
+                Для чего предназначена панель задач?
+            </div>
+
+            <div class="question">
+                Какие способы запуска программы ты знаешь?
+            </div>
+
+            <div class="question">
+                Что происходит после запуска программы?
+            </div>
+
+            <div class="question">
+                Чем сворачивание окна отличается от его закрытия?
+            </div>
+
+            <div class="question">
+                Как можно переключиться с одной запущенной
+                программы на другую?
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ИТОГ ================= -->
+
+    <section class="summary">
+
+        <h2>
+            Итог урока
+        </h2>
+
+        <p>
+            Рабочий стол является основной областью взаимодействия
+            пользователя с операционной системой. На нём располагаются
+            различные объекты, а панель задач помогает управлять
+            запущенными программами.
+        </p>
+
+        <div class="summary-points">
+
+            <div class="summary-point">
+                <strong>Рабочий стол</strong><br>
+                Основная область интерфейса операционной системы.
+            </div>
+
+            <div class="summary-point">
+                <strong>Панель задач</strong><br>
+                Помогает запускать программы и переключаться
+                между открытыми окнами.
+            </div>
+
+            <div class="summary-point">
+                <strong>Запуск программы</strong><br>
+                Начало выполнения программы операционной системой.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ОСНОВНЫЕ ПОНЯТИЯ ================= -->
+
+    <section class="section">
+
+        <div class="section-number">✓</div>
+
+        <h2>
+            Основные понятия урока
+        </h2>
+
+        <p class="section-intro">
+            Термины, которые важно знать после изучения темы:
+        </p>
+
+        <div class="terms">
+
+            <div class="term">
+                Рабочий стол
+            </div>
+
+            <div class="term">
+                Операционная система
+            </div>
+
+            <div class="term">
+                Значок
+            </div>
+
+            <div class="term">
+                Ярлык
+            </div>
+
+            <div class="term">
+                Панель задач
+            </div>
+
+            <div class="term">
+                Меню приложений
+            </div>
+
+            <div class="term">
+                Программа
+            </div>
+
+            <div class="term">
+                Окно программы
+            </div>
+
+            <div class="term">
+                Запуск программы
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Информатика · 7 класс · Рабочий стол. Запуск программ
+    </footer>
+
+</div>
+
+</body>
+</html>
