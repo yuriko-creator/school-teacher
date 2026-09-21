@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Хранение информации. Файлы — 5 класс</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7ff;
+            color: #263248;
+            line-height: 1.65;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 30px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 30px 0 20px;
+        }
+
+        .hero-box {
+            position: relative;
+            overflow: hidden;
+            padding: 55px 50px;
+            border-radius: 30px;
+            background:
+                linear-gradient(135deg, #5267e8, #7657d9);
+            color: white;
+            box-shadow: 0 18px 45px rgba(67, 72, 160, 0.22);
+        }
+
+        .hero-box::before {
+            content: "📁";
+            position: absolute;
+            right: 40px;
+            bottom: -35px;
+            font-size: 170px;
+            opacity: 0.14;
+            transform: rotate(-8deg);
+        }
+
+        .hero-box::after {
+            content: "💾";
+            position: absolute;
+            right: 190px;
+            top: 25px;
+            font-size: 70px;
+            opacity: 0.12;
+            transform: rotate(12deg);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .class-label {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 18px 0 15px;
+            font-size: clamp(34px, 6vw, 58px);
+            line-height: 1.08;
+        }
+
+        .hero-text {
+            margin: 0;
+            max-width: 650px;
+            font-size: 19px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        section {
+            margin: 22px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 34px;
+            border: 1px solid #e2e7f2;
+            box-shadow: 0 10px 28px rgba(31, 42, 68, 0.07);
+        }
+
+        h2 {
+            margin: 0 0 20px;
+            font-size: clamp(27px, 4vw, 36px);
+            line-height: 1.2;
+            color: #28355d;
+        }
+
+        h3 {
+            margin: 0 0 9px;
+            font-size: 21px;
+            color: #344267;
+        }
+
+        p {
+            margin: 0 0 15px;
+        }
+
+        .lead {
+            font-size: 18px;
+            color: #53617d;
+        }
+
+        .highlight {
+            margin-top: 20px;
+            padding: 18px 20px;
+            border-radius: 15px;
+            background: #eef1ff;
+            border-left: 5px solid #6573e8;
+        }
+
+        .highlight strong {
+            color: #4858d4;
+        }
+
+        /* =========================
+           VISUAL CARDS
+        ========================= */
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .visual-card {
+            overflow: hidden;
+            border-radius: 19px;
+            background: #f8faff;
+            border: 1px solid #e2e7f2;
+        }
+
+        .visual-card img {
+            display: block;
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .visual-card-content {
+            padding: 18px;
+        }
+
+        .visual-card-content p {
+            margin: 0;
+            font-size: 14px;
+            color: #65718a;
+        }
+
+        /* =========================
+           INFORMATION TYPES
+        ========================= */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-item {
+            padding: 22px 15px;
+            text-align: center;
+            border-radius: 18px;
+            background: #f7f9ff;
+            border: 1px solid #e1e6f2;
+        }
+
+        .info-icon {
+            font-size: 42px;
+            margin-bottom: 9px;
+        }
+
+        .info-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-item span {
+            font-size: 13px;
+            color: #6d7890;
+        }
+
+        /* =========================
+           FILE STRUCTURE
+        ========================= */
+
+        .file-example {
+            margin-top: 25px;
+            padding: 28px;
+            border-radius: 20px;
+            background: #1f2940;
+            color: white;
+            font-family: Consolas, monospace;
+            text-align: center;
+        }
+
+        .file-name {
+            font-size: clamp(20px, 5vw, 32px);
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .file-name .name {
+            color: #8fd3ff;
+        }
+
+        .file-name .dot {
+            color: #ffffff;
+        }
+
+        .file-name .extension {
+            color: #ffcb6b;
+        }
+
+        .file-parts {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .file-part {
+            font-size: 13px;
+            color: #b9c3d8;
+        }
+
+        .file-part strong {
+            display: block;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        /* =========================
+           FILE TYPES
+        ========================= */
+
+        .file-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .file-type {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 18px;
+            border-radius: 17px;
+            background: #fafbff;
+            border: 1px solid #e2e7f1;
+        }
+
+        .file-icon {
+            flex: 0 0 auto;
+            width: 55px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: #e9edff;
+            font-size: 28px;
+        }
+
+        .file-type strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .file-type span {
+            color: #6b768e;
+            font-size: 14px;
+        }
+
+        /* =========================
+           FOLDERS
+        ========================= */
+
+        .folder-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0 15px;
+        }
+
+        .folder {
+            min-width: 145px;
+            padding: 18px;
+            text-align: center;
+            border-radius: 16px;
+            background: #fff8d9;
+            border: 2px solid #f2d978;
+        }
+
+        .folder-icon {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 42px;
+        }
+
+        .folder-name {
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 28px;
+            color: #7380a0;
+        }
+
+        .files-inside {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.65);
+            font-size: 12px;
+            text-align: left;
+        }
+
+        /* =========================
+           OPERATIONS
+        ========================= */
+
+        .operations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .operation {
+            padding: 22px;
+            border-radius: 18px;
+            background: #f8faff;
+            border: 1px solid #e1e6f0;
+        }
+
+        .operation-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            background: #e9edff;
+            font-size: 23px;
+        }
+
+        .operation p {
+            margin: 0;
+            color: #68748b;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PRACTICAL
+        ========================= */
+
+        .practice {
+            background:
+                linear-gradient(135deg, #fff9e9, #fff4d3);
+            border-color: #f1dd9f;
+        }
+
+        .practice-label {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #f2c94c;
+            color: #554400;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 15px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(214,186,91,0.4);
+        }
+
+        .step-number {
+            flex: 0 0 auto;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #e5b92e;
+            color: white;
+            font-weight: bold;
+        }
+
+        .step p {
+            margin: 3px 0 0;
+        }
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        .questions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 23px;
+        }
+
+        .question {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 16px 18px;
+            border-radius: 15px;
+            background: #f8faff;
+            border: 1px solid #e1e6f0;
+        }
+
+        .question-number {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #6573e8;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .summary {
+            background: linear-gradient(135deg, #3f4db7, #6654c8);
+            color: white;
+            border: none;
+        }
+
+        .summary h2 {
+            color: white;
+        }
+
+        .summary p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+            margin-top: 23px;
+        }
+
+        .summary-item {
+            padding: 17px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.13);
+        }
+
+        .summary-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .summary-item span {
+            color: rgba(255,255,255,0.76);
+            font-size: 14px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 20px 0 45px;
+            text-align: center;
+            color: #8792aa;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 760px) {
+
+            .container {
+                width: min(100% - 20px, 1100px);
+            }
+
+            .hero {
+                padding-top: 10px;
+            }
+
+            .hero-box {
+                padding: 35px 22px;
+                border-radius: 23px;
+            }
+
+            .hero-box::before {
+                right: -20px;
+                font-size: 120px;
+            }
+
+            .hero-box::after {
+                display: none;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+            }
+
+            .card {
+                padding: 23px 17px;
+                border-radius: 18px;
+            }
+
+            h2 {
+                font-size: 27px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            /* Всё друг под другом */
+
+            .visual-grid,
+            .info-grid,
+            .file-types,
+            .operations,
+            .summary-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            .visual-card,
+            .info-item,
+            .file-type,
+            .operation,
+            .summary-item {
+                width: 100%;
+            }
+
+            .visual-card img {
+                height: 190px;
+            }
+
+            .file-parts {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .folder-diagram {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .folder {
+                width: 100%;
+            }
+
+            .file-name {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .hero-box {
+                padding: 30px 18px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 20px 14px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .visual-card img {
+                height: 170px;
+            }
+
+            .file-icon {
+                width: 48px;
+                height: 58px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <header class="hero">
+
+        <div class="hero-box">
+
+            <div class="hero-content">
+
+                <span class="class-label">
+                    5 класс · Информатика
+                </span>
+
+                <h1>
+                    Хранение информации. Файлы
+                </h1>
+
+                <p class="hero-text">
+                    Узнаем, как компьютер хранит информацию,
+                    что такое файлы и папки и какие действия
+                    можно выполнять с ними.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         STORAGE
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Зачем хранить информацию?</h2>
+
+            <p class="lead">
+                Представь, что ты создал рисунок или написал важный текст.
+                Что произойдёт, если просто выключить компьютер?
+            </p>
+
+            <p>
+                Если информацию не сохранить, её можно потерять.
+                Поэтому компьютеры умеют <strong>хранить информацию</strong>,
+                чтобы к ней можно было вернуться позже.
+            </p>
+
+            <div class="visual-grid">
+
+                <div class="visual-card">
+
+                    <img
+                        src="image/img-1.jpg"
+                        alt="Фотография"
+                    >
+
+                    <div class="visual-card-content">
+                        <h3>Фотографии</h3>
+                        <p>
+                            Можно сохранить фотографии и открыть их снова.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="visual-card">
+
+                    <img
+                        src="image/img-2.jpg"
+                        alt="Записи и текст"
+                    >
+
+                    <div class="visual-card-content">
+                        <h3>Тексты</h3>
+                        <p>
+                            Документы и школьные работы можно хранить
+                            в памяти компьютера.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="visual-card">
+
+                    <img
+                        src="image/img-3.jpg"
+                        alt="Компьютерные данные"
+                    >
+
+                    <div class="visual-card-content">
+                        <h3>Другие данные</h3>
+                        <p>
+                            Компьютер может хранить музыку, видео,
+                            программы и многое другое.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FILE
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Что такое файл?</h2>
+
+            <p class="lead">
+                <strong>Файл</strong> — это именованная область памяти,
+                в которой хранится определённая информация.
+            </p>
+
+            <p>
+                Например, фотография, текстовый документ, музыка или
+                компьютерная программа могут быть представлены в виде файлов.
+            </p>
+
+            <div class="highlight">
+
+                <strong>Запомни:</strong>
+
+                файл — это единица хранения информации,
+                с которой компьютер может работать.
+
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <div class="info-icon">📷</div>
+                    <strong>Фотография</strong>
+                    <span>графический файл</span>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📝</div>
+                    <strong>Документ</strong>
+                    <span>текстовый файл</span>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">🎵</div>
+                    <strong>Музыка</strong>
+                    <span>звуковой файл</span>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">🎬</div>
+                    <strong>Видео</strong>
+                    <span>видеофайл</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FILE NAME
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Имя и расширение файла</h2>
+
+            <p>
+                У каждого файла есть имя. Кроме имени, обычно указывается
+                его <strong>расширение</strong> — несколько символов после точки.
+            </p>
+
+            <div class="file-example">
+
+                <div class="file-name">
+                    <span class="name">Моя_фотография</span><span class="dot">.</span><span class="extension">jpg</span>
+                </div>
+
+                <div class="file-parts">
+
+                    <div class="file-part">
+                        <strong>Моя_фотография</strong>
+                        имя файла
+                    </div>
+
+                    <div class="file-part">
+                        <strong>.jpg</strong>
+                        расширение
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="file-types">
+
+                <div class="file-type">
+
+                    <div class="file-icon">📄</div>
+
+                    <div>
+                        <strong>Документ — .docx</strong>
+                        <span>
+                            Может использоваться для текстовых документов.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="file-type">
+
+                    <div class="file-icon">🖼️</div>
+
+                    <div>
+                        <strong>Изображение — .jpg</strong>
+                        <span>
+                            Формат для хранения изображений.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="file-type">
+
+                    <div class="file-icon">🎵</div>
+
+                    <div>
+                        <strong>Звук — .mp3</strong>
+                        <span>
+                            Формат для хранения звуковой информации.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="file-type">
+
+                    <div class="file-icon">🎬</div>
+
+                    <div>
+                        <strong>Видео — .mp4</strong>
+                        <span>
+                            Формат для хранения видео.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+
+                <strong>Расширение помогает понять тип файла.</strong>
+                Например, по расширению .jpg можно предположить,
+                что перед нами изображение.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOLDERS
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Папки</h2>
+
+            <p class="lead">
+                Если файлов становится много, найти нужный файл
+                становится трудно.
+            </p>
+
+            <p>
+                Для удобной организации файлов используются
+                <strong>папки</strong>.
+            </p>
+
+            <p>
+                Папку можно представить как контейнер, в котором
+                хранятся файлы и другие папки.
+            </p>
+
+
+            <div class="folder-diagram">
+
+                <div class="folder">
+
+                    <span class="folder-icon">📁</span>
+
+                    <div class="folder-name">
+                        Мои документы
+                    </div>
+
+                    <div class="files-inside">
+
+                        <span>📄 Доклад.docx</span>
+                        <span>📄 Задание.docx</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="folder">
+
+                    <span class="folder-icon">📁</span>
+
+                    <div class="folder-name">
+                        Рисунки
+                    </div>
+
+                    <div class="files-inside">
+
+                        <span>🖼️ Кот.jpg</span>
+                        <span>🖼️ Природа.jpg</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="folder">
+
+                    <span class="folder-icon">📁</span>
+
+                    <div class="folder-name">
+                        Музыка
+                    </div>
+
+                    <div class="files-inside">
+
+                        <span>🎵 Песня.mp3</span>
+                        <span>🎵 Музыка.mp3</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+
+                <strong>Главная идея:</strong>
+                папки помогают организовать большое количество
+                файлов и быстрее находить нужную информацию.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         OPERATIONS
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Что можно делать с файлами?</h2>
+
+            <p>
+                Компьютер позволяет выполнять с файлами
+                различные операции.
+            </p>
+
+            <div class="operations">
+
+                <div class="operation">
+
+                    <div class="operation-icon">➕</div>
+
+                    <h3>Создать</h3>
+
+                    <p>
+                        Создать новый файл или сохранить новую информацию
+                        в виде файла.
+                    </p>
+
+                </div>
+
+
+                <div class="operation">
+
+                    <div class="operation-icon">👁️</div>
+
+                    <h3>Открыть</h3>
+
+                    <p>
+                        Открыть файл и посмотреть или изменить
+                        содержащуюся в нём информацию.
+                    </p>
+
+                </div>
+
+
+                <div class="operation">
+
+                    <div class="operation-icon">📋</div>
+
+                    <h3>Копировать</h3>
+
+                    <p>
+                        Создать копию файла в другом месте.
+                    </p>
+
+                </div>
+
+
+                <div class="operation">
+
+                    <div class="operation-icon">↔️</div>
+
+                    <h3>Переместить</h3>
+
+                    <p>
+                        Перенести файл из одной папки
+                        в другую.
+                    </p>
+
+                </div>
+
+
+                <div class="operation">
+
+                    <div class="operation-icon">✏️</div>
+
+                    <h3>Переименовать</h3>
+
+                    <p>
+                        Изменить имя файла, не меняя его содержимое.
+                    </p>
+
+                </div>
+
+
+                <div class="operation">
+
+                    <div class="operation-icon">🗑️</div>
+
+                    <h3>Удалить</h3>
+
+                    <p>
+                        Убрать ненужный файл из папки.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PRACTICE
+    ========================== -->
+
+    <section>
+
+        <div class="card practice">
+
+            <span class="practice-label">
+                💻 Практическое задание
+            </span>
+
+            <h2>
+                Потренируемся работать с файлами
+            </h2>
+
+            <p>
+                Выполни последовательно следующие действия:
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">1</div>
+
+                    <p>
+                        Создай папку с именем
+                        <strong>«Информатика»</strong>.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">2</div>
+
+                    <p>
+                        Создай или сохрани в этой папке
+                        любой файл.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">3</div>
+
+                    <p>
+                        Переименуй созданный файл.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">4</div>
+
+                    <p>
+                        Создай копию файла или скопируй его
+                        в другую папку.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">5</div>
+
+                    <p>
+                        Удали ненужную копию файла.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+
+                <strong>Обрати внимание:</strong>
+                при выполнении задания важно понимать,
+                какое действие ты выполняешь с файлом:
+                создаёшь, копируешь, перемещаешь,
+                переименовываешь или удаляешь его.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FILE VS FOLDER
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Файл и папка — в чём разница?</h2>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+
+                    <div class="info-icon">📄</div>
+
+                    <strong>Файл</strong>
+
+                    <span>
+                        Хранит определённую информацию:
+                        текст, изображение, звук, видео и т. д.
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">📁</div>
+
+                    <strong>Папка</strong>
+
+                    <span>
+                        Используется для организации
+                        и хранения файлов и других папок.
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+
+                <strong>Простая аналогия:</strong>
+                папка похожа на школьную папку с документами,
+                а файл — на отдельный документ внутри неё.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUESTIONS
+    ========================== -->
+
+    <section>
+
+        <div class="card">
+
+            <h2>Вопросы для закрепления</h2>
+
+            <p class="lead">
+                Попробуй ответить на вопросы своими словами.
+            </p>
+
+            <div class="questions">
+
+                <div class="question">
+                    <div class="question-number">1</div>
+                    <div>
+                        Что такое хранение информации?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">2</div>
+                    <div>
+                        Что такое файл?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">3</div>
+                    <div>
+                        Для чего файлу нужно имя?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">4</div>
+                    <div>
+                        Что такое расширение файла?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">5</div>
+                    <div>
+                        Что можно узнать по расширению файла?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">6</div>
+                    <div>
+                        Что такое папка?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">7</div>
+                    <div>
+                        Зачем нужны папки?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">8</div>
+                    <div>
+                        Чем файл отличается от папки?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">9</div>
+                    <div>
+                        Что происходит при копировании файла?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">10</div>
+                    <div>
+                        Чем перемещение файла отличается от копирования?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">11</div>
+                    <div>
+                        Для чего используется переименование файла?
+                    </div>
+                </div>
+
+
+                <div class="question">
+                    <div class="question-number">12</div>
+                    <div>
+                        Какие основные действия можно выполнять
+                        с файлами?
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SUMMARY
+    ========================== -->
+
+    <section>
+
+        <div class="card summary">
+
+            <h2>Итог урока</h2>
+
+            <p>
+                Компьютер хранит информацию в виде файлов.
+                Для удобной организации файлов используются папки.
+            </p>
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <strong>📄 Файл</strong>
+
+                    <span>
+                        Единица хранения определённой информации.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>📁 Папка</strong>
+
+                    <span>
+                        Средство организации файлов и других папок.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>🔤 Расширение</strong>
+
+                    <span>
+                        Помогает определить тип файла.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>⚙️ Операции</strong>
+
+                    <span>
+                        Создание, открытие, копирование,
+                        перемещение, переименование и удаление.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Информатика · 5 класс · Хранение информации. Файлы
+    </footer>
+
+</div>
+
+</body>
+</html>
