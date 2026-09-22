@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Передача информации. Сеть Интернет — 5 класс</title>
+
+    <style>
+        :root {
+            --bg: #f3f7fc;
+            --card: #ffffff;
+            --text: #24324a;
+            --muted: #68758a;
+            --blue: #3478e5;
+            --blue-dark: #2355aa;
+            --blue-soft: #eaf3ff;
+            --cyan: #38b9d6;
+            --green: #39a878;
+            --green-soft: #eaf8f2;
+            --yellow: #f5c84c;
+            --yellow-soft: #fff8df;
+            --purple: #7867d9;
+            --red: #e56767;
+            --red-soft: #fff0f0;
+            --border: #dde6f1;
+            --shadow: 0 12px 30px rgba(40, 65, 100, 0.08);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.65;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 5% 2%, rgba(52,120,229,.08), transparent 24%),
+                radial-gradient(circle at 95% 10%, rgba(56,185,214,.08), transparent 22%),
+                var(--bg);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 30px 0 22px;
+        }
+
+        .hero-box {
+            position: relative;
+            overflow: hidden;
+            min-height: 390px;
+            display: flex;
+            align-items: center;
+            padding: 55px 52px;
+            border-radius: 32px;
+            color: white;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(20,48,101,.96) 0%,
+                    rgba(31,82,154,.91) 50%,
+                    rgba(26,115,156,.73) 100%
+                ),
+                url("https://examtimeassets.s3.amazonaws.com/uploads/node/image/109828233/desktop_0f24dde7-5864-438b-818a-f4a6ce09e4f1.jpg")
+                center / cover no-repeat;
+            box-shadow: 0 20px 50px rgba(34,73,130,.20);
+        }
+
+        .hero-box::after {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            right: -100px;
+            top: -130px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.17);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .class-label {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.23);
+            background: rgba(255,255,255,.13);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 18px 0 15px;
+            font-size: clamp(36px, 6vw, 62px);
+            line-height: 1.06;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-text {
+            max-width: 650px;
+            margin: 0;
+            color: rgba(255,255,255,.9);
+            font-size: 19px;
+        }
+
+        /* =========================
+           COMMON
+        ========================= */
+
+        section {
+            margin: 23px 0;
+        }
+
+        .section-card {
+            padding: 34px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--card);
+            box-shadow: var(--shadow);
+        }
+
+        .section-label {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            background: var(--blue-soft);
+            color: var(--blue-dark);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin: 0 0 16px;
+            color: #26375a;
+            font-size: clamp(27px, 4vw, 36px);
+            line-height: 1.2;
+        }
+
+        h3 {
+            margin: 0 0 8px;
+            color: #304263;
+            font-size: 20px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            color: #52627a;
+            font-size: 18px;
+        }
+
+        .highlight {
+            margin-top: 20px;
+            padding: 18px 20px;
+            border-left: 5px solid var(--blue);
+            border-radius: 13px;
+            background: var(--blue-soft);
+        }
+
+        .highlight strong {
+            color: var(--blue-dark);
+        }
+
+        /* =========================
+           EVERYDAY EXAMPLES
+        ========================= */
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 24px;
+        }
+
+        .example {
+            padding: 22px 18px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #f9fbfe;
+        }
+
+        .example-icon {
+            margin-bottom: 9px;
+            font-size: 42px;
+        }
+
+        .example strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .example span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           TRANSMISSION SCHEME
+        ========================= */
+
+        .transmission-box {
+            margin-top: 25px;
+            padding: 30px;
+            border-radius: 22px;
+            background: #17243c;
+            color: white;
+        }
+
+        .transmission-title {
+            margin-bottom: 23px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .transmission {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .transmission-item {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 17px;
+            background: rgba(255,255,255,.08);
+        }
+
+        .transmission-icon {
+            margin-bottom: 8px;
+            font-size: 42px;
+        }
+
+        .transmission-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .transmission-item span {
+            color: #c6d2e5;
+            font-size: 13px;
+        }
+
+        .big-arrow {
+            color: #70c8ff;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           EXAMPLE STORY
+        ========================= */
+
+        .story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .story-card {
+            padding: 21px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #f8faff;
+        }
+
+        .story-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 11px;
+        }
+
+        .story-icon {
+            flex: 0 0 auto;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #e9f2ff;
+            font-size: 24px;
+        }
+
+        .story-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           CHANNELS
+        ========================= */
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 23px;
+        }
+
+        .channel {
+            position: relative;
+            overflow: hidden;
+            padding: 22px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .channel-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            background: #edf4ff;
+            font-size: 27px;
+        }
+
+        .channel p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           NETWORK
+        ========================= */
+
+        .network-layout {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 24px;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        .network-picture {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: #f8fafc;
+        }
+
+        .network-picture img {
+            width: 100%;
+            min-height: 320px;
+            object-fit: cover;
+        }
+
+        .network-caption {
+            padding: 12px 15px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .network-points {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .network-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            border-radius: 14px;
+            background: #f7f9fc;
+            border: 1px solid var(--border);
+        }
+
+        .network-point-icon {
+            flex: 0 0 auto;
+            font-size: 25px;
+        }
+
+        .network-point p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           LOCAL / GLOBAL
+        ========================= */
+
+        .network-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .network-type {
+            padding: 24px;
+            border-radius: 19px;
+            border: 1px solid var(--border);
+        }
+
+        .network-type.local {
+            background: var(--green-soft);
+            border-color: #ccebdd;
+        }
+
+        .network-type.global {
+            background: #eef3ff;
+            border-color: #d4def7;
+        }
+
+        .network-type-icon {
+            margin-bottom: 10px;
+            font-size: 40px;
+        }
+
+        .network-type p {
+            margin: 0;
+            color: #5e6b7e;
+        }
+
+        /* =========================
+           INTERNET HERO
+        ========================= */
+
+        .internet-visual {
+            margin-top: 25px;
+            overflow: hidden;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            background: #f6f9fc;
+        }
+
+        .internet-visual img {
+            width: 100%;
+            max-height: 470px;
+            object-fit: contain;
+            background: white;
+        }
+
+        .internet-visual-text {
+            padding: 17px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        /* =========================
+           INTERNET SERVICES
+        ========================= */
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 23px;
+        }
+
+        .service {
+            padding: 20px 15px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: #f9fbfe;
+        }
+
+        .service-icon {
+            margin-bottom: 8px;
+            font-size: 37px;
+        }
+
+        .service strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .service span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           INTERNET VS WWW
+        ========================= */
+
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 18px;
+            align-items: stretch;
+            margin-top: 25px;
+        }
+
+        .compare-card {
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .compare-card.internet {
+            background: #edf5ff;
+            border-color: #cfe0f7;
+        }
+
+        .compare-card.web {
+            background: #f1edff;
+            border-color: #ded4ff;
+        }
+
+        .compare-icon {
+            margin-bottom: 10px;
+            font-size: 43px;
+        }
+
+        .compare-middle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8994a7;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           BROWSER
+        ========================= */
+
+        .browser-demo {
+            margin-top: 24px;
+            overflow: hidden;
+            border: 1px solid #ccd6e3;
+            border-radius: 19px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(37,55,80,.08);
+        }
+
+        .browser-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: #e9edf4;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #b4bdca;
+        }
+
+        .address {
+            flex: 1;
+            margin-left: 8px;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: white;
+            color: #8490a2;
+            font-size: 13px;
+        }
+
+        .browser-page {
+            min-height: 210px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            text-align: center;
+            background:
+                linear-gradient(135deg, #f6f9ff, #eef6ff);
+        }
+
+        .browser-page-icon {
+            margin-bottom: 8px;
+            font-size: 50px;
+        }
+
+        /* =========================
+           SAFETY
+        ========================= */
+
+        .safety {
+            border-color: #f0d7a0;
+            background:
+                linear-gradient(135deg, #fffdf6, #fff8e6);
+        }
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 23px;
+        }
+
+        .safety-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 18px;
+            border: 1px solid #eedfb9;
+            border-radius: 16px;
+            background: rgba(255,255,255,.7);
+        }
+
+        .safety-icon {
+            flex: 0 0 auto;
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--yellow-soft);
+            font-size: 23px;
+        }
+
+        .safety-item p {
+            margin: 0;
+            color: #697284;
+            font-size: 14px;
+        }
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        .questions {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            margin-top: 22px;
+        }
+
+        .question {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 16px 18px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #f8faff;
+        }
+
+        .question-number {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: var(--blue);
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .summary {
+            color: white;
+            border: none;
+            background:
+                linear-gradient(135deg, #183a72, #2969b2 55%, #25899b);
+        }
+
+        .summary h2 {
+            color: white;
+        }
+
+        .summary > p {
+            color: rgba(255,255,255,.88);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .summary-item {
+            padding: 17px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 15px;
+            background: rgba(255,255,255,.09);
+        }
+
+        .summary-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .summary-item span {
+            color: rgba(255,255,255,.76);
+            font-size: 14px;
+        }
+
+        .terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 22px;
+        }
+
+        .term {
+            padding: 7px 11px;
+            border: 1px solid rgba(255,255,255,.17);
+            border-radius: 999px;
+            background: rgba(255,255,255,.1);
+            font-size: 13px;
+        }
+
+        footer {
+            padding: 22px 0 45px;
+            text-align: center;
+            color: #8592a6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 760px) {
+
+            .container {
+                width: min(100% - 20px, 1120px);
+            }
+
+            .hero {
+                padding-top: 10px;
+            }
+
+            .hero-box {
+                min-height: 380px;
+                padding: 35px 23px;
+                border-radius: 23px;
+                background-position: center;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+            }
+
+            section {
+                margin: 17px 0;
+            }
+
+            .section-card {
+                padding: 23px 18px;
+                border-radius: 18px;
+            }
+
+            h2 {
+                font-size: 27px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            /* Все основные блоки строго вертикально */
+
+            .example-grid,
+            .story,
+            .channel-grid,
+            .network-layout,
+            .network-types,
+            .services,
+            .compare,
+            .safety-grid,
+            .summary-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            .example,
+            .story-card,
+            .channel,
+            .network-picture,
+            .network-points,
+            .network-type,
+            .service,
+            .compare-card,
+            .safety-item,
+            .summary-item {
+                width: 100%;
+            }
+
+            .transmission {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .transmission-item {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .big-arrow {
+                transform: rotate(90deg);
+            }
+
+            .compare-middle {
+                transform: rotate(90deg);
+                min-height: 38px;
+            }
+
+            .network-picture img {
+                min-height: 0;
+                height: auto;
+            }
+
+            .internet-visual img {
+                height: auto;
+            }
+
+            .browser-top {
+                flex-wrap: wrap;
+            }
+
+            .address {
+                width: 100%;
+                flex-basis: 100%;
+                margin: 4px 0 0;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            h1 {
+                font-size: 31px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero-box {
+                padding: 30px 18px;
+            }
+
+            .section-card {
+                padding: 20px 14px;
+            }
+
+            .transmission-box {
+                padding: 20px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HERO -->
+
+    <header class="hero">
+
+        <div class="hero-box">
+
+            <div class="hero-content">
+
+                <span class="class-label">
+                    5 класс · Информатика
+                </span>
+
+                <h1>
+                    Передача информации.<br>
+                    Сеть Интернет
+                </h1>
+
+                <p class="hero-text">
+                    Как информация путешествует от одного человека к другому?
+                    Как компьютеры обмениваются данными? И что на самом деле
+                    представляет собой Интернет?
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- 1. ПЕРЕДАЧА ИНФОРМАЦИИ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">01 · ИНФОРМАЦИОННЫЙ ПРОЦЕСС</span>
+
+            <h2>Мы постоянно передаём информацию</h2>
+
+            <p class="lead">
+                Когда мы разговариваем, пишем письмо, отправляем сообщение
+                или показываем кому-нибудь фотографию — происходит
+                <strong>передача информации</strong>.
+            </p>
+
+            <div class="example-grid">
+
+                <div class="example">
+                    <div class="example-icon">🗣️</div>
+                    <strong>Разговор</strong>
+                    <span>
+                        Один человек говорит, другой слышит сообщение.
+                    </span>
+                </div>
+
+                <div class="example">
+                    <div class="example-icon">✉️</div>
+                    <strong>Письмо</strong>
+                    <span>
+                        Информация передаётся человеку в письменном виде.
+                    </span>
+                </div>
+
+                <div class="example">
+                    <div class="example-icon">💬</div>
+                    <strong>Сообщение</strong>
+                    <span>
+                        Текст может быть передан с одного устройства на другое.
+                    </span>
+                </div>
+
+                <div class="example">
+                    <div class="example-icon">📞</div>
+                    <strong>Телефон</strong>
+                    <span>
+                        Позволяет передавать голос на большое расстояние.
+                    </span>
+                </div>
+
+                <div class="example">
+                    <div class="example-icon">📺</div>
+                    <strong>Телевидение</strong>
+                    <span>
+                        Передаёт зрителям изображение и звук.
+                    </span>
+                </div>
+
+                <div class="example">
+                    <div class="example-icon">💻</div>
+                    <strong>Компьютеры</strong>
+                    <span>
+                        Устройства могут передавать друг другу цифровые данные.
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="highlight">
+                <strong>Передача информации</strong> — это процесс,
+                при котором информация переходит от одного объекта к другому.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 2. СХЕМА -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">02 · КАК ПРОИСХОДИТ ПЕРЕДАЧА</span>
+
+            <h2>Источник → канал связи → получатель</h2>
+
+            <p>
+                В простейшей передаче информации можно выделить
+                три важных элемента.
+            </p>
+
+            <div class="transmission-box">
+
+                <div class="transmission-title">
+                    Простая схема передачи информации
+                </div>
+
+                <div class="transmission">
+
+                    <div class="transmission-item">
+
+                        <div class="transmission-icon">👧</div>
+
+                        <strong>Источник</strong>
+
+                        <span>
+                            Передаёт информацию
+                        </span>
+
+                    </div>
+
+                    <div class="big-arrow">→</div>
+
+                    <div class="transmission-item">
+
+                        <div class="transmission-icon">〰️</div>
+
+                        <strong>Канал связи</strong>
+
+                        <span>
+                            По нему движется информация
+                        </span>
+
+                    </div>
+
+                    <div class="big-arrow">→</div>
+
+                    <div class="transmission-item">
+
+                        <div class="transmission-icon">👦</div>
+
+                        <strong>Получатель</strong>
+
+                        <span>
+                            Принимает информацию
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-card">
+
+                    <div class="story-top">
+                        <div class="story-icon">🗣️</div>
+                        <h3>Пример: разговор</h3>
+                    </div>
+
+                    <p>
+                        Маша говорит Пете: «Завтра урок информатики».
+                        Маша — источник, звук — канал связи,
+                        Петя — получатель.
+                    </p>
+
+                </div>
+
+
+                <div class="story-card">
+
+                    <div class="story-top">
+                        <div class="story-icon">📱</div>
+                        <h3>Пример: сообщение</h3>
+                    </div>
+
+                    <p>
+                        Маша отправляет Пете сообщение через сеть.
+                        Устройство Маши передаёт данные, сеть служит
+                        каналом связи, а устройство Пети принимает их.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 3. КАНАЛЫ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">03 · КАНАЛЫ СВЯЗИ</span>
+
+            <h2>Как информация добирается до получателя?</h2>
+
+            <p class="lead">
+                Между источником и получателем должен существовать
+                способ передачи информации — <strong>канал связи</strong>.
+            </p>
+
+            <div class="channel-grid">
+
+                <div class="channel">
+                    <div class="channel-icon">🔊</div>
+                    <h3>Звук</h3>
+                    <p>
+                        Голос человека передаётся с помощью звуковых волн.
+                    </p>
+                </div>
+
+                <div class="channel">
+                    <div class="channel-icon">✉️</div>
+                    <h3>Письмо</h3>
+                    <p>
+                        Текст и изображения могут передаваться на бумаге.
+                    </p>
+                </div>
+
+                <div class="channel">
+                    <div class="channel-icon">📞</div>
+                    <h3>Телефонная связь</h3>
+                    <p>
+                        Позволяет людям общаться на расстоянии.
+                    </p>
+                </div>
+
+                <div class="channel">
+                    <div class="channel-icon">📡</div>
+                    <h3>Радиосвязь</h3>
+                    <p>
+                        Информация может передаваться с помощью радиоволн.
+                    </p>
+                </div>
+
+                <div class="channel">
+                    <div class="channel-icon">🔌</div>
+                    <h3>Кабель</h3>
+                    <p>
+                        Цифровые данные могут передаваться по проводным линиям.
+                    </p>
+                </div>
+
+                <div class="channel">
+                    <div class="channel-icon">📶</div>
+                    <h3>Беспроводная связь</h3>
+                    <p>
+                        Устройства могут обмениваться данными без проводов.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 4. КОМПЬЮТЕРНАЯ СЕТЬ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">04 · КОМПЬЮТЕРНАЯ СЕТЬ</span>
+
+            <h2>Когда компьютеры объединяются</h2>
+
+            <p class="lead">
+                Компьютеры, смартфоны и другие цифровые устройства
+                тоже могут обмениваться информацией.
+            </p>
+
+            <div class="highlight">
+                <strong>Компьютерная сеть</strong> — это объединение
+                компьютеров и других устройств для обмена информацией.
+            </div>
+
+
+            <div class="network-layout">
+
+                <div class="network-picture">
+
+                    <img
+                        src="image/img-1.png"
+                        alt="Схема компьютерной сети и Интернета"
+                    >
+
+                    <div class="network-caption">
+                        Устройства могут быть связаны между собой
+                        и обмениваться цифровыми данными.
+                    </div>
+
+                </div>
+
+
+                <div class="network-points">
+
+                    <div class="network-point">
+
+                        <div class="network-point-icon">📄</div>
+
+                        <div>
+                            <strong>Передавать файлы</strong>
+                            <p>
+                                Например, документы, фотографии и другие данные.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="network-point">
+
+                        <div class="network-point-icon">💬</div>
+
+                        <div>
+                            <strong>Передавать сообщения</strong>
+                            <p>
+                                Устройства помогают людям общаться друг с другом.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="network-point">
+
+                        <div class="network-point-icon">🖨️</div>
+
+                        <div>
+                            <strong>Использовать общие устройства</strong>
+                            <p>
+                                Несколько компьютеров могут работать
+                                с сетевыми ресурсами.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="network-point">
+
+                        <div class="network-point-icon">🌐</div>
+
+                        <div>
+                            <strong>Получать информацию</strong>
+                            <p>
+                                Сеть позволяет получать данные
+                                с других компьютеров.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 5. ЛОКАЛЬНАЯ / ГЛОБАЛЬНАЯ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">05 · РАЗМЕР СЕТИ</span>
+
+            <h2>Сети бывают разными</h2>
+
+            <p>
+                Некоторые сети объединяют устройства в одном помещении
+                или здании, а другие могут связывать устройства,
+                находящиеся очень далеко друг от друга.
+            </p>
+
+            <div class="network-types">
+
+                <div class="network-type local">
+
+                    <div class="network-type-icon">🏫</div>
+
+                    <h3>Локальная сеть</h3>
+
+                    <p>
+                        Может объединять устройства на небольшой территории:
+                        например, дома, в школе или организации.
+                    </p>
+
+                </div>
+
+
+                <div class="network-type global">
+
+                    <div class="network-type-icon">🌍</div>
+
+                    <h3>Глобальная сеть</h3>
+
+                    <p>
+                        Может связывать сети и устройства,
+                        расположенные на больших расстояниях.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 6. ИНТЕРНЕТ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">06 · ГЛОБАЛЬНАЯ СЕТЬ</span>
+
+            <h2>Что такое Интернет?</h2>
+
+            <p class="lead">
+                Представь огромное количество компьютерных сетей,
+                соединённых друг с другом по всему миру.
+            </p>
+
+            <div class="highlight">
+                <strong>Интернет</strong> — глобальная компьютерная сеть,
+                объединяющая огромное количество сетей и устройств
+                по всему миру.
+            </div>
+
+
+            <div class="internet-visual">
+
+                <img
+                    src="image/img-2.png"
+                    alt="Люди используют Интернет в разных частях мира"
+                >
+
+                <div class="internet-visual-text">
+                    Интернет позволяет устройствам обмениваться информацией,
+                    даже если они находятся далеко друг от друга.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 7. ВОЗМОЖНОСТИ -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">07 · ВОЗМОЖНОСТИ</span>
+
+            <h2>Что можно делать с помощью Интернета?</h2>
+
+            <div class="services">
+
+                <div class="service">
+                    <div class="service-icon">🔎</div>
+                    <strong>Искать</strong>
+                    <span>Находить нужную информацию</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">🌐</div>
+                    <strong>Смотреть сайты</strong>
+                    <span>Открывать веб-страницы</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">💬</div>
+                    <strong>Общаться</strong>
+                    <span>Передавать сообщения</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">✉️</div>
+                    <strong>Почта</strong>
+                    <span>Отправлять электронные письма</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">📁</div>
+                    <strong>Передавать файлы</strong>
+                    <span>Обмениваться цифровыми данными</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">🎬</div>
+                    <strong>Смотреть видео</strong>
+                    <span>Получать звук и изображение</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">🎓</div>
+                    <strong>Учиться</strong>
+                    <span>Получать учебные материалы</span>
+                </div>
+
+                <div class="service">
+                    <div class="service-icon">🤝</div>
+                    <strong>Работать вместе</strong>
+                    <span>Обмениваться результатами работы</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 8. INTERNET != WWW -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">08 · НЕ ПУТАЕМ ПОНЯТИЯ</span>
+
+            <h2>Интернет и Всемирная паутина — не одно и то же</h2>
+
+            <p>
+                В обычной речи эти слова иногда используют как синонимы.
+                Но в информатике между ними есть различие.
+            </p>
+
+            <div class="compare">
+
+                <div class="compare-card internet">
+
+                    <div class="compare-icon">🌍</div>
+
+                    <h3>Интернет</h3>
+
+                    <p>
+                        Глобальная компьютерная сеть.
+                        Она позволяет устройствам передавать
+                        информацию друг другу.
+                    </p>
+
+                </div>
+
+
+                <div class="compare-middle">
+                    ≠
+                </div>
+
+
+                <div class="compare-card web">
+
+                    <div class="compare-icon">🌐</div>
+
+                    <h3>Всемирная паутина — WWW</h3>
+
+                    <p>
+                        Система связанных веб-сайтов и веб-страниц,
+                        доступ к которым мы получаем через Интернет.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+                <strong>Простая аналогия:</strong>
+                Интернет можно представить как огромную систему дорог,
+                а веб-сайты — как места, до которых по этим дорогам
+                можно добраться.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 9. БРАУЗЕР -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">09 · ВЕБ-СТРАНИЦЫ</span>
+
+            <h2>Как мы открываем сайты?</h2>
+
+            <p class="lead">
+                Для просмотра веб-страниц используется специальная
+                программа — <strong>браузер</strong>.
+            </p>
+
+
+            <div class="browser-demo">
+
+                <div class="browser-top">
+
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+
+                    <div class="address">
+                        https://example.com
+                    </div>
+
+                </div>
+
+
+                <div class="browser-page">
+
+                    <div>
+
+                        <div class="browser-page-icon">🌐</div>
+
+                        <h3>Веб-страница</h3>
+
+                        <p>
+                            Браузер получает данные через сеть
+                            и показывает страницу пользователю.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+                <strong>Браузер — это программа.</strong>
+                Интернет — это сеть. А сайт — информационный ресурс,
+                который можно открыть через эту сеть.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 10. БЕЗОПАСНОСТЬ -->
+
+    <section>
+
+        <div class="section-card safety">
+
+            <span class="section-label">10 · БЕЗОПАСНОСТЬ</span>
+
+            <h2>Интернет требует внимательности 🛡️</h2>
+
+            <p class="lead">
+                Интернет даёт много возможностей, но пользоваться
+                им нужно разумно и осторожно.
+            </p>
+
+
+            <div class="safety-grid">
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">🔐</div>
+
+                    <div>
+                        <h3>Береги личные данные</h3>
+                        <p>
+                            Не сообщай незнакомым людям пароли,
+                            домашний адрес, номер телефона и другую
+                            личную информацию.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">🔑</div>
+
+                    <div>
+                        <h3>Береги пароли</h3>
+                        <p>
+                            Пароль должен быть известен только тому,
+                            кому принадлежит учётная запись.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">🔗</div>
+
+                    <div>
+                        <h3>Будь осторожен со ссылками</h3>
+                        <p>
+                            Не открывай подозрительные ссылки
+                            и неизвестные файлы.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">🤔</div>
+
+                    <div>
+                        <h3>Проверяй информацию</h3>
+                        <p>
+                            Не всё написанное в Интернете обязательно
+                            является правдой.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">👤</div>
+
+                    <div>
+                        <h3>Помни о незнакомцах</h3>
+                        <p>
+                            Человек в Интернете может оказаться
+                            не тем, за кого себя выдаёт.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="safety-item">
+
+                    <div class="safety-icon">🧑‍🏫</div>
+
+                    <div>
+                        <h3>Обратись к взрослому</h3>
+                        <p>
+                            Если что-то в сети вызывает тревогу,
+                            непонятно или кажется подозрительным,
+                            расскажи взрослому, которому доверяешь.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 11. QUESTIONS -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">11 · ЗАКРЕПЛЕНИЕ</span>
+
+            <h2>Вопросы по уроку</h2>
+
+            <p class="lead">
+                Попробуй ответить своими словами, а не просто
+                повторить определение.
+            </p>
+
+
+            <div class="questions">
+
+                <div class="question">
+                    <div class="question-number">1</div>
+                    <div>
+                        Что называется передачей информации?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">2</div>
+                    <div>
+                        Кто такой источник информации?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">3</div>
+                    <div>
+                        Кто такой получатель информации?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">4</div>
+                    <div>
+                        Что называется каналом связи?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">5</div>
+                    <div>
+                        Приведи два примера передачи информации
+                        из повседневной жизни.
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">6</div>
+                    <div>
+                        Что такое компьютерная сеть?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">7</div>
+                    <div>
+                        Для чего компьютеры объединяют в сети?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">8</div>
+                    <div>
+                        Что такое Интернет?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">9</div>
+                    <div>
+                        Какие возможности предоставляет Интернет?
+                        Назови не менее трёх.
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">10</div>
+                    <div>
+                        Чем Интернет отличается от Всемирной паутины?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">11</div>
+                    <div>
+                        Для чего нужна программа-браузер?
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">12</div>
+                    <div>
+                        Какие правила безопасного поведения
+                        в Интернете ты запомнил?
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section>
+
+        <div class="section-card summary">
+
+            <h2>Итог урока</h2>
+
+            <p>
+                Передача информации происходит постоянно — между людьми,
+                устройствами и компьютерами. Компьютерные сети позволяют
+                устройствам обмениваться цифровыми данными, а Интернет
+                объединяет огромное количество сетей по всему миру.
+            </p>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+                    <strong>📤 Источник</strong>
+                    <span>
+                        Передаёт информацию.
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <strong>〰️ Канал связи</strong>
+                    <span>
+                        Обеспечивает передачу информации.
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <strong>📥 Получатель</strong>
+                    <span>
+                        Принимает информацию.
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <strong>💻 Компьютерная сеть</strong>
+                    <span>
+                        Связывает устройства для обмена данными.
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <strong>🌍 Интернет</strong>
+                    <span>
+                        Глобальная компьютерная сеть.
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <strong>🛡️ Безопасность</strong>
+                    <span>
+                        В сети необходимо действовать внимательно.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="terms">
+
+                <span class="term">передача информации</span>
+                <span class="term">источник</span>
+                <span class="term">получатель</span>
+                <span class="term">канал связи</span>
+                <span class="term">компьютерная сеть</span>
+                <span class="term">Интернет</span>
+                <span class="term">WWW</span>
+                <span class="term">веб-сайт</span>
+                <span class="term">браузер</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Информатика · 5 класс · Передача информации. Сеть Интернет
+    </footer>
+
+</div>
+
+</body>
+</html>
