@@ -1,0 +1,2876 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Передача информации. Сеть Интернет. Часть 2 — 5 класс</title>
+
+    <style>
+        :root {
+            --bg: #f6f5fb;
+            --card: #ffffff;
+            --text: #26324a;
+            --muted: #6b7487;
+
+            --purple: #6757d9;
+            --purple-dark: #4537aa;
+            --purple-soft: #f0edff;
+
+            --blue: #3b82e6;
+            --blue-soft: #eaf3ff;
+
+            --green: #34a978;
+            --green-soft: #eaf8f1;
+
+            --orange: #ef9f3d;
+            --orange-soft: #fff4e4;
+
+            --red: #df6464;
+            --red-soft: #fff0f0;
+
+            --yellow: #f5c950;
+            --yellow-soft: #fff8dc;
+
+            --line: #e3e5ee;
+
+            --shadow:
+                0 12px 35px rgba(48, 49, 90, 0.07);
+
+            --radius: 24px;
+            --max: 1120px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--text);
+            line-height: 1.65;
+
+            background:
+                radial-gradient(
+                    circle at 5% 5%,
+                    rgba(103,87,217,.08),
+                    transparent 22%
+                ),
+                radial-gradient(
+                    circle at 95% 15%,
+                    rgba(52,169,120,.07),
+                    transparent 20%
+                ),
+                var(--bg);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width: min(
+                var(--max),
+                calc(100% - 32px)
+            );
+
+            margin: 0 auto;
+        }
+
+        /* ==========================
+           HERO
+        ========================== */
+
+        .hero {
+            padding: 30px 0 12px;
+        }
+
+        .hero-box {
+            position: relative;
+
+            min-height: 420px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            padding: 58px;
+
+            border-radius: 34px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    rgba(52,42,140,.97) 0%,
+                    rgba(89,72,198,.94) 50%,
+                    rgba(58,132,194,.86) 100%
+                ),
+                url("img-1.jpg")
+                center / cover no-repeat;
+
+            box-shadow:
+                0 24px 60px
+                rgba(68,52,150,.22);
+        }
+
+        .hero-box::before {
+            content: "🔎";
+
+            position: absolute;
+
+            right: 60px;
+            top: 45px;
+
+            font-size: 115px;
+
+            opacity: .13;
+
+            transform: rotate(-8deg);
+        }
+
+        .hero-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 330px;
+            height: 330px;
+
+            right: -120px;
+            bottom: -170px;
+
+            border: 2px solid
+                rgba(255,255,255,.13);
+
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 720px;
+        }
+
+        .hero-label {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.25);
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 20px 0 17px;
+
+            font-size:
+                clamp(37px, 6vw, 63px);
+
+            line-height: 1.05;
+
+            letter-spacing: -1.5px;
+        }
+
+        .hero-text {
+            max-width: 650px;
+
+            margin: 0;
+
+            color:
+                rgba(255,255,255,.89);
+
+            font-size: 19px;
+        }
+
+        .hero-route {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            margin-top: 25px;
+        }
+
+        .hero-route span {
+            padding: 7px 11px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            font-size: 13px;
+        }
+
+        /* ==========================
+           ОБЩИЕ СТИЛИ
+        ========================== */
+
+        section {
+            margin: 23px 0;
+        }
+
+        .section-card {
+            padding: 35px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius:
+                var(--radius);
+
+            background:
+                var(--card);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .section-label {
+            display: inline-block;
+
+            margin-bottom: 11px;
+
+            padding: 5px 10px;
+
+            border-radius: 8px;
+
+            background:
+                var(--purple-soft);
+
+            color:
+                var(--purple-dark);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        h2 {
+            margin: 0 0 16px;
+
+            color: #2d3651;
+
+            font-size:
+                clamp(27px, 4vw, 37px);
+
+            line-height: 1.2;
+
+            letter-spacing: -.5px;
+        }
+
+        h3 {
+            margin: 0 0 8px;
+
+            color: #35405d;
+
+            font-size: 20px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            color: #59647a;
+
+            font-size: 18px;
+        }
+
+        .note {
+            margin-top: 20px;
+
+            padding: 18px 20px;
+
+            border-left:
+                5px solid
+                var(--purple);
+
+            border-radius: 13px;
+
+            background:
+                var(--purple-soft);
+        }
+
+        .note strong {
+            color:
+                var(--purple-dark);
+        }
+
+        /* ==========================
+           ПОВТОРЕНИЕ
+        ========================== */
+
+        .remember-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 23px;
+        }
+
+        .remember-card {
+            padding: 20px 15px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 18px;
+
+            background: #fafaff;
+        }
+
+        .remember-icon {
+            margin-bottom: 8px;
+
+            font-size: 39px;
+        }
+
+        .remember-card strong {
+            display: block;
+
+            margin-bottom: 4px;
+        }
+
+        .remember-card span {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        .transmission {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background: #26324c;
+
+            color: white;
+        }
+
+        .transmission-item {
+            padding: 12px 16px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255,255,255,.13);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+        .transmission-arrow {
+            color: #9ec8ff;
+
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ==========================
+           БРАУЗЕР
+        ========================== */
+
+        .browser {
+            margin-top: 25px;
+
+            overflow: hidden;
+
+            border:
+                1px solid #ccd2df;
+
+            border-radius: 20px;
+
+            background: white;
+
+            box-shadow:
+                0 14px 30px
+                rgba(42,50,75,.09);
+        }
+
+        .browser-top {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 12px;
+
+            background: #e9ebf1;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            background: #afb6c3;
+        }
+
+        .browser-address {
+            flex: 1;
+
+            margin-left: 9px;
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: #7c8698;
+
+            font-size: 13px;
+        }
+
+        .browser-page {
+            padding: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f9faff,
+                    #f3f6ff
+                );
+        }
+
+        .fake-site {
+            max-width: 700px;
+
+            margin: 0 auto;
+        }
+
+        .fake-title {
+            width: 58%;
+            height: 19px;
+
+            margin-bottom: 13px;
+
+            border-radius: 5px;
+
+            background: #6b63cf;
+        }
+
+        .fake-line {
+            height: 9px;
+
+            margin: 8px 0;
+
+            border-radius: 5px;
+
+            background: #dce0ea;
+        }
+
+        .fake-line.short {
+            width: 70%;
+        }
+
+        .fake-link {
+            display: inline-block;
+
+            margin-top: 16px;
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            background: #e7efff;
+
+            color: #3472d2;
+
+            font-weight: 700;
+        }
+
+        .browser-explain {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-top: 20px;
+        }
+
+        .browser-card {
+            padding: 18px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 16px;
+
+            background: #fafbfe;
+        }
+
+        .browser-card-icon {
+            margin-bottom: 8px;
+
+            font-size: 31px;
+        }
+
+        .browser-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           ПОИСК
+        ========================== */
+
+        .search-demo {
+            margin-top: 25px;
+
+            padding: 28px;
+
+            border-radius: 21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0edff,
+                    #edf6ff
+                );
+
+            border:
+                1px solid #ddd8f5;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+
+            max-width: 750px;
+
+            margin: 0 auto;
+
+            padding: 14px 18px;
+
+            border:
+                1px solid #d3d8e5;
+
+            border-radius: 999px;
+
+            background: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(60,62,100,.08);
+        }
+
+        .search-icon {
+            margin-right: 11px;
+
+            font-size: 21px;
+        }
+
+        .search-text {
+            flex: 1;
+
+            color: #424c62;
+
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 7px 14px;
+
+            border-radius: 999px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .query-comparison {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 16px;
+
+            margin-top: 22px;
+        }
+
+        .query {
+            padding: 20px;
+
+            border-radius: 17px;
+        }
+
+        .query.bad {
+            background: var(--red-soft);
+
+            border:
+                1px solid #f1cece;
+        }
+
+        .query.good {
+            background: var(--green-soft);
+
+            border:
+                1px solid #cde9dc;
+        }
+
+        .query-mark {
+            margin-bottom: 8px;
+
+            font-size: 30px;
+        }
+
+        .query-example {
+            margin: 10px 0 0;
+
+            padding: 9px 12px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.72);
+
+            font-weight: 600;
+        }
+
+        /* ==========================
+           ШАГИ ПОИСКА
+        ========================== */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 10px;
+
+            margin-top: 23px;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 18px 13px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 16px;
+
+            background: #fafbfe;
+        }
+
+        .step-number {
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 9px;
+
+            border-radius: 9px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .step-icon {
+            margin-bottom: 7px;
+
+            font-size: 28px;
+        }
+
+        .step span {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* ==========================
+           РЕЗУЛЬТАТЫ ПОИСКА
+        ========================== */
+
+        .results-box {
+            margin-top: 25px;
+
+            padding: 23px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 20px;
+
+            background: #f9fafc;
+        }
+
+        .result {
+            max-width: 800px;
+
+            margin-bottom: 18px;
+
+            padding-bottom: 18px;
+
+            border-bottom:
+                1px solid var(--line);
+        }
+
+        .result:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+
+            border-bottom: none;
+        }
+
+        .result-address {
+            color: #568065;
+
+            font-size: 12px;
+        }
+
+        .result-title {
+            margin: 3px 0 5px;
+
+            color: #365fc4;
+
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .result-text {
+            color: #697386;
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           ПРОВЕРКА ИНФОРМАЦИИ
+        ========================== */
+
+        .detective {
+            overflow: hidden;
+
+            border:
+                1px solid #e7dfc4;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fffdf5,
+                    #fff8df
+                );
+        }
+
+        .detective-heading {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .detective-big-icon {
+            font-size: 52px;
+        }
+
+        .check-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+
+            margin-top: 23px;
+        }
+
+        .check {
+            display: flex;
+
+            gap: 13px;
+
+            padding: 18px;
+
+            border:
+                1px solid #e9dfbc;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,.72);
+        }
+
+        .check-icon {
+            flex: 0 0 auto;
+
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                var(--yellow-soft);
+
+            font-size: 24px;
+        }
+
+        .check p {
+            margin: 2px 0 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           ФАКТ / МНЕНИЕ
+        ========================== */
+
+        .fact-opinion {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 16px;
+
+            margin-top: 22px;
+        }
+
+        .fact,
+        .opinion {
+            padding: 22px;
+
+            border-radius: 18px;
+        }
+
+        .fact {
+            border:
+                1px solid #cde3f5;
+
+            background: #edf7ff;
+        }
+
+        .opinion {
+            border:
+                1px solid #dfd5f5;
+
+            background: #f6f0ff;
+        }
+
+        .fact-icon {
+            margin-bottom: 8px;
+
+            font-size: 34px;
+        }
+
+        .example-text {
+            margin-top: 12px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.72);
+        }
+
+        /* ==========================
+           ПЕРЕДАЧА
+        ========================== */
+
+        .send-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 23px;
+        }
+
+        .send-card {
+            padding: 23px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 18px;
+
+            background: #fafbfe;
+        }
+
+        .send-icon {
+            margin-bottom: 10px;
+
+            font-size: 42px;
+        }
+
+        .send-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        .privacy-warning {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            margin-top: 20px;
+
+            padding: 18px;
+
+            border:
+                1px solid #f0d0d0;
+
+            border-radius: 15px;
+
+            background: var(--red-soft);
+        }
+
+        .privacy-icon {
+            flex: 0 0 auto;
+
+            font-size: 35px;
+        }
+
+        /* ==========================
+           ПРАКТИКА
+        ========================== */
+
+        .practice {
+            border-color: #cfe4d8;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4fff9,
+                    #f0fbff
+                );
+        }
+
+        .optional {
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            padding: 6px 11px;
+
+            border-radius: 999px;
+
+            background: #dff5e9;
+
+            color: #267651;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .practice-topic {
+            margin: 22px 0;
+
+            padding: 21px;
+
+            text-align: center;
+
+            border:
+                2px dashed #a9d5bd;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.68);
+        }
+
+        .practice-topic span {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #728078;
+
+            font-size: 13px;
+        }
+
+        .practice-topic strong {
+            color: #267651;
+
+            font-size: 22px;
+        }
+
+        .practice-steps {
+            display: flex;
+            flex-direction: column;
+
+            gap: 11px;
+        }
+
+        .practice-step {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 14px;
+
+            padding: 15px 17px;
+
+            border:
+                1px solid #d8e9df;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.78);
+        }
+
+        .practice-number {
+            flex: 0 0 auto;
+
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: var(--green);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .no-device {
+            margin-top: 18px;
+
+            padding: 15px 17px;
+
+            border-radius: 13px;
+
+            background: #edf3f8;
+
+            color: #5d6b79;
+        }
+
+        /* ==========================
+           QUESTIONS
+        ========================== */
+
+        .questions {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+            margin-top: 22px;
+        }
+
+        .question {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding: 17px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 15px;
+
+            background: #fafbfe;
+        }
+
+        .question-number {
+            flex: 0 0 auto;
+
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ==========================
+           SUMMARY
+        ========================== */
+
+        .summary {
+            color: white;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3d338d,
+                    #6352cb 55%,
+                    #327ca7
+                );
+        }
+
+        .summary h2 {
+            color: white;
+        }
+
+        .summary > p {
+            color:
+                rgba(255,255,255,.86);
+        }
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-top: 23px;
+        }
+
+        .summary-item {
+            padding: 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.15);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.09);
+        }
+
+        .summary-icon {
+            margin-bottom: 7px;
+
+            font-size: 29px;
+        }
+
+        .summary-item strong {
+            display: block;
+
+            margin-bottom: 4px;
+        }
+
+        .summary-item span {
+            color:
+                rgba(255,255,255,.73);
+
+            font-size: 13px;
+        }
+
+        .final-rule {
+            margin-top: 20px;
+
+            padding: 18px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255,255,255,.17);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.11);
+
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 22px 0 45px;
+
+            text-align: center;
+
+            color: #8a91a1;
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 760px) {
+
+            .container {
+                width:
+                    min(
+                        100% - 20px,
+                        var(--max)
+                    );
+            }
+
+            .hero {
+                padding-top: 10px;
+            }
+
+            .hero-box {
+                min-height: 410px;
+
+                padding: 36px 23px;
+
+                border-radius: 24px;
+            }
+
+            .hero-box::before {
+                right: 15px;
+                top: 20px;
+
+                font-size: 80px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+            }
+
+            section {
+                margin: 17px 0;
+            }
+
+            .section-card {
+                padding: 23px 18px;
+
+                border-radius: 19px;
+            }
+
+            h2 {
+                font-size: 27px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            /*
+                Наше главное мобильное правило:
+                все многоколоночные блоки
+                становятся вертикальными.
+            */
+
+            .remember-grid,
+            .browser-explain,
+            .query-comparison,
+            .steps,
+            .check-grid,
+            .fact-opinion,
+            .send-grid,
+            .questions,
+            .summary-grid {
+                display: flex;
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .remember-card,
+            .browser-card,
+            .query,
+            .step,
+            .check,
+            .fact,
+            .opinion,
+            .send-card,
+            .question,
+            .summary-item {
+                width: 100%;
+            }
+
+            .transmission {
+                flex-direction: column;
+            }
+
+            .transmission-item {
+                width: 100%;
+            }
+
+            .transmission-arrow {
+                transform: rotate(90deg);
+            }
+
+            .browser-top {
+                flex-wrap: wrap;
+            }
+
+            .browser-address {
+                width: 100%;
+                flex-basis: 100%;
+
+                margin: 5px 0 0;
+            }
+
+            .browser-page {
+                padding: 23px 16px;
+            }
+
+            .search-demo {
+                padding: 20px 13px;
+            }
+
+            .search-bar {
+                border-radius: 17px;
+            }
+
+            .search-button {
+                display: none;
+            }
+
+            .detective-heading {
+                align-items: flex-start;
+            }
+
+            .privacy-warning {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero-box {
+                padding: 30px 18px;
+            }
+
+            .section-card {
+                padding: 20px 14px;
+            }
+
+            .hero-route {
+                gap: 6px;
+            }
+
+            .hero-route span {
+                font-size: 12px;
+            }
+
+            .practice-topic strong {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- =================================
+         HERO
+    ================================== -->
+
+    <header class="hero">
+
+        <div class="hero-box">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    5 класс · Информатика · Часть 2
+                </span>
+
+                <h1>
+                    Ищем информацию<br>
+                    в Интернете 🔎
+                </h1>
+
+                <p class="hero-text">
+                    Интернет умеет хранить и передавать огромное количество
+                    информации. Сегодня научимся находить нужные сведения,
+                    выбирать подходящие источники и не верить всему подряд.
+                </p>
+
+                <div class="hero-route">
+                    <span>🌐 Открываем</span>
+                    <span>🔎 Ищем</span>
+                    <span>🧠 Проверяем</span>
+                    <span>📤 Передаём</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         1. ПОВТОРЕНИЕ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                01 · ВСПОМИНАЕМ
+            </span>
+
+            <h2>
+                Что мы уже знаем? 🧠
+            </h2>
+
+            <p class="lead">
+                На прошлом уроке мы узнали, как передаётся информация
+                и почему компьютеры объединяют в сети. Быстро вспомним
+                самое главное.
+            </p>
+
+
+            <div class="remember-grid">
+
+                <div class="remember-card">
+
+                    <div class="remember-icon">
+                        📤
+                    </div>
+
+                    <strong>
+                        Источник
+                    </strong>
+
+                    <span>
+                        Передаёт информацию
+                    </span>
+
+                </div>
+
+
+                <div class="remember-card">
+
+                    <div class="remember-icon">
+                        〰️
+                    </div>
+
+                    <strong>
+                        Канал связи
+                    </strong>
+
+                    <span>
+                        По нему передаётся информация
+                    </span>
+
+                </div>
+
+
+                <div class="remember-card">
+
+                    <div class="remember-icon">
+                        📥
+                    </div>
+
+                    <strong>
+                        Получатель
+                    </strong>
+
+                    <span>
+                        Принимает информацию
+                    </span>
+
+                </div>
+
+
+                <div class="remember-card">
+
+                    <div class="remember-icon">
+                        🌍
+                    </div>
+
+                    <strong>
+                        Интернет
+                    </strong>
+
+                    <span>
+                        Глобальная компьютерная сеть
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="transmission">
+
+                <div class="transmission-item">
+                    👧 Источник
+                </div>
+
+                <div class="transmission-arrow">
+                    →
+                </div>
+
+                <div class="transmission-item">
+                    📡 Канал связи
+                </div>
+
+                <div class="transmission-arrow">
+                    →
+                </div>
+
+                <div class="transmission-item">
+                    👦 Получатель
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                <strong>Сегодня идём дальше:</strong>
+                будем не просто говорить об Интернете,
+                а разберёмся, как с его помощью
+                <strong>находить, получать, проверять и передавать информацию.</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         2. ПОЛУЧЕНИЕ ИНФОРМАЦИИ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                02 · ВЕБ-СТРАНИЦЫ
+            </span>
+
+            <h2>
+                Как мы получаем информацию? 🌐
+            </h2>
+
+            <p class="lead">
+                Огромное количество информации в Интернете
+                размещается на <strong>веб-сайтах</strong>.
+                Сайты состоят из веб-страниц.
+            </p>
+
+
+            <div class="browser">
+
+                <div class="browser-top">
+
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+
+                    <div class="browser-address">
+                        🔒 https://example.ru/animals
+                    </div>
+
+                </div>
+
+
+                <div class="browser-page">
+
+                    <div class="fake-site">
+
+                        <div class="fake-title"></div>
+
+                        <div class="fake-line"></div>
+                        <div class="fake-line"></div>
+                        <div class="fake-line short"></div>
+
+                        <div class="fake-link">
+                            Перейти к следующей странице →
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="browser-explain">
+
+                <div class="browser-card">
+
+                    <div class="browser-card-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        Веб-сайт
+                    </h3>
+
+                    <p>
+                        Набор связанных веб-страниц,
+                        объединённых общей темой и адресом.
+                    </p>
+
+                </div>
+
+
+                <div class="browser-card">
+
+                    <div class="browser-card-icon">
+                        📍
+                    </div>
+
+                    <h3>
+                        Адресная строка
+                    </h3>
+
+                    <p>
+                        Здесь можно увидеть или ввести
+                        адрес веб-страницы.
+                    </p>
+
+                </div>
+
+
+                <div class="browser-card">
+
+                    <div class="browser-card-icon">
+                        🔗
+                    </div>
+
+                    <h3>
+                        Ссылка
+                    </h3>
+
+                    <p>
+                        Позволяет перейти на другую страницу,
+                        сайт или ресурс.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         3. ПОИСК
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                03 · ПОИСК ИНФОРМАЦИИ
+            </span>
+
+            <h2>
+                А если мы не знаем адрес сайта? 🔎
+            </h2>
+
+            <p class="lead">
+                Тогда найти нужную информацию помогает
+                <strong>поисковая система</strong>.
+            </p>
+
+            <p>
+                Мы задаём ей вопрос — <strong>поисковый запрос</strong>,
+                а система показывает страницы, которые могут содержать ответ.
+            </p>
+
+
+            <div class="search-demo">
+
+                <div class="search-bar">
+
+                    <div class="search-icon">
+                        🔎
+                    </div>
+
+                    <div class="search-text">
+                        Почему меняются времена года?
+                    </div>
+
+                    <div class="search-button">
+                        Найти
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                <strong>Поисковый запрос</strong> — это слова или фраза,
+                которые пользователь вводит в поисковую систему,
+                чтобы найти нужную информацию.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         4. ХОРОШИЙ ЗАПРОС
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                04 · КЛЮЧЕВЫЕ СЛОВА
+            </span>
+
+            <h2>
+                Как правильно спросить Интернет? 💬
+            </h2>
+
+            <p>
+                Поисковая система не умеет читать наши мысли.
+                Поэтому важно использовать слова, которые
+                точно описывают то, что мы хотим найти.
+            </p>
+
+
+            <div class="query-comparison">
+
+                <div class="query bad">
+
+                    <div class="query-mark">
+                        😕
+                    </div>
+
+                    <h3>
+                        Слишком общий запрос
+                    </h3>
+
+                    <p>
+                        Поисковая система может показать
+                        огромное количество разных страниц.
+                    </p>
+
+                    <div class="query-example">
+                        «времена года»
+                    </div>
+
+                </div>
+
+
+                <div class="query good">
+
+                    <div class="query-mark">
+                        🎯
+                    </div>
+
+                    <h3>
+                        Более точный запрос
+                    </h3>
+
+                    <p>
+                        В запросе понятно, какой именно
+                        ответ нам нужен.
+                    </p>
+
+                    <div class="query-example">
+                        «почему меняются времена года»
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Если нужного ответа нет,
+                <strong>измени или уточни запрос</strong>.
+                Иногда достаточно добавить несколько важных слов.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         5. АЛГОРИТМ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                05 · АЛГОРИТМ
+            </span>
+
+            <h2>
+                Пять шагов хорошего поиска 🧭
+            </h2>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-icon">
+                        🤔
+                    </div>
+
+                    <strong>
+                        Подумай
+                    </strong>
+
+                    <span>
+                        Что именно нужно узнать?
+                    </span>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-icon">
+                        ⌨️
+                    </div>
+
+                    <strong>
+                        Составь запрос
+                    </strong>
+
+                    <span>
+                        Используй ключевые слова.
+                    </span>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-icon">
+                        🔎
+                    </div>
+
+                    <strong>
+                        Посмотри результаты
+                    </strong>
+
+                    <span>
+                        Выбери подходящую страницу.
+                    </span>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-icon">
+                        📖
+                    </div>
+
+                    <strong>
+                        Найди ответ
+                    </strong>
+
+                    <span>
+                        Прочитай нужную информацию.
+                    </span>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div class="step-icon">
+                        🧐
+                    </div>
+
+                    <strong>
+                        Проверь
+                    </strong>
+
+                    <span>
+                        Можно ли доверять источнику?
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         6. РЕЗУЛЬТАТЫ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                06 · ВЫБИРАЕМ РЕЗУЛЬТАТ
+            </span>
+
+            <h2>
+                Поиск нашёл много страниц. Что дальше?
+            </h2>
+
+            <p>
+                Результаты поиска могут быть разными.
+                Необязательно открывать первую попавшуюся страницу.
+            </p>
+
+
+            <div class="results-box">
+
+                <div class="result">
+
+                    <div class="result-address">
+                        educational-site.ru › seasons
+                    </div>
+
+                    <div class="result-title">
+                        Почему на Земле меняются времена года?
+                    </div>
+
+                    <div class="result-text">
+                        Учебный материал о движении Земли
+                        вокруг Солнца и смене времён года...
+                    </div>
+
+                </div>
+
+
+                <div class="result">
+
+                    <div class="result-address">
+                        encyclopedia.example › earth
+                    </div>
+
+                    <div class="result-title">
+                        Земля и её движение вокруг Солнца
+                    </div>
+
+                    <div class="result-text">
+                        Информация о Земле, её движении,
+                        наклоне оси и годовом цикле...
+                    </div>
+
+                </div>
+
+
+                <div class="result">
+
+                    <div class="result-address">
+                        unknown-example.ru
+                    </div>
+
+                    <div class="result-title">
+                        ШОК! Настоящая причина смены времён года!!!
+                    </div>
+
+                    <div class="result-text">
+                        Сенсационная информация, которую
+                        от вас скрывали...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Название страницы может подсказать её содержание,
+                но этого недостаточно. После перехода на сайт
+                нужно посмотреть, <strong>кто и где опубликовал информацию</strong>
+                и соответствует ли она нашему вопросу.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         7. ПРОВЕРКА
+    ================================== -->
+
+    <section>
+
+        <div class="section-card detective">
+
+            <div class="detective-heading">
+
+                <div class="detective-big-icon">
+                    🕵️
+                </div>
+
+                <div>
+
+                    <span class="section-label">
+                        07 · ИНФОРМАЦИОННЫЙ ДЕТЕКТИВ
+                    </span>
+
+                    <h2>
+                        Можно ли верить всему в Интернете?
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <p class="lead">
+                Нет. Информация может быть
+                <strong>полезной, ошибочной или устаревшей</strong>.
+                Поэтому хороший пользователь Интернета
+                не только ищет — он ещё и проверяет.
+            </p>
+
+
+            <div class="check-grid">
+
+                <div class="check">
+
+                    <div class="check-icon">
+                        🏠
+                    </div>
+
+                    <div>
+                        <h3>
+                            Посмотри на сайт
+                        </h3>
+
+                        <p>
+                            Где размещена информация?
+                            Что это за ресурс?
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="check">
+
+                    <div class="check-icon">
+                        👤
+                    </div>
+
+                    <div>
+                        <h3>
+                            Кто сообщает?
+                        </h3>
+
+                        <p>
+                            Указан ли автор или организация,
+                            подготовившая материал?
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="check">
+
+                    <div class="check-icon">
+                        📅
+                    </div>
+
+                    <div>
+                        <h3>
+                            Когда опубликовано?
+                        </h3>
+
+                        <p>
+                            Некоторые сведения со временем
+                            могут устареть.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="check">
+
+                    <div class="check-icon">
+                        🔄
+                    </div>
+
+                    <div>
+                        <h3>
+                            Сравни
+                        </h3>
+
+                        <p>
+                            Если информация важна,
+                            полезно проверить её ещё
+                            в одном источнике.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                <strong>Главное правило:</strong>
+                наличие информации в Интернете ещё не означает,
+                что эта информация правильная.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         8. ФАКТ / МНЕНИЕ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                08 · ФАКТ И МНЕНИЕ
+            </span>
+
+            <h2>
+                Факт или чьё-то мнение? 🤔
+            </h2>
+
+            <p>
+                В Интернете можно встретить и проверяемые сведения,
+                и личные оценки людей. Их важно различать.
+            </p>
+
+
+            <div class="fact-opinion">
+
+                <div class="fact">
+
+                    <div class="fact-icon">
+                        📘
+                    </div>
+
+                    <h3>
+                        Факт
+                    </h3>
+
+                    <p>
+                        Сведения, которые можно проверить.
+                    </p>
+
+                    <div class="example-text">
+                        «В одном году 12 месяцев».
+                    </div>
+
+                </div>
+
+
+                <div class="opinion">
+
+                    <div class="fact-icon">
+                        💭
+                    </div>
+
+                    <h3>
+                        Мнение
+                    </h3>
+
+                    <p>
+                        Личная оценка, вкус или отношение человека.
+                    </p>
+
+                    <div class="example-text">
+                        «Зима — самое красивое время года».
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Слова <strong>«лучший», «самый красивый»,
+                «интересный», «скучный»</strong> часто выражают
+                чьё-либо мнение, а не проверяемый факт.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         9. ПЕРЕДАЧА
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                09 · ПЕРЕДАЁМ ИНФОРМАЦИЮ
+            </span>
+
+            <h2>
+                Интернет работает в обе стороны 📤📥
+            </h2>
+
+            <p class="lead">
+                С помощью сети мы можем не только
+                <strong>получать</strong> информацию,
+                но и <strong>передавать</strong> её другим людям.
+            </p>
+
+
+            <div class="send-grid">
+
+                <div class="send-card">
+
+                    <div class="send-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        Сообщения
+                    </h3>
+
+                    <p>
+                        Пользователи могут передавать
+                        друг другу текстовые сообщения.
+                    </p>
+
+                </div>
+
+
+                <div class="send-card">
+
+                    <div class="send-icon">
+                        📎
+                    </div>
+
+                    <h3>
+                        Файлы
+                    </h3>
+
+                    <p>
+                        Через сеть можно отправлять
+                        документы, изображения и другие файлы.
+                    </p>
+
+                </div>
+
+
+                <div class="send-card">
+
+                    <div class="send-icon">
+                        ✉️
+                    </div>
+
+                    <h3>
+                        Электронная почта
+                    </h3>
+
+                    <p>
+                        Позволяет передавать электронные
+                        письма через Интернет.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="privacy-warning">
+
+                <div class="privacy-icon">
+                    🔐
+                </div>
+
+                <div>
+                    <strong>
+                        Помни о безопасности
+                    </strong>
+
+                    <div>
+                        Не передавай посторонним людям пароли,
+                        домашний адрес, номер телефона и другие
+                        личные сведения.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         10. ПРАКТИКА
+    ================================== -->
+
+    <section>
+
+        <div class="section-card practice">
+
+            <span class="optional">
+                💻 Практика · по возможности
+            </span>
+
+            <h2>
+                Попробуй найти ответ самостоятельно
+            </h2>
+
+            <p>
+                Если у тебя есть доступное устройство
+                и возможность выполнить задание,
+                попробуй пройти небольшой путь
+                интернет-исследователя.
+            </p>
+
+
+            <div class="practice-topic">
+
+                <span>
+                    Наш вопрос
+                </span>
+
+                <strong>
+                    🌍 Почему меняются времена года?
+                </strong>
+
+            </div>
+
+
+            <div class="practice-steps">
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        1
+                    </div>
+
+                    <div>
+                        <strong>
+                            Открой браузер.
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        2
+                    </div>
+
+                    <div>
+                        <strong>
+                            Сформулируй запрос.
+                        </strong>
+
+                        Например:
+                        «Почему меняются времена года?»
+                    </div>
+
+                </div>
+
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        3
+                    </div>
+
+                    <div>
+                        <strong>
+                            Посмотри результаты поиска
+                        </strong>
+                        и выбери один подходящий источник.
+                    </div>
+
+                </div>
+
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        4
+                    </div>
+
+                    <div>
+                        <strong>
+                            Найди на странице ответ
+                        </strong>
+                        на поставленный вопрос.
+                    </div>
+
+                </div>
+
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        5
+                    </div>
+
+                    <div>
+                        <strong>
+                            Обрати внимание на источник.
+                        </strong>
+
+                        Как называется сайт?
+                        Соответствует ли страница твоему вопросу?
+                    </div>
+
+                </div>
+
+
+                <div class="practice-step">
+
+                    <div class="practice-number">
+                        6
+                    </div>
+
+                    <div>
+                        <strong>
+                            Если хочешь — сравни
+                        </strong>
+                        ответ ещё с одним источником.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="no-device">
+                📌 <strong>Важно:</strong>
+                если подходящего устройства нет,
+                практическое задание выполнять не нужно.
+                Главное — понять сам принцип поиска информации.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         11. ЗАКРЕПЛЕНИЕ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                11 · ЗАКРЕПЛЕНИЕ
+            </span>
+
+            <h2>
+                Проверим, что запомнилось 🧠
+            </h2>
+
+
+            <div class="questions">
+
+                <div class="question">
+
+                    <div class="question-number">
+                        1
+                    </div>
+
+                    <div>
+                        Для чего нужна адресная строка браузера?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        2
+                    </div>
+
+                    <div>
+                        Что такое ссылка?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        3
+                    </div>
+
+                    <div>
+                        Что такое поисковая система?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        4
+                    </div>
+
+                    <div>
+                        Что называется поисковым запросом?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        5
+                    </div>
+
+                    <div>
+                        Зачем в запросе использовать ключевые слова?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        6
+                    </div>
+
+                    <div>
+                        Что можно сделать, если поиск
+                        не дал подходящего ответа?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        7
+                    </div>
+
+                    <div>
+                        Почему нельзя безусловно доверять
+                        любой информации из Интернета?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        8
+                    </div>
+
+                    <div>
+                        На что стоит обратить внимание
+                        при выборе источника информации?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        9
+                    </div>
+
+                    <div>
+                        Зачем сравнивать сведения
+                        из нескольких источников?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        10
+                    </div>
+
+                    <div>
+                        Чем факт отличается от мнения?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        11
+                    </div>
+
+                    <div>
+                        Какие виды информации можно
+                        передавать через Интернет?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        12
+                    </div>
+
+                    <div>
+                        Какие правила безопасности нужно соблюдать
+                        при передаче информации через сеть?
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         ИТОГ
+    ================================== -->
+
+    <section>
+
+        <div class="section-card summary">
+
+            <h2>
+                Итог урока 🎓
+            </h2>
+
+            <p>
+                Интернет помогает нам получать и передавать информацию.
+                Но хороший пользователь сети умеет не только найти страницу —
+                он понимает, <strong>что ищет, где нашёл информацию
+                и можно ли ей доверять.</strong>
+            </p>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🔎
+                    </div>
+
+                    <strong>
+                        Ищи
+                    </strong>
+
+                    <span>
+                        Формулируй понятный
+                        и точный запрос.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        📖
+                    </div>
+
+                    <strong>
+                        Читай
+                    </strong>
+
+                    <span>
+                        Выбирай материал,
+                        который отвечает на вопрос.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🧐
+                    </div>
+
+                    <strong>
+                        Проверяй
+                    </strong>
+
+                    <span>
+                        Обращай внимание
+                        на источник информации.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🔐
+                    </div>
+
+                    <strong>
+                        Будь осторожен
+                    </strong>
+
+                    <span>
+                        Соблюдай правила
+                        безопасности в сети.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="final-rule">
+                🔎 Найти информацию — это только половина дела.
+                Важно ещё понять, можно ли ей доверять.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Информатика · 5 класс · Передача информации.
+        Сеть Интернет · Часть 2
+    </footer>
+
+</div>
+
+</body>
+</html>

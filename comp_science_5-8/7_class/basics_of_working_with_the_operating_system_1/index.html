@@ -1,0 +1,3060 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Основы работы с операционной системой — часть 1 | 8 класс</title>
+
+    <style>
+        :root {
+            --bg: #f3f5f8;
+            --card: #ffffff;
+            --text: #202b3c;
+            --muted: #687487;
+            --line: #dde3eb;
+
+            --dark: #172233;
+            --dark-soft: #202e43;
+
+            --blue: #3977d5;
+            --blue-soft: #eaf2ff;
+
+            --cyan: #36a8ba;
+            --cyan-soft: #e8f7f8;
+
+            --green: #3d9c72;
+            --green-soft: #eaf7f1;
+
+            --orange: #e99a3d;
+            --orange-soft: #fff4e5;
+
+            --purple: #7568cf;
+            --purple-soft: #f0edff;
+
+            --red: #d86161;
+            --red-soft: #fff0f0;
+
+            --shadow:
+                0 12px 32px rgba(35, 49, 68, .07);
+
+            --radius: 22px;
+            --max: 1140px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--text);
+            line-height: 1.65;
+
+            background:
+                radial-gradient(
+                    circle at 5% 2%,
+                    rgba(57,119,213,.07),
+                    transparent 22%
+                ),
+                radial-gradient(
+                    circle at 96% 12%,
+                    rgba(54,168,186,.06),
+                    transparent 20%
+                ),
+                var(--bg);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width:
+                min(
+                    var(--max),
+                    calc(100% - 32px)
+                );
+
+            margin: 0 auto;
+        }
+
+        /* ===================================
+           HERO
+        =================================== */
+
+        .hero {
+            padding: 30px 0 12px;
+        }
+
+        .hero-box {
+            position: relative;
+
+            min-height: 430px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            padding: 58px;
+
+            border-radius: 32px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    rgba(15,27,45,.98) 0%,
+                    rgba(24,51,81,.95) 48%,
+                    rgba(34,92,115,.78) 100%
+                ),
+                url("img-1.jpg")
+                center / cover no-repeat;
+
+            box-shadow:
+                0 24px 60px rgba(22,43,68,.22);
+        }
+
+        .hero-box::before {
+            content: "⚙️";
+
+            position: absolute;
+
+            right: 55px;
+            top: 38px;
+
+            font-size: 125px;
+
+            opacity: .1;
+
+            transform: rotate(15deg);
+        }
+
+        .hero-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 330px;
+            height: 330px;
+
+            right: -120px;
+            bottom: -170px;
+
+            border:
+                1px solid rgba(255,255,255,.13);
+
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 740px;
+        }
+
+        .hero-label {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border:
+                1px solid rgba(255,255,255,.23);
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.1);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 19px 0 16px;
+
+            font-size:
+                clamp(38px, 6vw, 64px);
+
+            line-height: 1.05;
+
+            letter-spacing: -1.5px;
+        }
+
+        .hero-text {
+            max-width: 680px;
+
+            margin: 0;
+
+            color:
+                rgba(255,255,255,.86);
+
+            font-size: 19px;
+        }
+
+        .course-progress {
+            display: flex;
+            gap: 8px;
+
+            margin-top: 28px;
+        }
+
+        .course-step {
+            padding: 7px 12px;
+
+            border:
+                1px solid rgba(255,255,255,.15);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            color:
+                rgba(255,255,255,.68);
+
+            font-size: 13px;
+        }
+
+        .course-step.active {
+            background: white;
+            color: #233653;
+
+            font-weight: 700;
+        }
+
+        /* ===================================
+           COMMON
+        =================================== */
+
+        section {
+            margin: 23px 0;
+        }
+
+        .section-card {
+            padding: 35px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius:
+                var(--radius);
+
+            background:
+                var(--card);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .section-label {
+            display: inline-block;
+
+            margin-bottom: 10px;
+
+            padding: 5px 10px;
+
+            border-radius: 8px;
+
+            background:
+                var(--blue-soft);
+
+            color:
+                #285fae;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        h2 {
+            margin: 0 0 16px;
+
+            color: #26344a;
+
+            font-size:
+                clamp(27px, 4vw, 37px);
+
+            line-height: 1.2;
+
+            letter-spacing: -.5px;
+        }
+
+        h3 {
+            margin: 0 0 8px;
+
+            color: #31415a;
+
+            font-size: 20px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            color: #59677b;
+
+            font-size: 18px;
+        }
+
+        .note {
+            margin-top: 20px;
+
+            padding: 18px 20px;
+
+            border-left:
+                5px solid var(--blue);
+
+            border-radius: 13px;
+
+            background:
+                var(--blue-soft);
+        }
+
+        .note strong {
+            color: #285fae;
+        }
+
+        /* ===================================
+           BIG QUESTION
+        =================================== */
+
+        .big-question {
+            display: grid;
+
+            grid-template-columns:
+                1fr .8fr;
+
+            gap: 25px;
+
+            align-items: center;
+        }
+
+        .computer-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 280px;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #edf3fb,
+                    #e8f4f5
+                );
+
+            border:
+                1px solid var(--line);
+        }
+
+        .computer-stack {
+            text-align: center;
+        }
+
+        .computer-icon {
+            font-size: 100px;
+            line-height: 1;
+        }
+
+        .computer-question {
+            margin-top: 12px;
+
+            color: #607086;
+
+            font-weight: 600;
+        }
+
+        /* ===================================
+           SOFTWARE
+        =================================== */
+
+        .software-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 17px;
+
+            margin-top: 24px;
+        }
+
+        .software-card {
+            padding: 25px;
+
+            border-radius: 19px;
+
+            border:
+                1px solid var(--line);
+        }
+
+        .software-card.system {
+            background: var(--blue-soft);
+            border-color: #d1e0f6;
+        }
+
+        .software-card.application {
+            background: var(--green-soft);
+            border-color: #cee8dc;
+        }
+
+        .software-icon {
+            margin-bottom: 10px;
+
+            font-size: 43px;
+        }
+
+        .software-card p {
+            color: #647185;
+        }
+
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-top: 15px;
+        }
+
+        .example-chip {
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,.7);
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ===================================
+           OS DEFINITION
+        =================================== */
+
+        .os-definition {
+            margin-top: 25px;
+
+            padding: 27px;
+
+            border-radius: 21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17263b,
+                    #213c59
+                );
+
+            color: white;
+        }
+
+        .os-definition-title {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        .os-definition-icon {
+            font-size: 42px;
+        }
+
+        .os-definition h3 {
+            margin: 0;
+
+            color: white;
+
+            font-size: 25px;
+        }
+
+        .os-definition p {
+            margin: 0;
+
+            color:
+                rgba(255,255,255,.79);
+
+            font-size: 17px;
+        }
+
+        /* ===================================
+           INTERACTION SCHEME
+        =================================== */
+
+        .interaction {
+            display: grid;
+
+            grid-template-columns:
+                1fr auto 1.2fr auto 1fr;
+
+            gap: 12px;
+
+            align-items: center;
+
+            margin-top: 26px;
+
+            padding: 28px;
+
+            border-radius: 21px;
+
+            background: #f5f7fa;
+
+            border:
+                1px solid var(--line);
+        }
+
+        .interaction-card {
+            min-height: 155px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            background: white;
+
+            border:
+                1px solid var(--line);
+        }
+
+        .interaction-card.os {
+            color: white;
+
+            border-color: transparent;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3977d5,
+                    #376ba9
+                );
+        }
+
+        .interaction-icon {
+            margin-bottom: 8px;
+
+            font-size: 42px;
+        }
+
+        .interaction-card span {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        .interaction-card.os span {
+            color:
+                rgba(255,255,255,.75);
+        }
+
+        .interaction-arrow {
+            color: #7c8ca1;
+
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        /* ===================================
+           OS EXAMPLES
+        =================================== */
+
+        .os-examples {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+
+            margin-top: 23px;
+        }
+
+        .os-example {
+            padding: 20px 10px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 16px;
+
+            background: #fafbfc;
+        }
+
+        .os-example-icon {
+            margin-bottom: 7px;
+
+            font-size: 36px;
+        }
+
+        .os-example span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        /* ===================================
+           FUNCTIONS
+        =================================== */
+
+        .function-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-top: 24px;
+        }
+
+        .function-card {
+            padding: 21px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 17px;
+
+            background: #fafbfc;
+        }
+
+        .function-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 12px;
+
+            border-radius: 14px;
+
+            background: var(--blue-soft);
+
+            font-size: 26px;
+        }
+
+        .function-card:nth-child(2) .function-icon {
+            background: var(--purple-soft);
+        }
+
+        .function-card:nth-child(3) .function-icon {
+            background: var(--green-soft);
+        }
+
+        .function-card:nth-child(4) .function-icon {
+            background: var(--orange-soft);
+        }
+
+        .function-card:nth-child(5) .function-icon {
+            background: var(--cyan-soft);
+        }
+
+        .function-card:nth-child(6) .function-icon {
+            background: var(--red-soft);
+        }
+
+        .function-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* ===================================
+           BOOT
+        =================================== */
+
+        .boot-section {
+            border-color: #d9e1eb;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbfcfe,
+                    #f2f6fa
+                );
+        }
+
+        .boot-flow {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .boot-step {
+            position: relative;
+
+            padding: 22px 17px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 17px;
+
+            background: white;
+        }
+
+        .boot-number {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 10px;
+
+            border-radius: 8px;
+
+            background: var(--dark);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .boot-icon {
+            margin-bottom: 8px;
+
+            font-size: 32px;
+        }
+
+        .boot-step p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        .boot-comparison {
+            display: grid;
+
+            grid-template-columns:
+                1fr auto 1fr;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background: #e9eef5;
+        }
+
+        .boot-state {
+            padding: 15px;
+
+            text-align: center;
+
+            border-radius: 13px;
+
+            background: white;
+        }
+
+        .boot-state-icon {
+            font-size: 30px;
+        }
+
+        .boot-arrow {
+            color: #65758a;
+
+            font-size: 25px;
+        }
+
+        /* ===================================
+           COMPONENTS
+        =================================== */
+
+        .components {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-top: 23px;
+        }
+
+        .component {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 23px 18px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 18px;
+
+            background: white;
+        }
+
+        .component::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background: var(--blue);
+        }
+
+        .component:nth-child(2)::before {
+            background: var(--green);
+        }
+
+        .component:nth-child(3)::before {
+            background: var(--orange);
+        }
+
+        .component:nth-child(4)::before {
+            background: var(--purple);
+        }
+
+        .component-icon {
+            margin-bottom: 10px;
+
+            font-size: 38px;
+        }
+
+        .component p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* ===================================
+           KERNEL VISUAL
+        =================================== */
+
+        .kernel-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 24px;
+
+            padding: 32px 20px;
+
+            border-radius: 20px;
+
+            background: #182538;
+        }
+
+        .kernel-layers {
+            width: 100%;
+            max-width: 750px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .kernel-layer {
+            padding: 14px 18px;
+
+            text-align: center;
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            border-radius: 11px;
+
+            color: white;
+        }
+
+        .kernel-layer.user {
+            background:
+                rgba(117,104,207,.35);
+        }
+
+        .kernel-layer.apps {
+            background:
+                rgba(54,168,186,.32);
+        }
+
+        .kernel-layer.kernel {
+            padding: 20px;
+
+            background:
+                rgba(57,119,213,.65);
+
+            font-weight: 700;
+        }
+
+        .kernel-layer.hardware {
+            background:
+                rgba(255,255,255,.09);
+        }
+
+        .kernel-small {
+            display: block;
+
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,.65);
+
+            font-size: 12px;
+        }
+
+        /* ===================================
+           INTERFACE
+        =================================== */
+
+        .interface-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 24px;
+        }
+
+        .interface-card {
+            overflow: hidden;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 19px;
+
+            background: #fafbfc;
+        }
+
+        .interface-head {
+            padding: 21px;
+        }
+
+        .interface-visual {
+            min-height: 235px;
+
+            padding: 18px;
+
+            background: #e9eef5;
+        }
+
+        /* Fake GUI */
+
+        .desktop-demo {
+            position: relative;
+
+            height: 200px;
+
+            overflow: hidden;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2c6197,
+                    #48a0ad
+                );
+        }
+
+        .desktop-icons {
+            position: absolute;
+
+            left: 14px;
+            top: 14px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .desktop-icon {
+            color: white;
+
+            font-size: 22px;
+
+            text-shadow:
+                0 1px 3px rgba(0,0,0,.3);
+        }
+
+        .fake-window {
+            position: absolute;
+
+            width: 65%;
+            height: 68%;
+
+            left: 23%;
+            top: 13%;
+
+            overflow: hidden;
+
+            border-radius: 8px;
+
+            background: white;
+
+            box-shadow:
+                0 12px 25px rgba(0,0,0,.18);
+        }
+
+        .fake-window-top {
+            height: 25px;
+
+            background: #e5e8ed;
+        }
+
+        .fake-window-content {
+            padding: 12px;
+        }
+
+        .window-line {
+            height: 7px;
+
+            margin: 8px 0;
+
+            border-radius: 5px;
+
+            background: #dce2ea;
+        }
+
+        .window-line.short {
+            width: 60%;
+        }
+
+        .taskbar {
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 26px;
+
+            background:
+                rgba(20,28,40,.8);
+        }
+
+        /* Fake terminal */
+
+        .terminal {
+            height: 200px;
+
+            padding: 18px;
+
+            overflow: hidden;
+
+            border-radius: 11px;
+
+            background: #17202d;
+
+            color: #cfe5d5;
+
+            font-family:
+                Consolas,
+                monospace;
+
+            font-size: 13px;
+        }
+
+        .terminal-line {
+            margin-bottom: 9px;
+        }
+
+        .prompt {
+            color: #6ed39b;
+        }
+
+        /* ===================================
+           GUI ELEMENTS
+        =================================== */
+
+        .gui-elements {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 11px;
+
+            margin-top: 20px;
+        }
+
+        .gui-element {
+            padding: 17px 10px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 14px;
+
+            background: #fafbfc;
+        }
+
+        .gui-icon {
+            margin-bottom: 6px;
+
+            font-size: 30px;
+        }
+
+        /* ===================================
+           QUESTIONS
+        =================================== */
+
+        .questions {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+            margin-top: 22px;
+        }
+
+        .question {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding: 17px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 15px;
+
+            background: #fafbfc;
+        }
+
+        .question-number {
+            flex: 0 0 auto;
+
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: var(--dark);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ===================================
+           SUMMARY
+        =================================== */
+
+        .summary {
+            color: white;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17263a,
+                    #23486c 55%,
+                    #267582
+                );
+        }
+
+        .summary h2 {
+            color: white;
+        }
+
+        .summary > p {
+            color:
+                rgba(255,255,255,.82);
+        }
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-top: 23px;
+        }
+
+        .summary-item {
+            padding: 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.14);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+        .summary-icon {
+            margin-bottom: 7px;
+
+            font-size: 29px;
+        }
+
+        .summary-item strong {
+            display: block;
+
+            margin-bottom: 4px;
+        }
+
+        .summary-item span {
+            color:
+                rgba(255,255,255,.68);
+
+            font-size: 13px;
+        }
+
+        .next-lesson {
+            margin-top: 22px;
+
+            padding: 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.15);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.09);
+        }
+
+        .next-lesson-label {
+            color: #9bd7e0;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: .6px;
+        }
+
+        .next-lesson strong {
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 17px;
+        }
+
+        footer {
+            padding: 22px 0 45px;
+
+            text-align: center;
+
+            color: #8994a3;
+
+            font-size: 14px;
+        }
+
+        /* ===================================
+           MOBILE
+        =================================== */
+
+        @media (max-width: 760px) {
+
+            .container {
+                width:
+                    min(
+                        100% - 20px,
+                        var(--max)
+                    );
+            }
+
+            .hero {
+                padding-top: 10px;
+            }
+
+            .hero-box {
+                min-height: 430px;
+
+                padding: 36px 23px;
+
+                border-radius: 24px;
+            }
+
+            .hero-box::before {
+                right: 15px;
+                top: 20px;
+
+                font-size: 80px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+            }
+
+            .course-progress {
+                flex-wrap: wrap;
+            }
+
+            section {
+                margin: 17px 0;
+            }
+
+            .section-card {
+                padding: 23px 18px;
+
+                border-radius: 19px;
+            }
+
+            h2 {
+                font-size: 27px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            /* Все основные сетки
+               превращаются в один столбец */
+
+            .big-question,
+            .software-grid,
+            .function-grid,
+            .boot-flow,
+            .components,
+            .interface-grid,
+            .gui-elements,
+            .questions,
+            .summary-grid,
+            .os-examples {
+                display: flex;
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .software-card,
+            .function-card,
+            .boot-step,
+            .component,
+            .interface-card,
+            .gui-element,
+            .question,
+            .summary-item,
+            .os-example {
+                width: 100%;
+            }
+
+            .interaction {
+                display: flex;
+                flex-direction: column;
+
+                padding: 20px 14px;
+            }
+
+            .interaction-card {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .interaction-arrow {
+                transform: rotate(90deg);
+            }
+
+            .boot-comparison {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .boot-state {
+                width: 100%;
+            }
+
+            .boot-arrow {
+                transform: rotate(90deg);
+            }
+
+            .computer-visual {
+                min-height: 220px;
+            }
+
+            .computer-icon {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .hero-box {
+                padding: 30px 18px;
+            }
+
+            .section-card {
+                padding: 20px 14px;
+            }
+
+            .os-definition {
+                padding: 21px 17px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- ===================================
+         HERO
+    =================================== -->
+
+    <header class="hero">
+
+        <div class="hero-box">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    8 класс · Информатика
+                </span>
+
+                <h1>
+                    Основы работы<br>
+                    с операционной системой
+                </h1>
+
+                <p class="hero-text">
+                    Что происходит между нажатием кнопки питания
+                    и появлением рабочего стола? Кто управляет памятью,
+                    программами и устройствами компьютера?
+                    Начинаем знакомство с операционной системой.
+                </p>
+
+
+                <div class="course-progress">
+
+                    <span class="course-step active">
+                        1 · Основы
+                    </span>
+
+                    <span class="course-step">
+                        2 · Объекты ОС
+                    </span>
+
+                    <span class="course-step">
+                        3 · Работа с системой
+                    </span>
+
+                    <span class="course-step">
+                        4 · Продолжение
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ===================================
+         1. ВВЕДЕНИЕ
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                01 · НАЧИНАЕМ
+            </span>
+
+
+            <div class="big-question">
+
+                <div>
+
+                    <h2>
+                        Компьютер включён. Что дальше? 🤔
+                    </h2>
+
+                    <p class="lead">
+                        Внутри компьютера есть процессор,
+                        оперативная память, накопитель,
+                        видеокарта и множество других устройств.
+                    </p>
+
+                    <p>
+                        Но сами по себе эти устройства ещё не дают
+                        нам привычного рабочего стола, окон,
+                        файлов и возможности запускать программы.
+                    </p>
+
+                    <div class="note">
+                        Чтобы все части компьютера могли работать
+                        как единая система, необходимо
+                        <strong>программное обеспечение.</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="computer-visual">
+
+                    <div class="computer-stack">
+
+                        <div class="computer-icon">
+                            🖥️
+                        </div>
+
+                        <div class="computer-question">
+                            Кто всем этим управляет?
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         2. SOFTWARE
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                02 · ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ
+            </span>
+
+            <h2>
+                Компьютеру нужны программы
+            </h2>
+
+            <p class="lead">
+                <strong>Программное обеспечение (ПО)</strong> —
+                совокупность программ, которые позволяют
+                компьютеру выполнять различные задачи.
+            </p>
+
+            <p>
+                На базовом уровне программное обеспечение
+                можно разделить на две большие группы.
+            </p>
+
+
+            <div class="software-grid">
+
+                <div class="software-card system">
+
+                    <div class="software-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        Системное ПО
+                    </h3>
+
+                    <p>
+                        Обеспечивает работу самого компьютера
+                        и взаимодействие его компонентов.
+                    </p>
+
+                    <div class="examples">
+                        <span class="example-chip">Операционная система</span>
+                        <span class="example-chip">Драйверы</span>
+                        <span class="example-chip">Утилиты</span>
+                    </div>
+
+                </div>
+
+
+                <div class="software-card application">
+
+                    <div class="software-icon">
+                        🧩
+                    </div>
+
+                    <h3>
+                        Прикладное ПО
+                    </h3>
+
+                    <p>
+                        Помогает пользователю решать
+                        конкретные задачи.
+                    </p>
+
+                    <div class="examples">
+                        <span class="example-chip">Браузер</span>
+                        <span class="example-chip">Редактор</span>
+                        <span class="example-chip">Игра</span>
+                        <span class="example-chip">Медиаплеер</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                <strong>Операционная система относится
+                к системному программному обеспечению.</strong>
+                Она создаёт основу, на которой работают
+                остальные программы.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         3. ЧТО ТАКОЕ ОС
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                03 · ОПЕРАЦИОННАЯ СИСТЕМА
+            </span>
+
+            <h2>
+                Что такое операционная система? ⚙️
+            </h2>
+
+
+            <div class="os-definition">
+
+                <div class="os-definition-title">
+
+                    <div class="os-definition-icon">
+                        🖥️
+                    </div>
+
+                    <h3>
+                        Операционная система — ОС
+                    </h3>
+
+                </div>
+
+                <p>
+                    Комплекс программ, который управляет
+                    работой компьютера, его устройствами
+                    и программами, а также обеспечивает
+                    взаимодействие пользователя с компьютером.
+                </p>
+
+            </div>
+
+
+            <p class="lead" style="margin-top:25px;">
+                Одна из главных идей этого урока:
+                операционная система находится
+                <strong>между пользователем, программами
+                и аппаратной частью компьютера.</strong>
+            </p>
+
+
+            <div class="interaction">
+
+                <div class="interaction-card">
+
+                    <div class="interaction-icon">
+                        👤
+                    </div>
+
+                    <strong>
+                        Пользователь
+                    </strong>
+
+                    <span>
+                        Даёт команды
+                    </span>
+
+                </div>
+
+
+                <div class="interaction-arrow">
+                    ⇄
+                </div>
+
+
+                <div class="interaction-card os">
+
+                    <div class="interaction-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        Операционная система
+                    </strong>
+
+                    <span>
+                        Организует взаимодействие
+                    </span>
+
+                </div>
+
+
+                <div class="interaction-arrow">
+                    ⇄
+                </div>
+
+
+                <div class="interaction-card">
+
+                    <div class="interaction-icon">
+                        💻
+                    </div>
+
+                    <strong>
+                        Программы и устройства
+                    </strong>
+
+                    <span>
+                        Выполняют работу
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Например, когда пользователь сохраняет файл,
+                ему не нужно самостоятельно управлять накопителем.
+                Эту работу организует операционная система.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         4. ПРИМЕРЫ ОС
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                04 · ПРИМЕРЫ
+            </span>
+
+            <h2>
+                Операционные системы вокруг нас
+            </h2>
+
+            <p>
+                Операционные системы существуют не только
+                на настольных компьютерах. Они используются
+                на ноутбуках, смартфонах, планшетах
+                и других цифровых устройствах.
+            </p>
+
+
+            <div class="os-examples">
+
+                <div class="os-example">
+
+                    <div class="os-example-icon">
+                        🪟
+                    </div>
+
+                    <strong>
+                        Windows
+                    </strong>
+
+                    <span>
+                        ПК и ноутбуки
+                    </span>
+
+                </div>
+
+
+                <div class="os-example">
+
+                    <div class="os-example-icon">
+                        🐧
+                    </div>
+
+                    <strong>
+                        Linux
+                    </strong>
+
+                    <span>
+                        ПК, серверы и другие устройства
+                    </span>
+
+                </div>
+
+
+                <div class="os-example">
+
+                    <div class="os-example-icon">
+                        🍎
+                    </div>
+
+                    <strong>
+                        macOS
+                    </strong>
+
+                    <span>
+                        Компьютеры Mac
+                    </span>
+
+                </div>
+
+
+                <div class="os-example">
+
+                    <div class="os-example-icon">
+                        🤖
+                    </div>
+
+                    <strong>
+                        Android
+                    </strong>
+
+                    <span>
+                        Смартфоны и планшеты
+                    </span>
+
+                </div>
+
+
+                <div class="os-example">
+
+                    <div class="os-example-icon">
+                        📱
+                    </div>
+
+                    <strong>
+                        iOS
+                    </strong>
+
+                    <span>
+                        iPhone
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Интерфейс и устройство разных ОС могут отличаться,
+                но их основная задача похожа:
+                <strong>организовать работу устройства
+                и предоставить пользователю средства управления.</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         5. ФУНКЦИИ
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                05 · ФУНКЦИИ ОС
+            </span>
+
+            <h2>
+                Чем занимается операционная система?
+            </h2>
+
+            <p class="lead">
+                ОС одновременно выполняет множество задач.
+                На первом уроке достаточно понять
+                основные направления её работы.
+            </p>
+
+
+            <div class="function-grid">
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Процессор
+                    </h3>
+
+                    <p>
+                        Организует выполнение программ
+                        и использование вычислительных ресурсов.
+                    </p>
+
+                </div>
+
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        🧮
+                    </div>
+
+                    <h3>
+                        Память
+                    </h3>
+
+                    <p>
+                        Распределяет оперативную память
+                        между работающими программами.
+                    </p>
+
+                </div>
+
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        🖨️
+                    </div>
+
+                    <h3>
+                        Устройства
+                    </h3>
+
+                    <p>
+                        Организует работу с клавиатурой,
+                        мышью, экраном, принтером
+                        и другим оборудованием.
+                    </p>
+
+                </div>
+
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        📁
+                    </div>
+
+                    <h3>
+                        Файлы
+                    </h3>
+
+                    <p>
+                        Помогает организовывать хранение
+                        файлов и папок на накопителях.
+                    </p>
+
+                </div>
+
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        🪟
+                    </div>
+
+                    <h3>
+                        Интерфейс
+                    </h3>
+
+                    <p>
+                        Предоставляет пользователю
+                        средства взаимодействия с системой.
+                    </p>
+
+                </div>
+
+
+                <div class="function-card">
+
+                    <div class="function-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        Защита
+                    </h3>
+
+                    <p>
+                        Предоставляет базовые средства
+                        управления доступом и защиты системы.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Не нужно запоминать все внутренние механизмы.
+                Пока важно увидеть общую картину:
+                <strong>ОС управляет ресурсами компьютера
+                и предоставляет их программам и пользователю.</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         6. ЗАГРУЗКА
+    =================================== -->
+
+    <section>
+
+        <div class="section-card boot-section">
+
+            <span class="section-label">
+                06 · ЗАГРУЗКА
+            </span>
+
+            <h2>
+                Что происходит после включения компьютера? 🔌
+            </h2>
+
+            <p class="lead">
+                Нажатие кнопки питания ещё не означает,
+                что компьютер сразу готов к работе.
+                Системе необходимо пройти несколько этапов.
+            </p>
+
+
+            <div class="boot-flow">
+
+                <div class="boot-step">
+
+                    <div class="boot-number">
+                        1
+                    </div>
+
+                    <div class="boot-icon">
+                        ⏻
+                    </div>
+
+                    <h3>
+                        Включение
+                    </h3>
+
+                    <p>
+                        Компьютер получает питание
+                        и начинает работу.
+                    </p>
+
+                </div>
+
+
+                <div class="boot-step">
+
+                    <div class="boot-number">
+                        2
+                    </div>
+
+                    <div class="boot-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        Проверка
+                    </h3>
+
+                    <p>
+                        Выполняется первоначальная
+                        проверка оборудования.
+                    </p>
+
+                </div>
+
+
+                <div class="boot-step">
+
+                    <div class="boot-number">
+                        3
+                    </div>
+
+                    <div class="boot-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        Загрузка ОС
+                    </h3>
+
+                    <p>
+                        Основные компоненты операционной
+                        системы загружаются в память.
+                    </p>
+
+                </div>
+
+
+                <div class="boot-step">
+
+                    <div class="boot-number">
+                        4
+                    </div>
+
+                    <div class="boot-icon">
+                        🖥️
+                    </div>
+
+                    <h3>
+                        Готовность
+                    </h3>
+
+                    <p>
+                        Появляется интерфейс,
+                        и система готова к работе.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="boot-comparison">
+
+                <div class="boot-state">
+
+                    <div class="boot-state-icon">
+                        ⏻
+                    </div>
+
+                    <strong>
+                        Компьютер включён
+                    </strong>
+
+                </div>
+
+                <div class="boot-arrow">
+                    →
+                </div>
+
+                <div class="boot-state">
+
+                    <div class="boot-state-icon">
+                        🖥️
+                    </div>
+
+                    <strong>
+                        Операционная система готова
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                <strong>Загрузка операционной системы</strong> —
+                процесс подготовки ОС к работе после
+                включения компьютера.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         7. КОМПОНЕНТЫ
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                07 · ВНУТРИ ОПЕРАЦИОННОЙ СИСТЕМЫ
+            </span>
+
+            <h2>
+                Из чего состоит ОС? 🧩
+            </h2>
+
+            <p class="lead">
+                Операционная система — это не одна программа.
+                Она включает множество взаимосвязанных компонентов.
+                Сегодня познакомимся только с четырьмя основными понятиями.
+            </p>
+
+
+            <div class="components">
+
+                <div class="component">
+
+                    <div class="component-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Ядро
+                    </h3>
+
+                    <p>
+                        Центральная часть операционной системы,
+                        управляющая важнейшими ресурсами компьютера.
+                    </p>
+
+                </div>
+
+
+                <div class="component">
+
+                    <div class="component-icon">
+                        🔌
+                    </div>
+
+                    <h3>
+                        Драйвер
+                    </h3>
+
+                    <p>
+                        Программа, которая помогает операционной
+                        системе взаимодействовать
+                        с конкретным устройством.
+                    </p>
+
+                </div>
+
+
+                <div class="component">
+
+                    <div class="component-icon">
+                        🛠️
+                    </div>
+
+                    <h3>
+                        Утилита
+                    </h3>
+
+                    <p>
+                        Вспомогательная системная программа
+                        для обслуживания и настройки компьютера.
+                    </p>
+
+                </div>
+
+
+                <div class="component">
+
+                    <div class="component-icon">
+                        🪟
+                    </div>
+
+                    <h3>
+                        Интерфейс
+                    </h3>
+
+                    <p>
+                        Средства, с помощью которых
+                        пользователь взаимодействует
+                        с операционной системой.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="kernel-visual">
+
+                <div class="kernel-layers">
+
+                    <div class="kernel-layer user">
+                        👤 Пользователь
+                    </div>
+
+                    <div class="kernel-layer apps">
+                        🧩 Программы
+                    </div>
+
+                    <div class="kernel-layer kernel">
+                        ⚙️ Ядро операционной системы
+
+                        <span class="kernel-small">
+                            управление основными ресурсами
+                        </span>
+                    </div>
+
+                    <div class="kernel-layer hardware">
+                        💻 Аппаратное обеспечение
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Это <strong>упрощённая модель</strong>.
+                Внутреннее устройство современных операционных систем
+                значительно сложнее, но такой схемы достаточно,
+                чтобы понять основную роль ядра.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         8. ДРАЙВЕР
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                08 · ДРАЙВЕРЫ
+            </span>
+
+            <h2>
+                Как ОС понимает устройства? 🖨️
+            </h2>
+
+            <p>
+                К компьютеру можно подключить множество разных устройств:
+                принтер, мышь, видеокарту, звуковое оборудование
+                и многое другое.
+            </p>
+
+            <p class="lead">
+                Для взаимодействия операционной системы
+                с оборудованием используются
+                <strong>драйверы.</strong>
+            </p>
+
+
+            <div class="interaction">
+
+                <div class="interaction-card">
+
+                    <div class="interaction-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        Операционная система
+                    </strong>
+
+                </div>
+
+
+                <div class="interaction-arrow">
+                    →
+                </div>
+
+
+                <div class="interaction-card os">
+
+                    <div class="interaction-icon">
+                        🔌
+                    </div>
+
+                    <strong>
+                        Драйвер
+                    </strong>
+
+                    <span>
+                        Обеспечивает взаимодействие
+                    </span>
+
+                </div>
+
+
+                <div class="interaction-arrow">
+                    →
+                </div>
+
+
+                <div class="interaction-card">
+
+                    <div class="interaction-icon">
+                        🖨️
+                    </div>
+
+                    <strong>
+                        Устройство
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Пока достаточно запомнить:
+                <strong>драйвер связывает операционную систему
+                с конкретным оборудованием.</strong>
+                Подробнее устройство драйверов изучать
+                на этом этапе не требуется.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         9. INTERFACE
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                09 · ПОЛЬЗОВАТЕЛЬСКИЙ ИНТЕРФЕЙС
+            </span>
+
+            <h2>
+                Как человек общается с ОС?
+            </h2>
+
+            <p class="lead">
+                <strong>Пользовательский интерфейс</strong> —
+                средства взаимодействия человека
+                с компьютерной системой.
+            </p>
+
+            <p>
+                Интерфейс может быть организован по-разному.
+                Познакомимся с двумя распространёнными вариантами.
+            </p>
+
+
+            <div class="interface-grid">
+
+                <!-- GUI -->
+
+                <div class="interface-card">
+
+                    <div class="interface-head">
+
+                        <h3>
+                            🪟 Графический интерфейс
+                        </h3>
+
+                        <p>
+                            Пользователь работает с окнами,
+                            значками, меню, кнопками
+                            и другими графическими объектами.
+                        </p>
+
+                    </div>
+
+
+                    <div class="interface-visual">
+
+                        <div class="desktop-demo">
+
+                            <div class="desktop-icons">
+                                <div class="desktop-icon">📁</div>
+                                <div class="desktop-icon">🗑️</div>
+                            </div>
+
+                            <div class="fake-window">
+
+                                <div class="fake-window-top"></div>
+
+                                <div class="fake-window-content">
+                                    <div class="window-line"></div>
+                                    <div class="window-line"></div>
+                                    <div class="window-line short"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="taskbar"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CLI -->
+
+                <div class="interface-card">
+
+                    <div class="interface-head">
+
+                        <h3>
+                            ⌨️ Командный интерфейс
+                        </h3>
+
+                        <p>
+                            Пользователь взаимодействует
+                            с системой при помощи
+                            текстовых команд.
+                        </p>
+
+                    </div>
+
+
+                    <div class="interface-visual">
+
+                        <div class="terminal">
+
+                            <div class="terminal-line">
+                                <span class="prompt">user@computer:~$</span>
+                                pwd
+                            </div>
+
+                            <div class="terminal-line">
+                                /home/user
+                            </div>
+
+                            <div class="terminal-line">
+                                <span class="prompt">user@computer:~$</span>
+                                ls
+                            </div>
+
+                            <div class="terminal-line">
+                                Documents&nbsp;&nbsp;
+                                Pictures&nbsp;&nbsp;
+                                School
+                            </div>
+
+                            <div class="terminal-line">
+                                <span class="prompt">user@computer:~$</span>
+                                _
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Современные операционные системы могут
+                предоставлять <strong>и графический,
+                и командный интерфейс</strong>.
+                Это не две разные операционные системы,
+                а разные способы взаимодействия с системой.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         10. GUI ELEMENTS
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                10 · ГРАФИЧЕСКИЙ ИНТЕРФЕЙС
+            </span>
+
+            <h2>
+                Знакомые элементы интерфейса
+            </h2>
+
+            <p>
+                Даже если мы никогда не задумывались
+                об устройстве операционной системы,
+                многие её графические элементы
+                уже хорошо нам знакомы.
+            </p>
+
+
+            <div class="gui-elements">
+
+                <div class="gui-element">
+
+                    <div class="gui-icon">
+                        🪟
+                    </div>
+
+                    <strong>
+                        Окно
+                    </strong>
+
+                </div>
+
+
+                <div class="gui-element">
+
+                    <div class="gui-icon">
+                        📁
+                    </div>
+
+                    <strong>
+                        Значок
+                    </strong>
+
+                </div>
+
+
+                <div class="gui-element">
+
+                    <div class="gui-icon">
+                        ☰
+                    </div>
+
+                    <strong>
+                        Меню
+                    </strong>
+
+                </div>
+
+
+                <div class="gui-element">
+
+                    <div class="gui-icon">
+                        🖱️
+                    </div>
+
+                    <strong>
+                        Указатель
+                    </strong>
+
+                </div>
+
+
+                <div class="gui-element">
+
+                    <div class="gui-icon">
+                        ▬
+                    </div>
+
+                    <strong>
+                        Панель
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+                Сегодня нам достаточно узнать эти элементы.
+                <strong>Работать с объектами операционной системы
+                подробнее будем в следующих частях темы.</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         QUESTIONS
+    =================================== -->
+
+    <section>
+
+        <div class="section-card">
+
+            <span class="section-label">
+                11 · ЗАКРЕПЛЕНИЕ
+            </span>
+
+            <h2>
+                Проверим понимание 🧠
+            </h2>
+
+
+            <div class="questions">
+
+                <div class="question">
+
+                    <div class="question-number">
+                        1
+                    </div>
+
+                    <div>
+                        Что такое программное обеспечение?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        2
+                    </div>
+
+                    <div>
+                        Чем системное программное обеспечение
+                        отличается от прикладного?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        3
+                    </div>
+
+                    <div>
+                        Что такое операционная система?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        4
+                    </div>
+
+                    <div>
+                        Почему современному компьютеру
+                        необходима операционная система?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        5
+                    </div>
+
+                    <div>
+                        Между какими участниками
+                        операционная система организует взаимодействие?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        6
+                    </div>
+
+                    <div>
+                        Какие основные функции выполняет ОС?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        7
+                    </div>
+
+                    <div>
+                        Что происходит при загрузке
+                        операционной системы?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        8
+                    </div>
+
+                    <div>
+                        Что называется ядром операционной системы?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        9
+                    </div>
+
+                    <div>
+                        Для чего нужен драйвер?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        10
+                    </div>
+
+                    <div>
+                        Что такое утилита?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        11
+                    </div>
+
+                    <div>
+                        Чем графический интерфейс
+                        отличается от командного?
+                    </div>
+
+                </div>
+
+
+                <div class="question">
+
+                    <div class="question-number">
+                        12
+                    </div>
+
+                    <div>
+                        Какие операционные системы
+                        вы можете назвать?
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================
+         SUMMARY
+    =================================== -->
+
+    <section>
+
+        <div class="section-card summary">
+
+            <h2>
+                Итог первой части 🎓
+            </h2>
+
+            <p>
+                Сегодня мы познакомились с операционной системой
+                в целом. Главное — понять её место в работе компьютера:
+                <strong>ОС управляет ресурсами системы и помогает
+                пользователю, программам и устройствам
+                взаимодействовать друг с другом.</strong>
+            </p>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        Операционная система
+                    </strong>
+
+                    <span>
+                        Основа системного
+                        программного обеспечения.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🧠
+                    </div>
+
+                    <strong>
+                        Управление
+                    </strong>
+
+                    <span>
+                        ОС управляет ресурсами,
+                        программами и устройствами.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🔌
+                    </div>
+
+                    <strong>
+                        Компоненты
+                    </strong>
+
+                    <span>
+                        Ядро, драйверы,
+                        утилиты и интерфейс.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-icon">
+                        🪟
+                    </div>
+
+                    <strong>
+                        Интерфейс
+                    </strong>
+
+                    <span>
+                        Позволяет пользователю
+                        взаимодействовать с системой.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="next-lesson">
+
+                <span class="next-lesson-label">
+                    Продолжение темы
+                </span>
+
+                <strong>
+                    Часть 2 из 4 → переходим от общей схемы
+                    к более конкретной работе
+                    с операционной системой.
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Информатика · 8 класс · Основы работы
+        с операционной системой · Часть 1 из 4
+    </footer>
+
+</div>
+
+</body>
+</html>

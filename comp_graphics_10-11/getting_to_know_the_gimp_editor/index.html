@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Знакомство с редактором GIMP — 10–11 классы</title>
+
+<style>
+:root {
+    --bg: #f3f5f7;
+    --card: #ffffff;
+    --text: #242b35;
+    --muted: #687383;
+    --line: #dde2e8;
+
+    --dark: #25272b;
+    --dark2: #303238;
+
+    --green: #639b68;
+    --green-soft: #edf6ee;
+
+    --blue: #5688c7;
+    --blue-soft: #edf4fc;
+
+    --orange: #d89650;
+    --orange-soft: #fff4e8;
+
+    --purple: #7b70c5;
+    --purple-soft: #f1effb;
+
+    --shadow: 0 12px 34px rgba(35,40,48,.08);
+
+    --radius: 22px;
+    --max: 1140px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+    line-height: 1.65;
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(99,155,104,.07),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(86,136,199,.06),
+            transparent 20%
+        ),
+        var(--bg);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container {
+    width: min(
+        var(--max),
+        calc(100% - 32px)
+    );
+
+    margin: 0 auto;
+}
+
+
+/* =====================================
+   HERO
+===================================== */
+
+.hero {
+    padding: 30px 0 12px;
+}
+
+.hero-box {
+    position: relative;
+
+    min-height: 440px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 60px;
+
+    border-radius: 32px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            105deg,
+            rgba(28,30,34,.99),
+            rgba(42,46,49,.96) 55%,
+            rgba(65,94,70,.88)
+        );
+
+    box-shadow:
+        0 25px 65px rgba(30,33,38,.22);
+}
+
+.hero-box::before {
+    content: "🖼️";
+
+    position: absolute;
+
+    right: 65px;
+    top: 45px;
+
+    font-size: 125px;
+
+    opacity: .09;
+
+    transform: rotate(-5deg);
+}
+
+.hero-box::after {
+    content: "";
+
+    position: absolute;
+
+    right: -130px;
+    bottom: -190px;
+
+    width: 370px;
+    height: 370px;
+
+    border:
+        1px solid rgba(255,255,255,.11);
+
+    border-radius: 50%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 770px;
+}
+
+.hero-label {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 20px 0 17px;
+
+    font-size:
+        clamp(40px, 6vw, 67px);
+
+    line-height: 1.04;
+
+    letter-spacing: -1.5px;
+}
+
+.hero-text {
+    max-width: 700px;
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.82);
+
+    font-size: 19px;
+}
+
+.hero-features {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 27px;
+}
+
+.hero-features span {
+    padding: 7px 11px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   COMMON
+===================================== */
+
+section {
+    margin: 23px 0;
+}
+
+.section-card {
+    padding: 35px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: var(--radius);
+
+    background: var(--card);
+
+    box-shadow: var(--shadow);
+}
+
+.section-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding: 5px 10px;
+
+    border-radius: 8px;
+
+    background: var(--green-soft);
+
+    color: #477d4c;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+h2 {
+    margin: 0 0 16px;
+
+    color: #29313c;
+
+    font-size:
+        clamp(27px, 4vw, 37px);
+
+    line-height: 1.2;
+
+    letter-spacing: -.5px;
+}
+
+h3 {
+    margin: 0 0 8px;
+
+    color: #34404e;
+
+    font-size: 20px;
+}
+
+p {
+    margin: 0 0 14px;
+}
+
+.lead {
+    color: #596575;
+
+    font-size: 18px;
+}
+
+.note {
+    margin-top: 20px;
+
+    padding: 18px 20px;
+
+    border-left:
+        5px solid var(--green);
+
+    border-radius: 13px;
+
+    background: var(--green-soft);
+}
+
+.note strong {
+    color: #477d4c;
+}
+
+
+/* =====================================
+   SCREENSHOTS
+===================================== */
+
+.screenshot {
+    margin-top: 25px;
+
+    overflow: hidden;
+
+    border:
+        1px solid #d5dae1;
+
+    border-radius: 20px;
+
+    background: #25272b;
+
+    box-shadow:
+        0 15px 38px rgba(30,35,42,.13);
+}
+
+.screenshot img {
+    width: 100%;
+    max-height: 650px;
+
+    object-fit: contain;
+
+    background: #25272b;
+}
+
+.screenshot-caption {
+    padding: 13px 17px;
+
+    border-top:
+        1px solid #40434a;
+
+    background: #303238;
+
+    color: #c7ccd3;
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   WHAT GIMP CAN DO
+===================================== */
+
+.purpose-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 13px;
+
+    margin-top: 23px;
+}
+
+.purpose {
+    padding: 21px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 17px;
+
+    background: #fafbfc;
+}
+
+.purpose-icon {
+    margin-bottom: 8px;
+
+    font-size: 39px;
+}
+
+.purpose span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   GIMP VS SIMPLE EDITOR
+===================================== */
+
+.level-box {
+    display: grid;
+
+    grid-template-columns:
+        .8fr 1.2fr;
+
+    gap: 20px;
+
+    align-items: center;
+
+    margin-top: 24px;
+}
+
+.level-visual {
+    padding: 30px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #25272b,
+            #383b40
+        );
+
+    color: white;
+}
+
+.level-icon {
+    font-size: 80px;
+}
+
+.level-visual strong {
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 21px;
+}
+
+
+/* =====================================
+   INTERFACE
+===================================== */
+
+.interface-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 11px;
+
+    margin-top: 22px;
+}
+
+.interface-item {
+    padding: 17px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 15px;
+
+    background: #fafbfc;
+}
+
+.interface-number {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 9px;
+
+    border-radius: 8px;
+
+    background: var(--dark);
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.interface-item p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   CREATE / OPEN
+===================================== */
+
+.start-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 16px;
+
+    margin-top: 23px;
+}
+
+.start-card {
+    padding: 24px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+}
+
+.start-card.new {
+    background: var(--blue-soft);
+}
+
+.start-card.open {
+    background: var(--green-soft);
+}
+
+.start-icon {
+    margin-bottom: 9px;
+
+    font-size: 40px;
+}
+
+.size-demo {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.size-field {
+    flex: 1;
+
+    padding: 10px;
+
+    border:
+        1px solid #d4dbe5;
+
+    border-radius: 9px;
+
+    background: white;
+
+    color: #687383;
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   TOOL GROUPS
+===================================== */
+
+.tool-groups {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-top: 23px;
+}
+
+.tool-group {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 22px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+
+    background: #fafbfc;
+}
+
+.tool-group::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: var(--blue);
+}
+
+.tool-group:nth-child(2)::before {
+    background: var(--green);
+}
+
+.tool-group:nth-child(3)::before {
+    background: var(--orange);
+}
+
+.tool-group:nth-child(4)::before {
+    background: var(--purple);
+}
+
+.tool-icon {
+    margin-bottom: 10px;
+
+    font-size: 38px;
+}
+
+.tool-group p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.tool-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 13px;
+}
+
+.tool-chip {
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    background: white;
+
+    border:
+        1px solid var(--line);
+
+    font-size: 12px;
+}
+
+
+/* =====================================
+   COLOR
+===================================== */
+
+.colors-box {
+    display: grid;
+
+    grid-template-columns:
+        auto 1fr;
+
+    gap: 23px;
+
+    align-items: center;
+
+    margin-top: 23px;
+
+    padding: 23px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+
+    background: #fafbfc;
+}
+
+.fg-bg {
+    position: relative;
+
+    width: 100px;
+    height: 85px;
+}
+
+.fg {
+    position: absolute;
+
+    left: 8px;
+    top: 5px;
+
+    width: 58px;
+    height: 58px;
+
+    z-index: 2;
+
+    border:
+        3px solid white;
+
+    box-shadow:
+        0 0 0 1px #aaa;
+
+    background: #1e1e1e;
+}
+
+.bg-color {
+    position: absolute;
+
+    right: 8px;
+    bottom: 5px;
+
+    width: 58px;
+    height: 58px;
+
+    border:
+        3px solid white;
+
+    box-shadow:
+        0 0 0 1px #aaa;
+
+    background: white;
+}
+
+
+/* =====================================
+   LAYERS
+===================================== */
+
+.layers-section {
+    border-color: #d9e4da;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fbfdfb,
+            #f3f8f4
+        );
+}
+
+.layers-intro {
+    display: grid;
+
+    grid-template-columns:
+        1fr .8fr;
+
+    gap: 24px;
+
+    align-items: center;
+
+    margin-top: 22px;
+}
+
+.layer-stack {
+    position: relative;
+
+    height: 300px;
+}
+
+.layer {
+    position: absolute;
+
+    width: 78%;
+    height: 125px;
+
+    left: 11%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid rgba(255,255,255,.9);
+
+    border-radius: 15px;
+
+    color: white;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 15px 30px rgba(35,45,50,.13);
+}
+
+.layer:nth-child(1) {
+    top: 0;
+
+    z-index: 3;
+
+    transform:
+        translateX(25px)
+        rotate(-2deg);
+
+    background:
+        rgba(116,105,197,.88);
+}
+
+.layer:nth-child(2) {
+    top: 70px;
+
+    z-index: 2;
+
+    background:
+        rgba(83,142,190,.88);
+}
+
+.layer:nth-child(3) {
+    top: 140px;
+
+    z-index: 1;
+
+    transform:
+        translateX(-25px)
+        rotate(2deg);
+
+    background:
+        rgba(87,151,102,.88);
+}
+
+.layer-info {
+    padding: 10px;
+}
+
+.layer-info h3 {
+    font-size: 25px;
+}
+
+
+/* =====================================
+   LAYER ADVANTAGES
+===================================== */
+
+.layer-benefits {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.layer-benefit {
+    padding: 18px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 15px;
+
+    background: white;
+}
+
+.layer-benefit-icon {
+    margin-bottom: 7px;
+
+    font-size: 30px;
+}
+
+.layer-benefit p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =====================================
+   EYE VISIBILITY
+===================================== */
+
+.visibility-demo {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    gap: 15px;
+
+    align-items: center;
+
+    margin-top: 22px;
+}
+
+.visibility-card {
+    padding: 20px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
+    background: white;
+}
+
+.visibility-icon {
+    font-size: 35px;
+}
+
+.visibility-arrow {
+    color: #758195;
+
+    font-size: 27px;
+}
+
+
+/* =====================================
+   SAVE / EXPORT
+===================================== */
+
+.save-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 17px;
+
+    margin-top: 23px;
+}
+
+.save-card {
+    padding: 25px;
+
+    border-radius: 19px;
+}
+
+.save-card.project {
+    border:
+        1px solid #d7d2ef;
+
+    background: var(--purple-soft);
+}
+
+.save-card.export {
+    border:
+        1px solid #cee5d3;
+
+    background: var(--green-soft);
+}
+
+.save-icon {
+    margin-bottom: 10px;
+
+    font-size: 42px;
+}
+
+.extension {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 6px 11px;
+
+    border-radius: 8px;
+
+    background: white;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-weight: 700;
+}
+
+
+/* =====================================
+   WORKFLOW
+===================================== */
+
+.workflow {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 9px;
+
+    margin-top: 23px;
+}
+
+.workflow-step {
+    padding: 18px 12px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 15px;
+
+    background: #fafbfc;
+}
+
+.workflow-number {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 8px;
+
+    border-radius: 8px;
+
+    background: var(--dark);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.workflow-icon {
+    margin-bottom: 5px;
+
+    font-size: 27px;
+}
+
+
+/* =====================================
+   CAPABILITIES
+===================================== */
+
+.capabilities {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+
+    margin-top: 23px;
+}
+
+.capability {
+    padding: 19px 13px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
+    background: #fafbfc;
+}
+
+.capability-icon {
+    margin-bottom: 7px;
+
+    font-size: 35px;
+}
+
+.capability span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =====================================
+   QUESTIONS
+===================================== */
+
+.questions {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.question {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding: 17px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 15px;
+
+    background: #fafbfc;
+}
+
+.question-number {
+    flex: 0 0 auto;
+
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--dark);
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =====================================
+   SUMMARY
+===================================== */
+
+.summary {
+    color: white;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #23262a,
+            #353a3d 55%,
+            #496c50
+        );
+}
+
+.summary h2 {
+    color: white;
+}
+
+.summary > p {
+    color:
+        rgba(255,255,255,.8);
+}
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 23px;
+}
+
+.summary-item {
+    padding: 18px;
+
+    border:
+        1px solid rgba(255,255,255,.13);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.summary-icon {
+    margin-bottom: 7px;
+
+    font-size: 29px;
+}
+
+.summary-item strong {
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+.summary-item span {
+    color:
+        rgba(255,255,255,.66);
+
+    font-size: 13px;
+}
+
+.final-rule {
+    margin-top: 21px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(255,255,255,.14);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+footer {
+    padding: 22px 0 45px;
+
+    text-align: center;
+
+    color: #89929d;
+
+    font-size: 14px;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 760px) {
+
+    .container {
+        width:
+            min(
+                100% - 20px,
+                var(--max)
+            );
+    }
+
+    .hero {
+        padding-top: 10px;
+    }
+
+    .hero-box {
+        min-height: 430px;
+
+        padding: 36px 23px;
+
+        border-radius: 24px;
+    }
+
+    .hero-box::before {
+        right: 15px;
+        top: 20px;
+
+        font-size: 80px;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+    }
+
+    section {
+        margin: 17px 0;
+    }
+
+    .section-card {
+        padding: 23px 18px;
+
+        border-radius: 19px;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    .lead {
+        font-size: 16px;
+    }
+
+    .purpose-grid,
+    .level-box,
+    .interface-grid,
+    .start-grid,
+    .tool-groups,
+    .colors-box,
+    .layers-intro,
+    .layer-benefits,
+    .visibility-demo,
+    .save-grid,
+    .workflow,
+    .capabilities,
+    .questions,
+    .summary-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .purpose,
+    .interface-item,
+    .start-card,
+    .tool-group,
+    .layer-benefit,
+    .visibility-card,
+    .save-card,
+    .workflow-step,
+    .capability,
+    .question,
+    .summary-item {
+        width: 100%;
+    }
+
+    .visibility-arrow {
+        transform: rotate(90deg);
+
+        text-align: center;
+    }
+
+    .layer-stack {
+        width: 100%;
+        max-width: 450px;
+
+        margin: 0 auto;
+    }
+
+    .screenshot img {
+        max-height: none;
+    }
+}
+
+@media (max-width: 430px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .hero-box {
+        padding: 30px 18px;
+    }
+
+    .section-card {
+        padding: 20px 14px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<header class="hero">
+
+    <div class="hero-box">
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                10–11 классы · Компьютерная графика
+            </span>
+
+            <h1>
+                Знакомство<br>
+                с редактором GIMP
+            </h1>
+
+            <p class="hero-text">
+                Переходим от простого редактирования изображений
+                к более серьёзной работе с растровой графикой.
+                Познакомимся с интерфейсом GIMP, его инструментами,
+                слоями и правильным сохранением проекта.
+            </p>
+
+            <div class="hero-features">
+                <span>🖼️ Изображения</span>
+                <span>🛠️ Инструменты</span>
+                <span>🧩 Слои</span>
+                <span>🎨 Обработка</span>
+                <span>💾 XCF и экспорт</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================
+     1. WHAT IS GIMP
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            01 · ЗНАКОМСТВО
+        </span>
+
+        <h2>
+            Что такое GIMP? 🖼️
+        </h2>
+
+        <p class="lead">
+            <strong>GIMP</strong> — растровый графический редактор,
+            предназначенный для создания и обработки
+            цифровых изображений.
+        </p>
+
+        <p>
+            Возможности программы значительно шире
+            простого рисования. GIMP можно использовать
+            для обработки фотографий, создания графики,
+            коллажей и подготовки изображений
+            для дальнейшего использования.
+        </p>
+
+
+        <div class="purpose-grid">
+
+            <div class="purpose">
+                <div class="purpose-icon">📷</div>
+                <strong>Фотографии</strong>
+                <span>Обработка и коррекция</span>
+            </div>
+
+            <div class="purpose">
+                <div class="purpose-icon">🖌️</div>
+                <strong>Рисование</strong>
+                <span>Работа кистями и цветом</span>
+            </div>
+
+            <div class="purpose">
+                <div class="purpose-icon">🧩</div>
+                <strong>Коллажи</strong>
+                <span>Соединение нескольких изображений</span>
+            </div>
+
+            <div class="purpose">
+                <div class="purpose-icon">✨</div>
+                <strong>Обработка</strong>
+                <span>Фильтры, эффекты и преобразования</span>
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            GIMP — <strong>свободное программное обеспечение</strong>.
+            Программа доступна для различных операционных систем,
+            включая Windows, Linux и macOS.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     2. REAL GIMP
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            02 · РАБОЧЕЕ ПРОСТРАНСТВО
+        </span>
+
+        <h2>
+            Посмотрим на настоящий GIMP 👀
+        </h2>
+
+        <p class="lead">
+            На первый взгляд элементов значительно больше,
+            чем в простом графическом редакторе.
+            Но рабочее пространство можно разделить
+            на несколько понятных областей.
+        </p>
+
+
+        <div class="screenshot">
+
+            <img
+                src="image/img-1.png"
+                alt="Интерфейс GIMP 3"
+                loading="lazy"
+            >
+
+            <div class="screenshot-caption">
+                Современный интерфейс GIMP:
+                центральную часть занимает изображение,
+                слева располагаются инструменты и их параметры,
+                справа — дополнительные панели, включая работу со слоями.
+            </div>
+
+        </div>
+
+
+        <div class="interface-grid">
+
+            <div class="interface-item">
+
+                <div class="interface-number">
+                    1
+                </div>
+
+                <h3>
+                    Меню
+                </h3>
+
+                <p>
+                    Команды для работы с файлами,
+                    изображением, слоями, фильтрами
+                    и другими функциями.
+                </p>
+
+            </div>
+
+
+            <div class="interface-item">
+
+                <div class="interface-number">
+                    2
+                </div>
+
+                <h3>
+                    Инструменты
+                </h3>
+
+                <p>
+                    Выделение, рисование,
+                    преобразование и другие операции.
+                </p>
+
+            </div>
+
+
+            <div class="interface-item">
+
+                <div class="interface-number">
+                    3
+                </div>
+
+                <h3>
+                    Параметры
+                </h3>
+
+                <p>
+                    Настройки меняются
+                    в зависимости от выбранного инструмента.
+                </p>
+
+            </div>
+
+
+            <div class="interface-item">
+
+                <div class="interface-number">
+                    4
+                </div>
+
+                <h3>
+                    Холст
+                </h3>
+
+                <p>
+                    Центральная область,
+                    в которой отображается изображение.
+                </p>
+
+            </div>
+
+
+            <div class="interface-item">
+
+                <div class="interface-number">
+                    5
+                </div>
+
+                <h3>
+                    Панели
+                </h3>
+
+                <p>
+                    Слои, кисти и другие
+                    вспомогательные диалоги.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            Рабочее пространство GIMP можно настраивать.
+            Поэтому расположение отдельных панелей
+            на разных компьютерах может немного отличаться.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     3. TOOL OPTIONS
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            03 · ИНСТРУМЕНТ И ЕГО ПАРАМЕТРЫ
+        </span>
+
+        <h2>
+            Выбрать инструмент — только половина дела 🛠️
+        </h2>
+
+        <p>
+            У большинства инструментов GIMP есть собственные
+            настройки. Например, для кисти можно менять
+            размер, жёсткость и другие параметры.
+        </p>
+
+
+        <div class="screenshot">
+
+            <img
+                src="image/img-2.png"
+                alt="Инструменты, параметры кисти и слои GIMP"
+                loading="lazy"
+            >
+
+            <div class="screenshot-caption">
+                На скриншоте активна кисть.
+                Слева видны параметры выбранного инструмента,
+                а справа — набор кистей и структура слоёв.
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            Запомни принцип:
+            <strong>сначала выбираем инструмент →
+            затем настраиваем его параметры.</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     4. NEW / OPEN
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            04 · НАЧИНАЕМ РАБОТУ
+        </span>
+
+        <h2>
+            Создать новое или открыть готовое?
+        </h2>
+
+
+        <div class="start-grid">
+
+            <div class="start-card new">
+
+                <div class="start-icon">
+                    📄
+                </div>
+
+                <h3>
+                    Новое изображение
+                </h3>
+
+                <p>
+                    Если работа начинается с чистого листа,
+                    создаётся новый документ.
+                </p>
+
+                <p>
+                    Один из главных параметров —
+                    <strong>размер изображения.</strong>
+                </p>
+
+                <div class="size-demo">
+
+                    <div class="size-field">
+                        Ширина: 1920 px
+                    </div>
+
+                    <div class="size-field">
+                        Высота: 1080 px
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="start-card open">
+
+                <div class="start-icon">
+                    📂
+                </div>
+
+                <h3>
+                    Открыть изображение
+                </h3>
+
+                <p>
+                    Если нужно изменить уже существующую
+                    фотографию или рисунок,
+                    файл открывают в GIMP.
+                </p>
+
+                <p>
+                    После открытия изображение появляется
+                    в центральной рабочей области.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            <strong>Масштаб просмотра</strong> можно изменять,
+            чтобы рассмотреть детали или увидеть всё изображение целиком.
+            При этом размер самого изображения не обязательно изменяется.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     5. TOOLS
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            05 · ОСНОВНЫЕ ИНСТРУМЕНТЫ
+        </span>
+
+        <h2>
+            Инструменты решают разные задачи
+        </h2>
+
+        <p class="lead">
+            На первом знакомстве необязательно запоминать
+            каждую кнопку. Важнее понять,
+            <strong>на какие группы можно разделить инструменты.</strong>
+        </p>
+
+
+        <div class="tool-groups">
+
+            <div class="tool-group">
+
+                <div class="tool-icon">
+                    ⬚
+                </div>
+
+                <h3>
+                    Выделение
+                </h3>
+
+                <p>
+                    Позволяет указать область,
+                    с которой мы хотим работать.
+                </p>
+
+                <div class="tool-list">
+                    <span class="tool-chip">Прямоугольное</span>
+                    <span class="tool-chip">Эллиптическое</span>
+                    <span class="tool-chip">Свободное</span>
+                </div>
+
+            </div>
+
+
+            <div class="tool-group">
+
+                <div class="tool-icon">
+                    🖌️
+                </div>
+
+                <h3>
+                    Рисование
+                </h3>
+
+                <p>
+                    Используется для создания линий,
+                    цвета и рисованных элементов.
+                </p>
+
+                <div class="tool-list">
+                    <span class="tool-chip">Кисть</span>
+                    <span class="tool-chip">Карандаш</span>
+                    <span class="tool-chip">Заливка</span>
+                </div>
+
+            </div>
+
+
+            <div class="tool-group">
+
+                <div class="tool-icon">
+                    🔄
+                </div>
+
+                <h3>
+                    Преобразование
+                </h3>
+
+                <p>
+                    Изменяет положение
+                    или геометрию изображения.
+                </p>
+
+                <div class="tool-list">
+                    <span class="tool-chip">Перемещение</span>
+                    <span class="tool-chip">Масштаб</span>
+                    <span class="tool-chip">Вращение</span>
+                </div>
+
+            </div>
+
+
+            <div class="tool-group">
+
+                <div class="tool-icon">
+                    ✂️
+                </div>
+
+                <h3>
+                    Кадрирование
+                </h3>
+
+                <p>
+                    Позволяет оставить нужную часть
+                    изображения и убрать лишнее.
+                </p>
+
+                <div class="tool-list">
+                    <span class="tool-chip">Crop</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="colors-box">
+
+            <div class="fg-bg">
+
+                <div class="fg"></div>
+                <div class="bg-color"></div>
+
+            </div>
+
+            <div>
+
+                <h3>
+                    🎨 Основной и фоновый цвета
+                </h3>
+
+                <p>
+                    В панели инструментов отображаются
+                    два выбранных цвета.
+                    Они используются различными инструментами
+                    рисования и обработки.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     6. LAYERS INTRO
+===================================== -->
+
+<section>
+
+    <div class="section-card layers-section">
+
+        <span class="section-label">
+            06 · ГЛАВНАЯ ИДЕЯ
+        </span>
+
+        <h2>
+            Слои: изображение как конструктор 🧩
+        </h2>
+
+        <p class="lead">
+            Одна из важнейших идей GIMP —
+            возможность разделить изображение
+            на <strong>несколько независимых слоёв.</strong>
+        </p>
+
+
+        <div class="layers-intro">
+
+            <div class="layer-stack">
+
+                <div class="layer">
+                    🔤 Текст
+                </div>
+
+                <div class="layer">
+                    🧍 Объект
+                </div>
+
+                <div class="layer">
+                    🌄 Фон
+                </div>
+
+            </div>
+
+
+            <div class="layer-info">
+
+                <h3>
+                    Представь прозрачные листы
+                </h3>
+
+                <p>
+                    На одном находится фон,
+                    на другом — объект,
+                    на третьем — текст.
+                </p>
+
+                <p>
+                    Когда мы складываем их вместе,
+                    получается единая композиция.
+                </p>
+
+                <p>
+                    Но каждый слой всё ещё можно
+                    редактировать отдельно.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            <strong>Слой</strong> — отдельная часть композиции,
+            которую можно редактировать независимо
+            от других слоёв.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     7. REAL LAYERS
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            07 · СЛОИ В НАСТОЯЩЕМ GIMP
+        </span>
+
+        <h2>
+            Как это выглядит в программе? 👀
+        </h2>
+
+        <p>
+            На панели слоёв можно увидеть,
+            из каких элементов состоит текущая композиция
+            и в каком порядке они расположены.
+        </p>
+
+
+        <div class="screenshot">
+
+            <img
+                src="image/img-3.png"
+                alt="Работа со слоями в GIMP 3"
+                loading="lazy"
+            >
+
+            <div class="screenshot-caption">
+                Cправа видна панель слоев.
+                Композиция состоит из нескольких изображений,
+                текста и фонового слоя.
+            </div>
+
+        </div>
+
+
+        <div class="layer-benefits">
+
+            <div class="layer-benefit">
+
+                <div class="layer-benefit-icon">
+                    ↕️
+                </div>
+
+                <h3>
+                    Порядок
+                </h3>
+
+                <p>
+                    Верхние слои располагаются
+                    поверх нижних.
+                </p>
+
+            </div>
+
+
+            <div class="layer-benefit">
+
+                <div class="layer-benefit-icon">
+                    👁️
+                </div>
+
+                <h3>
+                    Видимость
+                </h3>
+
+                <p>
+                    Отдельный слой можно
+                    временно скрыть.
+                </p>
+
+            </div>
+
+
+            <div class="layer-benefit">
+
+                <div class="layer-benefit-icon">
+                    ✏️
+                </div>
+
+                <h3>
+                    Редактирование
+                </h3>
+
+                <p>
+                    Можно изменять один элемент,
+                    не затрагивая остальные.
+                </p>
+
+            </div>
+
+
+            <div class="layer-benefit">
+
+                <div class="layer-benefit-icon">
+                    🧩
+                </div>
+
+                <h3>
+                    Композиция
+                </h3>
+
+                <p>
+                    Несколько независимых элементов
+                    образуют единое изображение.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     8. LAYER VISIBILITY
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            08 · ВИДИМОСТЬ СЛОЯ
+        </span>
+
+        <h2>
+            Слой можно скрыть, не удаляя его 👁️
+        </h2>
+
+        <p>
+            Это удобно, когда нужно временно посмотреть,
+            как композиция выглядит без определённого элемента.
+        </p>
+
+
+        <div class="visibility-demo">
+
+            <div class="visibility-card">
+
+                <div class="visibility-icon">
+                    👁️
+                </div>
+
+                <h3>
+                    Слой видим
+                </h3>
+
+                <p>
+                    Его содержимое отображается
+                    в композиции.
+                </p>
+
+            </div>
+
+
+            <div class="visibility-arrow">
+                ⇄
+            </div>
+
+
+            <div class="visibility-card">
+
+                <div class="visibility-icon">
+                    🚫
+                </div>
+
+                <h3>
+                    Слой скрыт
+                </h3>
+
+                <p>
+                    Он остаётся в проекте,
+                    но временно не отображается.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            Это одно из преимуществ слоёв:
+            <strong>элементы композиции можно контролировать
+            независимо друг от друга.</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     9. SAVE VS EXPORT
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            09 · СОХРАНЕНИЕ И ЭКСПОРТ
+        </span>
+
+        <h2>
+            Проект и готовая картинка — не одно и то же 💾
+        </h2>
+
+        <p class="lead">
+            Это один из важнейших принципов работы с GIMP.
+        </p>
+
+
+        <div class="save-grid">
+
+            <div class="save-card project">
+
+                <div class="save-icon">
+                    🧩
+                </div>
+
+                <h3>
+                    Сохранить проект
+                </h3>
+
+                <p>
+                    Если работу планируется продолжать,
+                    нужно сохранить проект GIMP.
+                </p>
+
+                <p>
+                    В нём сохраняется структура изображения,
+                    включая слои.
+                </p>
+
+                <span class="extension">
+                    .xcf
+                </span>
+
+            </div>
+
+
+            <div class="save-card export">
+
+                <div class="save-icon">
+                    🖼️
+                </div>
+
+                <h3>
+                    Экспортировать изображение
+                </h3>
+
+                <p>
+                    Если нужен готовый файл
+                    для просмотра, публикации
+                    или передачи другому человеку,
+                    изображение экспортируют.
+                </p>
+
+                <span class="extension">
+                    .png
+                </span>
+
+                <span class="extension">
+                    .jpg
+                </span>
+
+                <span class="extension">
+                    и др.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            <strong>XCF — рабочий проект.</strong><br>
+            PNG, JPEG и другие обычные форматы —
+            результат, который удобно использовать
+            вне GIMP.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     10. EXPORT SCREENSHOT
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            10 · ЭКСПОРТ НА ПРАКТИКЕ
+        </span>
+
+        <h2>
+            Как выглядит экспорт? 📤
+        </h2>
+
+        <p>
+            При экспорте пользователь выбирает имя файла,
+            папку и формат готового изображения.
+        </p>
+
+
+        <div class="screenshot">
+
+            <img
+                src="image/img-4.png"
+                alt="Окно экспорта изображения в GIMP"
+                loading="lazy"
+            >
+
+            <div class="screenshot-caption">
+                Пример окна экспорта GIMP:
+                изображение сохраняется как отдельный графический файл.
+                Интерфейс может отличаться в зависимости от версии GIMP
+                и операционной системы.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     11. WORKFLOW
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            11 · ОБЩАЯ СХЕМА РАБОТЫ
+        </span>
+
+        <h2>
+            От исходника до результата 🧭
+        </h2>
+
+
+        <div class="workflow">
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">
+                    1
+                </div>
+
+                <div class="workflow-icon">
+                    📂
+                </div>
+
+                <strong>
+                    Открываем
+                </strong>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">
+                    2
+                </div>
+
+                <div class="workflow-icon">
+                    🛠️
+                </div>
+
+                <strong>
+                    Редактируем
+                </strong>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">
+                    3
+                </div>
+
+                <div class="workflow-icon">
+                    🧩
+                </div>
+
+                <strong>
+                    Работаем со слоями
+                </strong>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">
+                    4
+                </div>
+
+                <div class="workflow-icon">
+                    💾
+                </div>
+
+                <strong>
+                    Сохраняем XCF
+                </strong>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">
+                    5
+                </div>
+
+                <div class="workflow-icon">
+                    📤
+                </div>
+
+                <strong>
+                    Экспортируем
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            Рабочий проект лучше сохранять
+            <strong>до экспорта</strong>.
+            Тогда к редактированию можно будет
+            вернуться позже.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     12. CAPABILITIES
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            12 · ЧТО ЕЩЁ УМЕЕТ GIMP?
+        </span>
+
+        <h2>
+            Возможности программы
+        </h2>
+
+        <p class="lead">
+            Сегодня мы только знакомимся с редактором.
+            Его возможности значительно шире рассмотренных
+            основных инструментов.
+        </p>
+
+
+        <div class="capabilities">
+
+            <div class="capability">
+
+                <div class="capability-icon">
+                    🩹
+                </div>
+
+                <strong>
+                    Ретушь
+                </strong>
+
+                <span>
+                    Исправление отдельных
+                    участков фотографии
+                </span>
+
+            </div>
+
+
+            <div class="capability">
+
+                <div class="capability-icon">
+                    🎨
+                </div>
+
+                <strong>
+                    Цвет
+                </strong>
+
+                <span>
+                    Цветовая и тоновая
+                    коррекция
+                </span>
+
+            </div>
+
+
+            <div class="capability">
+
+                <div class="capability-icon">
+                    🔤
+                </div>
+
+                <strong>
+                    Текст
+                </strong>
+
+                <span>
+                    Добавление текстовых
+                    элементов
+                </span>
+
+            </div>
+
+
+            <div class="capability">
+
+                <div class="capability-icon">
+                    ✨
+                </div>
+
+                <strong>
+                    Фильтры
+                </strong>
+
+                <span>
+                    Различные эффекты
+                    обработки
+                </span>
+
+            </div>
+
+
+            <div class="capability">
+
+                <div class="capability-icon">
+                    🧩
+                </div>
+
+                <strong>
+                    Коллажи
+                </strong>
+
+                <span>
+                    Объединение нескольких
+                    изображений
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+            На первом уроке не нужно изучать все эти возможности.
+            Сейчас главное — <strong>понять устройство рабочего пространства,
+            назначение основных инструментов и принцип слоёв.</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     QUESTIONS
+===================================== -->
+
+<section>
+
+    <div class="section-card">
+
+        <span class="section-label">
+            13 · ЗАКРЕПЛЕНИЕ
+        </span>
+
+        <h2>
+            Проверим понимание 🧠
+        </h2>
+
+
+        <div class="questions">
+
+            <div class="question">
+                <div class="question-number">1</div>
+                <div>
+                    Для чего предназначен графический редактор GIMP?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">2</div>
+                <div>
+                    К какому виду графических редакторов относится GIMP?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">3</div>
+                <div>
+                    Какие основные области интерфейса GIMP
+                    можно выделить?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">4</div>
+                <div>
+                    Для чего предназначена панель инструментов?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">5</div>
+                <div>
+                    Почему у инструментов существуют
+                    дополнительные параметры?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">6</div>
+                <div>
+                    Какие группы инструментов
+                    мы рассмотрели?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">7</div>
+                <div>
+                    Для чего используется кадрирование?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">8</div>
+                <div>
+                    Что такое слой?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">9</div>
+                <div>
+                    Почему удобно размещать элементы изображения
+                    на разных слоях?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">10</div>
+                <div>
+                    Что происходит, если отключить
+                    видимость слоя?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">11</div>
+                <div>
+                    Для чего используется формат XCF?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">12</div>
+                <div>
+                    Чем сохранение проекта отличается
+                    от экспорта готового изображения?
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     SUMMARY
+===================================== -->
+
+<section>
+
+    <div class="section-card summary">
+
+        <h2>
+            Итог урока 🎓
+        </h2>
+
+        <p>
+            GIMP — мощный растровый графический редактор,
+            позволяющий создавать и обрабатывать изображения.
+            Его важная особенность —
+            <strong>работа с инструментами, их параметрами
+            и послойной структурой изображения.</strong>
+        </p>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-item">
+
+                <div class="summary-icon">
+                    🛠️
+                </div>
+
+                <strong>
+                    Инструменты
+                </strong>
+
+                <span>
+                    Каждый инструмент решает
+                    определённую задачу.
+                </span>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-icon">
+                    ⚙️
+                </div>
+
+                <strong>
+                    Параметры
+                </strong>
+
+                <span>
+                    Настройки зависят
+                    от активного инструмента.
+                </span>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-icon">
+                    🧩
+                </div>
+
+                <strong>
+                    Слои
+                </strong>
+
+                <span>
+                    Позволяют редактировать
+                    элементы независимо.
+                </span>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-icon">
+                    💾
+                </div>
+
+                <strong>
+                    XCF и экспорт
+                </strong>
+
+                <span>
+                    Проект сохраняем,
+                    готовое изображение экспортируем.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="final-rule">
+            🖼️ GIMP — это не просто набор инструментов:
+            это рабочая среда, в которой изображение
+            можно собирать и редактировать по частям.
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    Информатика · 10–11 классы ·
+    Знакомство с редактором GIMP
+</footer>
+
+
+</div>
+
+</body>
+</html>
