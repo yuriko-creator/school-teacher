@@ -1,0 +1,2890 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Компьютерные вирусы и защита от них — 6 класс</title>
+
+<style>
+
+/* =========================================================
+   SYSTEM VARIABLES
+========================================================= */
+
+:root {
+    --bg: #0b1018;
+    --bg-soft: #101722;
+    --panel: #141d29;
+    --panel-2: #192433;
+
+    --text: #edf4f8;
+    --muted: #91a1af;
+
+    --line: rgba(255,255,255,.09);
+
+    --danger: #ff625c;
+    --danger-soft: rgba(255,98,92,.11);
+
+    --orange: #ff9d48;
+    --orange-soft: rgba(255,157,72,.11);
+
+    --yellow: #ffd45a;
+    --yellow-soft: rgba(255,212,90,.1);
+
+    --green: #5de08b;
+    --green-soft: rgba(93,224,139,.1);
+
+    --cyan: #55c9e8;
+    --cyan-soft: rgba(85,201,232,.1);
+
+    --shadow:
+        0 20px 60px rgba(0,0,0,.28);
+
+    --radius: 22px;
+    --max: 1160px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    line-height: 1.65;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        var(--bg);
+
+    background-size:
+        35px 35px;
+}
+
+.container {
+    width:
+        min(
+            var(--max),
+            calc(100% - 32px)
+        );
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    padding: 30px 0 15px;
+}
+
+.hero-box {
+    position: relative;
+
+    min-height: 520px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 60px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    border-radius: 32px;
+
+    background:
+        radial-gradient(
+            circle at 88% 45%,
+            rgba(255,98,92,.19),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 70% 10%,
+            rgba(255,157,72,.08),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #131b27,
+            #0c1119
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+.hero-box::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -110px;
+    top: 50px;
+
+    border:
+        1px solid rgba(255,98,92,.15);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 45px rgba(255,98,92,.025),
+        0 0 0 90px rgba(255,98,92,.018);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+
+    max-width: 760px;
+}
+
+.system-label {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 12px;
+
+    border:
+        1px solid rgba(255,98,92,.25);
+
+    border-radius: 8px;
+
+    color: #ff9a95;
+
+    background:
+        rgba(255,98,92,.08);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.system-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--danger);
+
+    box-shadow:
+        0 0 10px var(--danger);
+}
+
+h1 {
+    margin: 22px 0 17px;
+
+    font-size:
+        clamp(41px, 6vw, 68px);
+
+    line-height: 1.03;
+
+    letter-spacing: -1.8px;
+}
+
+h1 span {
+    color: var(--danger);
+}
+
+.hero-text {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: #aebac5;
+
+    font-size: 19px;
+}
+
+.hero-status {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-top: 28px;
+}
+
+.status-chip {
+    padding: 7px 11px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 8px;
+
+    color: #b9c5ce;
+
+    background:
+        rgba(255,255,255,.035);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+.hero-virus {
+    position: absolute;
+
+    right: 85px;
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        rotate(8deg);
+
+    font-size: 150px;
+
+    opacity: .12;
+
+    filter:
+        drop-shadow(
+            0 0 25px rgba(255,98,92,.5)
+        );
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+section {
+    margin: 23px 0;
+}
+
+.panel {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 36px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: var(--radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,36,51,.98),
+            rgba(17,25,36,.98)
+        );
+
+    box-shadow:
+        0 14px 45px rgba(0,0,0,.18);
+}
+
+.section-code {
+    display: inline-block;
+
+    margin-bottom: 11px;
+
+    color: var(--cyan);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+h2 {
+    margin: 0 0 17px;
+
+    font-size:
+        clamp(27px, 4vw, 38px);
+
+    line-height: 1.18;
+
+    letter-spacing: -.6px;
+}
+
+h3 {
+    margin: 0 0 8px;
+
+    font-size: 19px;
+}
+
+p {
+    margin: 0 0 14px;
+}
+
+.lead {
+    max-width: 900px;
+
+    color: #adbbc6;
+
+    font-size: 18px;
+}
+
+strong {
+    color: #ffffff;
+}
+
+.highlight-danger {
+    color: #ff827d;
+}
+
+.highlight-green {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.terminal {
+    margin-top: 24px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 16px;
+
+    background: #080d13;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,.35);
+}
+
+.terminal-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 11px 14px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+    background: #111822;
+}
+
+.terminal-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+}
+
+.t-red {
+    background: #ff625c;
+}
+
+.t-yellow {
+    background: #ffd45a;
+}
+
+.t-green {
+    background: #5de08b;
+}
+
+.terminal-title {
+    margin-left: 7px;
+
+    color: #748390;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+}
+
+.terminal-body {
+    padding: 20px;
+
+    color: #8fa0ac;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 13px;
+}
+
+.command {
+    color: var(--green);
+}
+
+.warning-text {
+    color: #ff8b86;
+}
+
+.terminal-line {
+    margin: 5px 0;
+}
+
+
+/* =========================================================
+   WHAT IS MALWARE
+========================================================= */
+
+.definition-grid {
+    display: grid;
+
+    grid-template-columns:
+        .9fr 1.1fr;
+
+    gap: 20px;
+
+    align-items: stretch;
+
+    margin-top: 24px;
+}
+
+.definition-main {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    border:
+        1px solid rgba(255,98,92,.2);
+
+    border-radius: 19px;
+
+    background:
+        var(--danger-soft);
+}
+
+.definition-icon {
+    margin-bottom: 10px;
+
+    font-size: 55px;
+}
+
+.definition-main p {
+    margin: 0;
+
+    color: #c3cdd4;
+}
+
+.effect-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+.effect {
+    padding: 18px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.effect-icon {
+    margin-bottom: 5px;
+
+    font-size: 28px;
+}
+
+.effect span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MALWARE DATABASE
+========================================================= */
+
+.malware-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 13px;
+
+    margin-top: 24px;
+}
+
+.malware-card {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 245px;
+
+    padding: 23px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.027);
+}
+
+.malware-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: var(--danger);
+}
+
+.malware-card:nth-child(2)::before {
+    background: var(--orange);
+}
+
+.malware-card:nth-child(3)::before {
+    background: #b77cff;
+}
+
+.malware-card:nth-child(4)::before {
+    background: var(--yellow);
+}
+
+.malware-code {
+    color: #687986;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 10px;
+}
+
+.malware-icon {
+    margin: 13px 0 9px;
+
+    font-size: 42px;
+}
+
+.malware-card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.not-equal {
+    margin-top: 19px;
+
+    padding: 17px 19px;
+
+    border-left:
+        4px solid var(--orange);
+
+    border-radius: 11px;
+
+    color: #bec8cf;
+
+    background:
+        var(--orange-soft);
+}
+
+
+/* =========================================================
+   INFECTION ROUTES
+========================================================= */
+
+.route-map {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.route {
+    position: relative;
+
+    padding: 21px 14px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.route::after {
+    content: "→";
+
+    position: absolute;
+
+    right: -18px;
+    top: 50%;
+
+    z-index: 3;
+
+    transform:
+        translateY(-50%);
+
+    color: #596875;
+
+    font-size: 20px;
+}
+
+.route:last-child::after {
+    display: none;
+}
+
+.route-icon {
+    margin-bottom: 8px;
+
+    font-size: 35px;
+}
+
+.route span {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FAKE DOWNLOAD
+========================================================= */
+
+.fake-download {
+    margin-top: 23px;
+
+    padding: 21px;
+
+    border:
+        1px solid rgba(255,157,72,.18);
+
+    border-radius: 17px;
+
+    background:
+        #0d131b;
+}
+
+.browser-line {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+
+    padding: 9px 12px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 9px;
+
+    color: #778793;
+
+    background: #161f2a;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+}
+
+.download-content {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.download-file {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.file-icon {
+    font-size: 37px;
+}
+
+.download-name {
+    font-weight: 700;
+}
+
+.download-source {
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.fake-download-button {
+    padding: 9px 14px;
+
+    border:
+        1px solid rgba(255,98,92,.3);
+
+    border-radius: 9px;
+
+    color: #ff8c87;
+
+    background:
+        var(--danger-soft);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SYMPTOMS / SCANNER
+========================================================= */
+
+.scanner {
+    display: grid;
+
+    grid-template-columns:
+        .75fr 1.25fr;
+
+    gap: 22px;
+
+    align-items: center;
+
+    margin-top: 25px;
+}
+
+.scan-display {
+    padding: 25px;
+
+    border:
+        1px solid rgba(85,201,232,.18);
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(85,201,232,.1),
+            transparent 60%
+        ),
+        #0c131b;
+}
+
+.scan-circle {
+    width: 150px;
+    height: 150px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    border:
+        2px solid rgba(85,201,232,.35);
+
+    border-radius: 50%;
+
+    box-shadow:
+        inset 0 0 30px rgba(85,201,232,.08),
+        0 0 30px rgba(85,201,232,.05);
+
+    font-size: 60px;
+}
+
+.scan-label {
+    color: var(--cyan);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+.symptom-list {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+.symptom {
+    display: flex;
+
+    gap: 12px;
+
+    align-items: flex-start;
+
+    padding: 16px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.symptom-icon {
+    font-size: 25px;
+}
+
+.symptom p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CAUTION
+========================================================= */
+
+.caution {
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border:
+        1px solid rgba(255,212,90,.2);
+
+    border-radius: 14px;
+
+    background:
+        var(--yellow-soft);
+}
+
+.caution-icon {
+    flex: 0 0 auto;
+
+    font-size: 35px;
+}
+
+.caution p {
+    margin: 0;
+
+    color: #c5c7b4;
+}
+
+
+/* =========================================================
+   ANTIVIRUS
+========================================================= */
+
+.protection-panel {
+    border-color:
+        rgba(93,224,139,.14);
+
+    background:
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(93,224,139,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #17251f,
+            #111b19 45%,
+            #111922
+        );
+}
+
+.protection-header {
+    display: flex;
+
+    gap: 22px;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    padding: 24px;
+
+    border:
+        1px solid rgba(93,224,139,.17);
+
+    border-radius: 18px;
+
+    background:
+        rgba(93,224,139,.055);
+}
+
+.shield {
+    flex: 0 0 auto;
+
+    width: 85px;
+    height: 85px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(93,224,139,.25);
+
+    border-radius: 25px;
+
+    background:
+        rgba(93,224,139,.08);
+
+    font-size: 45px;
+}
+
+.protection-header p {
+    margin: 0;
+
+    color: #a8bbb0;
+}
+
+.antivirus-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.antivirus-action {
+    padding: 19px;
+
+    border:
+        1px solid rgba(93,224,139,.12);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.antivirus-number {
+    margin-bottom: 8px;
+
+    color: var(--green);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+.antivirus-action p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   UPDATE
+========================================================= */
+
+.update-box {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap: 25px;
+
+    align-items: center;
+
+    margin-top: 22px;
+
+    padding: 23px;
+
+    border:
+        1px solid rgba(85,201,232,.15);
+
+    border-radius: 18px;
+
+    background:
+        var(--cyan-soft);
+}
+
+.update-box p {
+    margin: 0;
+
+    color: #adc0c5;
+}
+
+.update-status {
+    padding: 9px 13px;
+
+    border:
+        1px solid rgba(93,224,139,.2);
+
+    border-radius: 8px;
+
+    color: var(--green);
+
+    background:
+        rgba(93,224,139,.08);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SAFETY RULES
+========================================================= */
+
+.safety-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.safety-rule {
+    min-height: 170px;
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(93,224,139,.12);
+
+    border-radius: 17px;
+
+    background:
+        rgba(93,224,139,.035);
+}
+
+.safety-icon {
+    margin-bottom: 9px;
+
+    font-size: 35px;
+}
+
+.safety-rule p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SECURITY LEVEL
+========================================================= */
+
+.security-level {
+    margin-top: 24px;
+
+    padding: 23px;
+
+    border:
+        1px solid rgba(93,224,139,.16);
+
+    border-radius: 17px;
+
+    background:
+        #0c1513;
+}
+
+.security-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 12px;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+.security-value {
+    color: var(--green);
+}
+
+.security-bar {
+    height: 12px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.security-fill {
+    width: 92%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4fb978,
+            #67e593
+        );
+
+    box-shadow:
+        0 0 15px rgba(93,224,139,.25);
+}
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+.questions {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 11px;
+
+    margin-top: 23px;
+}
+
+.question {
+    display: flex;
+
+    gap: 13px;
+
+    align-items: flex-start;
+
+    padding: 17px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.question-number {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #0d1511;
+
+    background: var(--green);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final-panel {
+    border-color:
+        rgba(93,224,139,.18);
+
+    background:
+        radial-gradient(
+            circle at 85% 30%,
+            rgba(93,224,139,.13),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #13251d,
+            #101a19 50%,
+            #101721
+        );
+}
+
+.final-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+    padding: 6px 10px;
+
+    border:
+        1px solid rgba(93,224,139,.2);
+
+    border-radius: 8px;
+
+    color: var(--green);
+
+    background:
+        rgba(93,224,139,.06);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+.final-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 11px;
+
+    margin-top: 23px;
+}
+
+.final-item {
+    padding: 19px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.final-icon {
+    margin-bottom: 8px;
+
+    font-size: 31px;
+}
+
+.final-item strong {
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+.final-item span {
+    color: #8ea097;
+
+    font-size: 12px;
+}
+
+.final-message {
+    margin-top: 21px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(93,224,139,.16);
+
+    border-radius: 14px;
+
+    color: #c6d7cd;
+
+    background:
+        rgba(93,224,139,.05);
+
+    font-size: 17px;
+}
+
+footer {
+    padding: 22px 0 45px;
+
+    text-align: center;
+
+    color: #596875;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .container {
+        width:
+            min(
+                100% - 20px,
+                var(--max)
+            );
+    }
+
+    .hero {
+        padding-top: 10px;
+    }
+
+    .hero-box {
+        min-height: 480px;
+
+        padding: 35px 23px;
+
+        border-radius: 24px;
+    }
+
+    .hero-virus {
+        right: 15px;
+        top: 70px;
+
+        transform: none;
+
+        font-size: 85px;
+    }
+
+    h1 {
+        font-size: 37px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+    }
+
+    section {
+        margin: 16px 0;
+    }
+
+    .panel {
+        padding: 23px 18px;
+
+        border-radius: 19px;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    .lead {
+        font-size: 16px;
+    }
+
+    .definition-grid,
+    .malware-grid,
+    .route-map,
+    .scanner,
+    .antivirus-grid,
+    .safety-grid,
+    .questions,
+    .final-grid {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 11px;
+    }
+
+    .route::after {
+        content: "↓";
+
+        position: static;
+
+        display: block;
+
+        margin-top: 12px;
+
+        transform: none;
+    }
+
+    .route:last-child::after {
+        display: none;
+    }
+
+    .effect-grid,
+    .symptom-list {
+        grid-template-columns: 1fr;
+    }
+
+    .download-content,
+    .protection-header,
+    .update-box {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .download-content {
+        display: flex;
+    }
+
+    .update-box {
+        display: flex;
+    }
+
+}
+
+@media (max-width: 430px) {
+
+    h1 {
+        font-size: 31px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .hero-box {
+        padding: 30px 18px;
+    }
+
+    .panel {
+        padding: 20px 14px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<header class="hero">
+
+    <div class="hero-box">
+
+        <div class="hero-content">
+
+            <div class="system-label">
+                <span class="system-dot"></span>
+                DIGITAL SECURITY LAB
+            </div>
+
+            <h1>
+                Компьютерные <span>вирусы</span><br>
+                и защита от них
+            </h1>
+
+            <p class="hero-text">
+                Что такое вредоносные программы?
+                Как они могут попасть на устройство?
+                И главное — что может сделать пользователь,
+                чтобы защитить свои данные и компьютер?
+            </p>
+
+            <div class="hero-status">
+
+                <span class="status-chip">
+                    CLASS: 6
+                </span>
+
+                <span class="status-chip">
+                    THREAT: MALWARE
+                </span>
+
+                <span class="status-chip">
+                    DEFENCE: ENABLED
+                </span>
+
+                <span class="status-chip">
+                    STATUS: LEARNING
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-virus">
+            🦠
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     1. MALWARE
+====================================================== -->
+
+<section>
+
+    <div class="panel">
+
+        <span class="section-code">
+            [01] ОБНАРУЖЕНА НОВАЯ ТЕМА
+        </span>
+
+        <h2>
+            Что такое вредоносная программа?
+        </h2>
+
+        <p class="lead">
+            Большинство программ создаётся,
+            чтобы помогать пользователю.
+            Но существуют программы,
+            предназначенные для
+            <strong class="highlight-danger">
+                нежелательных или вредоносных действий.
+            </strong>
+        </p>
+
+
+        <div class="definition-grid">
+
+            <div class="definition-main">
+
+                <div class="definition-icon">
+                    🦠
+                </div>
+
+                <h3>
+                    Вредоносная программа
+                </h3>
+
+                <p>
+                    Программное обеспечение,
+                    которое может нарушать работу устройства,
+                    повреждать данные или выполнять
+                    другие нежелательные действия.
+                </p>
+
+            </div>
+
+
+            <div class="effect-grid">
+
+                <div class="effect">
+
+                    <div class="effect-icon">
+                        🐌
+                    </div>
+
+                    <strong>
+                        Мешать работе
+                    </strong>
+
+                    <span>
+                        Устройство может работать
+                        нестабильно.
+                    </span>
+
+                </div>
+
+
+                <div class="effect">
+
+                    <div class="effect-icon">
+                        📁
+                    </div>
+
+                    <strong>
+                        Повреждать данные
+                    </strong>
+
+                    <span>
+                        Файлы могут изменяться
+                        или исчезать.
+                    </span>
+
+                </div>
+
+
+                <div class="effect">
+
+                    <div class="effect-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        Менять настройки
+                    </strong>
+
+                    <span>
+                        Возможны нежелательные
+                        изменения системы.
+                    </span>
+
+                </div>
+
+
+                <div class="effect">
+
+                    <div class="effect-icon">
+                        ⚠️
+                    </div>
+
+                    <strong>
+                        Выполнять другие действия
+                    </strong>
+
+                    <span>
+                        Поведение зависит
+                        от конкретной программы.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="terminal">
+
+            <div class="terminal-top">
+
+                <span class="terminal-dot t-red"></span>
+                <span class="terminal-dot t-yellow"></span>
+                <span class="terminal-dot t-green"></span>
+
+                <span class="terminal-title">
+                    security_scan.exe
+                </span>
+
+            </div>
+
+
+            <div class="terminal-body">
+
+                <div class="terminal-line">
+                    <span class="command">&gt;</span>
+                    scanning system...
+                </div>
+
+                <div class="terminal-line">
+                    <span class="command">&gt;</span>
+                    checking software...
+                </div>
+
+                <div class="terminal-line warning-text">
+                    [!] suspicious object detected
+                </div>
+
+                <div class="terminal-line">
+                    <span class="command">&gt;</span>
+                    classification: MALWARE
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     2. TYPES
+====================================================== -->
+
+<section>
+
+    <div class="panel">
+
+        <span class="section-code">
+            [02] БАЗА УГРОЗ
+        </span>
+
+        <h2>
+            Не всякая вредоносная программа — вирус
+        </h2>
+
+        <p class="lead">
+            Словом «вирус» часто называют
+            почти любую вредоносную программу.
+            На самом деле существует
+            <strong>несколько разных видов угроз.</strong>
+        </p>
+
+
+        <div class="malware-grid">
+
+
+            <div class="malware-card">
+
+                <div class="malware-code">
+                    TYPE_01
+                </div>
+
+                <div class="malware-icon">
+                    🦠
+                </div>
+
+                <h3>
+                    Компьютерный вирус
+                </h3>
+
+                <p>
+                    Может внедряться
+                    в другие объекты
+                    и распространяться вместе с ними.
+                </p>
+
+            </div>
+
+
+            <div class="malware-card">
+
+                <div class="malware-code">
+                    TYPE_02
+                </div>
+
+                <div class="malware-icon">
+                    🪱
+                </div>
+
+                <h3>
+                    Компьютерный червь
+                </h3>
+
+                <p>
+                    Может самостоятельно
+                    распространяться между
+                    устройствами и системами.
+                </p>
+
+            </div>
+
+
+            <div class="malware-card">
+
+                <div class="malware-code">
+                    TYPE_03
+                </div>
+
+                <div class="malware-icon">
+                    🎁
+                </div>
+
+                <h3>
+                    Троянская программа
+                </h3>
+
+                <p>
+                    Может выглядеть
+                    как полезная или безобидная
+                    программа.
+                </p>
+
+            </div>
+
+
+            <div class="malware-card">
+
+                <div class="malware-code">
+                    TYPE_04
+                </div>
+
+                <div class="malware-icon">
+                    📢
+                </div>
+
+                <h3>
+                    Нежелательное ПО
+                </h3>
+
+                <p>
+                    Например, программы,
+                    которые показывают
+                    нежелательную рекламу.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="not-equal">
+            ⚠️ <strong>Важно:</strong>
+            компьютерный вирус — это
+            <strong>один из видов</strong>
+            вредоносного программного обеспечения.
+            Поэтому выражения «вирус» и
+            «вредоносная программа» —
+            не совсем одно и то же.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     3. HOW IT GETS IN
+====================================================== -->
+
+<section>
+
+    <div class="panel">
+
+        <span class="section-code">
+            [03] ПУТИ ПРОНИКНОВЕНИЯ
+        </span>
+
+        <h2>
+            Как вредоносная программа может попасть на устройство?
+        </h2>
+
+        <p class="lead">
+            Обычно программа не появляется
+            на компьютере «из воздуха».
+            Существуют разные пути,
+            которыми нежелательное ПО
+            может попасть на устройство.
+        </p>
+
+
+        <div class="route-map">
+
+            <div class="route">
+
+                <div class="route-icon">
+                    🌐
+                </div>
+
+                <strong>
+                    Интернет
+                </strong>
+
+                <span>
+                    Ненадёжный
+                    источник
+                </span>
+
+            </div>
+
+
+            <div class="route">
+
+                <div class="route-icon">
+                    📥
+                </div>
+
+                <strong>
+                    Загрузка
+                </strong>
+
+                <span>
+                    Неизвестный
+                    файл
+                </span>
+
+            </div>
+
+
+            <div class="route">
+
+                <div class="route-icon">
+                    💾
+                </div>
+
+                <strong>
+                    Носитель
+                </strong>
+
+                <span>
+                    Съёмное
+                    устройство
+                </span>
+
+            </div>
+
+
+            <div class="route">
+
+                <div class="route-icon">
+                    🔗
+                </div>
+
+                <strong>
+                    Ссылка
+                </strong>
+
+                <span>
+                    Сомнительный
+                    переход
+                </span>
+
+            </div>
+
+
+            <div class="route">
+
+                <div class="route-icon">
+                    💻
+                </div>
+
+                <strong>
+                    Устройство
+                </strong>
+
+                <span>
+                    Возможный
+                    результат
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="fake-download">
+
+            <div class="browser-line">
+                🔒 example-download-site / files / super_program
+            </div>
+
+            <div class="download-content">
+
+                <div class="download-file">
+
+                    <div class="file-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <div class="download-name">
+                            SUPER_PROGRAM.exe
+                        </div>
+
+                        <div class="download-source">
+                            Источник неизвестен
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fake-download-button">
+                    ⚠️ Сначала подумай
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="caution">
+
+            <div class="caution-icon">
+                💡
+            </div>
+
+            <p>
+                Если программа или файл
+                получены из неизвестного источника,
+                это <strong>не означает автоматически</strong>,
+                что они вредоносные.
+                Но такой файл требует большей осторожности.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     4. SYMPTOMS
+====================================================== -->
+
+<section>
+
+    <div class="panel">
+
+        <span class="section-code">
+            [04] ДИАГНОСТИКА
+        </span>
+
+        <h2>
+            Как заметить что-то необычное? 🔎
+        </h2>
+
+        <p class="lead">
+            Некоторые изменения в работе компьютера
+            могут заставить пользователя
+            обратить внимание на безопасность системы.
+        </p>
+
+
+        <div class="scanner">
+
+            <div class="scan-display">
+
+                <div class="scan-circle">
+                    🔍
+                </div>
+
+                <div class="scan-label">
+                    SYSTEM CHECK
+                </div>
+
+            </div>
+
+
+            <div class="symptom-list">
+
+                <div class="symptom">
+
+                    <div class="symptom-icon">
+                        🐌
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Медленная работа
+                        </strong>
+
+                        <p>
+                            Устройство неожиданно
+                            стало работать хуже.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="symptom">
+
+                    <div class="symptom-icon">
+                        🪟
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Неизвестные окна
+                        </strong>
+
+                        <p>
+                            Появляются элементы,
+                            которых раньше не было.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="symptom">
+
+                    <div class="symptom-icon">
+                        ⚙️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Изменения настроек
+                        </strong>
+
+                        <p>
+                            Некоторые параметры
+                            меняются неожиданно.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="symptom">
+
+                    <div class="symptom-icon">
+                        📁
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Проблемы с файлами
+                        </strong>
+
+                        <p>
+                            Файлы могут исчезать
+                            или повреждаться.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="caution">
+
+            <div class="caution-icon">
+                ⚠️
+            </div>
+
+            <p>
+                <strong>Но будь внимателен:</strong>
+                один такой признак ещё не доказывает,
+                что на компьютере есть вредоносная программа.
+                Например, медленная работа может иметь
+                множество других причин.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     5. ANTIVIRUS
+====================================================== -->
+
+<section>
+
+    <div class="panel protection-panel">
+
+        <span class="section-code">
+            [05] СИСТЕМА ЗАЩИТЫ
+        </span>
+
+        <h2>
+            На сцену выходит антивирус 🛡️
+        </h2>
+
+        <p class="lead">
+            Для обнаружения и предотвращения
+            многих вредоносных действий используются
+            специальные <strong>средства защиты.</strong>
+        </p>
+
+
+        <div class="protection-header">
+
+            <div class="shield">
+                🛡️
+            </div>
+
+            <div>
+
+                <h3>
+                    Антивирусное программное обеспечение
+                </h3>
+
+                <p>
+                    Помогает проверять файлы и программы,
+                    обнаруживать известные угрозы
+                    и подозрительную активность,
+                    а также предупреждать пользователя.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="antivirus-grid">
+
+            <div class="antivirus-action">
+
+                <div class="antivirus-number">
+                    01 / SCAN
+                </div>
+
+                <h3>
+                    🔎 Проверяет
+                </h3>
+
+                <p>
+                    Анализирует файлы
+                    и другие объекты.
+                </p>
+
+            </div>
+
+
+            <div class="antivirus-action">
+
+                <div class="antivirus-number">
+                    02 / DETECT
+                </div>
+
+                <h3>
+                    🚨 Обнаруживает
+                </h3>
+
+                <p>
+                    Ищет известные угрозы
+                    и подозрительную активность.
+                </p>
+
+            </div>
+
+
+            <div class="antivirus-action">
+
+                <div class="antivirus-number">
+                    03 / WARN
+                </div>
+
+                <h3>
+                    ⚠️ Предупреждает
+                </h3>
+
+                <p>
+                    Сообщает пользователю
+                    о возможной опасности.
+                </p>
+
+            </div>
+
+
+            <div class="antivirus-action">
+
+                <div class="antivirus-number">
+                    04 / ISOLATE
+                </div>
+
+                <h3>
+                    📦 Изолирует
+                </h3>
+
+                <p>
+                    Может ограничить действие
+                    обнаруженного объекта
+                    или предложить его удалить.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="update-box">
+
+            <div>
+
+                <h3>
+                    🔄 Защиту тоже нужно обновлять
+                </h3>
+
+                <p>
+                    Появляются новые угрозы,
+                    поэтому операционная система,
+                    программы и средства защиты
+                    должны оставаться актуальными.
+                </p>
+
+            </div>
+
+            <div class="update-status">
+                ● UP TO DATE
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     6. USER IS PART OF SECURITY
+====================================================== -->
+
+<section>
+
+    <div class="panel protection-panel">
+
+        <span class="section-code">
+            [06] ГЛАВНЫЙ ЭЛЕМЕНТ ЗАЩИТЫ
+        </span>
+
+        <h2>
+            Антивирус есть. Можно забыть об осторожности?
+        </h2>
+
+        <p class="lead">
+            <strong>Нет.</strong>
+            Защитные программы очень полезны,
+            но безопасность зависит ещё и от
+            <strong class="highlight-green">
+                действий самого пользователя.
+            </strong>
+        </p>
+
+
+        <div class="terminal">
+
+            <div class="terminal-top">
+
+                <span class="terminal-dot t-red"></span>
+                <span class="terminal-dot t-yellow"></span>
+                <span class="terminal-dot t-green"></span>
+
+                <span class="terminal-title">
+                    protection_status
+                </span>
+
+            </div>
+
+
+            <div class="terminal-body">
+
+                <div class="terminal-line">
+                    antivirus ............
+                    <span class="command">ACTIVE</span>
+                </div>
+
+                <div class="terminal-line">
+                    system updates .......
+                    <span class="command">ACTIVE</span>
+                </div>
+
+                <div class="terminal-line">
+                    safe behaviour .......
+                    <span class="command">REQUIRED</span>
+                </div>
+
+                <div class="terminal-line">
+                    user .................
+                    <span class="command">IMPORTANT</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="safety-grid">
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    Надёжные источники
+                </h3>
+
+                <p>
+                    Загружай программы
+                    и файлы из источников,
+                    которым можно доверять.
+                </p>
+
+            </div>
+
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    📎
+                </div>
+
+                <h3>
+                    Осторожно с файлами
+                </h3>
+
+                <p>
+                    Не спеши открывать
+                    неожиданные или
+                    подозрительные вложения.
+                </p>
+
+            </div>
+
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    Проверяй ссылки
+                </h3>
+
+                <p>
+                    Не переходи без необходимости
+                    по сомнительным ссылкам.
+                </p>
+
+            </div>
+
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    🔄
+                </div>
+
+                <h3>
+                    Обновляй
+                </h3>
+
+                <p>
+                    Актуальные версии программ
+                    помогают устранять
+                    известные уязвимости.
+                </p>
+
+            </div>
+
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    💾
+                </div>
+
+                <h3>
+                    Береги данные
+                </h3>
+
+                <p>
+                    Для важных файлов полезно
+                    иметь резервные копии.
+                </p>
+
+            </div>
+
+
+            <div class="safety-rule">
+
+                <div class="safety-icon">
+                    🙋
+                </div>
+
+                <h3>
+                    Сомневаешься?
+                </h3>
+
+                <p>
+                    Не действуй наугад.
+                    Обратись к взрослому
+                    или специалисту.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="security-level">
+
+            <div class="security-top">
+
+                <span>
+                    УРОВЕНЬ ЦИФРОВОЙ ОСТОРОЖНОСТИ
+                </span>
+
+                <span class="security-value">
+                    HIGH
+                </span>
+
+            </div>
+
+            <div class="security-bar">
+
+                <div class="security-fill"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     7. QUESTIONS
+====================================================== -->
+
+<section>
+
+    <div class="panel">
+
+        <span class="section-code">
+            [07] ПРОВЕРКА ЗНАНИЙ
+        </span>
+
+        <h2>
+            Завершающее сканирование 🧠
+        </h2>
+
+        <p class="lead">
+            Система проверяет не компьютер,
+            а то, что ты запомнил после урока.
+        </p>
+
+
+        <div class="questions">
+
+            <div class="question">
+                <div class="question-number">01</div>
+                <div>
+                    Что называют вредоносной программой?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">02</div>
+                <div>
+                    Являются ли все вредоносные программы вирусами?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">03</div>
+                <div>
+                    Какие виды вредоносных программ
+                    ты запомнил?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">04</div>
+                <div>
+                    Чем компьютерный червь
+                    отличается от вируса?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">05</div>
+                <div>
+                    Почему троянскую программу
+                    бывает трудно распознать сразу?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">06</div>
+                <div>
+                    Как вредоносная программа
+                    может попасть на устройство?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">07</div>
+                <div>
+                    Какие изменения в работе компьютера
+                    могут вызвать подозрение?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">08</div>
+                <div>
+                    Почему медленная работа компьютера
+                    ещё не доказывает наличие вируса?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">09</div>
+                <div>
+                    Для чего предназначено
+                    антивирусное программное обеспечение?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">10</div>
+                <div>
+                    Почему важно обновлять
+                    операционную систему и программы?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">11</div>
+                <div>
+                    Почему одного антивируса
+                    недостаточно для полной безопасности?
+                </div>
+            </div>
+
+
+            <div class="question">
+                <div class="question-number">12</div>
+                <div>
+                    Какие правила безопасной работы
+                    помогают уменьшить риск заражения?
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL
+====================================================== -->
+
+<section>
+
+    <div class="panel final-panel">
+
+        <div class="final-status">
+            ● LESSON COMPLETE
+        </div>
+
+        <h2>
+            Итог урока 🛡️
+        </h2>
+
+        <p class="lead">
+            Вредоносные программы бывают разными,
+            а компьютерный вирус —
+            только один из их видов.
+            Защитить устройство помогает сочетание
+            <strong>средств защиты и грамотных действий пользователя.</strong>
+        </p>
+
+
+        <div class="final-grid">
+
+            <div class="final-item">
+
+                <div class="final-icon">
+                    🦠
+                </div>
+
+                <strong>
+                    Распознавай
+                </strong>
+
+                <span>
+                    Знай, что существуют
+                    разные виды угроз.
+                </span>
+
+            </div>
+
+
+            <div class="final-item">
+
+                <div class="final-icon">
+                    🔎
+                </div>
+
+                <strong>
+                    Проверяй
+                </strong>
+
+                <span>
+                    Обращай внимание
+                    на источник файлов.
+                </span>
+
+            </div>
+
+
+            <div class="final-item">
+
+                <div class="final-icon">
+                    🛡️
+                </div>
+
+                <strong>
+                    Защищай
+                </strong>
+
+                <span>
+                    Используй средства
+                    защиты и обновления.
+                </span>
+
+            </div>
+
+
+            <div class="final-item">
+
+                <div class="final-icon">
+                    🧠
+                </div>
+
+                <strong>
+                    Думай
+                </strong>
+
+                <span>
+                    Осторожность пользователя —
+                    важная часть безопасности.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="final-message">
+            🛡️ Лучшая защита компьютера —
+            это не одна программа,
+            а сочетание технологий,
+            обновлений и внимательного пользователя.
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    SYSTEM: EDUCATION · CLASS: 6 ·
+    TOPIC: MALWARE_AND_PROTECTION · STATUS: COMPLETE
+</footer>
+
+
+</div>
+
+</body>
+</html>
