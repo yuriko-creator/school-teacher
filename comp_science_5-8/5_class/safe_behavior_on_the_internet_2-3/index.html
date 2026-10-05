@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личные границы в Интернете — 5 класс</title>
+<style>
+:root{--ink:#17233b;--muted:#63708a;--paper:#f7f8fc;--card:#fff;--blue:#4c6fff;--cyan:#31c7d9;--violet:#7b61ff;--green:#28b887;--amber:#ffb84d;--red:#f06464;--line:#dfe5f2;--shadow:0 20px 55px rgba(30,48,91,.12);--radius:28px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 10% 10%,#e9f8ff 0,transparent 28rem),radial-gradient(circle at 95% 22%,#eeeaff 0,transparent 26rem),var(--paper);line-height:1.65}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.eyebrow{font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.5rem,7vw,5.5rem);line-height:.95;letter-spacing:-.055em;margin-bottom:24px}h2{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.02;letter-spacing:-.04em;margin-bottom:16px}h3{font-size:1.15rem}.lead{font-size:clamp(1.05rem,2vw,1.25rem);color:#46536d;max-width:720px}.hero{min-height:92vh;display:grid;align-items:center;padding:56px 0 72px;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}.chips{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}.chip{padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.82rem;font-weight:800;box-shadow:0 8px 20px rgba(42,59,99,.06)}.hero-note{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:20px;background:#fff;border:1px solid var(--line);max-width:650px}.hero-note b{display:block}.hero-note .icon{font-size:1.55rem}.phone-scene{position:relative;min-height:570px}.orb{position:absolute;border-radius:50%;filter:blur(1px)}.orb.a{width:300px;height:300px;background:#d8f8fb;right:-30px;top:20px}.orb.b{width:250px;height:250px;background:#e3dcff;left:5px;bottom:15px}.phone{position:absolute;width:min(360px,88%);left:50%;top:50%;transform:translate(-50%,-50%) rotate(2deg);border:10px solid #18213a;border-radius:42px;background:#f7f9fd;box-shadow:0 38px 80px rgba(25,37,72,.25);overflow:hidden}.phone-top{height:35px;background:#18213a;display:flex;justify-content:center;align-items:flex-start}.notch{width:110px;height:19px;background:#0d1425;border-radius:0 0 16px 16px}.chat-head{padding:15px 18px;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7b61ff,#31c7d9);color:#fff;font-weight:900}.status{font-size:.76rem;color:var(--green);font-weight:800}.messages{padding:18px;display:flex;flex-direction:column;gap:10px}.msg{max-width:82%;padding:10px 13px;border-radius:17px;font-size:.9rem;box-shadow:0 5px 14px rgba(31,44,78,.05)}.msg.in{background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}.msg.out{align-self:flex-end;background:#e9efff;color:#27375f;border-bottom-right-radius:5px}.msg.warn{border:1px solid #ffc7c7;background:#fff3f3}.typing{font-size:.8rem;color:var(--muted);padding:0 18px 18px}.boundary-line{position:absolute;right:-20px;top:150px;width:150px;height:150px;border:3px dashed var(--violet);border-radius:50%;display:grid;place-items:center;font-weight:900;color:var(--violet);transform:rotate(-9deg);background:rgba(255,255,255,.58);backdrop-filter:blur(6px)}section{padding:88px 0}.section-head{display:grid;grid-template-columns:.72fr 1.28fr;gap:42px;margin-bottom:38px}.section-head p{color:var(--muted);font-size:1.05rem}.panel{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.boundary-lab{padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:20px}.zone{padding:28px;border-radius:22px;min-height:260px}.zone.safe{background:linear-gradient(145deg,#edfff8,#f8fffc);border:1px solid #c8f0df}.zone.stop{background:linear-gradient(145deg,#fff5f5,#fffafa);border:1px solid #ffd1d1}.zone h3{display:flex;align-items:center;gap:10px}.mini-list{display:grid;gap:10px;margin-top:18px}.mini-item{padding:12px 14px;background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,.07);font-weight:700}.chat-demo{display:grid;grid-template-columns:.95fr 1.05fr;overflow:hidden}.chat-window{background:#edf1f8;padding:24px}.chat-window .bar{background:#fff;border-radius:17px 17px 0 0;padding:13px 15px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}.dot{width:9px;height:9px;border-radius:50%;background:#cbd3e4}.demo-msgs{background:#f9fbff;padding:22px;min-height:380px;display:flex;flex-direction:column;gap:12px;border-radius:0 0 17px 17px}.bubble{padding:11px 14px;border-radius:16px;max-width:84%;background:#fff;border:1px solid var(--line)}.bubble.me{align-self:flex-end;background:#e9efff}.bubble.pressure{box-shadow:inset 4px 0 var(--red)}.signal-panel{padding:30px}.signal{display:grid;grid-template-columns:44px 1fr;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line)}.signal:last-child{border:0}.signal-num{width:38px;height:38px;border-radius:12px;background:#fff1f1;color:var(--red);display:grid;place-items:center;font-weight:950}.no-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.no-card{min-height:180px;padding:18px;border-radius:22px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;transition:.2s}.no-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.no-card .quote{font-size:1.05rem;font-weight:900}.no-card .symbol{font-size:2rem}.privacy-vault{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center}.shield-stage{position:relative;min-height:430px;display:grid;place-items:center;overflow:hidden}.shield{width:260px;height:310px;background:linear-gradient(160deg,#5575ff,#6c5ce7);clip-path:polygon(50% 0,92% 15%,86% 68%,50% 100%,14% 68%,8% 15%);display:grid;place-items:center;color:#fff;text-align:center;padding:60px 45px 70px;filter:drop-shadow(0 28px 28px rgba(75,92,190,.25));position:relative}.shield:before{content:"";position:absolute;inset:15px;background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.03));clip-path:inherit}.shield-content{position:relative}.shield .lock{font-size:3.2rem}.data-pill{position:absolute;padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 24px rgba(33,47,88,.12);font-weight:800;font-size:.83rem}.dp1{top:35px;left:20px}.dp2{top:90px;right:10px}.dp3{bottom:80px;left:10px}.dp4{bottom:30px;right:30px}.privacy-copy{padding:28px}.privacy-copy .danger{padding:16px;border-radius:18px;background:#fff4e8;border:1px solid #ffd9a7;margin-top:18px}.stranger{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.profile-card{padding:26px;position:relative;overflow:hidden}.profile-top{display:flex;align-items:center;gap:14px}.mystery-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#202a44,#7b61ff);display:grid;place-items:center;color:#fff;font-size:2rem;font-weight:950}.profile-meta{color:var(--muted)}.known{margin-top:25px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.known span{padding:10px 12px;border-radius:13px;background:#f4f6fb;font-size:.86rem}.unknown-mask{position:absolute;right:-30px;bottom:-40px;font-size:11rem;font-weight:950;color:rgba(123,97,255,.07);transform:rotate(-10deg)}.caution-board{padding:26px}.caution-board ol{padding-left:20px}.action-console{padding:30px;background:#111a2e;color:#eaf0ff;border-radius:32px;box-shadow:0 30px 70px rgba(15,25,49,.25)}.console-head{display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid #2d3954;padding-bottom:18px;margin-bottom:22px}.console-title{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:900}.console-status{font:700 .78rem ui-monospace,monospace;color:#7de2bc}.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.action-btn{border:1px solid #33405c;background:#19243c;color:#fff;border-radius:18px;padding:20px 14px;text-align:left;cursor:pointer;transition:.2s;font:inherit}.action-btn:hover,.action-btn.active{background:#243454;border-color:#5c79c9;transform:translateY(-2px)}.action-btn b{display:block;margin:8px 0 4px}.action-btn small{color:#aebbd5}.console-output{margin-top:18px;padding:18px;border-radius:16px;background:#0b1222;border:1px solid #27334c;font-family:ui-monospace,monospace;color:#c9d6f1;min-height:82px}.secret{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;align-items:center}.secret-visual{min-height:330px;position:relative;display:grid;place-items:center}.envelope{width:250px;height:160px;background:#fff;border:2px solid #d7deec;border-radius:15px;position:relative;box-shadow:var(--shadow);display:grid;place-items:center;text-align:center;padding:35px}.envelope:before{content:"";position:absolute;left:20px;right:20px;top:24px;height:110px;border:2px dashed #e6a3a3;border-radius:12px;transform:rotate(-4deg)}.envelope strong{z-index:1}.tear{position:absolute;font-size:3rem;right:12%;bottom:10%;transform:rotate(15deg)}.secret-copy{padding:28px}.practice-intro{text-align:center;max-width:760px;margin:0 auto 34px}.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.case{padding:24px;position:relative;overflow:hidden}.case:nth-child(5){grid-column:1/-1}.case-no{position:absolute;right:18px;top:8px;font-size:4.6rem;font-weight:950;color:#eef1f8;line-height:1}.case h3{position:relative;padding-right:50px}.case p{position:relative;color:#4e5b73}.case-questions{position:relative;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-weight:700}.summary-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}.step{padding:20px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);text-align:center;font-weight:900;position:relative}.step:not(:last-child):after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);z-index:2;color:var(--violet);font-size:1.3rem}.questions{columns:2;column-gap:34px;padding:28px}.questions li{break-inside:avoid;margin:0 0 12px;padding-left:5px}.final{padding-bottom:110px}.final-card{padding:38px;background:linear-gradient(135deg,#18233d,#25345a);color:#fff;border-radius:32px;display:grid;grid-template-columns:1.2fr .8fr;gap:25px;align-items:center}.final-card p{color:#cbd5ec}.final-badge{width:190px;height:190px;border-radius:50%;border:2px dashed #6e83bd;display:grid;place-items:center;text-align:center;margin:auto;font-weight:950;font-size:1.15rem;background:rgba(255,255,255,.04)}footer{text-align:center;color:var(--muted);padding:0 16px 38px;font-size:.86rem}@media(max-width:850px){.hero{min-height:auto}.hero-grid,.section-head,.chat-demo,.privacy-vault,.stranger,.secret,.final-card{grid-template-columns:1fr}.phone-scene{min-height:540px}.section-head{gap:8px}.no-grid{grid-template-columns:repeat(2,1fr)}.action-grid{grid-template-columns:repeat(2,1fr)}.summary-flow{grid-template-columns:1fr}.step:not(:last-child):after{content:"↓";right:auto;left:50%;top:auto;bottom:-19px;transform:translateX(-50%)}.cases{grid-template-columns:1fr}.case:nth-child(5){grid-column:auto}}@media(max-width:560px){.wrap{width:min(100% - 20px,1120px)}section{padding:64px 0}.hero{padding-top:32px}.phone{width:92%}.boundary-line{right:0;top:120px;width:110px;height:110px;font-size:.78rem}.boundary-lab{grid-template-columns:1fr;padding:16px}.no-grid,.action-grid{grid-template-columns:1fr}.known{grid-template-columns:1fr}.questions{columns:1;padding:20px}.shield-stage{min-height:390px}.shield{width:225px;height:275px}.data-pill{font-size:.72rem}.final-card{padding:26px}.final-badge{width:150px;height:150px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Информатика · 5 класс</div>
+      <h1>Твои границы<br>работают и в сети.</h1>
+      <p class="lead">В Интернете можно общаться, играть и знакомиться. Но ты не обязан отвечать на всё, выполнять чужие просьбы или продолжать разговор, который стал неприятным.</p>
+      <div class="chips"><span class="chip">💬 общение</span><span class="chip">🛡️ личные границы</span><span class="chip">🔐 личные данные</span><span class="chip">🚫 право отказаться</span></div>
+      <div class="hero-note"><div class="icon">💡</div><div><b>Главная идея урока</b>Ты можешь остановить нежелательное общение и обратиться за помощью, если ситуация вызывает беспокойство.</div></div>
+    </div>
+    <div class="phone-scene" aria-label="Пример переписки">
+      <div class="orb a"></div><div class="orb b"></div>
+      <div class="phone">
+        <div class="phone-top"><div class="notch"></div></div>
+        <div class="chat-head"><div class="avatar">?</div><div><b>Игрок_27</b><div class="status">● в сети</div></div></div>
+        <div class="messages">
+          <div class="msg in">Привет! Давай играть вместе?</div>
+          <div class="msg out">Привет. Можно 🙂</div>
+          <div class="msg in">А номер телефона дашь?</div>
+          <div class="msg out">Нет, не хочу.</div>
+          <div class="msg in warn">Ну чего ты? Дай номер. Я же просто спрашиваю.</div>
+          <div class="msg in warn">Почему молчишь? Ответь!</div>
+        </div>
+        <div class="typing">Здесь уже можно остановиться и подумать…</div>
+      </div>
+      <div class="boundary-line">МОЯ<br>ГРАНИЦА</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">01 · Личные границы</div><h2>Что для тебя приемлемо?</h2></div><p>Личные границы — это правила, которые помогают понимать, какое общение и какие действия для тебя приемлемы. Они существуют и в цифровой среде.</p></div>
+  <div class="panel boundary-lab">
+   <div class="zone safe"><h3>🟢 Мне комфортно</h3><div class="mini-list"><div class="mini-item">Собеседник уважает мой ответ</div><div class="mini-item">Я сам решаю, чем делиться</div><div class="mini-item">Можно спокойно сменить тему</div></div></div>
+   <div class="zone stop"><h3>🔴 Мне некомфортно</h3><div class="mini-list"><div class="mini-item">От меня постоянно требуют ответа</div><div class="mini-item">Меня заставляют сделать то, чего я не хочу</div><div class="mini-item">Просьбу остановиться игнорируют</div></div></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">02 · Сигналы</div><h2>Когда общение становится навязчивым</h2></div><p>Одно сообщение не всегда говорит обо всей ситуации. Важно смотреть на поведение собеседника в целом: уважает ли он твой отказ и право прекратить разговор.</p></div>
+  <div class="panel chat-demo">
+   <div class="chat-window"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><b>Чат</b></div><div class="demo-msgs"><div class="bubble">Пришли фото?</div><div class="bubble me">Не хочу.</div><div class="bubble pressure">Почему? Ну пришли.</div><div class="bubble me">Я сказал, что не хочу.</div><div class="bubble pressure">Да ладно тебе. Что сложного?</div><div class="bubble pressure">Ответь!</div></div></div>
+   <div class="signal-panel"><h3>Что здесь стоит заметить?</h3><div class="signal"><div class="signal-num">1</div><div><b>Отказ уже прозвучал.</b><br>Собеседник его не принимает.</div></div><div class="signal"><div class="signal-num">2</div><div><b>Появляется давление.</b><br>Человека пытаются заставить изменить решение.</div></div><div class="signal"><div class="signal-num">3</div><div><b>Требуют ответа.</b><br>Но отвечать на каждое сообщение никто не обязан.</div></div></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">03 · Право отказаться</div><h2>«Нет» — это полный ответ</h2></div><p>Для отказа не нужно придумывать сложное оправдание. Можно спокойно обозначить границу, а если её не принимают — прекратить разговор.</p></div>
+  <div class="no-grid">
+   <div class="no-card"><div class="symbol">💬</div><div class="quote">«Нет, я не хочу»</div></div>
+   <div class="no-card"><div class="symbol">📷</div><div class="quote">«Я не буду это отправлять»</div></div>
+   <div class="no-card"><div class="symbol">🛑</div><div class="quote">«Мне неприятен этот разговор»</div></div>
+   <div class="no-card"><div class="symbol">↪️</div><div class="quote">«Давай сменим тему»</div></div>
+   <div class="no-card"><div class="symbol">🚪</div><div class="quote">«Я не хочу продолжать общение»</div></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap privacy-vault">
+  <div class="shield-stage">
+   <div class="shield"><div class="shield-content"><div class="lock">🔒</div><b>Личные<br>данные</b></div></div>
+   <span class="data-pill dp1">📍 адрес</span><span class="data-pill dp2">☎️ телефон</span><span class="data-pill dp3">🏫 место учёбы</span><span class="data-pill dp4">👨‍👩‍👧 сведения о семье</span>
+  </div>
+  <div class="panel privacy-copy"><div class="eyebrow">04 · Личная информация</div><h2>Не всё нужно сообщать</h2><p>К личной информации могут относиться полное имя, адрес, номер телефона, место учёбы, сведения о семье, фотографии и данные учётных записей.</p><p>Перед отправкой такой информации стоит подумать: <b>зачем она нужна собеседнику и действительно ли её нужно сообщать?</b></p><div class="danger"><b>🔑 Особое правило:</b><br>пароли и коды доступа нельзя сообщать другим пользователям. Необычная просьба назвать пароль или код — повод проявить осторожность.</div></div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">05 · Кто по ту сторону?</div><h2>Незнакомый профиль — это не знакомый человек</h2></div><p>В Интернете не всегда можно точно знать, кто находится по другую сторону экрана. Даже если профиль выглядит дружелюбно или знает что-то о тебе, это ещё не доказывает, кто им управляет.</p></div>
+  <div class="stranger">
+   <div class="panel profile-card"><div class="profile-top"><div class="mystery-avatar">?</div><div><h3 style="margin:0">SuperFriend_2026</h3><div class="profile-meta">«Люблю игры и котов 🐈»</div></div></div><div class="known"><span>✓ имя профиля</span><span>✓ картинка</span><span>✓ несколько сообщений</span><span>✓ общие интересы</span></div><div class="unknown-mask">?</div><p style="margin-top:22px"><b>Но чего мы не знаем?</b> Кто на самом деле пишет, зачем ему информация и можно ли доверять его просьбам.</p></div>
+   <div class="panel caution-board"><h3>Режим осторожности</h3><ol><li>Не спеши сообщать информацию о себе.</li><li>Не выполняй необычные просьбы.</li><li>Осторожно относись к ссылкам и файлам.</li><li>Не считай человека знакомым только из-за информации в профиле.</li><li>Если сомневаешься — обратись к взрослому.</li></ol><p><b>Важно:</b> не каждое сообщение незнакомца опасно. Задача — не бояться Интернета, а действовать обдуманно.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">06 · Панель защиты</div><h2>Управляй общением</h2></div><p>Если разговор стал неприятным, есть несколько вариантов. Нажми на действия и посмотри, для чего каждое из них подходит.</p></div>
+  <div class="action-console">
+   <div class="console-head"><div class="console-title">SAFETY_PANEL / chat_control</div><div class="console-status">● READY</div></div>
+   <div class="action-grid">
+    <button class="action-btn" data-text="Ты не обязан продолжать разговор. Иногда безопасный первый шаг — просто перестать отвечать на дальнейшие сообщения."><span>💬</span><b>Не отвечать</b><small>остановить разговор</small></button>
+    <button class="action-btn" data-text="Блокировка ограничивает возможность дальнейшего взаимодействия с пользователем. Она помогает прекратить нежелательный контакт."><span>🚫</span><b>Заблокировать</b><small>ограничить контакт</small></button>
+    <button class="action-btn" data-text="Жалоба сообщает администрации сайта, игры или приложения о возможном нарушении правил сервиса."><span>🚩</span><b>Пожаловаться</b><small>сообщить сервису</small></button>
+    <button class="action-btn" data-text="Если ситуация пугает, вызывает сильное беспокойство или ты не знаешь, как поступить, расскажи родителю, учителю или другому взрослому, которому доверяешь."><span>🤝</span><b>Обратиться</b><small>получить помощь</small></button>
+   </div>
+   <div class="console-output" id="consoleOutput">&gt; Выбери действие на панели…</div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap secret">
+  <div class="secret-visual"><div class="envelope"><strong>«Только никому<br>не рассказывай…»</strong></div><div class="tear">✂️</div></div>
+  <div class="panel secret-copy"><div class="eyebrow">07 · «Это секрет»</div><h2>Безопасность важнее чужой просьбы молчать</h2><p>Если общение пугает, вызывает сильное беспокойство, связано с угрозами, заставляет делать что-то против желания или касается паролей и важной личной информации — можно и нужно обратиться к взрослому, которому доверяешь.</p><p><b>Просьба «никому не рассказывать» не лишает тебя права попросить помощи.</b></p></div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="practice-intro"><div class="eyebrow">08 · Практическое задание</div><h2>«Мои границы в Интернете»</h2><p>Для каждой ситуации ответь на три вопроса: <b>что происходит?</b> Есть ли нарушение границ или повод проявить осторожность? <b>Как поступить безопасно?</b></p></div>
+  <div class="cases">
+   <article class="panel case"><div class="case-no">1</div><h3>🎮 Знакомый по игре</h3><p>Знакомый по онлайн-игре несколько раз просит назвать номер телефона. Ты уже ответил, что не хочешь, но он продолжает спрашивать.</p><div class="case-questions">Можно ли отказаться отвечать? Как прекратить нежелательный разговор?</div></article>
+   <article class="panel case"><div class="case-no">2</div><h3>🖼️ Картинка для общего чата</h3><p>Одноклассник присылает смешную картинку и спрашивает, можно ли отправить её в общий чат.</p><div class="case-questions">Почему стоит подумать об отношении других людей? Как поступить уважительно?</div></article>
+   <article class="panel case"><div class="case-no">3</div><h3>⚠️ «Срочно перейди по ссылке»</h3><p>Незнакомый пользователь пишет: «Срочно перейди по этой ссылке, иначе твоя игровая учётная запись будет удалена».</p><div class="case-questions">Что должно вызвать осторожность? Нужно ли сразу переходить? К кому обратиться при сомнениях?</div></article>
+   <article class="panel case"><div class="case-no">4</div><h3>🔑 Пароль за помощь</h3><p>Собеседник просит прислать пароль от игровой учётной записи и обещает взамен помочь пройти сложный уровень.</p><div class="case-questions">Следует ли выполнять просьбу? Почему пароль нельзя сообщать другим?</div></article>
+   <article class="panel case"><div class="case-no">5</div><h3>💬 Разговор не прекращается</h3><p>В чате собеседник продолжает неприятный разговор после нескольких просьб остановиться.</p><div class="case-questions">Обязан ли ты продолжать отвечать? Какие средства можно использовать, чтобы прекратить общение?</div></article>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">09 · Алгоритм</div><h2>Если ситуация стала неприятной</h2></div><p>Не существует одной кнопки на все случаи. Но есть последовательность, которая помогает не действовать поспешно.</p></div>
+  <div class="summary-flow"><div class="step">👀<br>Оцени ситуацию</div><div class="step">✋<br>Обозначь границы</div><div class="step">🚪<br>Прекрати общение</div><div class="step">🛡️<br>Используй защиту</div><div class="step">🤝<br>Обратись за помощью</div></div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">10 · Проверь себя</div><h2>12 вопросов</h2></div><p>Ответь своими словами. Здесь важнее объяснить решение, чем повторить определение дословно.</p></div>
+  <ol class="panel questions"><li>Что можно понимать под личными границами в Интернете?</li><li>Обязан ли пользователь отвечать на каждое сообщение?</li><li>Можно ли отказаться продолжать неприятный разговор?</li><li>Какие признаки могут указывать на навязчивое общение?</li><li>Почему важно осторожно относиться к личной информации?</li><li>Какие сведения о себе не следует сообщать без необходимости?</li><li>Почему пароль нельзя передавать другим пользователям?</li><li>Как следует относиться к необычным просьбам незнакомых пользователей?</li><li>Для чего используется блокировка?</li><li>Для чего предназначена функция жалобы?</li><li>В каких ситуациях следует рассказать о происходящем взрослому?</li><li>Почему просьба «никому не рассказывай» не мешает обратиться за помощью, если ситуация вызывает беспокойство?</li></ol>
+ </div>
+</section>
+
+<section class="final">
+ <div class="wrap final-card"><div><div class="eyebrow" style="color:#8fe7cf">Итог урока</div><h2>Ты управляешь своим общением.</h2><p>Ты вправе отказаться от нежелательного разговора, не сообщать личную информацию, прекратить контакт и использовать доступные средства защиты. Если ситуация вызывает страх или сильное беспокойство, обратиться за помощью — правильное действие.</p><p><b>Оцени ситуацию → обозначь границы → прекрати нежелательное общение → используй защиту → обратись за помощью.</b></p></div><div class="final-badge">🛡️<br>МОИ<br>ГРАНИЦЫ</div></div>
+</section>
+</main>
+<footer>Безопасное поведение в сети Интернет · 5 класс</footer>
+<script>
+const buttons=document.querySelectorAll('.action-btn');
+const output=document.getElementById('consoleOutput');
+buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');output.textContent='> '+btn.dataset.text;}));
+</script>
+</body>
+</html>
