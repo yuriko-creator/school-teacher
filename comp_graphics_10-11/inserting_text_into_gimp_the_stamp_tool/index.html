@@ -1,0 +1,4024 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Текст и Штамп в GIMP — 10–11 класс</title>
+
+<style>
+/* ==================================================
+   01. ОСНОВНЫЕ ПЕРЕМЕННЫЕ
+================================================== */
+
+:root {
+  --bg: #101419;
+  --surface: #1b222a;
+  --surface-light: #252e38;
+  --surface-deep: #141a20;
+  --line: #394450;
+
+  --text: #f0f4f7;
+  --muted: #b2becb;
+
+  --cyan: #57dce0;
+  --cyan-soft: #18383e;
+  --violet: #b79aff;
+  --violet-soft: #30263f;
+  --orange: #ffbf79;
+  --green: #83d9a5;
+
+  --radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.75;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+h1, h2, h3, h4, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 7vw, 5.5rem);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+p {
+  color: var(--muted);
+}
+
+strong {
+  color: var(--text);
+}
+
+code,
+kbd {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+code {
+  color: var(--cyan);
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 2px;
+  border: 1px solid #697887;
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  background: #293440;
+  color: white;
+  font-weight: bold;
+}
+
+.container {
+  width: min(1160px, calc(100% - 36px));
+  margin: auto;
+}
+
+.section {
+  padding: 42px 0;
+}
+
+.section-heading {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--cyan);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 830px;
+  font-size: 1.08rem;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card {
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 57px;
+  height: 57px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  background: var(--cyan-soft);
+  font-size: 1.8rem;
+}
+
+.note {
+  margin-top: 22px;
+  padding: 21px 24px;
+  border-left: 4px solid var(--cyan);
+  border-radius: 0 15px 15px 0;
+  background: var(--cyan-soft);
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #a8f7f5;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+.note.violet {
+  border-color: var(--violet);
+  background: var(--violet-soft);
+}
+
+.note.violet strong {
+  color: #ddceff;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 50px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.tag.violet {
+  color: var(--violet);
+  background: var(--violet-soft);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 11px;
+  color: #0e2025;
+  font-weight: 800;
+  transition: transform .15s, filter .15s;
+}
+
+.btn:hover {
+  filter: brightness(1.07);
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  color: var(--text);
+  background: var(--surface-light);
+  border-color: #556474;
+}
+
+.btn.violet {
+  background: var(--violet);
+  border-color: var(--violet);
+  color: #211631;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.step-list {
+  margin: 0;
+  padding-left: 24px;
+  color: var(--muted);
+}
+
+.step-list li {
+  padding-left: 5px;
+  margin-bottom: 12px;
+}
+
+.step-list li::marker {
+  color: var(--cyan);
+  font-weight: bold;
+}
+
+/* ==================================================
+   02. ГЛАВНЫЙ ЭКРАН
+================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 86px 0;
+  background:
+    radial-gradient(
+      ellipse at 83% 30%,
+      rgba(132, 97, 218, .24),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 15% 90%,
+      rgba(67, 188, 195, .13),
+      transparent 48%
+    ),
+    #101419;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+  background-size: 42px 42px;
+  pointer-events: none;
+}
+
+.hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.hero-label {
+  display: inline-block;
+  margin-bottom: 24px;
+  padding: 9px 15px;
+  border: 1px solid #52606d;
+  border-radius: 50px;
+  background: rgba(255,255,255,.04);
+  color: var(--cyan);
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--cyan);
+}
+
+.hero-description {
+  max-width: 620px;
+  margin: 23px 0;
+  font-size: 1.12rem;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.hero-tags span {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid #475464;
+  background: #202934;
+  font-size: .84rem;
+}
+
+.hero-visual {
+  padding: 16px;
+  border: 1px solid #48566a;
+  border-radius: 20px;
+  background: #202832;
+  box-shadow: 0 28px 65px rgba(0,0,0,.3);
+}
+
+.hero-windowbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 4px 15px;
+  gap: 10px;
+  font-size: .8rem;
+  color: #aebfcd;
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.window-dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #768493;
+}
+
+.window-dots i:last-child {
+  background: #e17e86;
+}
+
+.hero-art {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-height: 310px;
+  padding: 24px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13,29,49,.35),
+      rgba(65,35,91,.65)
+    ),
+    #163849;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.hero-art::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 46px rgba(255,255,255,.025),
+    0 0 0 88px rgba(255,255,255,.018);
+}
+
+.hero-art-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-art .big-text {
+  font-size: clamp(3.4rem, 8vw, 5.3rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -3px;
+  color: white;
+}
+
+.hero-art .big-text span {
+  color: #9ff3f0;
+}
+
+.hero-art .small-text {
+  margin-top: 20px;
+  color: #c8edf0;
+  font-size: .8rem;
+  letter-spacing: 3px;
+}
+
+.hero-tools {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 16px;
+}
+
+.hero-tools span {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 48px;
+  background: #151c23;
+  border: 1px solid #485765;
+  border-radius: 10px;
+  font-size: 1.65rem;
+}
+
+/* ==================================================
+   03. ДВА УЧЕБНЫХ МОДУЛЯ
+================================================== */
+
+.module-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.module-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 21px;
+  background: var(--surface);
+}
+
+.module-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--cyan);
+}
+
+.module-card.clone::before {
+  background: var(--violet);
+}
+
+.module-card .module-symbol {
+  display: grid;
+  place-items: center;
+  width: 75px;
+  height: 75px;
+  margin-bottom: 17px;
+  border-radius: 19px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  font-family: Georgia, serif;
+  font-size: 3.4rem;
+  font-weight: bold;
+}
+
+.module-card.clone .module-symbol {
+  background: var(--violet-soft);
+  color: var(--violet);
+  font-family: inherit;
+  font-size: 2.6rem;
+}
+
+.module-card h3 {
+  font-size: 1.45rem;
+}
+
+.module-card p {
+  margin-bottom: 0;
+}
+
+.module-divider {
+  margin: 45px 0 10px;
+  padding: 18px 25px;
+  border: 1px solid #3e6268;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      90deg,
+      #14343c,
+      #1b222a
+    );
+  font-weight: 800;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.module-divider.violet {
+  border-color: #5b4a81;
+  background:
+    linear-gradient(
+      90deg,
+      #312340,
+      #1b222a
+    );
+  color: var(--violet);
+}
+
+/* ==================================================
+   04. МОДУЛЬ ТЕКСТА: СХЕМА
+================================================== */
+
+.visual-process {
+  display: grid;
+  grid-template-columns:
+    1fr auto 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.process-step {
+  padding: 20px 12px;
+  border: 1px solid #455362;
+  border-radius: 13px;
+  background: #121920;
+  text-align: center;
+}
+
+.process-step .emoji {
+  font-size: 2.3rem;
+  margin-bottom: 9px;
+}
+
+.process-step strong {
+  display: block;
+  font-size: .95rem;
+}
+
+.process-step small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.process-arrow {
+  color: var(--cyan);
+  font-size: 1.7rem;
+}
+
+.parameter-card {
+  position: relative;
+}
+
+.parameter-card .example {
+  display: grid;
+  place-items: center;
+  min-height: 108px;
+  margin-bottom: 18px;
+  padding: 13px;
+  border: 1px solid #46515e;
+  border-radius: 12px;
+  background: #111920;
+  text-align: center;
+}
+
+.example-serif {
+  font-family: Georgia, serif;
+  font-size: 2.1rem;
+}
+
+.example-size {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.example-size span:first-child {
+  font-size: 1rem;
+}
+
+.example-size span:last-child {
+  font-size: 2.8rem;
+  color: var(--cyan);
+}
+
+.example-colors {
+  font-size: 2.2rem;
+  font-weight: 900;
+}
+
+.example-colors span:nth-child(1) {
+  color: #8be5ef;
+}
+
+.example-colors span:nth-child(2) {
+  color: #ffbe80;
+}
+
+.example-colors span:nth-child(3) {
+  color: #c3aaff;
+}
+
+.example-spacing {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 7px;
+}
+
+.example-align {
+  width: 80%;
+}
+
+.example-align i {
+  display: block;
+  height: 8px;
+  margin: 9px auto;
+  border-radius: 3px;
+  background: #72dce2;
+}
+
+.example-align i:nth-child(1) {
+  width: 85%;
+}
+
+.example-align i:nth-child(2) {
+  width: 55%;
+}
+
+.example-align i:nth-child(3) {
+  width: 75%;
+}
+
+.example-lines {
+  font-size: 1.15rem;
+  line-height: 2.1;
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+/* ==================================================
+   05. ИМИТАЦИЯ РЕДАКТОРА GIMP
+================================================== */
+
+.gimp-lab {
+  overflow: hidden;
+  border: 1px solid #52606c;
+  border-radius: 19px;
+  background: #171d24;
+  box-shadow: 0 20px 65px rgba(0,0,0,.2);
+}
+
+.gimp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 13px 19px;
+  background: #303841;
+  border-bottom: 1px solid #4b5762;
+}
+
+.gimp-topbar strong {
+  font-size: .89rem;
+}
+
+.gimp-topbar small {
+  color: #adbcca;
+}
+
+.gimp-menu {
+  padding: 10px 18px;
+  border-bottom: 1px solid #444e5a;
+  background: #252e37;
+  font-size: .77rem;
+  color: #c7d2dc;
+}
+
+.gimp-workspace {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 1fr) 175px;
+  min-height: 480px;
+}
+
+.gimp-sidebar {
+  min-width: 0;
+  padding: 19px;
+  background: #252d36;
+  border-right: 1px solid #3e4a56;
+}
+
+.gimp-sidebar.right {
+  border-right: 0;
+  border-left: 1px solid #3e4a56;
+}
+
+.panel-title {
+  padding-bottom: 11px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #4a5663;
+  color: #eaf3fb;
+  font-size: .81rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 17px;
+}
+
+.field span {
+  display: block;
+  margin-bottom: 7px;
+  color: #c0cfdd;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.field input:not([type="color"]),
+.field select,
+.field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid #5d6c7b;
+  border-radius: 8px;
+  background: #111920;
+  color: #fff;
+}
+
+.field input[type="range"] {
+  width: 100%;
+  accent-color: var(--cyan);
+}
+
+.field input[type="color"] {
+  width: 100%;
+  height: 39px;
+  padding: 3px;
+  border: 1px solid #647280;
+  border-radius: 8px;
+  background: #151d25;
+  cursor: pointer;
+}
+
+.value-text {
+  display: inline-block;
+  font-family: Consolas, monospace;
+  color: var(--cyan);
+}
+
+.gimp-stage {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 26px;
+  background:
+    repeating-conic-gradient(
+      #38424d 0% 25%,
+      #303943 0% 50%
+    ) 0 0 / 30px 30px;
+}
+
+.poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: min(100%, 480px);
+  min-height: 340px;
+  padding: 40px 24px;
+  background:
+    radial-gradient(
+      circle at 85% 17%,
+      rgba(140,220,230,.35),
+      transparent 30%
+    ),
+    linear-gradient(
+      140deg,
+      #123d4f,
+      #26365a 55%,
+      #5a3d70
+    );
+  box-shadow: 0 15px 30px rgba(0,0,0,.25);
+  text-align: center;
+}
+
+.poster::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -115px;
+  bottom: -115px;
+  border: 50px solid rgba(255,255,255,.055);
+  border-radius: 50%;
+}
+
+.poster-kicker {
+  position: relative;
+  margin-bottom: 17px;
+  color: #cee8ed;
+  font-size: .75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.poster-text-box {
+  position: relative;
+  min-width: 0;
+  padding: 13px;
+  border: 2px dashed rgba(158,238,239,.68);
+  border-radius: 3px;
+}
+
+.poster-text {
+  color: #ffffff;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.poster-subtitle {
+  position: relative;
+  margin-top: 24px;
+  color: #e4eff8;
+  font-size: .88rem;
+  letter-spacing: 1px;
+}
+
+.layer-list {
+  display: grid;
+  gap: 8px;
+}
+
+.layer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 8px;
+  border: 1px solid #536272;
+  border-radius: 8px;
+  background: #202b34;
+  font-size: .78rem;
+}
+
+.layer.active {
+  border-color: var(--cyan);
+  background: #193a3d;
+}
+
+.layer .layer-symbol {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 29px;
+  height: 29px;
+  background: #374452;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.layer-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.eye-button {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  padding: 0;
+  margin-left: auto;
+  border: 1px solid #556575;
+  border-radius: 6px;
+  background: #17232c;
+  color: #fff;
+}
+
+.gimp-bottombar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 19px;
+  background: #303841;
+  color: #b9c8d4;
+  font-size: .77rem;
+}
+
+.lab-instructions {
+  padding: 20px 24px;
+  border-top: 1px solid #465361;
+  background: #202a34;
+}
+
+.lab-instructions p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================================================
+   06. СЛОИ И ИЕРАРХИЯ ТЕКСТА
+================================================== */
+
+.layers-diagram {
+  position: relative;
+  display: grid;
+  gap: 13px;
+  max-width: 540px;
+  margin: auto;
+  padding: 20px;
+}
+
+.diagram-layer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 19px;
+  border: 1px solid #638b98;
+  border-radius: 13px;
+  transform: skewX(-8deg);
+  background: #23434a;
+  text-align: center;
+  font-weight: 800;
+}
+
+.diagram-layer:nth-child(2) {
+  background: #353253;
+  border-color: #8a77b4;
+}
+
+.diagram-layer:nth-child(3) {
+  background: #243b56;
+  border-color: #5d85ac;
+}
+
+.diagram-layer span {
+  transform: skewX(8deg);
+}
+
+.typography-example {
+  padding: 33px;
+  border-radius: 16px;
+  background: #f1e9dc;
+  color: #24313a;
+}
+
+.typography-example h4 {
+  margin-bottom: 8px;
+  color: #172d42;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+.typography-example .subheading {
+  margin-bottom: 20px;
+  color: #b85f48;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.typography-example p {
+  max-width: 500px;
+  color: #46515b;
+  font-size: .94rem;
+}
+
+/* ==================================================
+   08. ОТДЕЛЬНЫЕ ВОПРОСЫ
+================================================== */
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 13px;
+}
+
+.question {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 19px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.question-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+.questions.clone .question-number {
+  background: var(--violet-soft);
+  color: var(--violet);
+}
+
+.question p {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: .94rem;
+}
+
+/* ==================================================
+   09. ШТАМП: СХЕМА
+================================================== */
+
+.clone-concept {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 15px;
+  align-items: center;
+  padding: 26px;
+  border: 1px solid #5a4e78;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.clone-area {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 185px;
+  padding: 20px;
+  border: 1px solid #56616e;
+  border-radius: 14px;
+  background: #274858;
+  text-align: center;
+}
+
+.clone-area .scene-symbol {
+  font-size: 4.7rem;
+}
+
+.clone-area span {
+  display: block;
+  margin-top: 10px;
+  font-weight: 800;
+}
+
+.clone-arrow {
+  text-align: center;
+  color: var(--violet);
+  font-size: 2rem;
+}
+
+.clone-arrow small {
+  display: block;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.parameter-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.parameter-highlight .number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--violet-soft);
+  color: var(--violet);
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+/* ==================================================
+   10. ИНТЕРАКТИВНЫЙ ШТАМП
+================================================== */
+
+.clone-lab {
+  overflow: hidden;
+  border: 1px solid #5d5280;
+  border-radius: var(--radius);
+  background: #1c232c;
+}
+
+.clone-lab-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 18px 24px;
+  background: #302a40;
+  border-bottom: 1px solid #5c5276;
+}
+
+.clone-lab-head h3 {
+  margin-bottom: 0;
+}
+
+.clone-lab-body {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+}
+
+.clone-controls {
+  padding: 22px;
+  border-right: 1px solid #4c4c62;
+  background: #262a36;
+}
+
+.clone-controls .field {
+  margin-top: 18px;
+}
+
+.clone-stage {
+  min-width: 0;
+  padding: 22px;
+  background: #151d26;
+}
+
+.canvas-holder {
+  position: relative;
+  max-width: 640px;
+  margin: auto;
+  overflow: hidden;
+  border: 2px solid #768396;
+  border-radius: 10px;
+  background: #97cde0;
+}
+
+#cloneCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.source-marker {
+  position: absolute;
+  display: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: rgba(160,110,255,.15);
+  box-shadow: 0 0 0 2px #7655e4;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.clone-status {
+  max-width: 640px;
+  margin: 17px auto 0;
+  padding: 15px 18px;
+  border: 1px solid #59557a;
+  border-radius: 11px;
+  background: #2a273b;
+  color: #ddd6ef;
+  font-size: .91rem;
+}
+
+.clone-status strong {
+  color: #d7c6ff;
+}
+
+.canvas-caption {
+  max-width: 640px;
+  margin: 12px auto 0;
+  font-size: .84rem;
+}
+
+.lab-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin: 17px 0;
+}
+
+.lab-step-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #493764;
+  color: #e3d7ff;
+  font-weight: 800;
+}
+
+.lab-step p {
+  margin: 0;
+  font-size: .9rem;
+}
+
+.mode-indicator {
+  padding: 10px 12px;
+  border: 1px solid #75608d;
+  border-radius: 9px;
+  background: #342846;
+  color: #e6dcff;
+  font-size: .83rem;
+  font-weight: 800;
+}
+
+.clone-uses {
+  margin-top: 22px;
+}
+
+/* ==================================================
+   11. ТИПИЧНЫЕ ОШИБКИ
+================================================== */
+
+.mistake {
+  padding: 23px;
+  border: 1px solid #635263;
+  border-radius: 17px;
+  background: #28232a;
+}
+
+.mistake h3 {
+  color: #ffd3bd;
+}
+
+.mistake p {
+  margin-bottom: 0;
+}
+
+.mistake .fix {
+  margin-top: 13px;
+  padding-top: 13px;
+  border-top: 1px solid #655766;
+  color: #b2f0cb;
+  font-size: .93rem;
+}
+
+/* ==================================================
+   12. ИТОГ И ПОДВАЛ
+================================================== */
+
+.final {
+  padding: 38px;
+  border: 1px solid #4b7171;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(87,220,224,.11),
+      transparent 47%
+    ),
+    var(--surface);
+}
+
+.final-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.final-column {
+  padding: 23px;
+  border: 1px solid #42656a;
+  border-radius: 14px;
+  background: #183036;
+}
+
+.final-column.clone {
+  border-color: #635081;
+  background: #2b253c;
+}
+
+.final-column h3 {
+  color: var(--cyan);
+}
+
+.final-column.clone h3 {
+  color: var(--violet);
+}
+
+footer {
+  padding: 35px 20px 48px;
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+  color: #93a4b4;
+  text-align: center;
+  font-size: .85rem;
+}
+
+/* ==================================================
+   13. АДАПТИВНАЯ ВЁРСТКА
+================================================== */
+
+@media(max-width: 1000px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    width: min(100%, 610px);
+    margin: auto;
+  }
+
+  .gimp-workspace {
+    grid-template-columns: 235px minmax(0,1fr);
+  }
+
+  .gimp-sidebar.right {
+    grid-column: 1 / -1;
+    border-left: 0;
+    border-top: 1px solid #3e4a56;
+  }
+
+  .layer-list {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width: 750px) {
+  .grid-3,
+  .module-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-process {
+    grid-template-columns: 1fr;
+  }
+
+  .process-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+  }
+
+  .clone-lab-body {
+    grid-template-columns: 1fr;
+  }
+
+  .clone-controls {
+    border-right: 0;
+    border-bottom: 1px solid #4c4c62;
+  }
+
+  .clone-concept {
+    grid-template-columns: 1fr;
+  }
+
+  .clone-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media(max-width: 600px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 30px 0;
+  }
+
+  .hero {
+    padding: 50px 0;
+  }
+
+  h1 {
+    letter-spacing: -1px;
+  }
+
+  .grid-2,
+  .practice-grid,
+  .questions,
+  .final-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .module-card,
+  .final {
+    padding: 20px;
+  }
+
+  .gimp-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .gimp-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid #3e4a56;
+  }
+
+  .gimp-sidebar.right {
+    border-bottom: 0;
+  }
+
+  .gimp-stage {
+    padding: 14px;
+  }
+
+  .poster {
+    min-height: 285px;
+    padding: 23px 14px;
+  }
+
+  .poster-text {
+    font-size: 30px;
+  }
+
+  .layer-list {
+    grid-template-columns: 1fr;
+  }
+
+  .clone-stage,
+  .clone-controls,
+  .practice-body {
+    padding: 18px;
+  }
+
+  .hero-art {
+    min-height: 245px;
+  }
+
+  .question {
+    padding: 15px;
+  }
+
+  .button-row .btn {
+    flex: 1 1 150px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================================================
+     01. ГЛАВНЫЙ ЭКРАН
+================================================== -->
+
+<header class="hero">
+  <div class="container hero-layout">
+
+    <div>
+      <div class="hero-label">
+        ИНФОРМАТИКА · 10–11 КЛАСС · GIMP
+      </div>
+
+      <h1>
+        Графика
+        <span>и инструменты</span>
+      </h1>
+
+      <p class="hero-description">
+        Как добавить выразительную надпись
+        на изображение? Как подобрать шрифт
+        и цвет? И как исправить небольшой
+        участок фотографии, используя
+        соседнюю область?
+      </p>
+
+      <p>
+        Сегодня познакомимся с двумя
+        возможностями графического
+        редактора GIMP.
+      </p>
+
+      <div class="hero-tags">
+        <span>Текст</span>
+        <span>Шрифты</span>
+        <span>Форматирование</span>
+        <span>Слои</span>
+        <span>Штамп</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-windowbar">
+        <span>Редактор изображений</span>
+
+        <div class="window-dots" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-art-content">
+          <div class="big-text">
+            G<span>I</span>MP
+          </div>
+
+          <div class="small-text">
+            DIGITAL DESIGN LAB
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-tools" aria-hidden="true">
+        <span>A</span>
+        <span>🖌️</span>
+        <span>▧</span>
+        <span>🎨</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- ==================================================
+     02. ВВЕДЕНИЕ: ДВА МОДУЛЯ
+================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        Содержание урока
+      </span>
+
+      <h2>Два инструмента — две разные задачи</h2>
+
+      <p class="lead">
+        Графический редактор позволяет
+        не только рисовать или изменять
+        изображения. Он также помогает
+        оформлять текст и исправлять
+        отдельные участки рисунка.
+      </p>
+    </div>
+
+    <div class="module-overview">
+
+      <article class="module-card">
+        <div class="module-symbol">A</div>
+
+        <span class="tag">Модуль 1</span>
+
+        <h3 style="margin-top:13px">
+          Работа с текстом
+        </h3>
+
+        <p>
+          Научимся создавать текстовые объекты,
+          изменять шрифты, размеры, цвета,
+          интервалы и положение текста.
+        </p>
+
+        <p style="margin-top:13px">
+          <strong>Результат:</strong>
+          оформление небольшого плаката.
+        </p>
+      </article>
+
+      <article class="module-card clone">
+        <div class="module-symbol">🖌️</div>
+
+        <span class="tag violet">Модуль 2</span>
+
+        <h3 style="margin-top:13px">
+          Инструмент «Штамп»
+        </h3>
+
+        <p>
+          Разберёмся, как копировать
+          фрагменты изображения с помощью
+          кисти и применять этот способ
+          для исправления деталей.
+        </p>
+
+        <p style="margin-top:13px">
+          <strong>Результат:</strong>
+          обработка небольшого участка изображения.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     МОДУЛЬ 1. РАБОТА С ТЕКСТОМ
+================================================== -->
+
+<div class="container">
+  <div class="module-divider">
+    МОДУЛЬ 01 / РАБОТА С ТЕКСТОМ
+  </div>
+</div>
+
+<!-- ==================================================
+     03. НАЗНАЧЕНИЕ ТЕКСТА
+================================================== -->
+
+<section class="section" id="text-intro">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        01 · Инструмент «Текст»
+      </span>
+
+      <h2>Зачем нужен текст в графическом редакторе?</h2>
+
+      <p class="lead">
+        Иногда одного изображения недостаточно,
+        чтобы передать сообщение.
+        Например, на плакате нужно указать
+        название мероприятия, время и место
+        его проведения.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card">
+        <div class="card-icon">📢</div>
+
+        <h3>Афиши</h3>
+
+        <p>
+          Крупный заголовок привлекает внимание,
+          а дополнительный текст сообщает
+          подробности мероприятия.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">📰</div>
+
+        <h3>Объявления</h3>
+
+        <p>
+          Важные слова можно выделить
+          цветом, размером или расположением,
+          чтобы их было легче заметить.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🖼️</div>
+
+        <h3>Иллюстрации</h3>
+
+        <p>
+          Текст помогает добавить название,
+          пояснение, подпись или небольшой
+          комментарий к изображению.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Что такое текстовый объект?</strong>
+
+      <p>
+        В GIMP текст вводится специальным
+        инструментом «Текст» и обычно
+        располагается на отдельном
+        <strong>текстовом слое</strong>.
+      </p>
+
+      <p>
+        Благодаря этому надпись можно
+        редактировать, не изменяя сам
+        фоновый рисунок.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     04. СОЗДАНИЕ ТЕКСТА
+================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        02 · Последовательность действий
+      </span>
+
+      <h2>Как добавить текст в GIMP?</h2>
+
+      <p class="lead">
+        Создание надписи начинается
+        с выбора инструмента, а затем
+        пользователь определяет, где
+        именно появится текст.
+      </p>
+    </div>
+
+    <div class="visual-process">
+
+      <div class="process-step">
+        <div class="emoji">🅰️</div>
+        <strong>Выбрать «Текст»</strong>
+        <small>Инструмент на панели</small>
+      </div>
+
+      <div class="process-arrow">→</div>
+
+      <div class="process-step">
+        <div class="emoji">▧</div>
+        <strong>Указать область</strong>
+        <small>Щелчок или рамка</small>
+      </div>
+
+      <div class="process-arrow">→</div>
+
+      <div class="process-step">
+        <div class="emoji">✍️</div>
+        <strong>Напечатать текст</strong>
+        <small>Появится текстовый слой</small>
+      </div>
+
+    </div>
+
+    <div class="grid grid-2" style="margin-top:20px">
+
+      <div class="card">
+        <h3>Ввод текста</h3>
+
+        <ol class="step-list">
+          <li>Открой изображение в GIMP.</li>
+          <li>Выбери инструмент «Текст».</li>
+          <li>
+            Щёлкни в нужном месте изображения
+            или создай текстовую рамку
+            перетаскиванием мыши.
+          </li>
+          <li>Введи надпись с клавиатуры.</li>
+          <li>
+            При необходимости измени
+            параметры текста.
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Что происходит в редакторе?</h3>
+
+        <p>
+          В изображении появляется
+          специальный текстовый слой.
+          Его можно найти в панели
+          <strong>«Слои»</strong>.
+        </p>
+
+        <p>
+          Когда инструмент «Текст» активен,
+          надпись можно редактировать
+          непосредственно на холсте.
+        </p>
+
+        <p>
+          Быстрый способ выбрать инструмент
+          «Текст» — клавиша <kbd>T</kbd>.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     05. ПАРАМЕТРЫ ТЕКСТА
+================================================== -->
+
+<section class="section" id="text-options">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        03 · Настройка оформления
+      </span>
+
+      <h2>Основные параметры текста</h2>
+
+      <p class="lead">
+        Одна и та же надпись может выглядеть
+        совершенно по-разному.
+        Внешний вид зависит от нескольких
+        параметров, которые можно изменять
+        независимо друг от друга.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card parameter-card">
+        <div class="example">
+          <span class="example-serif">Шрифт</span>
+        </div>
+
+        <h3>1. Шрифт</h3>
+
+        <p>
+          Определяет форму букв.
+          Например, один шрифт выглядит
+          строгим, другой — декоративным.
+        </p>
+      </article>
+
+      <article class="card parameter-card">
+        <div class="example">
+          <div class="example-size">
+            <span>Текст</span>
+            <span>Текст</span>
+          </div>
+        </div>
+
+        <h3>2. Размер</h3>
+
+        <p>
+          Позволяет делать надпись
+          крупнее или мельче.
+          Заголовки обычно заметнее
+          основного текста.
+        </p>
+      </article>
+
+      <article class="card parameter-card">
+        <div class="example">
+          <div class="example-colors">
+            <span>А</span>
+            <span>Б</span>
+            <span>В</span>
+          </div>
+        </div>
+
+        <h3>3. Цвет</h3>
+
+        <p>
+          Цвет помогает выделять
+          важные элементы. Он должен
+          хорошо отличаться от фона,
+          чтобы текст было удобно читать.
+        </p>
+      </article>
+
+      <article class="card parameter-card">
+        <div class="example">
+          <div class="example-align">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+        </div>
+
+        <h3>4. Выравнивание</h3>
+
+        <p>
+          Определяет, как строки текста
+          располагаются внутри текстовой области:
+          по левому краю, по центру,
+          по правому краю или по ширине.
+        </p>
+      </article>
+
+      <article class="card parameter-card">
+        <div class="example">
+          <span class="example-spacing">ТЕКСТ</span>
+        </div>
+
+        <h3>5. Интервал между буквами</h3>
+
+        <p>
+          Позволяет увеличивать
+          или уменьшать расстояние
+          между символами.
+        </p>
+      </article>
+
+      <article class="card parameter-card">
+        <div class="example">
+          <div class="example-lines">
+            Первая строка
+            <br>
+            Вторая строка
+          </div>
+        </div>
+
+        <h3>6. Межстрочный интервал</h3>
+
+        <p>
+          Определяет расстояние
+          между строками многострочной
+          надписи.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Параметры и форматирование</strong>
+
+      <p>
+        <strong>Параметры текста</strong> —
+        это настройки, определяющие
+        его внешний вид и расположение.
+      </p>
+
+      <p>
+        <strong>Форматирование текста</strong> —
+        процесс изменения этих настроек:
+        например, выбор нового шрифта,
+        размера, цвета или выравнивания.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     06. ИНТЕРАКТИВНЫЙ РЕДАКТОР ПЛАКАТА
+================================================== -->
+
+<section class="section" id="text-lab">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        04 · Интерактивная лаборатория
+      </span>
+
+      <h2>Попробуй оформить надпись</h2>
+
+      <p class="lead">
+        Перед тобой учебная модель
+        графического редактора.
+        Изменяй параметры текста
+        и наблюдай, как меняется
+        внешний вид плаката.
+      </p>
+    </div>
+
+    <div class="gimp-lab">
+
+      <div class="gimp-topbar">
+        <strong>🎨 Плакат — GIMP</strong>
+
+        <small>Учебная модель интерфейса</small>
+      </div>
+
+      <div class="gimp-menu">
+        Файл &nbsp; Правка &nbsp; Выделение &nbsp;
+        Вид &nbsp; Изображение &nbsp; Слой &nbsp;
+        Цвет &nbsp; Инструменты
+      </div>
+
+      <div class="gimp-workspace">
+
+        <!-- Панель настроек текста -->
+
+        <div class="gimp-sidebar">
+
+          <div class="panel-title">
+            Параметры текста
+          </div>
+
+          <label class="field">
+            <span>Надпись</span>
+
+            <textarea
+              id="textInput"
+              rows="3"
+              maxlength="100"
+            >МИР ИДЕЙ</textarea>
+          </label>
+
+          <label class="field">
+            <span>Шрифт</span>
+
+            <select id="fontSelect">
+              <option value="Arial, sans-serif">
+                Arial
+              </option>
+
+              <option value="Georgia, serif">
+                Georgia
+              </option>
+
+              <option value="Verdana, sans-serif">
+                Verdana
+              </option>
+
+              <option value="'Courier New', monospace">
+                Courier New
+              </option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>
+              Размер:
+              <output class="value-text"
+                      id="fontSizeValue">42</output>
+              px
+            </span>
+
+            <input
+              type="range"
+              id="fontSize"
+              min="16"
+              max="64"
+              value="42"
+            >
+          </label>
+
+          <label class="field">
+            <span>Цвет текста</span>
+
+            <input
+              id="textColor"
+              type="color"
+              value="#ffffff"
+            >
+          </label>
+
+          <label class="field">
+            <span>Выравнивание</span>
+
+            <select id="textAlign">
+              <option value="center">По центру</option>
+              <option value="left">По левому краю</option>
+              <option value="right">По правому краю</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>
+              Интервал:
+              <output class="value-text"
+                      id="letterSpacingValue">0</output>
+              px
+            </span>
+
+            <input
+              id="letterSpacing"
+              type="range"
+              min="0"
+              max="10"
+              value="0"
+            >
+          </label>
+
+          <div class="button-row">
+            <button
+              id="resetText"
+              type="button"
+              class="btn secondary"
+            >
+              Сбросить
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Холст -->
+
+        <div class="gimp-stage">
+
+          <div class="poster">
+
+            <div class="poster-kicker">
+              Creative workshop
+            </div>
+
+            <div class="poster-text-box"
+                 id="posterTextBox">
+
+              <div class="poster-text"
+                   id="posterText">
+                МИР ИДЕЙ
+              </div>
+
+            </div>
+
+            <div class="poster-subtitle">
+              ТВОРЧЕСТВО · ТЕХНОЛОГИИ · ДИЗАЙН
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Панель слоёв -->
+
+        <div class="gimp-sidebar right">
+
+          <div class="panel-title">
+            Слои
+          </div>
+
+          <div class="layer-list">
+
+            <div class="layer active">
+
+              <span class="layer-symbol">T</span>
+
+              <span class="layer-name">
+                Текст
+              </span>
+
+              <button
+                class="eye-button"
+                id="toggleTextLayer"
+                type="button"
+                aria-label="Скрыть текстовый слой"
+                aria-pressed="true"
+              >
+                ◉
+              </button>
+
+            </div>
+
+            <div class="layer">
+
+              <span class="layer-symbol">▧</span>
+
+              <span class="layer-name">
+                Фон
+              </span>
+
+              <span style="margin-left:auto">
+                ◉
+              </span>
+
+            </div>
+
+          </div>
+
+          <p style="font-size:.79rem;margin-top:20px">
+            Нажми на значок видимости
+            рядом с текстовым слоем,
+            чтобы скрыть или показать
+            надпись.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="gimp-bottombar">
+        <span>Активный инструмент: Текст</span>
+        <span>Масштаб: учебный</span>
+      </div>
+
+      <div class="lab-instructions">
+
+        <span class="tag">
+          Исследование
+        </span>
+
+        <h3 style="margin-top:13px">
+          Что попробовать?
+        </h3>
+
+        <p>
+          1. Замени надпись на
+          «КОСМИЧЕСКОЕ ПУТЕШЕСТВИЕ».
+          Уменьши размер, чтобы
+          текст помещался на плакате.
+        </p>
+
+        <p>
+          2. Измени шрифт, цвет
+          и выравнивание. Сравни,
+          какое оформление выглядит
+          наиболее читаемым.
+        </p>
+
+        <p>
+          3. Скрой текстовый слой.
+          Обрати внимание: фон изображения
+          при этом остаётся на месте.
+        </p>
+
+        <p>
+          <strong>Важно:</strong> здесь показана
+          учебная модель отдельных
+          возможностей GIMP, а не сам редактор.
+          В настоящем GIMP параметры
+          находятся в панели инструментов
+          и редакторе текста на холсте.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     07. ТЕКСТОВЫЕ СЛОИ
+================================================== -->
+
+<section class="section" id="layers">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        05 · Организация изображения
+      </span>
+
+      <h2>Почему текст лучше размещать на отдельном слое?</h2>
+
+      <p class="lead">
+        Представь изображение как стопку
+        прозрачных листов. На одном листе
+        находится фон, на другом —
+        иллюстрация, на третьем — текст.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+
+        <div class="layers-diagram">
+
+          <div class="diagram-layer">
+            <span>🔤</span>
+            <span>Текстовый слой</span>
+          </div>
+
+          <div class="diagram-layer">
+            <span>🖼️</span>
+            <span>Слой с изображением</span>
+          </div>
+
+          <div class="diagram-layer">
+            <span>🎨</span>
+            <span>Фоновый слой</span>
+          </div>
+
+        </div>
+
+        <p style="text-align:center;margin-top:15px">
+          Слои расположены друг над другом.
+          Их порядок влияет на то,
+          какие элементы видны поверх других.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Преимущества текстового слоя</h3>
+
+        <ol class="step-list">
+          <li>
+            Текст можно исправить,
+            если обнаружена ошибка.
+          </li>
+
+          <li>
+            Можно изменить шрифт,
+            размер или цвет.
+          </li>
+
+          <li>
+            Слой можно перемещать
+            отдельно от фонового изображения.
+          </li>
+
+          <li>
+            Слой можно временно скрыть.
+          </li>
+
+          <li>
+            Сохраняется возможность
+            редактирования надписи.
+          </li>
+        </ol>
+
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>Сохранение проекта</strong>
+
+      <p>
+        Для продолжения работы над слоями
+        проект GIMP удобно сохранять
+        в собственном формате
+        <code>.XCF</code>.
+      </p>
+
+      <p>
+        Если нужно получить готовое
+        изображение для просмотра
+        или публикации, его можно
+        экспортировать, например,
+        в <code>.PNG</code>.
+      </p>
+
+      <p>
+        При экспорте в обычный PNG
+        отдельные текстовые слои
+        не сохраняются как редактируемые
+        объекты GIMP.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     08. ЧИТАЕМОСТЬ И КОМПОЗИЦИЯ
+================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        06 · Основы оформления
+      </span>
+
+      <h2>Как сделать текст удобным для чтения?</h2>
+
+      <p class="lead">
+        Красивый текст — не обязательно
+        самый необычный. Главное,
+        чтобы человек мог быстро прочитать
+        и понять сообщение.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+
+        <h3>Пример оформления</h3>
+
+        <div class="typography-example">
+          <h4>Фестиваль науки</h4>
+
+          <div class="subheading">
+            Открываем мир исследований
+          </div>
+
+          <p>
+            Эксперименты, открытия
+            и интересные знакомства
+            с научными идеями.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Основные правила</h3>
+
+        <ol class="step-list">
+          <li>
+            Заголовок должен
+            быть заметнее пояснений.
+          </li>
+
+          <li>
+            Выбирай цвет текста,
+            который хорошо отличается
+            от фона.
+          </li>
+
+          <li>
+            Не используй слишком много
+            разных шрифтов одновременно.
+          </li>
+
+          <li>
+            Оставляй свободное пространство
+            вокруг важных надписей.
+          </li>
+
+          <li>
+            Проверяй, удобно ли читать
+            текст в небольшом размере.
+          </li>
+        </ol>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     10. ВОПРОСЫ ПО ТЕКСТУ
+================================================== -->
+
+<section class="section" id="text-questions">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        07 · Закрепление модуля 1
+      </span>
+
+      <h2>Вопросы: работа с текстом</h2>
+
+      <p class="lead">
+        Ответь на вопросы по первой теме.
+        Они относятся только к текстовым
+        инструментам и форматированию.
+      </p>
+    </div>
+
+    <div class="questions">
+
+      <div class="question">
+        <span class="question-number">01</span>
+        <p>Для чего используется инструмент «Текст» в GIMP?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">02</span>
+        <p>Как добавить текст на изображение?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">03</span>
+        <p>Какие параметры текста можно изменять?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">04</span>
+        <p>Что называют форматированием текста?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">05</span>
+        <p>Почему важно правильно выбирать цвет и размер надписи?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">06</span>
+        <p>Что такое текстовый слой и для чего он нужен?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">07</span>
+        <p>Как порядок слоёв влияет на изображение?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">08</span>
+        <p>Почему проект полезно сохранять в формате XCF?</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     МОДУЛЬ 2. ИНСТРУМЕНТ «ШТАМП»
+================================================== -->
+
+<div class="container">
+  <div class="module-divider violet">
+    МОДУЛЬ 02 / ИНСТРУМЕНТ «ШТАМП»
+  </div>
+</div>
+
+<!-- ==================================================
+     11. НАЗНАЧЕНИЕ ШТАМПА
+================================================== -->
+
+<section class="section" id="clone-intro">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        08 · Новый инструмент
+      </span>
+
+      <h2>Инструмент «Штамп»: копирование части изображения</h2>
+
+      <p class="lead">
+        Представь фотографию неба.
+        На одном участке есть небольшая
+        нежелательная деталь.
+        Можно ли заменить её подходящим
+        участком соседнего неба?
+      </p>
+    </div>
+
+    <div class="card">
+
+      <h3>Что делает «Штамп»?</h3>
+
+      <p>
+        <strong>«Штамп»</strong> —
+        инструмент GIMP, который позволяет
+        копировать содержимое одной области
+        изображения в другую с помощью кисти.
+      </p>
+
+      <p>
+        Пользователь сначала указывает
+        <strong>область-источник</strong>,
+        откуда нужно брать образец,
+        а затем рисует по другой области,
+        перенося туда пиксели изображения.
+      </p>
+
+      <p>
+        Этот процесс называют
+        <strong>клонированием</strong>.
+      </p>
+    </div>
+
+    <div class="clone-concept"
+         style="margin-top:20px">
+
+      <div class="clone-area">
+        <div>
+          <div class="scene-symbol">🌿</div>
+          <span>Исходный участок</span>
+          <small style="color:#b9cbd8">
+            Образец
+          </small>
+        </div>
+      </div>
+
+      <div class="clone-arrow">
+        →
+        <small>КЛОНИРОВАНИЕ</small>
+      </div>
+
+      <div class="clone-area">
+        <div>
+          <div class="scene-symbol">🌿🌿</div>
+          <span>Новый участок</span>
+          <small style="color:#b9cbd8">
+            Результат
+          </small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note violet">
+      <strong>Не путай с обычной кистью</strong>
+
+      <p>
+        Обычная кисть наносит выбранный
+        цвет или другой настроенный материал.
+        «Штамп» использует в качестве
+        образца пиксели изображения
+        или выбранную текстуру.
+      </p>
+
+      <p>
+        Поэтому с его помощью можно
+        переносить не только цвет,
+        но и детали поверхности:
+        оттенки, узоры и текстуры.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     12. ПРИНЦИП РАБОТЫ ШТАМПА
+================================================== -->
+
+<section class="section" id="clone-steps">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        09 · Последовательность действий
+      </span>
+
+      <h2>Как пользоваться инструментом «Штамп»?</h2>
+
+      <p class="lead">
+        Главное отличие от обычной кисти:
+        перед началом работы нужно указать,
+        откуда инструмент будет брать
+        содержимое для копирования.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="card parameter-highlight">
+        <div class="number">1</div>
+
+        <div>
+          <h3>Выбрать «Штамп»</h3>
+
+          <p>
+            Найди инструмент «Штамп»
+            на панели инструментов GIMP.
+            Он относится к инструментам рисования.
+          </p>
+        </div>
+      </div>
+
+      <div class="card parameter-highlight">
+        <div class="number">2</div>
+
+        <div>
+          <h3>Указать источник</h3>
+
+          <p>
+            Удерживая <kbd>Ctrl</kbd>,
+            щёлкни по подходящему
+            участку изображения.
+          </p>
+        </div>
+      </div>
+
+      <div class="card parameter-highlight">
+        <div class="number">3</div>
+
+        <div>
+          <h3>Выбрать область обработки</h3>
+
+          <p>
+            Перемести указатель туда,
+            где нужно скопировать
+            содержимое изображения.
+          </p>
+        </div>
+      </div>
+
+      <div class="card parameter-highlight">
+        <div class="number">4</div>
+
+        <div>
+          <h3>Рисовать кистью</h3>
+
+          <p>
+            Зажми кнопку мыши
+            и проводи по нужной области.
+            «Штамп» будет переносить
+            пиксели из области источника.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note violet">
+      <strong>Что происходит при движении кисти?</strong>
+
+      <p>
+        Обычно инструмент не просто
+        многократно ставит один и тот же
+        отпечаток. Он переносит содержимое
+        соответствующих участков источника,
+        сохраняя определённое смещение
+        между источником и кистью.
+      </p>
+
+      <p>
+        Поведение зависит от выбранного
+        режима выравнивания «Штампа».
+        Для первого знакомства достаточно
+        понять принцип:
+        <strong>выбираем образец → рисуем его содержимым.</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     13. ПАРАМЕТРЫ ШТАМПА
+================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        12 · Настройки инструмента
+      </span>
+
+      <h2>От чего зависит результат работы «Штампа»?</h2>
+
+      <p class="lead">
+        Один и тот же инструмент
+        может давать разные результаты.
+        На качество обработки влияют
+        несколько основных параметров.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card">
+        <div class="card-icon"
+             style="background:var(--violet-soft)">
+          ⭕
+        </div>
+
+        <h3>Размер кисти</h3>
+
+        <p>
+          Определяет, насколько большую
+          область инструмент обрабатывает
+          за один проход.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"
+             style="background:var(--violet-soft)">
+          🌫️
+        </div>
+
+        <h3>Жёсткость краёв</h3>
+
+        <p>
+          Мягкие края помогают
+          сделать переход между
+          обработанным и исходным
+          участками менее заметным.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon"
+             style="background:var(--violet-soft)">
+          🎚️
+        </div>
+
+        <h3>Непрозрачность</h3>
+
+        <p>
+          Определяет, насколько сильно
+          переносимый образец влияет
+          на обрабатываемое изображение.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note violet">
+      <strong>Выбор образца не менее важен, чем настройки</strong>
+
+      <p>
+        Если нужно исправить участок
+        голубого неба, в качестве
+        образца лучше выбрать другое
+        подходящее место на небе.
+      </p>
+
+      <p>
+        Если взять образец с дерева
+        или здания, результат
+        окажется совсем другим.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     14. ИНТЕРАКТИВНАЯ ЛАБОРАТОРИЯ «ШТАМП»
+================================================== -->
+
+<section class="section" id="clone-lab">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        13 · Интерактивная лаборатория
+      </span>
+
+      <h2>Исправь участок изображения</h2>
+
+      <p class="lead">
+        На рисунке неба находится
+        небольшая красная отметка.
+        Попробуй скрыть её с помощью
+        учебного инструмента «Штамп».
+      </p>
+    </div>
+
+    <div class="clone-lab">
+
+      <div class="clone-lab-head">
+        <h3>🖌️ Лаборатория клонирования</h3>
+
+        <span class="tag violet">
+          Модель инструмента
+        </span>
+      </div>
+
+      <div class="clone-lab-body">
+
+        <div class="clone-controls">
+
+          <div class="panel-title">
+            Инструмент «Штамп»
+          </div>
+
+          <div class="mode-indicator"
+               id="cloneMode">
+            Режим: ожидание образца
+          </div>
+
+          <div class="lab-step">
+            <span class="lab-step-number">1</span>
+
+            <p>
+              Нажми «Выбрать образец»,
+              затем щёлкни по чистому
+              участку неба слева
+              от красной отметки.
+            </p>
+          </div>
+
+          <div class="lab-step">
+            <span class="lab-step-number">2</span>
+
+            <p>
+              Нажми или проведи
+              по красной отметке,
+              чтобы заменить её
+              пикселями образца.
+            </p>
+          </div>
+
+          <label class="field">
+            <span>
+              Размер кисти:
+              <output id="brushSizeValue"
+                      class="value-text">24</output>
+            </span>
+
+            <input
+              id="brushSize"
+              type="range"
+              min="8"
+              max="44"
+              value="24"
+            >
+          </label>
+
+          <div class="button-row">
+
+            <button
+              id="chooseSource"
+              type="button"
+              class="btn violet"
+            >
+              Выбрать образец
+            </button>
+
+            <button
+              id="resetClone"
+              type="button"
+              class="btn secondary"
+            >
+              Сбросить
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="clone-stage">
+
+          <div class="canvas-holder"
+               id="canvasHolder">
+
+            <canvas
+              id="cloneCanvas"
+              width="640"
+              height="360"
+              aria-label="Интерактивный пейзаж для изучения Штампа"
+            >
+              Ваш браузер не поддерживает canvas.
+            </canvas>
+
+            <div class="source-marker"
+                 id="sourceMarker"
+                 aria-hidden="true">
+            </div>
+
+          </div>
+
+          <div class="clone-status"
+               id="cloneStatus"
+               role="status"
+               aria-live="polite">
+            <strong>Начало работы.</strong>
+            Выбери чистую область неба
+            слева от красной отметки
+            в качестве образца.
+          </div>
+
+          <p class="canvas-caption">
+            На компьютере можно использовать
+            мышь, а на телефоне — прикосновения
+            к изображению. В учебной модели
+            кнопка выбора образца заменяет
+            сочетание Ctrl + щелчок.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="note violet">
+      <strong>Как работает эта демонстрация?</strong>
+
+      <p>
+        Модель берёт образец из выбранной
+        области изображения и переносит
+        пиксели кистью на другое место.
+      </p>
+
+      <p>
+        Здесь используется упрощённое
+        клонирование из исходного изображения
+        с сохранением смещения в пределах
+        мазка. В настоящем GIMP
+        возможностей настройки значительно больше.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     15. ПРИМЕНЕНИЕ И ОШИБКИ
+================================================== -->
+
+<section class="section" id="clone-uses">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        14 · Применение
+      </span>
+
+      <h2>В каких ситуациях полезен «Штамп»?</h2>
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card">
+        <div class="card-icon">🌤️</div>
+
+        <h3>Исправление фона</h3>
+
+        <p>
+          Подходящий участок неба,
+          стены или другой поверхности
+          можно использовать
+          для исправления небольших деталей.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🧱</div>
+
+        <h3>Повторение текстуры</h3>
+
+        <p>
+          Можно копировать фрагменты
+          кирпичной стены, травы,
+          песка и других
+          повторяющихся поверхностей.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🖼️</div>
+
+        <h3>Обработка изображений</h3>
+
+        <p>
+          «Штамп» помогает исправлять
+          мелкие недостатки
+          и восстанавливать
+          отдельные участки изображения.
+        </p>
+      </article>
+
+    </div>
+
+    <h3 style="margin-top:35px">
+      Распространённые ошибки
+    </h3>
+
+    <div class="grid grid-3">
+
+      <div class="mistake">
+
+        <h3>Выбран неподходящий образец</h3>
+
+        <p>
+          Цвет или текстура
+          исходной области
+          сильно отличаются
+          от места обработки.
+        </p>
+
+        <div class="fix">
+          Решение: подобрать
+          более похожий участок.
+        </div>
+
+      </div>
+
+      <div class="mistake">
+
+        <h3>Слишком большая кисть</h3>
+
+        <p>
+          Инструмент затрагивает
+          соседние детали,
+          которые нужно сохранить.
+        </p>
+
+        <div class="fix">
+          Решение: уменьшить размер кисти.
+        </div>
+
+      </div>
+
+      <div class="mistake">
+
+        <h3>Заметны повторяющиеся детали</h3>
+
+        <p>
+          Одинаковые элементы текстуры
+          начинают слишком часто повторяться.
+        </p>
+
+        <div class="fix">
+          Решение: менять образец
+          и аккуратно обрабатывать переходы.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==================================================
+     17. ВОПРОСЫ ПО ШТАМПУ
+================================================== -->
+
+<section class="section" id="clone-questions">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow"
+            style="color:var(--violet)">
+        15 · Закрепление модуля 2
+      </span>
+
+      <h2>Вопросы: инструмент «Штамп»</h2>
+
+      <p class="lead">
+        Эти вопросы относятся
+        только ко второй теме урока.
+      </p>
+    </div>
+
+    <div class="questions clone">
+
+      <div class="question">
+        <span class="question-number">01</span>
+        <p>Для чего предназначен инструмент «Штамп»?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">02</span>
+        <p>Что называют клонированием изображения?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">03</span>
+        <p>Что такое область-источник?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">04</span>
+        <p>Как выбрать образец для «Штампа» в GIMP?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">05</span>
+        <p>Чем инструмент «Штамп» отличается от обычной кисти?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">06</span>
+        <p>Какие параметры влияют на работу «Штампа»?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">07</span>
+        <p>Почему важно правильно выбирать исходную область?</p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">08</span>
+        <p>В каких ситуациях удобно использовать «Штамп»?</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================================================
+     18. ИТОГ УРОКА
+================================================== -->
+
+<section class="section" id="summary">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        16 · Завершение
+      </span>
+
+      <h2>Итог урока</h2>
+
+      <p class="lead">
+        Сегодня мы познакомились
+        с двумя разными возможностями
+        графического редактора GIMP:
+        оформлением текста
+        и клонированием участков изображения.
+      </p>
+
+      <div class="final-columns">
+
+        <div class="final-column">
+
+          <h3>А — Работа с текстом</h3>
+
+          <p>
+            Инструмент «Текст» позволяет
+            добавлять надписи,
+            изменять их параметры
+            и создавать текстовые слои.
+          </p>
+
+          <p>
+            Правильное форматирование
+            делает изображение
+            более понятным
+            и выразительным.
+          </p>
+
+        </div>
+
+        <div class="final-column clone">
+
+          <h3>🖌️ Инструмент «Штамп»</h3>
+
+          <p>
+            «Штамп» позволяет
+            использовать часть изображения
+            как образец для копирования
+            пикселей в другую область.
+          </p>
+
+          <p>
+            Аккуратный выбор образца
+            и параметров кисти помогает
+            получить более естественный
+            результат.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="note" style="margin-top:25px">
+
+        <strong>Главный вывод</strong>
+
+        <p>
+          Каждый инструмент графического
+          редактора предназначен
+          для определённых задач.
+        </p>
+
+        <p>
+          Чтобы создавать качественные
+          изображения, важно не только
+          знать названия инструментов,
+          но и понимать, когда
+          и зачем их использовать.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 10–11 класс ·
+  GIMP: текст, форматирование и инструмент «Штамп»
+</footer>
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+"use strict";
+
+/* ==================================================
+   01. ИНТЕРАКТИВНЫЙ ТЕКСТОВЫЙ РЕДАКТОР
+================================================== */
+
+const textInput =
+  document.getElementById("textInput");
+
+const fontSelect =
+  document.getElementById("fontSelect");
+
+const fontSize =
+  document.getElementById("fontSize");
+
+const fontSizeValue =
+  document.getElementById("fontSizeValue");
+
+const textColor =
+  document.getElementById("textColor");
+
+const textAlign =
+  document.getElementById("textAlign");
+
+const letterSpacing =
+  document.getElementById("letterSpacing");
+
+const letterSpacingValue =
+  document.getElementById("letterSpacingValue");
+
+const posterText =
+  document.getElementById("posterText");
+
+const posterTextBox =
+  document.getElementById("posterTextBox");
+
+const resetText =
+  document.getElementById("resetText");
+
+const toggleTextLayer =
+  document.getElementById("toggleTextLayer");
+
+
+/* Функция обновляет оформление текста. */
+
+function updatePoster() {
+
+  posterText.textContent =
+    textInput.value || " ";
+
+  posterText.style.fontFamily =
+    fontSelect.value;
+
+  posterText.style.fontSize =
+    fontSize.value + "px";
+
+  posterText.style.color =
+    textColor.value;
+
+  posterText.style.textAlign =
+    textAlign.value;
+
+  posterText.style.letterSpacing =
+    letterSpacing.value + "px";
+
+  fontSizeValue.textContent =
+    fontSize.value;
+
+  letterSpacingValue.textContent =
+    letterSpacing.value;
+
+}
+
+
+/* Подключаем обновление к каждому параметру. */
+
+[
+  textInput,
+  fontSelect,
+  fontSize,
+  textColor,
+  textAlign,
+  letterSpacing
+].forEach(control => {
+
+  control.addEventListener(
+    "input",
+    updatePoster
+  );
+
+});
+
+
+/* Сброс оформления. */
+
+resetText.addEventListener("click", () => {
+
+  textInput.value = "МИР ИДЕЙ";
+
+  fontSelect.value =
+    "Arial, sans-serif";
+
+  fontSize.value = 42;
+  textColor.value = "#ffffff";
+  textAlign.value = "center";
+  letterSpacing.value = 0;
+
+  posterTextBox.hidden = false;
+
+  toggleTextLayer.textContent = "◉";
+
+  toggleTextLayer.setAttribute(
+    "aria-pressed",
+    "true"
+  );
+
+  toggleTextLayer.setAttribute(
+    "aria-label",
+    "Скрыть текстовый слой"
+  );
+
+  updatePoster();
+
+});
+
+
+/* Переключение видимости текстового слоя. */
+
+toggleTextLayer.addEventListener(
+  "click",
+  () => {
+
+    posterTextBox.hidden =
+      !posterTextBox.hidden;
+
+    const visible =
+      !posterTextBox.hidden;
+
+    toggleTextLayer.textContent =
+      visible ? "◉" : "○";
+
+    toggleTextLayer.setAttribute(
+      "aria-pressed",
+      String(visible)
+    );
+
+    toggleTextLayer.setAttribute(
+      "aria-label",
+      visible
+        ? "Скрыть текстовый слой"
+        : "Показать текстовый слой"
+    );
+
+  }
+);
+
+updatePoster();
+
+
+/* ==================================================
+   02. ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ «ШТАМП»
+
+   Принцип:
+   1. Рисуем исходное изображение на canvas.
+   2. Сохраняем его пиксели.
+   3. Пользователь выбирает источник.
+   4. При рисовании переносим пиксели
+      с постоянным смещением.
+================================================== */
+
+const canvas =
+  document.getElementById("cloneCanvas");
+
+const ctx =
+  canvas.getContext("2d", {
+    willReadFrequently: true
+  });
+
+const chooseSourceButton =
+  document.getElementById("chooseSource");
+
+const resetCloneButton =
+  document.getElementById("resetClone");
+
+const brushSizeInput =
+  document.getElementById("brushSize");
+
+const brushSizeValue =
+  document.getElementById("brushSizeValue");
+
+const cloneStatus =
+  document.getElementById("cloneStatus");
+
+const cloneMode =
+  document.getElementById("cloneMode");
+
+const sourceMarker =
+  document.getElementById("sourceMarker");
+
+
+let sourcePoint = null;
+let selectingSource = true;
+let drawing = false;
+let strokeStart = null;
+let basePixels = null;
+
+
+/* ==================================================
+   03. СОЗДАЁМ ИСХОДНОЕ ИЗОБРАЖЕНИЕ
+
+   Рисунок создаётся средствами canvas.
+   Внешние изображения не используются.
+================================================== */
+
+function drawLandscape() {
+
+  const w = canvas.width;
+  const h = canvas.height;
+
+  ctx.clearRect(0, 0, w, h);
+
+  /* Небо */
+
+  const sky = ctx.createLinearGradient(
+    0, 0, 0, h
+  );
+
+  sky.addColorStop(0, "#74b9e4");
+  sky.addColorStop(.7, "#d1edfa");
+  sky.addColorStop(1, "#e6f4df");
+
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, w, h);
+
+  /* Солнце */
+
+  ctx.fillStyle = "#ffe2a0";
+  ctx.beginPath();
+  ctx.arc(535, 75, 36, 0, Math.PI * 2);
+  ctx.fill();
+
+  /* Облака */
+
+  function cloud(x, y, size) {
+
+    ctx.fillStyle =
+      "rgba(255,255,255,.85)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      x, y,
+      size * .62,
+      size * .25,
+      0, 0, Math.PI * 2
+    );
+
+    ctx.ellipse(
+      x - size * .23,
+      y - size * .12,
+      size * .30,
+      size * .25,
+      0, 0, Math.PI * 2
+    );
+
+    ctx.ellipse(
+      x + size * .16,
+      y - size * .17,
+      size * .34,
+      size * .29,
+      0, 0, Math.PI * 2
+    );
+
+    ctx.fill();
+  }
+
+  cloud(130, 72, 70);
+  cloud(465, 120, 52);
+
+  /* Дальние холмы */
+
+  ctx.fillStyle = "#8dc6aa";
+
+  ctx.beginPath();
+  ctx.moveTo(0, 292);
+  ctx.quadraticCurveTo(155, 195, 325, 287);
+  ctx.quadraticCurveTo(480, 205, 640, 282);
+  ctx.lineTo(640, 360);
+  ctx.lineTo(0, 360);
+  ctx.fill();
+
+  /* Передний план */
+
+  ctx.fillStyle = "#54a77e";
+
+  ctx.beginPath();
+  ctx.moveTo(0, 330);
+  ctx.quadraticCurveTo(230, 270, 430, 340);
+  ctx.quadraticCurveTo(545, 292, 640, 310);
+  ctx.lineTo(640, 360);
+  ctx.lineTo(0, 360);
+  ctx.fill();
+
+  /* Небольшая красная отметка,
+     которую нужно исправить.
+     Она располагается на небе. */
+
+  ctx.strokeStyle = "#d33d59";
+  ctx.lineWidth = 11;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  ctx.beginPath();
+  ctx.moveTo(310, 142);
+  ctx.lineTo(335, 163);
+  ctx.lineTo(351, 126);
+  ctx.stroke();
+
+  /* Несколько небольших деталей травы */
+
+  ctx.strokeStyle = "#387c60";
+  ctx.lineWidth = 2;
+
+  for (let x = 20; x < 630; x += 34) {
+
+    const y = 331 + Math.sin(x) * 8;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 4, y - 10);
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 5, y - 12);
+    ctx.stroke();
+
+  }
+
+  /* Сохраняем исходные пиксели.
+     Клонирование будет брать образцы
+     именно из этой версии изображения. */
+
+  basePixels = ctx.getImageData(
+    0, 0, w, h
+  );
+
+}
+
+
+/* ==================================================
+   04. ПОЛУЧЕНИЕ КООРДИНАТ УКАЗАТЕЛЯ
+================================================== */
+
+function getCanvasPoint(event) {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const scaleX =
+    canvas.width / rect.width;
+
+  const scaleY =
+    canvas.height / rect.height;
+
+  return {
+    x: Math.floor(
+      (event.clientX - rect.left) * scaleX
+    ),
+
+    y: Math.floor(
+      (event.clientY - rect.top) * scaleY
+    )
+  };
+
+}
+
+
+/* ==================================================
+   05. ВЫБОР ИСТОЧНИКА
+================================================== */
+
+function enableSourceSelection() {
+
+  selectingSource = true;
+  drawing = false;
+
+  cloneMode.textContent =
+    "Режим: выбор образца";
+
+  cloneStatus.innerHTML = `
+    <strong>Выбор образца.</strong>
+    Щёлкни по чистому участку неба
+    слева от красной отметки.
+  `;
+
+}
+
+
+chooseSourceButton.addEventListener(
+  "click",
+  enableSourceSelection
+);
+
+
+function setSource(point) {
+
+  sourcePoint = point;
+
+  selectingSource = false;
+
+  cloneMode.textContent =
+    "Режим: клонирование";
+
+  /* Показываем отметку источника. */
+
+  sourceMarker.style.display = "block";
+
+  sourceMarker.style.left =
+    (point.x / canvas.width * 100) + "%";
+
+  sourceMarker.style.top =
+    (point.y / canvas.height * 100) + "%";
+
+  cloneStatus.innerHTML = `
+    <strong>Образец выбран.</strong>
+    Теперь нажми или проведи по красной
+    отметке. Можно изменить размер кисти.
+  `;
+
+}
+
+
+/* ==================================================
+   06. КОПИРОВАНИЕ ПИКСЕЛЕЙ
+
+   В этой модели каждый мазок
+   начинается с выбранного образца.
+
+   Для каждого пикселя кисти вычисляется
+   соответствующий пиксель источника.
+================================================== */
+
+function stampAt(point) {
+
+  if (!sourcePoint || !strokeStart) {
+    return;
+  }
+
+  const radius =
+    Number(brushSizeInput.value) / 2;
+
+  const w = canvas.width;
+  const h = canvas.height;
+
+  const offsetX =
+    sourcePoint.x - strokeStart.x;
+
+  const offsetY =
+    sourcePoint.y - strokeStart.y;
+
+  /* Берём текущую картинку. */
+
+  const current =
+    ctx.getImageData(0, 0, w, h);
+
+  const dest = current.data;
+  const src = basePixels.data;
+
+  const left = Math.max(
+    0,
+    Math.floor(point.x - radius)
+  );
+
+  const right = Math.min(
+    w - 1,
+    Math.ceil(point.x + radius)
+  );
+
+  const top = Math.max(
+    0,
+    Math.floor(point.y - radius)
+  );
+
+  const bottom = Math.min(
+    h - 1,
+    Math.ceil(point.y + radius)
+  );
+
+  for (let y = top; y <= bottom; y++) {
+
+    for (let x = left; x <= right; x++) {
+
+      const distance =
+        Math.hypot(
+          x - point.x,
+          y - point.y
+        );
+
+      if (distance > radius) {
+        continue;
+      }
+
+      const sourceX =
+        Math.round(x + offsetX);
+
+      const sourceY =
+        Math.round(y + offsetY);
+
+      if (
+        sourceX < 0 ||
+        sourceX >= w ||
+        sourceY < 0 ||
+        sourceY >= h
+      ) {
+        continue;
+      }
+
+      const targetIndex =
+        (y * w + x) * 4;
+
+      const sourceIndex =
+        (sourceY * w + sourceX) * 4;
+
+      /* Переносим RGB-значения. */
+
+      dest[targetIndex] =
+        src[sourceIndex];
+
+      dest[targetIndex + 1] =
+        src[sourceIndex + 1];
+
+      dest[targetIndex + 2] =
+        src[sourceIndex + 2];
+
+      dest[targetIndex + 3] = 255;
+
+    }
+  }
+
+  ctx.putImageData(current, 0, 0);
+
+}
+
+
+/* ==================================================
+   07. СОБЫТИЯ МЫШИ И ПРИКОСНОВЕНИЙ
+================================================== */
+
+canvas.addEventListener(
+  "pointerdown",
+  event => {
+
+    const point =
+      getCanvasPoint(event);
+
+    /* Можно выбирать источник
+       кнопкой или Ctrl + щелчком. */
+
+    if (
+      selectingSource ||
+      event.ctrlKey
+    ) {
+
+      setSource(point);
+      return;
+
+    }
+
+    if (!sourcePoint) {
+
+      enableSourceSelection();
+      return;
+
+    }
+
+    drawing = true;
+    strokeStart = point;
+
+    canvas.setPointerCapture(
+      event.pointerId
+    );
+
+    stampAt(point);
+
+    cloneStatus.innerHTML = `
+      <strong>Клонирование выполняется.</strong>
+      Продолжай проводить кистью
+      по участку изображения.
+    `;
+
+  }
+);
+
+
+canvas.addEventListener(
+  "pointermove",
+  event => {
+
+    if (!drawing) {
+      return;
+    }
+
+    stampAt(
+      getCanvasPoint(event)
+    );
+
+  }
+);
+
+
+function stopDrawing() {
+  drawing = false;
+  strokeStart = null;
+}
+
+
+canvas.addEventListener(
+  "pointerup",
+  stopDrawing
+);
+
+canvas.addEventListener(
+  "pointercancel",
+  stopDrawing
+);
+
+canvas.addEventListener(
+  "lostpointercapture",
+  stopDrawing
+);
+
+
+/* ==================================================
+   08. РАЗМЕР КИСТИ
+================================================== */
+
+brushSizeInput.addEventListener(
+  "input",
+  () => {
+
+    brushSizeValue.textContent =
+      brushSizeInput.value;
+
+  }
+);
+
+
+/* ==================================================
+   09. СБРОС ЛАБОРАТОРИИ
+================================================== */
+
+function resetCloneLab() {
+
+  drawLandscape();
+
+  sourcePoint = null;
+  selectingSource = true;
+
+  drawing = false;
+  strokeStart = null;
+
+  sourceMarker.style.display = "none";
+
+  brushSizeInput.value = 24;
+  brushSizeValue.textContent = 24;
+
+  cloneMode.textContent =
+    "Режим: ожидание образца";
+
+  cloneStatus.innerHTML = `
+    <strong>Начало работы.</strong>
+    Выбери чистую область неба
+    слева от красной отметки
+    в качестве образца.
+  `;
+
+}
+
+
+resetCloneButton.addEventListener(
+  "click",
+  resetCloneLab
+);
+
+
+/* Начальная отрисовка изображения. */
+
+resetCloneLab();
+
+</script>
+
+</body>
+</html>

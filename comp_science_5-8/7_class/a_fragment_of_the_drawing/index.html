@@ -1,0 +1,3497 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Фрагмент рисунка — Информатика, 7 класс
+  </title>
+
+  <style>
+
+    /* ============================================
+       01. ОБЩИЕ ПЕРЕМЕННЫЕ И ОФОРМЛЕНИЕ
+    ============================================ */
+
+    :root {
+      --page: #f3f6fb;
+      --white: #ffffff;
+      --ink: #25334b;
+      --muted: #62718a;
+
+      --blue: #3977e8;
+      --blue-light: #e9f1ff;
+
+      --purple: #8b5ce8;
+      --purple-light: #f2ebff;
+
+      --orange: #f39b45;
+      --orange-light: #fff2e4;
+
+      --green: #2ca987;
+      --green-light: #e3f8f0;
+
+      --red: #eb6976;
+
+      --line: #dce4f0;
+
+      --radius: 23px;
+
+      --shadow:
+        0 14px 45px rgba(38, 65, 113, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+
+      background: var(--page);
+
+      color: var(--ink);
+
+      font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      line-height: 1.7;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 4px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -2px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.65rem);
+      line-height: 1.2;
+      letter-spacing: -0.7px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: var(--ink);
+    }
+
+    code,
+    kbd {
+      font-family: Consolas, monospace;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 5px 9px;
+      border: 1px solid #becbe0;
+      border-bottom-width: 3px;
+      border-radius: 7px;
+      background: white;
+      color: var(--ink);
+      font-size: 0.9em;
+      font-weight: 700;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 38px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 26px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+
+      color: var(--blue);
+
+      font-size: 0.79rem;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+    }
+
+    .lead {
+      max-width: 790px;
+      font-size: 1.08rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+      padding: 26px;
+
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+
+      width: 56px;
+      height: 56px;
+
+      margin-bottom: 18px;
+
+      border-radius: 16px;
+
+      background: var(--blue-light);
+      font-size: 1.8rem;
+    }
+
+    .callout {
+      margin-top: 23px;
+      padding: 22px 25px;
+
+      border-radius: 0 17px 17px 0;
+      border-left: 5px solid var(--blue);
+
+      background: var(--blue-light);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 5px;
+
+      color: #2659b3;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+
+      padding: 6px 12px;
+
+      border-radius: 100px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      font-size: 0.79rem;
+      font-weight: 750;
+    }
+
+    .mini-label {
+      display: block;
+
+      margin-bottom: 12px;
+
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+
+      min-height: 45px;
+
+      padding: 11px 19px;
+
+      border: 1px solid var(--blue);
+      border-radius: 12px;
+
+      background: var(--blue);
+      color: #ffffff;
+
+      font-weight: 750;
+
+      transition:
+        transform 0.2s,
+        background 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #245ed0;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--blue);
+    }
+
+    .btn-secondary:hover {
+      background: var(--blue-light);
+    }
+
+    .btn-purple {
+      background: var(--purple);
+      border-color: var(--purple);
+    }
+
+    .btn-purple:hover {
+      background: #7445d4;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      margin-top: 19px;
+    }
+
+    .button-row button {
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       02. ГЛАВНЫЙ ЭКРАН
+    ============================================ */
+
+    .hero {
+      overflow: hidden;
+
+      padding: 77px 0 73px;
+
+      background:
+        radial-gradient(
+          circle at 88% 20%,
+          #e4d8ff,
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at 5% 96%,
+          #d5efff,
+          transparent 43%
+        ),
+        #eef3ff;
+
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-layout {
+      display: grid;
+
+      grid-template-columns:
+        1.05fr 0.95fr;
+
+      align-items: center;
+      gap: 43px;
+    }
+
+    .lesson-tag {
+      display: inline-block;
+
+      padding: 9px 15px;
+      margin-bottom: 24px;
+
+      border: 1px solid #b5cafa;
+      border-radius: 100px;
+
+      background: rgba(255,255,255,0.7);
+
+      color: var(--blue);
+      font-size: 0.83rem;
+      font-weight: 800;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--blue);
+    }
+
+    .hero-description {
+      max-width: 570px;
+
+      margin: 24px 0;
+
+      color: #52627d;
+      font-size: 1.12rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .hero-tags span {
+      padding: 7px 12px;
+
+      background: #ffffff;
+      border: 1px solid #dbe4f5;
+      border-radius: 9px;
+
+      font-size: 0.85rem;
+      font-weight: 650;
+    }
+
+    /* ============================================
+       03. МИНИАТЮРА ГРАФИЧЕСКОГО РЕДАКТОРА
+    ============================================ */
+
+    .paint-window {
+      overflow: hidden;
+
+      border: 1px solid #b9c9e1;
+      border-radius: 17px;
+
+      background: #ffffff;
+
+      box-shadow:
+        0 24px 65px rgba(43, 73, 128, 0.17);
+
+      transform: rotate(2deg);
+    }
+
+    .paint-titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 8px;
+      padding: 12px 15px;
+
+      background: #e8eff9;
+      border-bottom: 1px solid #cfdaea;
+    }
+
+    .paint-titlebar strong {
+      font-size: 0.86rem;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-controls span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+
+      background: #b3c2d8;
+    }
+
+    .window-controls span:last-child {
+      background: #f28b91;
+    }
+
+    .paint-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+
+      padding: 12px;
+
+      background: #f8fbff;
+      border-bottom: 1px solid #e3eaf4;
+    }
+
+    .tool {
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+
+      background: #ffffff;
+      border: 1px solid #dce5f2;
+      border-radius: 8px;
+
+      font-size: 1.1rem;
+    }
+
+    .tool.active {
+      border-color: var(--blue);
+      background: var(--blue-light);
+    }
+
+    .paint-canvas {
+      position: relative;
+      overflow: hidden;
+
+      height: 270px;
+
+      background: #f4f9ff;
+    }
+
+    .paint-ground {
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 63px;
+
+      background: #9edcaa;
+    }
+
+    .paint-sun {
+      position: absolute;
+
+      right: 38px;
+      top: 29px;
+
+      width: 57px;
+      height: 57px;
+
+      border-radius: 50%;
+      background: #ffd36a;
+    }
+
+    .paint-house {
+      position: absolute;
+
+      bottom: 60px;
+      left: 55px;
+
+      width: 132px;
+      height: 104px;
+
+      background: #ffc39b;
+      border: 3px solid #ca825c;
+    }
+
+    .paint-house::before {
+      content: "";
+
+      position: absolute;
+
+      left: -15px;
+      top: -58px;
+
+      width: 0;
+      height: 0;
+
+      border-left: 80px solid transparent;
+      border-right: 80px solid transparent;
+      border-bottom: 60px solid #d96f7b;
+    }
+
+    .paint-door {
+      position: absolute;
+
+      bottom: 0;
+      left: 49px;
+
+      width: 36px;
+      height: 61px;
+
+      background: #8e614f;
+    }
+
+    .paint-window-small {
+      position: absolute;
+
+      left: 13px;
+      top: 18px;
+
+      width: 31px;
+      height: 31px;
+
+      background: #a9e4ff;
+      border: 4px solid white;
+    }
+
+    .tree {
+      position: relative;
+      width: 86px;
+      height: 137px;
+    }
+
+    .tree-trunk {
+      position: absolute;
+      bottom: 0;
+      left: 34px;
+
+      width: 19px;
+      height: 67px;
+
+      background: #a87650;
+      border-radius: 4px;
+    }
+
+    .tree-crown {
+      position: absolute;
+
+      top: 5px;
+      left: 6px;
+
+      width: 76px;
+      height: 91px;
+
+      background: #39af77;
+      border-radius: 46% 54% 50% 50%;
+
+      box-shadow:
+        inset -13px -8px 0 rgba(0,0,0,0.07);
+    }
+
+    .hero-tree {
+      position: absolute;
+
+      bottom: 57px;
+      right: 44px;
+
+      transform: scale(0.88);
+      transform-origin: bottom center;
+    }
+
+    .hero-selection {
+      position: absolute;
+
+      bottom: 53px;
+      right: 41px;
+
+      width: 95px;
+      height: 135px;
+
+      border: 2px dashed var(--blue);
+
+      pointer-events: none;
+    }
+
+    .selection-handle {
+      position: absolute;
+
+      width: 9px;
+      height: 9px;
+
+      background: white;
+      border: 2px solid var(--blue);
+    }
+
+    .selection-handle.one {
+      top: -5px;
+      left: -5px;
+    }
+
+    .selection-handle.two {
+      top: -5px;
+      right: -5px;
+    }
+
+    .selection-handle.three {
+      bottom: -5px;
+      left: -5px;
+    }
+
+    .selection-handle.four {
+      bottom: -5px;
+      right: -5px;
+    }
+
+    .paint-statusbar {
+      padding: 7px 14px;
+
+      background: #f5f8fd;
+
+      color: #73829b;
+      font-size: 0.74rem;
+    }
+
+    /* ============================================
+       04. ЧТО ТАКОЕ ФРАГМЕНТ?
+    ============================================ */
+
+    .fragment-showcase {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+
+      padding: 26px;
+
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .fragment-preview {
+      display: grid;
+      place-items: center;
+
+      min-height: 185px;
+      padding: 25px;
+
+      background: #f2f7ff;
+      border-radius: 16px;
+
+      text-align: center;
+    }
+
+    .fragment-preview .symbol {
+      position: relative;
+
+      font-size: 4.5rem;
+      line-height: 1.3;
+    }
+
+    .fragment-preview .symbol.selected::after {
+      content: "";
+
+      position: absolute;
+      inset: -8px;
+
+      border: 2px dashed var(--blue);
+    }
+
+    .fragment-preview small {
+      margin-top: 15px;
+
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .large-arrow {
+      color: var(--purple);
+
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    /* ============================================
+       05. СПОСОБЫ ВЫДЕЛЕНИЯ
+    ============================================ */
+
+    .selection-card {
+      overflow: hidden;
+    }
+
+    .selection-art {
+      display: grid;
+      place-items: center;
+
+      min-height: 210px;
+
+      margin: -26px -26px 23px;
+      padding: 20px;
+
+      background: #ebf3ff;
+    }
+
+    .selection-art.free {
+      background: #f3edff;
+    }
+
+    .selection-art svg {
+      width: 100%;
+      max-width: 280px;
+      height: 180px;
+    }
+
+    .tip-strip {
+      margin-top: 14px;
+      padding: 12px 15px;
+
+      border-radius: 10px;
+
+      background: var(--blue-light);
+      color: #315ba3;
+
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .selection-card:nth-child(2) .tip-strip {
+      background: var(--purple-light);
+      color: #7045b4;
+    }
+
+    /* ============================================
+       06. ШАГИ РАБОТЫ
+    ============================================ */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step {
+      padding: 23px;
+
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+
+      width: 40px;
+      height: 40px;
+
+      margin-bottom: 16px;
+
+      border-radius: 12px;
+
+      background: var(--blue-light);
+      color: var(--blue);
+
+      font-weight: 800;
+    }
+
+    .step h3 {
+      font-size: 1.08rem;
+    }
+
+    .step p {
+      margin-bottom: 0;
+      font-size: 0.91rem;
+    }
+
+    /* ============================================
+       07. ИНТЕРАКТИВНЫЙ ГОРОДСКОЙ ПЕЙЗАЖ
+    ============================================ */
+
+    .demo-shell {
+      overflow: hidden;
+
+      border: 1px solid #c5d5ea;
+      border-radius: var(--radius);
+
+      background: #ffffff;
+
+      box-shadow: var(--shadow);
+    }
+
+    .demo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      flex-wrap: wrap;
+
+      padding: 19px 24px;
+
+      background: #eaf1fc;
+      border-bottom: 1px solid #cfdaea;
+    }
+
+    .demo-header h3 {
+      margin-bottom: 0;
+    }
+
+    .demo-body {
+      padding: 25px;
+    }
+
+    .city-scene {
+      position: relative;
+      overflow: hidden;
+
+      height: 330px;
+
+      background:
+        linear-gradient(
+          #c7eaff 0%,
+          #eaf7ff 76%,
+          #a4dda9 76%,
+          #90d39e 100%
+        );
+
+      border: 2px solid #c9d8e7;
+      border-radius: 15px;
+    }
+
+    .city-sun {
+      position: absolute;
+
+      top: 25px;
+      right: 35px;
+
+      width: 64px;
+      height: 64px;
+
+      border-radius: 50%;
+      background: #ffd16b;
+
+      box-shadow: 0 0 0 13px rgba(255,209,107,0.18);
+    }
+
+    .city-cloud {
+      position: absolute;
+
+      top: 41px;
+      left: 43%;
+
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+
+    .city-house {
+      position: absolute;
+
+      bottom: 23%;
+      left: 10%;
+
+      width: 145px;
+      height: 128px;
+
+      background: #f9bd94;
+
+      border: 4px solid #cf8a6a;
+      border-bottom: none;
+    }
+
+    .city-house::before {
+      content: "";
+
+      position: absolute;
+
+      left: -21px;
+      top: -67px;
+
+      width: 0;
+      height: 0;
+
+      border-left: 89px solid transparent;
+      border-right: 89px solid transparent;
+      border-bottom: 70px solid #da7882;
+    }
+
+    .city-door {
+      position: absolute;
+
+      bottom: 0;
+      left: 54px;
+
+      width: 37px;
+      height: 72px;
+
+      background: #855843;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .city-house-window {
+      position: absolute;
+
+      top: 25px;
+      left: 15px;
+
+      width: 35px;
+      height: 35px;
+
+      background: #9de1ff;
+      border: 5px solid white;
+    }
+
+    .scene-object {
+      position: absolute;
+
+      bottom: 22%;
+
+      width: 100px;
+      height: 145px;
+
+      display: grid;
+      place-items: center;
+
+      transition:
+        left 0.45s ease,
+        opacity 0.25s ease;
+
+      z-index: 5;
+    }
+
+    .scene-object .tree {
+      transform: scale(0.93);
+    }
+
+    .scene-object.selected::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 3px;
+
+      border: 2px dashed #286deb;
+      pointer-events: none;
+    }
+
+    #originalTree {
+      left: 57%;
+    }
+
+    #destinationTree {
+      left: 75%;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scene-object.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scene-object.is-visible {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    .scene-object.is-target {
+      border: 2px dashed rgba(37, 98, 202, 0.55);
+      border-radius: 10px;
+    }
+
+    .demo-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+
+      margin-top: 19px;
+    }
+
+    .demo-controls button {
+      flex: 1 1 150px;
+    }
+
+    .demo-status {
+      margin-top: 18px;
+      padding: 16px 19px;
+
+      border: 1px solid #cbdcf8;
+      border-radius: 12px;
+      background: #f1f6ff;
+
+      color: #315487;
+      font-size: 0.96rem;
+    }
+
+    .demo-status strong {
+      color: #174a9d;
+    }
+
+    .comparison-mini {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+
+      margin-top: 19px;
+    }
+
+    .comparison-mini > div {
+      padding: 18px;
+
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .comparison-mini strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .comparison-mini p {
+      margin-bottom: 0;
+      font-size: 0.88rem;
+    }
+
+    /* ============================================
+       08. БУФЕР ОБМЕНА
+    ============================================ */
+
+    .clipboard-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+
+      align-items: center;
+      gap: 12px;
+
+      padding: 25px;
+
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .clipboard-stage {
+      min-height: 160px;
+
+      padding: 24px 12px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      background: #f1f6ff;
+      border: 1px solid #dce8fb;
+      border-radius: 15px;
+    }
+
+    .clipboard-stage:nth-of-type(3) {
+      background: #f4efff;
+    }
+
+    .clipboard-stage .emoji {
+      font-size: 2.8rem;
+      margin-bottom: 9px;
+    }
+
+    .clipboard-stage strong {
+      font-size: 0.94rem;
+    }
+
+    .clipboard-stage small {
+      color: var(--muted);
+    }
+
+    .clipboard-arrow {
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .clipboard-arrow b {
+      display: block;
+      font-size: 1.8rem;
+    }
+
+    .clipboard-arrow small {
+      display: block;
+      font-size: 0.73rem;
+      font-weight: 750;
+    }
+
+    .shortcut-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 21px;
+    }
+
+    .shortcut {
+      text-align: center;
+
+      padding: 23px 12px;
+
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .shortcut kbd {
+      margin-bottom: 12px;
+    }
+
+    .shortcut strong {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .shortcut p {
+      margin: 5px 0 0;
+      font-size: 0.84rem;
+    }
+
+    /* ============================================
+       09. ПРОЗРАЧНОЕ ВЫДЕЛЕНИЕ
+    ============================================ */
+
+    .transparency-panel {
+      overflow: hidden;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      background: white;
+    }
+
+    .transparency-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      padding: 22px;
+
+      background: #f5f7fc;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mode-button {
+      padding: 12px 18px;
+
+      background: white;
+      color: var(--ink);
+
+      border: 2px solid #d5dfed;
+      border-radius: 11px;
+
+      font-weight: 750;
+    }
+
+    .mode-button.active {
+      color: var(--blue);
+      background: var(--blue-light);
+      border-color: var(--blue);
+    }
+
+    .transparency-body {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 23px;
+
+      align-items: center;
+
+      padding: 26px;
+    }
+
+    .transparency-scene {
+      position: relative;
+
+      overflow: hidden;
+
+      height: 270px;
+
+      border: 2px solid #cbd8e8;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          #a5d7ff 0%,
+          #dcf2ff 74%,
+          #9bd7ac 74%
+        );
+    }
+
+    .background-hill {
+      position: absolute;
+
+      bottom: -70px;
+      left: -40px;
+
+      width: 250px;
+      height: 160px;
+
+      background: #65bb8a;
+      border-radius: 50%;
+    }
+
+    .background-sun {
+      position: absolute;
+      right: 40px;
+      top: 25px;
+
+      width: 58px;
+      height: 58px;
+
+      background: #ffd36e;
+      border-radius: 50%;
+    }
+
+    .background-shape {
+      position: absolute;
+
+      bottom: 54px;
+      left: 36%;
+
+      width: 170px;
+      height: 105px;
+
+      border-radius: 50% 50% 0 0;
+      background: #58a66f;
+    }
+
+    .pasted-area {
+      position: absolute;
+
+      left: 39%;
+      top: 49px;
+
+      display: grid;
+      place-items: center;
+
+      width: 165px;
+      height: 126px;
+
+      border: 2px dashed #2b68d2;
+
+      background: #ffffff;
+
+      transition: background 0.2s;
+    }
+
+    .pasted-area.transparent {
+      background: transparent;
+    }
+
+    .pasted-cloud {
+      font-size: 5.7rem;
+      line-height: 1;
+      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.03));
+    }
+
+    .transparency-description {
+      padding: 10px;
+    }
+
+    .transparency-description h3 {
+      color: var(--blue);
+    }
+
+    .transparency-description p {
+      font-size: 0.95rem;
+    }
+
+    .small-note {
+      margin-top: 15px;
+
+      padding: 15px;
+
+      border-radius: 12px;
+      background: var(--orange-light);
+
+      color: #825327;
+      font-size: 0.87rem;
+    }
+
+    
+    /* ============================================
+       11. ВОПРОСЫ
+    ============================================ */
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .question {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+
+      padding: 19px;
+
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .question-number {
+      display: grid;
+      place-items: center;
+
+      flex: 0 0 38px;
+
+      width: 38px;
+      height: 38px;
+
+      background: var(--blue-light);
+      color: var(--blue);
+
+      border-radius: 11px;
+      font-weight: 800;
+    }
+
+    .question p {
+      margin: 5px 0 0;
+      color: var(--ink);
+      font-size: 0.94rem;
+    }
+
+    /* ============================================
+       12. ИТОГ УРОКА
+    ============================================ */
+
+    .final-card {
+      padding: 38px;
+
+      border: 1px solid #bfdbcF;
+      border-radius: var(--radius);
+
+      background:
+        radial-gradient(
+          circle at right top,
+          rgba(102, 214, 164, 0.18),
+          transparent 48%
+        ),
+        white;
+    }
+
+    .final-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+
+      margin-top: 25px;
+    }
+
+    .final-point {
+      padding: 21px;
+
+      border: 1px solid #d9e9e4;
+      border-radius: 15px;
+
+      background: #f5fcf9;
+    }
+
+    .final-point strong {
+      display: block;
+
+      color: #218567;
+
+      font-size: 1.1rem;
+      margin-bottom: 7px;
+    }
+
+    .final-point p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 38px;
+      padding: 30px 20px 40px;
+
+      text-align: center;
+
+      background: #e9eef7;
+      color: #71809a;
+
+      font-size: 0.86rem;
+    }
+
+    /* ============================================
+       13. АДАПТИВНАЯ ВЁРСТКА
+    ============================================ */
+
+    @media (max-width: 900px) {
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .paint-window {
+        width: min(100%, 520px);
+        margin: 15px auto 0;
+        transform: rotate(0deg);
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .clipboard-diagram {
+        grid-template-columns: 1fr;
+      }
+
+      .clipboard-arrow b {
+        transform: rotate(90deg);
+      }
+
+      .transparency-body {
+        grid-template-columns: 1fr;
+      }
+
+      .final-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .section {
+        padding: 29px 0;
+      }
+
+      .hero {
+        padding: 49px 0;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .questions,
+      .comparison-mini {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .fragment-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .large-arrow {
+        transform: rotate(90deg);
+        text-align: center;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-body,
+      .transparency-body,
+      .practice-content,
+      .final-card {
+        padding: 19px;
+      }
+
+      .city-scene {
+        height: 270px;
+      }
+
+      .city-house {
+        transform: scale(0.7);
+        transform-origin: left bottom;
+        left: 6%;
+      }
+
+      #originalTree {
+        left: 50%;
+      }
+
+      #destinationTree {
+        left: 72%;
+      }
+
+      .scene-object {
+        width: 78px;
+        height: 130px;
+      }
+
+      .scene-object .tree {
+        transform: scale(0.72);
+        transform-origin: bottom left;
+      }
+
+      .shortcut-list {
+        grid-template-columns: 1fr;
+      }
+
+      .transparency-scene {
+        height: 230px;
+      }
+
+      .pasted-area {
+        left: 27%;
+      }
+
+      .question {
+        padding: 15px;
+      }
+
+      .final-grid {
+        gap: 10px;
+      }
+
+      .hero-tags span {
+        font-size: 0.78rem;
+      }
+
+      .selection-art {
+        margin: -20px -20px 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ==========================================
+       01. ГЛАВНЫЙ ЭКРАН
+  ========================================== -->
+
+  <header class="hero">
+
+    <div class="container hero-layout">
+
+      <div>
+
+        <div class="lesson-tag">
+          🎨 ИНФОРМАТИКА · 7 КЛАСС
+        </div>
+
+        <h1>
+          Фрагмент
+          <span>рисунка</span>
+        </h1>
+
+        <p class="hero-description">
+          Как переместить дерево, не перерисовывая его?
+          Как создать целую улицу одинаковых домов?
+          И зачем художнику нужны инструменты
+          выделения и копирования?
+        </p>
+
+        <div class="hero-tags">
+          <span>✂️ Выделение</span>
+          <span>↔️ Перемещение</span>
+          <span>📋 Копирование</span>
+          <span>🖥️ Paint</span>
+        </div>
+
+      </div>
+
+      <!-- Декоративная имитация Paint -->
+
+      <div class="paint-window">
+
+        <div class="paint-titlebar">
+
+          <strong>🎨 Рисунок — Paint</strong>
+
+          <div class="window-controls">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+        </div>
+
+        <div class="paint-toolbar">
+          <span class="tool">✏️</span>
+          <span class="tool">🖌️</span>
+          <span class="tool active">⬚</span>
+          <span class="tool">🎨</span>
+          <span class="tool">🔍</span>
+        </div>
+
+        <div class="paint-canvas">
+
+          <div class="paint-sun"></div>
+          <div class="paint-ground"></div>
+
+          <div class="paint-house">
+            <div class="paint-door"></div>
+            <div class="paint-window-small"></div>
+          </div>
+
+          <div class="tree hero-tree">
+            <div class="tree-trunk"></div>
+            <div class="tree-crown"></div>
+          </div>
+
+          <div class="hero-selection">
+            <span class="selection-handle one"></span>
+            <span class="selection-handle two"></span>
+            <span class="selection-handle three"></span>
+            <span class="selection-handle four"></span>
+          </div>
+
+        </div>
+
+        <div class="paint-statusbar">
+          Инструмент: Выделение · 1 объект выбран
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- ==========================================
+         02. ЧТО ТАКОЕ ФРАГМЕНТ РИСУНКА?
+    ========================================== -->
+
+    <section class="section" id="fragment">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            01 · Основное понятие
+          </span>
+
+          <h2>
+            Рисунок состоит из частей
+          </h2>
+
+          <p class="lead">
+            Представь, что ты нарисовал дом,
+            дерево и облака. Получилось одно
+            изображение, но внутри него можно
+            выделить отдельные части.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            Что называют фрагментом?
+          </h3>
+
+          <p>
+            <strong>Фрагмент рисунка</strong> —
+            это выделенная часть изображения,
+            с которой можно выполнять различные
+            действия: перемещать, копировать,
+            удалять или изменять её размер.
+          </p>
+
+          <p>
+            Например, на рисунке леса можно
+            выделить одно дерево.
+            После этого не обязательно
+            изменять всё изображение —
+            можно работать только
+            с выбранной областью.
+          </p>
+
+        </div>
+
+        <div class="fragment-showcase"
+             style="margin-top:20px">
+
+          <div class="fragment-preview">
+
+            <div class="symbol">
+              🏡🌳☁️
+            </div>
+
+            <small>
+              Весь рисунок
+            </small>
+
+          </div>
+
+          <div class="large-arrow">
+            →
+          </div>
+
+          <div class="fragment-preview">
+
+            <div class="symbol selected">
+              🌳
+            </div>
+
+            <small>
+              Выделенный фрагмент
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="grid grid-3"
+             style="margin-top:20px">
+
+          <article class="card">
+
+            <div class="icon">↔️</div>
+
+            <h3>Перемещение</h3>
+
+            <p>
+              Позволяет изменить
+              расположение части рисунка.
+              Например, передвинуть дерево
+              ближе к дому.
+            </p>
+
+          </article>
+
+          <article class="card">
+
+            <div class="icon">📄</div>
+
+            <h3>Копирование</h3>
+
+            <p>
+              Позволяет создать ещё один
+              такой же фрагмент.
+              Например, получить несколько
+              одинаковых деревьев.
+            </p>
+
+          </article>
+
+          <article class="card">
+
+            <div class="icon">🧹</div>
+
+            <h3>Исправление</h3>
+
+            <p>
+              Помогает убрать
+              или изменить часть рисунка,
+              не переделывая всё
+              изображение с самого начала.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Зачем это нужно?
+          </strong>
+
+          <p>
+            Представь, что ты десять минут
+            рисовал красивое дерево, но
+            расположил его слишком близко
+            к дому. Вместо того чтобы
+            стирать и рисовать заново,
+            можно выделить дерево и переместить его.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         03. ИНСТРУМЕНТ ВЫДЕЛЕНИЯ
+    ========================================== -->
+
+    <section class="section" id="selection">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            02 · Инструменты Paint
+          </span>
+
+          <h2>
+            Как выделить часть рисунка?
+          </h2>
+
+          <p class="lead">
+            Прежде чем переместить или
+            скопировать фрагмент, необходимо
+            объяснить программе, с какой
+            именно областью изображения
+            мы собираемся работать.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            Инструмент «Выделить»
+          </h3>
+
+          <p>
+            В графическом редакторе Paint
+            для этого предусмотрен
+            инструмент <strong>«Выделить»</strong>.
+          </p>
+
+          <p>
+            С его помощью мы обозначаем
+            границы нужной области.
+            После выделения эту область
+            можно перемещать,
+            копировать и изменять.
+          </p>
+
+          <p>
+            В Paint существуют два основных
+            способа выделения,
+            которые полезно различать.
+          </p>
+
+        </div>
+
+        <div class="grid grid-2"
+             style="margin-top:20px">
+
+          <!-- Прямоугольное выделение -->
+
+          <article class="card selection-card">
+
+            <div class="selection-art">
+
+              <svg viewBox="0 0 280 180"
+                   role="img"
+                   aria-label="Прямоугольное выделение дерева">
+
+                <rect
+                  x="0"
+                  y="0"
+                  width="280"
+                  height="180"
+                  fill="#d5ecff"
+                />
+
+                <rect
+                  x="0"
+                  y="145"
+                  width="280"
+                  height="35"
+                  fill="#9dd9ac"
+                />
+
+                <rect
+                  x="129"
+                  y="85"
+                  width="22"
+                  height="66"
+                  rx="3"
+                  fill="#a66b47"
+                />
+
+                <ellipse
+                  cx="140"
+                  cy="73"
+                  rx="51"
+                  ry="55"
+                  fill="#43b37a"
+                />
+
+                <rect
+                  x="82"
+                  y="12"
+                  width="118"
+                  height="146"
+                  fill="none"
+                  stroke="#286be6"
+                  stroke-width="3"
+                  stroke-dasharray="7 5"
+                />
+
+                <g fill="#fff"
+                   stroke="#286be6"
+                   stroke-width="2">
+
+                  <rect x="78" y="8" width="9" height="9"/>
+                  <rect x="196" y="8" width="9" height="9"/>
+                  <rect x="78" y="154" width="9" height="9"/>
+                  <rect x="196" y="154" width="9" height="9"/>
+
+                </g>
+
+              </svg>
+
+            </div>
+
+            <span class="tag">
+              Способ №1
+            </span>
+
+            <h3 style="margin-top:12px">
+              Прямоугольное выделение
+            </h3>
+
+            <p>
+              Выделенная область имеет форму
+              прямоугольника.
+            </p>
+
+            <p>
+              Удобно использовать
+              для окон, домов, отдельных
+              изображений и других объектов,
+              которые можно поместить
+              в прямоугольную область.
+            </p>
+
+            <div class="tip-strip">
+              ⬚ Граница выделения — прямоугольник
+            </div>
+
+          </article>
+
+          <!-- Произвольное выделение -->
+
+          <article class="card selection-card">
+
+            <div class="selection-art free">
+
+              <svg viewBox="0 0 280 180"
+                   role="img"
+                   aria-label="Произвольное выделение дерева">
+
+                <rect
+                  x="0"
+                  y="0"
+                  width="280"
+                  height="180"
+                  fill="#e8ddff"
+                />
+
+                <rect
+                  x="0"
+                  y="145"
+                  width="280"
+                  height="35"
+                  fill="#b6dfa9"
+                />
+
+                <rect
+                  x="129"
+                  y="85"
+                  width="22"
+                  height="66"
+                  rx="3"
+                  fill="#a66b47"
+                />
+
+                <ellipse
+                  cx="140"
+                  cy="73"
+                  rx="51"
+                  ry="55"
+                  fill="#43b37a"
+                />
+
+                <path
+                  d="
+                    M 125 8
+                    C 91 7, 71 35, 77 66
+                    C 62 99, 86 126, 115 131
+                    L 116 164
+                    L 164 164
+                    L 165 130
+                    C 199 114, 213 83, 202 55
+                    C 197 25, 168 5, 125 8
+                    Z
+                  "
+                  fill="none"
+                  stroke="#8b5ce8"
+                  stroke-width="3"
+                  stroke-dasharray="7 5"
+                  stroke-linejoin="round"
+                />
+
+              </svg>
+
+            </div>
+
+            <span class="tag"
+                  style="background:var(--purple-light);
+                         color:var(--purple)">
+              Способ №2
+            </span>
+
+            <h3 style="margin-top:12px">
+              Выделение произвольной формы
+            </h3>
+
+            <p>
+              Границу выделения можно проводить
+              по сложной линии, стараясь
+              повторить форму объекта.
+            </p>
+
+            <p>
+              Этот способ полезен для
+              деревьев, облаков, животных
+              и других объектов
+              неправильной формы.
+            </p>
+
+            <div class="tip-strip">
+              〰️ Граница повторяет форму объекта
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Что важно понимать
+          </strong>
+
+          <p>
+            Paint — растровый редактор.
+            Выделение определяет область
+            пикселей, а не обязательно
+            отдельный самостоятельный предмет.
+          </p>
+
+          <p>
+            Например, если рядом с деревом
+            находится часть дома и она попала
+            внутрь выделения, программа
+            может захватить и её.
+            Поэтому границы выделения
+            следует выбирать внимательно.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         04. КАК РАБОТАТЬ С ВЫДЕЛЕННЫМ ФРАГМЕНТОМ
+    ========================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            03 · Последовательность действий
+          </span>
+
+          <h2>
+            От выделения до результата
+          </h2>
+
+          <p class="lead">
+            В большинстве случаев работа
+            с фрагментами происходит
+            по простой последовательности.
+          </p>
+
+        </div>
+
+        <div class="steps">
+
+          <div class="step">
+
+            <div class="step-number">
+              1
+            </div>
+
+            <h3>
+              Выбери инструмент
+            </h3>
+
+            <p>
+              Найди в Paint команду
+              «Выделить» и укажи
+              подходящий способ выделения.
+            </p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">
+              2
+            </div>
+
+            <h3>
+              Обведи область
+            </h3>
+
+            <p>
+              С помощью мыши
+              обозначь границы нужного
+              фрагмента рисунка.
+            </p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">
+              3
+            </div>
+
+            <h3>
+              Выбери действие
+            </h3>
+
+            <p>
+              Реши, что нужно сделать:
+              переместить, скопировать,
+              вырезать или удалить.
+            </p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">
+              4
+            </div>
+
+            <h3>
+              Проверь результат
+            </h3>
+
+            <p>
+              Убедись, что рисунок
+              изменился именно так,
+              как ты задумывал.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Если действие оказалось ошибочным
+          </strong>
+
+          <p>
+            Во многих программах,
+            включая Paint, последнее
+            действие можно отменить
+            сочетанием клавиш
+            <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+          </p>
+
+          <p>
+            Это особенно полезно,
+            если фрагмент переместился
+            не туда, куда планировалось.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         05. ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ
+    ========================================== -->
+
+    <section class="section" id="move-copy">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            04 · Практическая демонстрация
+          </span>
+
+          <h2>
+            Переместить или скопировать?
+          </h2>
+
+          <p class="lead">
+            Это два разных действия.
+            Чтобы понять отличие,
+            проведём небольшой эксперимент
+            с деревом на рисунке.
+          </p>
+
+        </div>
+
+        <div class="demo-shell">
+
+          <div class="demo-header">
+
+            <h3>
+              🖌️ Мини-лаборатория Paint
+            </h3>
+
+            <span class="tag">
+              Интерактивная демонстрация
+            </span>
+
+          </div>
+
+          <div class="demo-body">
+
+            <p>
+              На рисунке есть одно дерево.
+              Попробуй переместить его
+              или создать копию.
+              Обрати внимание, что произойдёт
+              с исходным деревом.
+            </p>
+
+            <div class="city-scene">
+
+              <div class="city-sun"></div>
+
+              <div class="city-cloud">
+                ☁️
+              </div>
+
+              <div class="city-house">
+                <div class="city-door"></div>
+                <div class="city-house-window"></div>
+              </div>
+
+              <!-- Исходное дерево -->
+
+              <div
+                class="scene-object selected"
+                id="originalTree"
+              >
+
+                <div class="tree">
+                  <div class="tree-trunk"></div>
+                  <div class="tree-crown"></div>
+                </div>
+
+              </div>
+
+              <!-- Второе дерево:
+                   появляется после действия -->
+
+              <div
+                class="scene-object"
+                id="destinationTree"
+              >
+
+                <div class="tree">
+                  <div class="tree-trunk"></div>
+                  <div class="tree-crown"></div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="demo-controls">
+
+              <button
+                class="btn"
+                id="moveButton"
+                type="button"
+              >
+                ↔️ Переместить
+              </button>
+
+              <button
+                class="btn btn-purple"
+                id="copyButton"
+                type="button"
+              >
+                📋 Скопировать
+              </button>
+
+              <button
+                class="btn btn-secondary"
+                id="resetButton"
+                type="button"
+              >
+                ↩️ Начать заново
+              </button>
+
+            </div>
+
+            <div
+              class="demo-status"
+              id="demoStatus"
+              role="status"
+              aria-live="polite"
+            >
+              <strong>
+                Начальное положение.
+              </strong>
+
+              Дерево выделено.
+              Выбери действие и посмотри
+              на результат.
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="comparison-mini">
+
+          <div>
+
+            <strong>
+              ↔️ Перемещение
+            </strong>
+
+            <p>
+              Выделенный фрагмент
+              изменяет своё расположение.
+              На прежнем месте
+              исходные пиксели больше
+              не остаются в прежнем виде.
+            </p>
+
+          </div>
+
+          <div>
+
+            <strong>
+              📋 Копирование
+            </strong>
+
+            <p>
+              Создаётся ещё один
+              такой же фрагмент.
+              Исходная часть рисунка
+              остаётся на прежнем месте.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Особенность Paint
+          </strong>
+
+          <p>
+            При обычном перемещении
+            выделенной области её прежнее
+            место в Paint заполняется
+            цветом фона.
+          </p>
+
+          <p>
+            Например, если дерево находится
+            на голубом небе,
+            а цвет фона установлен белым,
+            после перемещения
+            на прежнем месте может
+            появиться белая область.
+          </p>
+
+          <p>
+            Поэтому иногда нужно
+            дополнительно исправлять
+            фон изображения.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         06. БУФЕР ОБМЕНА
+    ========================================== -->
+
+    <section class="section" id="clipboard">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            05 · Работа с командами
+          </span>
+
+          <h2>
+            Буфер обмена: временное хранилище
+          </h2>
+
+          <p class="lead">
+            Представь, что ты хочешь взять
+            дерево с одного рисунка
+            и вставить его в другой.
+            Для этого существует
+            специальный механизм —
+            буфер обмена.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            Что такое буфер обмена?
+          </h3>
+
+          <p>
+            <strong>Буфер обмена</strong> —
+            это область памяти,
+            в которой временно
+            сохраняются данные
+            для копирования или переноса.
+          </p>
+
+          <p>
+            В буфере обмена могут
+            находиться не только
+            части рисунков,
+            но и текст,
+            файлы и другие данные.
+          </p>
+
+          <p>
+            Когда ты нажимаешь
+            «Копировать», выбранные данные
+            помещаются в буфер обмена.
+            После этого их можно
+            вставить в подходящее место.
+          </p>
+
+        </div>
+
+        <div class="clipboard-diagram"
+             style="margin-top:20px">
+
+          <div class="clipboard-stage">
+
+            <div class="emoji">🌳</div>
+
+            <strong>
+              Исходный рисунок
+            </strong>
+
+            <small>
+              Выделяем дерево
+            </small>
+
+          </div>
+
+          <div class="clipboard-arrow">
+
+            <b>→</b>
+            <small>Копировать</small>
+
+          </div>
+
+          <div class="clipboard-stage">
+
+            <div class="emoji">📋</div>
+
+            <strong>
+              Буфер обмена
+            </strong>
+
+            <small>
+              Временное хранение
+            </small>
+
+          </div>
+
+          <div class="clipboard-arrow">
+
+            <b>→</b>
+            <small>Вставить</small>
+
+          </div>
+
+          <div class="clipboard-stage">
+
+            <div class="emoji">🌳🌳</div>
+
+            <strong>
+              Готовый рисунок
+            </strong>
+
+            <small>
+              Появилась копия
+            </small>
+
+          </div>
+
+        </div>
+
+        <h3 style="margin-top:35px">
+          Три важные команды
+        </h3>
+
+        <div class="shortcut-list">
+
+          <div class="shortcut">
+
+            <kbd>Ctrl</kbd> + <kbd>C</kbd>
+
+            <strong>
+              Копировать
+            </strong>
+
+            <p>
+              Сохраняет выделенные
+              данные в буфере обмена,
+              не удаляя их
+              с исходного места.
+            </p>
+
+          </div>
+
+          <div class="shortcut">
+
+            <kbd>Ctrl</kbd> + <kbd>X</kbd>
+
+            <strong>
+              Вырезать
+            </strong>
+
+            <p>
+              Помещает выделенные данные
+              в буфер обмена
+              и удаляет их
+              из исходной области.
+            </p>
+
+          </div>
+
+          <div class="shortcut">
+
+            <kbd>Ctrl</kbd> + <kbd>V</kbd>
+
+            <strong>
+              Вставить
+            </strong>
+
+            <p>
+              Добавляет содержимое
+              буфера обмена
+              в выбранное место.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Копировать и вырезать — не одно и то же
+          </strong>
+
+          <p>
+            Если скопировать рисунок дерева,
+            оно останется на прежнем месте.
+            Если вырезать дерево,
+            исходный фрагмент будет удалён
+            из прежней области,
+            но его можно будет вставить
+            в другом месте.
+          </p>
+
+          <p>
+            Обрати внимание:
+            содержимое буфера обмена
+            обычно заменяется при следующем
+            копировании или вырезании.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         07. ПРОЗРАЧНОЕ ВЫДЕЛЕНИЕ
+    ========================================== -->
+
+    <section class="section" id="transparent">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            06 · Особенность Paint
+          </span>
+
+          <h2>
+            Что такое прозрачное выделение?
+          </h2>
+
+          <p class="lead">
+            Иногда после копирования объекта
+            вместе с ним появляется
+            ненужный прямоугольный фон.
+            В Paint существует режим,
+            который помогает избежать
+            такой ситуации.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            Пример с облаком
+          </h3>
+
+          <p>
+            Представь, что облако нарисовано
+            на белом фоне, а ты хочешь
+            поместить его на голубое небо.
+          </p>
+
+          <p>
+            При обычном выделении
+            вместе с облаком может
+            переноситься белая область.
+            Она закроет часть неба.
+          </p>
+
+          <p>
+            При прозрачном выделении
+            пиксели определённого фонового
+            цвета не перекрывают
+            изображение под ними.
+          </p>
+
+        </div>
+
+        <!-- Интерактивное сравнение -->
+
+        <div class="transparency-panel"
+             style="margin-top:20px">
+
+          <div class="transparency-controls">
+
+            <button
+              class="mode-button active"
+              id="opaqueMode"
+              type="button"
+              aria-pressed="true"
+            >
+              ⬜ Обычное выделение
+            </button>
+
+            <button
+              class="mode-button"
+              id="transparentMode"
+              type="button"
+              aria-pressed="false"
+            >
+              ✨ Прозрачное выделение
+            </button>
+
+          </div>
+
+          <div class="transparency-body">
+
+            <div class="transparency-scene">
+
+              <div class="background-sun"></div>
+              <div class="background-hill"></div>
+              <div class="background-shape"></div>
+
+              <div class="pasted-area"
+                   id="pastedArea">
+
+                <span class="pasted-cloud">
+                  ☁️
+                </span>
+
+              </div>
+
+            </div>
+
+            <div class="transparency-description">
+
+              <span class="tag">
+                Сравни результаты
+              </span>
+
+              <h3 id="transparencyTitle"
+                  style="margin-top:12px">
+                Обычное выделение
+              </h3>
+
+              <p id="transparencyText">
+                Вместе с облаком видна
+                белая прямоугольная область.
+                Она закрывает часть
+                фонового изображения.
+              </p>
+
+              <p>
+                Нажми на кнопку
+                «Прозрачное выделение»
+                и посмотри, что изменится.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="small-note">
+
+          <strong>
+            Важно!
+          </strong>
+
+          Это упрощённая демонстрация.
+          В классическом Paint режим прозрачного
+          выделения учитывает установленный
+          цвет фона (обычно «Цвет 2»).
+          Он не превращает весь выделенный
+          фрагмент в изображение с настоящей
+          полупрозрачностью.
+          В разных версиях Paint расположение
+          этой настройки может отличаться.
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         08. ГДЕ ПОЛЕЗНО КОПИРОВАНИЕ?
+    ========================================== -->
+
+    <section class="section" id="uses">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            07 · Применение
+          </span>
+
+          <h2>
+            Один рисунок — много возможностей
+          </h2>
+
+          <p class="lead">
+            Копирование особенно удобно,
+            когда на изображении
+            встречается несколько
+            одинаковых или похожих объектов.
+          </p>
+
+        </div>
+
+        <div class="grid grid-3">
+
+          <article class="card">
+
+            <div class="icon">🌲</div>
+
+            <h3>
+              Лес
+            </h3>
+
+            <p>
+              Вместо того чтобы
+              рисовать каждое дерево
+              с самого начала,
+              можно создать одно
+              и сделать несколько копий.
+            </p>
+
+            <div style="font-size:2rem;
+                        text-align:center;
+                        margin-top:15px">
+              🌲🌲🌲🌲
+            </div>
+
+          </article>
+
+          <article class="card">
+
+            <div class="icon">🏢</div>
+
+            <h3>
+              Здание
+            </h3>
+
+            <p>
+              Если в доме много
+              одинаковых окон,
+              удобно нарисовать
+              одно окно и повторить его.
+            </p>
+
+            <div style="font-size:2rem;
+                        text-align:center;
+                        margin-top:15px">
+              🪟 🪟 🪟
+            </div>
+
+          </article>
+
+          <article class="card">
+
+            <div class="icon">☁️</div>
+
+            <h3>
+              Небо
+            </h3>
+
+            <p>
+              Облака можно
+              копировать и размещать
+              в разных частях
+              изображения.
+            </p>
+
+            <div style="font-size:2rem;
+                        text-align:center;
+                        margin-top:15px">
+              ☁️ ☁️ ☁️
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Не забывай про аккуратность
+          </strong>
+
+          <p>
+            Копирование ускоряет работу,
+            но не заменяет планирование.
+            Если разместить все объекты
+            слишком близко друг к другу,
+            рисунок может стать
+            перегруженным.
+          </p>
+
+          <p>
+            Хороший художник думает
+            не только о том,
+            как создать объект,
+            но и о том,
+            где его расположить.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==========================================
+         10. ВОПРОСЫ ДЛЯ ЗАКРЕПЛЕНИЯ
+    ========================================== -->
+
+    <section class="section" id="questions">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            08 · Проверка знаний
+          </span>
+
+          <h2>
+            Вопросы по уроку
+          </h2>
+
+          <p class="lead">
+            Ответь на вопросы своими словами.
+            Если какая-то тема кажется
+            сложной, вернись
+            к соответствующему разделу.
+          </p>
+
+        </div>
+
+        <div class="questions">
+
+          <div class="question">
+            <span class="question-number">01</span>
+            <p>
+              Что называют
+              фрагментом рисунка?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">02</span>
+            <p>
+              Для чего используется
+              инструмент выделения?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">03</span>
+            <p>
+              Какие способы выделения
+              существуют в Paint?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">04</span>
+            <p>
+              Когда удобно использовать
+              прямоугольное выделение?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">05</span>
+            <p>
+              Для чего необходимо выделение
+              произвольной формы?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">06</span>
+            <p>
+              Как переместить
+              фрагмент рисунка?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">07</span>
+            <p>
+              Чем копирование отличается
+              от перемещения?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">08</span>
+            <p>
+              Что такое буфер обмена?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">09</span>
+            <p>
+              Для чего используется
+              команда «Вырезать»?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">10</span>
+            <p>
+              Какие сочетания клавиш
+              применяются для копирования
+              и вставки?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">11</span>
+            <p>
+              Что такое
+              прозрачное выделение?
+            </p>
+          </div>
+
+          <div class="question">
+            <span class="question-number">12</span>
+            <p>
+              В каких ситуациях
+              копирование фрагментов
+              облегчает создание рисунка?
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         11. ИТОГ УРОКА
+    ========================================== -->
+
+    <section class="section" id="summary">
+
+      <div class="container">
+
+        <div class="final-card">
+
+          <span class="eyebrow"
+                style="color:var(--green)">
+            09 · Завершение
+          </span>
+
+          <h2>
+            Итог урока
+          </h2>
+
+          <p class="lead">
+            Сегодня мы познакомились
+            со способами работы
+            с отдельными частями
+            изображения в Paint.
+          </p>
+
+          <p>
+            Теперь мы знаем, что
+            для изменения рисунка
+            не всегда нужно
+            перерисовывать его полностью.
+            Достаточно выделить
+            нужный фрагмент
+            и выполнить подходящее действие.
+          </p>
+
+          <div class="final-grid">
+
+            <div class="final-point">
+
+              <strong>
+                ✂️ Выделение
+              </strong>
+
+              <p>
+                Позволяет выбрать
+                область изображения,
+                с которой необходимо работать.
+              </p>
+
+            </div>
+
+            <div class="final-point">
+
+              <strong>
+                ↔️ Перемещение
+              </strong>
+
+              <p>
+                Изменяет расположение
+                выбранного фрагмента.
+              </p>
+
+            </div>
+
+            <div class="final-point">
+
+              <strong>
+                📋 Копирование
+              </strong>
+
+              <p>
+                Создаёт дополнительный
+                экземпляр фрагмента,
+                сохраняя исходный.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="callout"
+               style="margin-top:25px;
+                      background:var(--green-light);
+                      border-color:var(--green)">
+
+            <strong style="color:#218567">
+              Главный вывод
+            </strong>
+
+            <p>
+              Выделение, перемещение
+              и копирование позволяют
+              работать с рисунками
+              быстрее и удобнее.
+            </p>
+
+            <p>
+              Эти действия используются
+              не только в Paint,
+              но и во многих других
+              графических редакторах.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    Информатика · 7 класс ·
+    Фрагмент рисунка: выделение,
+    перемещение и копирование
+
+  </footer>
+
+
+  <!-- ==========================================
+       12. JAVASCRIPT
+       Интерактивные демонстрации
+  ========================================== -->
+
+  <script>
+
+    "use strict";
+
+
+    /* ==========================================
+       ЛАБОРАТОРИЯ №1
+       Демонстрация перемещения и копирования
+    ========================================== */
+
+    const moveButton = document.getElementById(
+      "moveButton"
+    );
+
+    const copyButton = document.getElementById(
+      "copyButton"
+    );
+
+    const resetButton = document.getElementById(
+      "resetButton"
+    );
+
+    const originalTree = document.getElementById(
+      "originalTree"
+    );
+
+    const destinationTree = document.getElementById(
+      "destinationTree"
+    );
+
+    const demoStatus = document.getElementById(
+      "demoStatus"
+    );
+
+
+    // Функция возвращает рисунок
+    // в исходное состояние.
+
+    function resetScene() {
+
+      originalTree.classList.remove(
+        "is-hidden"
+      );
+
+      originalTree.classList.add(
+        "selected"
+      );
+
+      destinationTree.classList.remove(
+        "is-visible",
+        "selected"
+      );
+
+      demoStatus.innerHTML = `
+        <strong>Начальное положение.</strong>
+        Дерево выделено. Выбери действие
+        и посмотри на результат.
+      `;
+
+    }
+
+
+    // Демонстрация перемещения.
+    //
+    // Исходное дерево исчезает со старого
+    // места, а на новом появляется.
+    //
+    // Это упрощённая модель, поэтому
+    // здесь не изображается закрашивание
+    // исходной области цветом фона.
+
+    function moveTree() {
+
+      resetScene();
+
+      originalTree.classList.add(
+        "is-hidden"
+      );
+
+      originalTree.classList.remove(
+        "selected"
+      );
+
+      destinationTree.classList.add(
+        "is-visible",
+        "selected"
+      );
+
+      demoStatus.innerHTML = `
+        <strong>Перемещение:</strong>
+        дерево теперь находится справа.
+        На старом месте дерева нет.
+        В настоящем Paint исходная
+        область заполняется цветом фона.
+      `;
+
+    }
+
+
+    // Демонстрация копирования.
+    //
+    // Исходное дерево остаётся,
+    // и дополнительно появляется копия.
+
+    function copyTree() {
+
+      resetScene();
+
+      destinationTree.classList.add(
+        "is-visible",
+        "selected"
+      );
+
+      originalTree.classList.remove(
+        "selected"
+      );
+
+      demoStatus.innerHTML = `
+        <strong>Копирование:</strong>
+        исходное дерево осталось на месте,
+        а справа появилась его копия.
+        Теперь на рисунке два дерева.
+      `;
+
+    }
+
+
+    // Обработчики кнопок.
+
+    moveButton.addEventListener(
+      "click",
+      moveTree
+    );
+
+    copyButton.addEventListener(
+      "click",
+      copyTree
+    );
+
+    resetButton.addEventListener(
+      "click",
+      resetScene
+    );
+
+    // Начальное состояние.
+
+    resetScene();
+
+
+    /* ==========================================
+       ЛАБОРАТОРИЯ №2
+       Обычное и прозрачное выделение
+    ========================================== */
+
+    const opaqueMode = document.getElementById(
+      "opaqueMode"
+    );
+
+    const transparentMode = document.getElementById(
+      "transparentMode"
+    );
+
+    const pastedArea = document.getElementById(
+      "pastedArea"
+    );
+
+    const transparencyTitle = document.getElementById(
+      "transparencyTitle"
+    );
+
+    const transparencyText = document.getElementById(
+      "transparencyText"
+    );
+
+
+    // Обычный режим:
+    // белая область вокруг облака видна.
+
+    function showOpaqueMode() {
+
+      pastedArea.classList.remove(
+        "transparent"
+      );
+
+      opaqueMode.classList.add(
+        "active"
+      );
+
+      transparentMode.classList.remove(
+        "active"
+      );
+
+      opaqueMode.setAttribute(
+        "aria-pressed",
+        "true"
+      );
+
+      transparentMode.setAttribute(
+        "aria-pressed",
+        "false"
+      );
+
+      transparencyTitle.textContent =
+        "Обычное выделение";
+
+      transparencyText.textContent =
+        "Вместе с облаком видна белая " +
+        "прямоугольная область. " +
+        "Она закрывает часть фонового изображения.";
+
+    }
+
+
+    // Прозрачный режим:
+    // белая область вокруг облака
+    // перестаёт закрывать фон.
+
+    function showTransparentMode() {
+
+      pastedArea.classList.add(
+        "transparent"
+      );
+
+      transparentMode.classList.add(
+        "active"
+      );
+
+      opaqueMode.classList.remove(
+        "active"
+      );
+
+      transparentMode.setAttribute(
+        "aria-pressed",
+        "true"
+      );
+
+      opaqueMode.setAttribute(
+        "aria-pressed",
+        "false"
+      );
+
+      transparencyTitle.textContent =
+        "Прозрачное выделение";
+
+      transparencyText.textContent =
+        "Белая область вокруг облака " +
+        "больше не закрывает небо. " +
+        "Теперь фон виден сквозь " +
+        "пространство вокруг объекта.";
+
+    }
+
+
+    opaqueMode.addEventListener(
+      "click",
+      showOpaqueMode
+    );
+
+    transparentMode.addEventListener(
+      "click",
+      showTransparentMode
+    );
+
+    showOpaqueMode();
+
+  </script>
+
+</body>
+
+</html>
