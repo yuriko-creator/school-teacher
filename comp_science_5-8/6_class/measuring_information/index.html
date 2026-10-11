@@ -1,0 +1,4571 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Информатика, 6 класс. Измерение информации: бит, байт, килобайт, мегабайт, перевод единиц и информационный объём текста."
+  >
+
+  <title>
+    Измерение информации — Информатика, 6 класс
+  </title>
+
+  <style>
+
+    /* ===================================================
+       01. ЦВЕТОВАЯ ПАЛИТРА И ОБЩЕЕ ОФОРМЛЕНИЕ
+    =================================================== */
+
+    :root {
+      --bg: #f3f7fc;
+      --white: #ffffff;
+      --ink: #24364e;
+      --muted: #63758d;
+      --line: #dce6f0;
+
+      --blue: #3677dc;
+      --blue-soft: #e9f2ff;
+
+      --cyan: #0aabb8;
+      --cyan-soft: #e2f8fa;
+
+      --purple: #815cdb;
+      --purple-soft: #f0ebff;
+
+      --green: #209d79;
+      --green-soft: #e1f7ed;
+
+      --orange: #e9963d;
+      --orange-soft: #fff3e3;
+
+      --dark: #142945;
+
+      --radius: 21px;
+
+      --shadow:
+        0 15px 38px rgba(39, 66, 114, .075);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.72;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
+
+    h1, h2, h3, h4, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      line-height: 1.07;
+      letter-spacing: -2px;
+    }
+
+    h2 {
+      font-size: clamp(1.85rem, 4vw, 2.7rem);
+      line-height: 1.2;
+      letter-spacing: -.7px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.24rem;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: var(--ink);
+    }
+
+    code,
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    code {
+      color: #285bad;
+      overflow-wrap: anywhere;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 43px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 26px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 815px;
+      font-size: 1.075rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 19px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+      padding: 25px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      margin-bottom: 18px;
+      border-radius: 17px;
+      background: var(--blue-soft);
+      font-size: 2rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .tag.purple {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .tag.green {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .note {
+      margin-top: 22px;
+      padding: 21px 24px;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 15px 15px 0;
+      background: var(--blue-soft);
+    }
+
+    .note strong {
+      display: block;
+      color: #285eb5;
+      margin-bottom: 6px;
+    }
+
+    .note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .note.green {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    .note.green strong {
+      color: #168161;
+    }
+
+    .note.purple {
+      background: var(--purple-soft);
+      border-color: var(--purple);
+    }
+
+    .note.purple strong {
+      color: #7047bd;
+    }
+
+    .note.orange {
+      background: var(--orange-soft);
+      border-color: var(--orange);
+    }
+
+    .note.orange strong {
+      color: #ad6b22;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 17px;
+      border: 1px solid var(--blue);
+      border-radius: 11px;
+      background: var(--blue);
+      color: white;
+      font-weight: 800;
+      transition: transform .16s, filter .16s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .btn.secondary {
+      border-color: #bfd1e8;
+      background: white;
+      color: var(--blue);
+    }
+
+    .btn.purple {
+      border-color: var(--purple);
+      background: var(--purple);
+    }
+
+    .btn.green {
+      border-color: var(--green);
+      background: var(--green);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    /* ===================================================
+       02. ГЛАВНЫЙ ЭКРАН
+    =================================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 83px 0;
+      background:
+        radial-gradient(
+          ellipse at 85% 17%,
+          #d8f6fa,
+          transparent 43%
+        ),
+        radial-gradient(
+          ellipse at 8% 100%,
+          #e6e0ff,
+          transparent 50%
+        ),
+        #eaf2ff;
+      border-bottom: 1px solid #d5e2f5;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .2;
+      background-image:
+        radial-gradient(
+          #84a5d6 1.5px,
+          transparent 1.5px
+        );
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-label {
+      display: inline-block;
+      margin-bottom: 25px;
+      padding: 9px 15px;
+      border: 1px solid #afc8f2;
+      border-radius: 50px;
+      background: rgba(255,255,255,.82);
+      color: var(--blue);
+      font-size: .83rem;
+      font-weight: 850;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--blue);
+    }
+
+    .hero-description {
+      max-width: 550px;
+      margin: 23px 0;
+      color: #526781;
+      font-size: 1.1rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .hero-tags span {
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #dae6f5;
+      border-radius: 9px;
+      font-size: .84rem;
+      font-weight: 750;
+    }
+
+    /* ===================================================
+       03. ИЛЛЮСТРАЦИЯ ГЛАВНОГО ЭКРАНА
+    =================================================== */
+
+    .hero-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+    }
+
+    .hero-ring {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border: 3px dashed #c4d2eb;
+      border-radius: 50%;
+    }
+
+    .hero-core {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 225px;
+      height: 225px;
+      border: 8px solid white;
+      border-radius: 36px;
+      background: linear-gradient(
+        145deg,
+        #397fe6,
+        #5d5ac9
+      );
+      box-shadow: 0 25px 48px rgba(62,92,162,.25);
+      color: white;
+      text-align: center;
+    }
+
+    .hero-core .binary {
+      color: #d8fcff;
+      font-family: Consolas, monospace;
+      font-size: 2.8rem;
+      font-weight: 900;
+    }
+
+    .hero-core strong {
+      margin-top: 10px;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .hero-core small {
+      color: #d9eaff;
+      font-size: .86rem;
+    }
+
+    .hero-bubble {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: 97px;
+      height: 97px;
+      border: 5px solid white;
+      border-radius: 25px;
+      background: white;
+      box-shadow: var(--shadow);
+      font-size: 1.7rem;
+      font-weight: 900;
+    }
+
+    .hero-bubble.one {
+      left: 4%;
+      top: 32px;
+      background: #ddf5fa;
+      color: var(--cyan);
+    }
+
+    .hero-bubble.two {
+      right: 0;
+      top: 85px;
+      background: #eee8ff;
+      color: var(--purple);
+    }
+
+    .hero-bubble.three {
+      left: 7%;
+      bottom: 27px;
+      background: #fff3df;
+      color: #bc792b;
+    }
+
+    .hero-bubble.four {
+      right: 12%;
+      bottom: 10px;
+      background: #e0f7ed;
+      color: var(--green);
+    }
+
+    /* ===================================================
+       04. ЗАЧЕМ ИЗМЕРЯТЬ ИНФОРМАЦИЮ
+    =================================================== */
+
+    .intro-banner {
+      padding: 30px;
+      border: 1px solid #cdddf3;
+      border-radius: var(--radius);
+      background: linear-gradient(
+        115deg,
+        #e8f1ff,
+        #ffffff 65%,
+        #f0eaff
+      );
+    }
+
+    .intro-banner strong {
+      font-size: 1.19rem;
+    }
+
+    .intro-banner p:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      padding: 22px;
+      border-radius: 15px;
+      background: #f2f7ff;
+      text-align: center;
+    }
+
+    .comparison-box .emoji {
+      display: block;
+      font-size: 4.2rem;
+      line-height: 1.3;
+    }
+
+    .comparison-box strong {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .comparison-box small {
+      color: var(--muted);
+    }
+
+    /* ===================================================
+       05. БИТ
+    =================================================== */
+
+    .bit-choice {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 17px;
+      align-items: center;
+      padding: 25px;
+      border: 1px solid #c9dff1;
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .bit-option {
+      padding: 27px 15px;
+      border: 2px solid #d6e7f8;
+      border-radius: 17px;
+      background: #edf5ff;
+      text-align: center;
+    }
+
+    .bit-option .digit {
+      display: block;
+      color: var(--blue);
+      font-family: Consolas, monospace;
+      font-size: 5rem;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .bit-option strong {
+      display: block;
+      margin-top: 7px;
+    }
+
+    .bit-middle {
+      color: var(--cyan);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    /* ===================================================
+       06. БАЙТ И КОНСТРУКТОР БИТОВ
+    =================================================== */
+
+    .byte-lab {
+      overflow: hidden;
+      border: 1px solid #c9dcf2;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .lab-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 21px 25px;
+      background: #e6f0ff;
+      border-bottom: 1px solid #d2dff1;
+    }
+
+    .lab-header h3 {
+      margin-bottom: 0;
+    }
+
+    .lab-body {
+      padding: 27px;
+    }
+
+    .bits-board {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0,1fr));
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .bit-button {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 95px;
+      padding: 12px 3px;
+      border: 2px solid #b5cae9;
+      border-radius: 13px;
+      background: #eaf2ff;
+      color: var(--blue);
+      font-family: Consolas, monospace;
+      font-size: clamp(1.45rem,3vw,2.4rem);
+      font-weight: 900;
+      transition: transform .15s, background .15s;
+    }
+
+    .bit-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .bit-button.one {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    .bit-caption {
+      display: block;
+      margin-top: 5px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: .68rem;
+      font-weight: 750;
+    }
+
+    .byte-result {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 14px;
+      margin-top: 21px;
+    }
+
+    .byte-result-box {
+      min-width: 0;
+      padding: 21px;
+      border-radius: 15px;
+      background: #edf5ff;
+      text-align: center;
+    }
+
+    .byte-result-box.purple {
+      background: var(--purple-soft);
+    }
+
+    .byte-result-box small {
+      display: block;
+      margin-bottom: 8px;
+      color: #627b98;
+      font-weight: 800;
+    }
+
+    .byte-result-box strong {
+      display: block;
+      font-family: Consolas, monospace;
+      font-size: clamp(1.35rem,3.8vw,2.2rem);
+      overflow-wrap: anywhere;
+      color: #2866c7;
+    }
+
+    .byte-result-box.purple strong {
+      color: var(--purple);
+    }
+
+    .byte-weights {
+      display: grid;
+      grid-template-columns: repeat(8,minmax(0,1fr));
+      gap: 9px;
+      margin-top: 10px;
+      color: #7d8ca5;
+      text-align: center;
+      font-family: Consolas, monospace;
+      font-size: .81rem;
+      font-weight: 800;
+    }
+
+    /* ===================================================
+       07. ЛЕСТНИЦА ЕДИНИЦ
+    =================================================== */
+
+    .unit-ladder {
+      position: relative;
+      display: grid;
+      gap: 10px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .unit-row {
+      display: grid;
+      grid-template-columns: 115px minmax(0,1fr);
+      gap: 15px;
+      align-items: center;
+    }
+
+    .unit-symbol {
+      display: grid;
+      place-items: center;
+      min-height: 65px;
+      padding: 9px;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .unit-description {
+      padding: 15px;
+      border: 1px solid #e4ebf4;
+      border-radius: 12px;
+      background: #fbfcff;
+    }
+
+    .unit-description strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .unit-description small {
+      color: var(--muted);
+    }
+
+    .ladder-connector {
+      margin-left: 52px;
+      color: var(--purple);
+      font-size: .89rem;
+      font-weight: 900;
+    }
+
+    .unit-equations {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .unit-equation {
+      padding: 16px;
+      border: 1px solid #d6e3f3;
+      border-radius: 12px;
+      background: #edf4ff;
+      color: #3563ac;
+      text-align: center;
+      font-size: 1.02rem;
+      font-weight: 850;
+    }
+
+    /* ===================================================
+       08. ПЕРЕВОД ЕДИНИЦ
+    =================================================== */
+
+    .operation-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .operation-sign {
+      display: grid;
+      place-items: center;
+      width: 73px;
+      height: 73px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      background: #e3f7ed;
+      color: var(--green);
+      font-size: 2.8rem;
+      font-weight: 900;
+    }
+
+    .operation-card:nth-child(2) .operation-sign {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .equation-example {
+      margin-top: 15px;
+      padding: 16px;
+      border-radius: 11px;
+      background: #f1f5fc;
+      font-family: Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #3762a4;
+      overflow-wrap: anywhere;
+    }
+
+    /* ===================================================
+       09. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР
+    =================================================== */
+
+    .converter {
+      overflow: hidden;
+      border: 1px solid #d5cef0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .converter-header {
+      padding: 23px 25px;
+      background: var(--purple-soft);
+      border-bottom: 1px solid #dcd4f3;
+    }
+
+    .converter-header h3 {
+      margin: 12px 0 7px;
+    }
+
+    .converter-body {
+      padding: 26px;
+    }
+
+    .converter-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 15px;
+      align-items: end;
+    }
+
+    .converter-field {
+      display: block;
+      min-width: 0;
+    }
+
+    .converter-field span {
+      display: block;
+      margin-bottom: 8px;
+      font-size: .88rem;
+      font-weight: 800;
+      color: #546b87;
+    }
+
+    .converter-field input,
+    .converter-field select {
+      display: block;
+      width: 100%;
+      min-height: 49px;
+      padding: 10px 13px;
+      border: 2px solid #d4e0f0;
+      border-radius: 11px;
+      background: white;
+      color: var(--ink);
+    }
+
+    .converter-field select {
+      margin-top: 9px;
+    }
+
+    .converter-arrow {
+      padding-bottom: 20px;
+      color: var(--purple);
+      font-size: 2.2rem;
+      font-weight: 900;
+    }
+
+    .conversion-result {
+      min-height: 57px;
+      padding: 12px 15px;
+      border: 2px solid #d7c9f3;
+      border-radius: 11px;
+      background: #f7f3ff;
+      color: #754cbd;
+      font-size: clamp(1rem,3vw,1.4rem);
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .converter-explanation {
+      margin-top: 19px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #f4f7fc;
+      color: #556c87;
+    }
+
+    .converter-explanation strong {
+      display: block;
+      color: #365c9d;
+      margin-bottom: 6px;
+    }
+
+    .converter-explanation p {
+      margin-bottom: 0;
+    }
+
+    /* ===================================================
+       10. ОБЪЁМ ТЕКСТА
+    =================================================== */
+
+    .text-formula {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 23px;
+      border: 1px solid #cbdcf4;
+      border-radius: 16px;
+      background: #eaf2ff;
+      font-weight: 900;
+    }
+
+    .text-formula span {
+      padding: 11px 15px;
+      border-radius: 10px;
+      background: white;
+      color: #315fac;
+    }
+
+    .text-formula b {
+      color: var(--purple);
+      font-size: 1.5rem;
+    }
+
+    .text-lab {
+      overflow: hidden;
+      border: 1px solid #c9e5dd;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .text-lab-header {
+      padding: 23px 25px;
+      background: var(--green-soft);
+      border-bottom: 1px solid #c7e6d8;
+    }
+
+    .text-lab-header h3 {
+      margin: 11px 0 6px;
+    }
+
+    .text-lab-body {
+      padding: 26px;
+    }
+
+    .text-input-label {
+      display: block;
+      margin-bottom: 9px;
+      font-weight: 800;
+    }
+
+    .text-entry {
+      display: block;
+      width: 100%;
+      min-height: 100px;
+      padding: 16px;
+      border: 2px solid #bfdfd4;
+      border-radius: 12px;
+      background: #fcfffd;
+      color: var(--ink);
+      resize: vertical;
+      font-size: 1.15rem;
+    }
+
+    .symbol-visual {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+      min-height: 58px;
+    }
+
+    .symbol-cell {
+      display: grid;
+      place-items: center;
+      min-width: 47px;
+      height: 48px;
+      padding: 6px;
+      border: 1px solid #afdcca;
+      border-radius: 10px;
+      background: #e9f9f1;
+      color: #218a67;
+      font-family: Consolas, monospace;
+      font-size: 1.2rem;
+      font-weight: 850;
+    }
+
+    .text-stats {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 12px;
+      margin-top: 17px;
+    }
+
+    .stat-box {
+      padding: 18px 12px;
+      border: 1px solid #d4e6df;
+      border-radius: 13px;
+      background: #f2fbf6;
+      text-align: center;
+    }
+
+    .stat-box small {
+      display: block;
+      margin-bottom: 8px;
+      color: #56816e;
+      font-weight: 800;
+    }
+
+    .stat-box strong {
+      display: block;
+      color: #198362;
+      font-family: Consolas, monospace;
+      font-size: clamp(1.3rem,3.4vw,2rem);
+      overflow-wrap: anywhere;
+    }
+
+    .text-rule {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 13px;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #f1f5fb;
+    }
+
+    .text-rule label {
+      color: #49657f;
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    .text-rule select {
+      padding: 9px;
+      border: 1px solid #c5d6e8;
+      border-radius: 9px;
+      background: white;
+    }
+
+    .text-calculation {
+      padding: 19px;
+      margin-top: 17px;
+      border-radius: 13px;
+      background: #e7f8f0;
+      color: #1f8467;
+      font-family: Consolas, monospace;
+      font-size: 1.1rem;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
+
+    /* ===================================================
+       11. РАЗНЫЕ ВИДЫ ФАЙЛОВ
+    =================================================== */
+
+    .file-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .file-art {
+      display: grid;
+      place-items: center;
+      min-height: 145px;
+      padding: 19px;
+      background: var(--blue-soft);
+      font-size: 4rem;
+    }
+
+    .file-card:nth-child(2) .file-art {
+      background: var(--purple-soft);
+    }
+
+    .file-card:nth-child(3) .file-art {
+      background: var(--green-soft);
+    }
+
+    .file-card:nth-child(4) .file-art {
+      background: var(--orange-soft);
+    }
+
+    .file-card:nth-child(5) .file-art {
+      background: var(--cyan-soft);
+    }
+
+    .file-body {
+      padding: 23px;
+    }
+
+    .file-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .file-demo {
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .file-bar-row {
+      display: grid;
+      grid-template-columns: 160px minmax(0,1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .file-bar-row span {
+      color: #46607d;
+      font-size: .87rem;
+      font-weight: 750;
+    }
+
+    .file-bar {
+      overflow: hidden;
+      height: 20px;
+      border-radius: 30px;
+      background: #e9eff8;
+    }
+
+    .file-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+
+    .file-bar-row:nth-child(2) .file-bar-fill {
+      background: var(--cyan);
+    }
+
+    .file-bar-row:nth-child(3) .file-bar-fill {
+      background: var(--purple);
+    }
+
+    .file-bar-row:nth-child(4) .file-bar-fill {
+      background: var(--orange);
+    }
+
+    /* ===================================================
+       12. ПОВСЕДНЕВНАЯ ЖИЗНЬ
+    =================================================== */
+
+    .real-life-icon {
+      display: grid;
+      place-items: center;
+      width: 70px;
+      height: 70px;
+      margin-bottom: 17px;
+      border-radius: 18px;
+      background: var(--blue-soft);
+      font-size: 2.5rem;
+    }
+
+    /* ===================================================
+       13. ЗАДАЧИ С ОТВЕТАМИ
+    =================================================== */
+
+    .task-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: white;
+    }
+
+    .task-expression {
+      margin: 18px 0;
+      padding: 18px;
+      border-radius: 12px;
+      background: var(--purple-soft);
+      color: #704bb4;
+      font-family: Consolas, monospace;
+      font-size: clamp(1.1rem,3vw,1.4rem);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .task-answer {
+      margin-top: 14px;
+      padding: 15px;
+      border-radius: 12px;
+      background: var(--green-soft);
+      color: #1d8264;
+      font-size: .94rem;
+      font-weight: 750;
+    }
+
+    .task-answer[hidden] {
+      display: none;
+    }
+
+    /* ===================================================
+       14. ВОПРОСЫ ПО УРОКУ
+    =================================================== */
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 13px;
+    }
+
+    .question {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+    }
+
+    .question-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 39px;
+      width: 39px;
+      height: 39px;
+      border-radius: 11px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .question p {
+      margin: 4px 0 0;
+      color: var(--ink);
+      font-size: .94rem;
+    }
+
+    /* ===================================================
+       15. ИТОГ УРОКА
+    =================================================== */
+
+    .summary {
+      padding: 38px;
+      border: 1px solid #cddff2;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(
+          circle at right top,
+          #e1f5ff,
+          transparent 44%
+        ),
+        white;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 14px;
+      margin-top: 25px;
+    }
+
+    .summary-point {
+      padding: 21px;
+      border: 1px solid #d5e6f4;
+      border-radius: 15px;
+      background: #f2f7ff;
+    }
+
+    .summary-point strong {
+      display: block;
+      margin-bottom: 7px;
+      color: #3164b9;
+    }
+
+    .summary-point p {
+      margin-bottom: 0;
+      font-size: .9rem;
+    }
+
+    footer {
+      padding: 33px 20px 45px;
+      margin-top: 35px;
+      background: #e7eef8;
+      color: #75869e;
+      text-align: center;
+      font-size: .87rem;
+    }
+
+    /* ===================================================
+       16. АДАПТИВНАЯ ВЁРСТКА
+    =================================================== */
+
+    @media(max-width: 950px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        width: min(100%,530px);
+        margin: auto;
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width: 700px) {
+      .grid-2,
+      .grid-3,
+      .questions,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .converter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .converter-arrow {
+        padding: 0;
+        transform: rotate(90deg);
+        text-align: center;
+      }
+
+      .file-bar-row {
+        grid-template-columns: 110px minmax(0,1fr) 65px;
+        gap: 8px;
+      }
+
+      .file-bar-row span {
+        font-size: .75rem;
+      }
+    }
+
+    @media(max-width: 550px) {
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .section {
+        padding: 30px 0;
+      }
+
+      .hero {
+        padding: 50px 0 35px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .card,
+      .summary,
+      .file-demo,
+      .intro-banner {
+        padding: 19px;
+      }
+
+      .hero-visual {
+        min-height: 330px;
+      }
+
+      .hero-ring {
+        width: 275px;
+        height: 275px;
+      }
+
+      .hero-core {
+        width: 165px;
+        height: 165px;
+        border-radius: 25px;
+      }
+
+      .hero-core .binary {
+        font-size: 2rem;
+      }
+
+      .hero-bubble {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        font-size: 1.2rem;
+      }
+
+      .hero-bubble.one {
+        top: 9px;
+      }
+
+      .hero-bubble.two {
+        top: 65px;
+      }
+
+      .bit-choice {
+        grid-template-columns: 1fr;
+      }
+
+      .bit-middle {
+        text-align: center;
+      }
+
+      .bit-option {
+        padding: 13px;
+      }
+
+      .bit-option .digit {
+        font-size: 3rem;
+      }
+
+      .bits-board,
+      .byte-weights {
+        gap: 4px;
+      }
+
+      .bit-button {
+        min-height: 67px;
+        padding: 8px 1px;
+        border-radius: 7px;
+        font-size: 1.4rem;
+      }
+
+      .bit-caption {
+        font-size: .55rem;
+      }
+
+      .byte-weights {
+        font-size: .67rem;
+      }
+
+      .byte-result {
+        grid-template-columns: 1fr;
+      }
+
+      .unit-row {
+        grid-template-columns: 79px minmax(0,1fr);
+        gap: 8px;
+      }
+
+      .unit-ladder {
+        padding: 14px;
+      }
+
+      .unit-symbol {
+        font-size: .81rem;
+      }
+
+      .unit-description {
+        padding: 12px;
+        font-size: .9rem;
+      }
+
+      .ladder-connector {
+        margin-left: 24px;
+      }
+
+      .unit-equations,
+      .text-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .lab-body,
+      .converter-body,
+      .text-lab-body {
+        padding: 18px;
+      }
+
+      .symbol-cell {
+        min-width: 39px;
+        height: 42px;
+        font-size: 1rem;
+      }
+
+      .question {
+        padding: 15px;
+      }
+
+      .button-row .btn {
+        flex: 1 1 140px;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ===================================================
+     01. ГЛАВНЫЙ ЭКРАН
+=================================================== -->
+
+<header class="hero">
+
+  <div class="container hero-layout">
+
+    <div>
+
+      <div class="hero-label">
+        💾 ИНФОРМАТИКА · 6 КЛАСС
+      </div>
+
+      <h1>
+        Измерение
+        <span>информации</span>
+      </h1>
+
+      <p class="hero-description">
+        Почему один файл занимает
+        несколько килобайтов,
+        а другой — целые гигабайты?
+        Сколько битов помещается
+        в одном байте?
+        И как измерить объём текста?
+      </p>
+
+      <p class="hero-description">
+        Сегодня научимся измерять
+        цифровые данные, переводить
+        единицы информации и выполнять
+        первые вычисления!
+      </p>
+
+      <div class="hero-tags">
+        <span>0️⃣ 1️⃣ Биты</span>
+        <span>💾 Байты</span>
+        <span>📏 Единицы</span>
+        <span>🧮 Вычисления</span>
+      </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+      <div class="hero-ring"></div>
+
+      <div class="hero-core">
+        <span class="binary">01001011</span>
+        <strong>8 БИТ</strong>
+        <small>1 байт</small>
+      </div>
+
+      <div class="hero-bubble one">0 / 1</div>
+      <div class="hero-bubble two">КБ</div>
+      <div class="hero-bubble three">МБ</div>
+      <div class="hero-bubble four">ГБ</div>
+
+    </div>
+
+  </div>
+
+</header>
+
+<main>
+
+<!-- ===================================================
+     02. ЗАЧЕМ ИЗМЕРЯТЬ ИНФОРМАЦИЮ?
+=================================================== -->
+
+<section class="section" id="why">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        01 · Начнём со знакомого
+      </span>
+
+      <h2>Зачем измерять информацию?</h2>
+
+      <p class="lead">
+        Представь, что ты хочешь
+        сохранить на компьютере
+        рисунок, текстовый документ
+        и видеозапись.
+      </p>
+
+      <p class="lead">
+        Все эти файлы содержат
+        информацию, но занимают
+        разное количество места
+        в памяти устройства.
+      </p>
+
+    </div>
+
+    <div class="intro-banner">
+
+      <strong>Вспомним понятие информации</strong>
+
+      <p>
+        <strong>Информация</strong> —
+        это сведения об окружающем мире,
+        предметах, событиях и явлениях.
+      </p>
+
+      <p>
+        В компьютере информация
+        представляется в цифровой форме.
+        Чтобы хранить и передавать данные,
+        необходимо знать,
+        какой объём они занимают.
+      </p>
+
+    </div>
+
+    <div class="grid grid-2" style="margin-top:20px">
+
+      <article class="card">
+
+        <div class="comparison-box">
+          <span class="emoji">📄</span>
+          <strong>Небольшой текст</strong>
+          <small>Может занимать мало памяти</small>
+        </div>
+
+        <h3 style="margin-top:19px">
+          Текстовый файл
+        </h3>
+
+        <p>
+          Если записать всего несколько
+          предложений, для хранения
+          символов обычно потребуется
+          сравнительно немного данных.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="comparison-box"
+             style="background:var(--purple-soft)">
+          <span class="emoji">🎬</span>
+          <strong>Видеозапись</strong>
+          <small>Может занимать много памяти</small>
+        </div>
+
+        <h3 style="margin-top:19px">
+          Видеофайл
+        </h3>
+
+        <p>
+          Видео содержит множество
+          последовательных изображений,
+          а часто ещё и звук.
+          Поэтому объём данных
+          может быть намного больше.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="grid grid-3" style="margin-top:20px">
+
+      <article class="card">
+
+        <div class="card-icon">💽</div>
+
+        <h3>Хранение</h3>
+
+        <p>
+          Размер файла помогает
+          понять, хватит ли памяти
+          на компьютере или накопителе.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">🌐</div>
+
+        <h3>Передача</h3>
+
+        <p>
+          При одинаковой скорости
+          передачи больший файл
+          обычно отправляется дольше.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">📊</div>
+
+        <h3>Сравнение</h3>
+
+        <p>
+          Единицы измерения помогают
+          сравнивать размеры файлов
+          и вместимость устройств.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Главная мысль</strong>
+
+      <p>
+        Мы измеряем длину в метрах,
+        массу — в килограммах,
+        а объём цифровых данных —
+        в специальных единицах информации.
+      </p>
+
+      <p>
+        С ними мы сейчас и познакомимся.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     03. БИТ
+=================================================== -->
+
+<section class="section" id="bit">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        02 · Самая маленькая единица
+      </span>
+
+      <h2>Что такое бит?</h2>
+
+      <p class="lead">
+        На предыдущем уроке
+        мы познакомились
+        с двоичным кодом.
+        В нём используются
+        только два символа:
+        <strong>0</strong> и <strong>1</strong>.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="tag">
+        Новое понятие
+      </span>
+
+      <h3 style="margin-top:14px">
+        Бит
+      </h3>
+
+      <p>
+        <strong>Бит</strong> —
+        единица измерения
+        количества информации.
+        В двоичном представлении
+        один бит соответствует
+        одному двоичному разряду,
+        который может принимать
+        значение 0 или 1.
+      </p>
+
+      <p>
+        Слово «бит» происходит
+        от английского выражения
+        <em>binary digit</em> —
+        «двоичная цифра».
+      </p>
+
+    </div>
+
+    <div class="bit-choice" style="margin-top:20px">
+
+      <div class="bit-option">
+
+        <span class="digit">0</span>
+
+        <strong>
+          Первое состояние
+        </strong>
+
+        <p style="margin-bottom:0">
+          Например, «нет»
+        </p>
+
+      </div>
+
+      <div class="bit-middle">
+        ИЛИ
+      </div>
+
+      <div class="bit-option">
+
+        <span class="digit">1</span>
+
+        <strong>
+          Второе состояние
+        </strong>
+
+        <p style="margin-bottom:0">
+          Например, «да»
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="grid grid-2" style="margin-top:20px">
+
+      <article class="card">
+
+        <div class="card-icon">💡</div>
+
+        <h3>
+          Пример с лампочкой
+        </h3>
+
+        <p>
+          Представим, что лампочка
+          может быть только
+          выключена или включена.
+        </p>
+
+        <p>
+          Обозначим выключенное
+          состояние числом 0,
+          а включённое — числом 1.
+        </p>
+
+        <p>
+          Тогда для записи состояния
+          достаточно одного бита.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">❓</div>
+
+        <h3>
+          Пример с вопросом
+        </h3>
+
+        <p>
+          Если на вопрос
+          существует только
+          два равновероятных ответа
+          — «да» или «нет»,
+          получение одного ответа
+          даёт один бит информации.
+        </p>
+
+        <p>
+          Это простой пример
+          измерения количества
+          информации.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Запомни</strong>
+
+      <p>
+        Один двоичный разряд
+        имеет только два
+        возможных значения:
+        <strong>0 и 1</strong>.
+      </p>
+
+      <p>
+        Но сложные данные
+        невозможно представить
+        всего одним битом.
+        Поэтому компьютеры используют
+        последовательности
+        из множества битов.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     04. БАЙТ
+=================================================== -->
+
+<section class="section" id="byte">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        03 · Восемь битов вместе
+      </span>
+
+      <h2>Байт — группа из восьми битов</h2>
+
+      <p class="lead">
+        Одного бита достаточно,
+        чтобы различить два состояния.
+        Но если нужно представить
+        больше вариантов,
+        можно объединить
+        несколько битов.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="tag">
+        Главное соотношение
+      </span>
+
+      <h3 style="margin-top:14px">
+        1 байт = 8 бит
+      </h3>
+
+      <p>
+        <strong>Байт</strong> —
+        единица измерения объёма
+        цифровых данных,
+        равная восьми битам.
+      </p>
+
+      <p>
+        Например, последовательность
+        <code>01000001</code>
+        содержит восемь
+        двоичных разрядов.
+        Следовательно,
+        её длина равна одному байту.
+      </p>
+
+      <p>
+        Каждый бит может принимать
+        одно из двух значений.
+        Поэтому восемь битов
+        позволяют составить
+        <strong>256 различных комбинаций</strong>.
+      </p>
+
+    </div>
+
+    <div class="byte-lab" style="margin-top:20px">
+
+      <div class="lab-header">
+
+        <h3>
+          🔬 Конструктор одного байта
+        </h3>
+
+        <span class="tag">
+          Попробуй сам
+        </span>
+
+      </div>
+
+      <div class="lab-body">
+
+        <p>
+          Перед тобой восемь битов.
+          Нажимай на любой из них,
+          чтобы изменить
+          его значение с 0 на 1
+          или обратно.
+        </p>
+
+        <p>
+          Попробуй составить
+          разные комбинации.
+          Обрати внимание:
+          количество битов
+          всегда остаётся одинаковым.
+        </p>
+
+        <div
+          class="bits-board"
+          id="bitsBoard"
+          aria-label="Восемь переключаемых битов"
+        >
+          <!-- Создаётся JavaScript -->
+        </div>
+
+        <div class="byte-weights">
+          <span>128</span>
+          <span>64</span>
+          <span>32</span>
+          <span>16</span>
+          <span>8</span>
+          <span>4</span>
+          <span>2</span>
+          <span>1</span>
+        </div>
+
+        <div class="byte-result">
+
+          <div class="byte-result-box">
+
+            <small>
+              Двоичная последовательность
+            </small>
+
+            <strong id="binaryResult">
+              00000000
+            </strong>
+
+          </div>
+
+          <div class="byte-result-box purple">
+
+            <small>
+              Значение как двоичного числа
+            </small>
+
+            <strong id="decimalResult">
+              0
+            </strong>
+
+          </div>
+
+        </div>
+
+        <div class="button-row">
+
+          <button
+            class="btn"
+            type="button"
+            id="allZeros"
+          >
+            Все нули
+          </button>
+
+          <button
+            class="btn purple"
+            type="button"
+            id="allOnes"
+          >
+            Все единицы
+          </button>
+
+          <button
+            class="btn secondary"
+            type="button"
+            id="exampleByte"
+          >
+            Пример 01000001
+          </button>
+
+        </div>
+
+        <div class="note">
+
+          <strong>
+            Почему показаны числа от 0 до 255?
+          </strong>
+
+          <p>
+            Восемь битов дают
+            256 различных комбинаций.
+            Если воспринимать их
+            как обычные неотрицательные
+            двоичные числа,
+            получаются значения
+            от 0 до 255.
+          </p>
+
+          <p>
+            Мы можем посчитать:
+            <strong>2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 = 256</strong>.
+          </p>
+
+          <p>
+            Следовательно, один байт
+            может принимать 256
+            разных комбинаций значений.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     05. ЕДИНИЦЫ ИЗМЕРЕНИЯ
+=================================================== -->
+
+<section class="section" id="units">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        04 · От маленького к большому
+      </span>
+
+      <h2>Единицы измерения информации</h2>
+
+      <p class="lead">
+        Представь, что нужно
+        измерить размер большого
+        видеофайла в битах.
+        Получится очень длинное число.
+      </p>
+
+      <p class="lead">
+        Поэтому для больших объёмов
+        используют более крупные
+        единицы измерения.
+      </p>
+
+    </div>
+
+    <div class="unit-ladder">
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          бит
+        </div>
+
+        <div class="unit-description">
+          <strong>Бит</strong>
+          <small>
+            Двоичный разряд:
+            0 или 1
+          </small>
+        </div>
+
+      </div>
+
+      <div class="ladder-connector">
+        ↓ 8 бит = 1 байт
+      </div>
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          Б
+        </div>
+
+        <div class="unit-description">
+          <strong>Байт</strong>
+          <small>
+            Содержит 8 бит
+          </small>
+        </div>
+
+      </div>
+
+      <div class="ladder-connector">
+        ↓ 1024 байта
+      </div>
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          Кбайт
+        </div>
+
+        <div class="unit-description">
+          <strong>Килобайт</strong>
+          <small>
+            Используется для небольших
+            объёмов данных
+          </small>
+        </div>
+
+      </div>
+
+      <div class="ladder-connector">
+        ↓ 1024 Кбайта
+      </div>
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          Мбайт
+        </div>
+
+        <div class="unit-description">
+          <strong>Мегабайт</strong>
+          <small>
+            Часто встречается
+            при указании размеров файлов
+          </small>
+        </div>
+
+      </div>
+
+      <div class="ladder-connector">
+        ↓ 1024 Мбайта
+      </div>
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          Гбайт
+        </div>
+
+        <div class="unit-description">
+          <strong>Гигабайт</strong>
+          <small>
+            Часто используется
+            для больших файлов
+            и памяти устройств
+          </small>
+        </div>
+
+      </div>
+
+      <div class="ladder-connector">
+        ↓ 1024 Гбайта
+      </div>
+
+      <div class="unit-row">
+
+        <div class="unit-symbol">
+          Тбайт
+        </div>
+
+        <div class="unit-description">
+          <strong>Терабайт</strong>
+          <small>
+            Используется для обозначения
+            очень больших объёмов хранения
+          </small>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="unit-equations">
+
+      <div class="unit-equation">
+        1 Б = 8 бит
+      </div>
+
+      <div class="unit-equation">
+        1 Кбайт = 1024 Б
+      </div>
+
+      <div class="unit-equation">
+        1 Мбайт = 1024 Кбайта
+      </div>
+
+      <div class="unit-equation">
+        1 Гбайт = 1024 Мбайта
+      </div>
+
+      <div class="unit-equation">
+        1 Тбайт = 1024 Гбайта
+      </div>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>
+        Небольшое уточнение
+      </strong>
+
+      <p>
+        В наших школьных задачах
+        будем использовать
+        привычное правило:
+        <strong>1 Кбайт = 1024 байта</strong>,
+        а каждая следующая
+        крупная единица
+        содержит 1024 предыдущие.
+      </p>
+
+      <p>
+        В современной технике
+        также встречаются
+        единицы с шагом 1000.
+        А для шага 1024
+        существуют специальные
+        названия: кибибайт (КиБ),
+        мебибайт (МиБ)
+        и другие.
+      </p>
+
+      <p>
+        Поэтому обозначение единицы
+        и принятое правило измерения
+        имеют значение.
+        В упражнениях этого урока
+        используем именно
+        школьную систему с шагом 1024.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     06. ПЕРЕВОД ЕДИНИЦ
+=================================================== -->
+
+<section class="section" id="conversion">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        05 · Учимся вычислять
+      </span>
+
+      <h2>Как переводить единицы?</h2>
+
+      <p class="lead">
+        Перевод единиц информации
+        напоминает знакомые
+        математические действия.
+      </p>
+
+      <p class="lead">
+        Главное — знать,
+        во сколько раз
+        одна единица
+        больше или меньше другой.
+      </p>
+
+    </div>
+
+    <div class="grid grid-2">
+
+      <article class="card operation-card">
+
+        <div class="operation-sign">
+          ×
+        </div>
+
+        <h3>
+          Из крупных единиц
+          в более мелкие
+        </h3>
+
+        <p>
+          Если нужно узнать,
+          сколько более мелких
+          единиц содержится
+          в определённом объёме,
+          обычно выполняем умножение.
+        </p>
+
+        <div class="equation-example">
+          2 Б × 8 = 16 бит
+        </div>
+
+        <div class="equation-example">
+          3 Кбайта × 1024 = 3072 Б
+        </div>
+
+      </article>
+
+      <article class="card operation-card">
+
+        <div class="operation-sign">
+          ÷
+        </div>
+
+        <h3>
+          Из мелких единиц
+          в более крупные
+        </h3>
+
+        <p>
+          Если нужно узнать,
+          сколько более крупных
+          единиц составляет
+          данный объём,
+          обычно выполняем деление.
+        </p>
+
+        <div class="equation-example">
+          40 бит ÷ 8 = 5 Б
+        </div>
+
+        <div class="equation-example">
+          2048 Б ÷ 1024 = 2 Кбайта
+        </div>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Пример решения задачи</strong>
+
+      <p>
+        <strong>Задача:</strong>
+        сколько битов содержится
+        в пяти байтах?
+      </p>
+
+      <p>
+        <strong>Решение:</strong>
+        один байт содержит 8 бит.
+        Значит, пять байтов
+        содержат в пять раз
+        больше битов:
+      </p>
+
+      <p>
+        <strong>5 × 8 = 40 бит.</strong>
+      </p>
+
+      <p>
+        <strong>Ответ:</strong>
+        40 бит.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     07. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР
+=================================================== -->
+
+<section class="section" id="converter">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        06 · Попробуй сам
+      </span>
+
+      <h2>Калькулятор единиц информации</h2>
+
+      <p class="lead">
+        Выбери число, укажи
+        исходную единицу измерения
+        и единицу, в которую
+        нужно перевести объём.
+      </p>
+
+      <p class="lead">
+        Программа выполнит вычисление.
+        Сравни результат
+        со своим решением.
+      </p>
+
+    </div>
+
+    <div class="converter">
+
+      <div class="converter-header">
+
+        <span class="tag purple">
+          🧮 Интерактивное исследование
+        </span>
+
+        <h3>
+          Перевод единиц
+        </h3>
+
+        <p>
+          Используем школьные соотношения:
+          8 бит в байте и 1024 единицы
+          на каждом следующем уровне.
+        </p>
+
+      </div>
+
+      <div class="converter-body">
+
+        <div class="converter-grid">
+
+          <div class="converter-field">
+
+            <label for="amountInput">
+              <span>Исходное значение</span>
+            </label>
+
+            <input
+              type="number"
+              id="amountInput"
+              min="0"
+              max="1000000"
+              step="any"
+              value="5"
+            >
+
+            <select
+              id="fromUnit"
+              aria-label="Исходная единица измерения"
+            >
+              <option value="bit">Биты</option>
+              <option value="byte" selected>Байты</option>
+              <option value="kb">Килобайты</option>
+              <option value="mb">Мегабайты</option>
+              <option value="gb">Гигабайты</option>
+              <option value="tb">Терабайты</option>
+            </select>
+
+          </div>
+
+          <div class="converter-arrow">
+            →
+          </div>
+
+          <div class="converter-field">
+
+            <label for="toUnit">
+              <span>Перевести в</span>
+            </label>
+
+            <div
+              class="conversion-result"
+              id="conversionResult"
+              aria-live="polite"
+            >
+              40 бит
+            </div>
+
+            <select
+              id="toUnit"
+              aria-label="Конечная единица измерения"
+            >
+              <option value="bit" selected>Биты</option>
+              <option value="byte">Байты</option>
+              <option value="kb">Килобайты</option>
+              <option value="mb">Мегабайты</option>
+              <option value="gb">Гигабайты</option>
+              <option value="tb">Терабайты</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="converter-explanation">
+
+          <strong>
+            Как выполнено вычисление?
+          </strong>
+
+          <p
+            id="conversionExplanation"
+            aria-live="polite"
+          >
+            5 байт × 8 = 40 бит
+          </p>
+
+        </div>
+
+        <div class="button-row">
+
+          <button
+            class="btn"
+            type="button"
+            id="exampleConversion1"
+          >
+            5 Б → бит
+          </button>
+
+          <button
+            class="btn secondary"
+            type="button"
+            id="exampleConversion2"
+          >
+            2048 Б → Кбайт
+          </button>
+
+          <button
+            class="btn secondary"
+            type="button"
+            id="exampleConversion3"
+          >
+            2 Мбайта → Кбайт
+          </button>
+
+        </div>
+
+        <div class="note purple">
+
+          <strong>
+            Как лучше использовать калькулятор?
+          </strong>
+
+          <p>
+            Сначала попробуй выполнить
+            перевод самостоятельно.
+            Затем сравни
+            свой ответ
+            с результатом программы.
+          </p>
+
+          <p>
+            Так калькулятор поможет
+            проверять решения,
+            а не заменять вычисления.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     08. ОБЪЁМ ТЕКСТА
+=================================================== -->
+
+<section class="section" id="text">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        07 · Информация в тексте
+      </span>
+
+      <h2>Как измерить объём текстового сообщения?</h2>
+
+      <p class="lead">
+        На компьютере можно хранить
+        не только числа, но и тексты.
+      </p>
+
+      <p class="lead">
+        Каждый текст состоит
+        из отдельных символов:
+        букв, цифр, пробелов
+        и знаков препинания.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        Как компьютер хранит текст?
+      </h3>
+
+      <p>
+        Компьютер представляет
+        символы с помощью
+        специальных кодов.
+        Для хранения этих кодов
+        используется определённое
+        количество байтов.
+      </p>
+
+      <p>
+        В простых школьных задачах
+        часто заранее известно,
+        сколько байтов занимает
+        один символ.
+      </p>
+
+      <p>
+        Тогда объём сообщения
+        можно вычислить,
+        умножив количество символов
+        на количество байтов
+        для одного символа.
+      </p>
+
+    </div>
+
+    <div class="text-formula" style="margin-top:20px">
+
+      <span>Число символов</span>
+
+      <b>×</b>
+
+      <span>Байтов на символ</span>
+
+      <b>=</b>
+
+      <span>Объём текста</span>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>
+        Пример со словом «КОТ»
+      </strong>
+
+      <p>
+        В слове «КОТ»
+        три буквы:
+        К, О и Т.
+      </p>
+
+      <p>
+        Предположим,
+        что по условию задачи
+        каждая буква занимает
+        один байт.
+      </p>
+
+      <p>
+        Получаем:
+        <strong>3 × 1 = 3 байта.</strong>
+      </p>
+
+      <p>
+        А поскольку в одном байте
+        8 бит:
+        <strong>3 × 8 = 24 бита.</strong>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     09. ИНТЕРАКТИВНЫЙ ИЗМЕРИТЕЛЬ ТЕКСТА
+=================================================== -->
+
+<section class="section" id="text-lab">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        08 · Попробуй сам
+      </span>
+
+      <h2>Измеряем объём собственного текста</h2>
+
+      <p class="lead">
+        Напиши короткое слово
+        или предложение.
+        Наша лаборатория
+        подсчитает количество
+        символов и покажет,
+        сколько байтов
+        потребовалось бы
+        для их хранения
+        по выбранному правилу.
+      </p>
+
+    </div>
+
+    <div class="text-lab">
+
+      <div class="text-lab-header">
+
+        <span class="tag green">
+          📝 Интерактивное исследование
+        </span>
+
+        <h3>
+          Измеритель текста
+        </h3>
+
+        <p>
+          В этой модели
+          каждый введённый символ
+          занимает одинаковое
+          количество байтов,
+          которое мы задаём сами.
+        </p>
+
+      </div>
+
+      <div class="text-lab-body">
+
+        <label
+          class="text-input-label"
+          for="textInput"
+        >
+          Введи текст
+        </label>
+
+        <textarea
+          id="textInput"
+          class="text-entry"
+          rows="3"
+          maxlength="100"
+          placeholder="Например: КОТ"
+          spellcheck="false"
+        >КОТ</textarea>
+
+        <h3 style="margin-top:23px">
+          Из каких символов состоит текст?
+        </h3>
+
+        <p>
+          Ниже показаны
+          первые 30 символов сообщения.
+          Каждый находится
+          в отдельной ячейке.
+        </p>
+
+        <div
+          class="symbol-visual"
+          id="symbolVisual"
+        >
+          <!-- Создаётся JavaScript -->
+        </div>
+
+        <div class="text-rule">
+
+          <label for="bytesPerSymbol">
+            Условие задачи:
+          </label>
+
+          <select id="bytesPerSymbol">
+
+            <option value="1">
+              1 байт на символ
+            </option>
+
+            <option value="2">
+              2 байта на символ
+            </option>
+
+            <option value="4">
+              4 байта на символ
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="text-stats">
+
+          <div class="stat-box">
+
+            <small>
+              Символов
+            </small>
+
+            <strong id="symbolCount">
+              3
+            </strong>
+
+          </div>
+
+          <div class="stat-box">
+
+            <small>
+              Байт
+            </small>
+
+            <strong id="textByteCount">
+              3
+            </strong>
+
+          </div>
+
+          <div class="stat-box">
+
+            <small>
+              Бит
+            </small>
+
+            <strong id="textBitCount">
+              24
+            </strong>
+
+          </div>
+
+        </div>
+
+        <div
+          class="text-calculation"
+          id="textCalculation"
+          aria-live="polite"
+        >
+          3 символа × 1 байт = 3 байта = 24 бита
+        </div>
+
+        <div class="button-row">
+
+          <button
+            class="btn green"
+            type="button"
+            id="exampleText1"
+          >
+            КОТ
+          </button>
+
+          <button
+            class="btn secondary"
+            type="button"
+            id="exampleText2"
+          >
+            МИР
+          </button>
+
+          <button
+            class="btn secondary"
+            type="button"
+            id="exampleText3"
+          >
+            ПРИВЕТ МИР
+          </button>
+
+        </div>
+
+        <div class="note orange">
+
+          <strong>
+            Важное уточнение
+          </strong>
+
+          <p>
+            Это упрощённая модель
+            вычисления объёма текста
+            по условию школьной задачи.
+          </p>
+
+          <p>
+            В настоящих текстовых файлах
+            размер символа зависит
+            от кодировки.
+            Например, в современной
+            кодировке UTF-8
+            разные символы могут
+            занимать разное
+            количество байтов.
+          </p>
+
+          <p>
+            Кроме самого текста
+            файл иногда содержит
+            и дополнительную
+            служебную информацию.
+            Поэтому размер реального
+            файла не всегда совпадает
+            с простым вычислением.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     10. ОБЪЁМ РАЗНЫХ ФАЙЛОВ
+=================================================== -->
+
+<section class="section" id="files">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        09 · Информация бывает разной
+      </span>
+
+      <h2>Почему файлы занимают разный объём?</h2>
+
+      <p class="lead">
+        Размер файла зависит
+        от того, какую информацию
+        он содержит и каким способом
+        эта информация записана.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card file-card">
+
+        <div class="file-art">
+          📄
+        </div>
+
+        <div class="file-body">
+
+          <h3>Текст</h3>
+
+          <p>
+            Обычный текст
+            состоит из символов.
+            Его объём зависит
+            от количества символов
+            и способа кодирования.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="card file-card">
+
+        <div class="file-art">
+          🖼️
+        </div>
+
+        <div class="file-body">
+
+          <h3>Изображение</h3>
+
+          <p>
+            Цифровой рисунок
+            может содержать
+            сведения о множестве
+            пикселей.
+          </p>
+
+          <p>
+            На размер влияют
+            разрешение, цвета,
+            формат и сжатие.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="card file-card">
+
+        <div class="file-art">
+          🎵
+        </div>
+
+        <div class="file-body">
+
+          <h3>Аудиозапись</h3>
+
+          <p>
+            Файл хранит
+            цифровые данные,
+            представляющие звук.
+          </p>
+
+          <p>
+            На размер влияют
+            продолжительность,
+            качество и сжатие.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="card file-card">
+
+        <div class="file-art">
+          🎬
+        </div>
+
+        <div class="file-body">
+
+          <h3>Видеозапись</h3>
+
+          <p>
+            Видео содержит
+            последовательность
+            изображений
+            и может включать звук.
+          </p>
+
+          <p>
+            Поэтому видеофайлы
+            нередко занимают
+            много памяти.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="card file-card">
+
+        <div class="file-art">
+          ⚙️
+        </div>
+
+        <div class="file-body">
+
+          <h3>Программы</h3>
+
+          <p>
+            Программы содержат
+            команды для компьютера,
+            а также иногда
+            изображения, звуки
+            и другие ресурсы.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <div class="file-demo" style="margin-top:20px">
+
+      <h3>
+        Сравним условные размеры файлов
+      </h3>
+
+      <p>
+        Перед нами четыре
+        вымышленных файла.
+        Сравним, сколько
+        места они занимают.
+      </p>
+
+      <div class="file-bar-row">
+
+        <span>📄 Текст</span>
+
+        <div class="file-bar">
+          <div class="file-bar-fill"
+               style="width:4%"></div>
+        </div>
+
+        <span>2 Кбайта</span>
+
+      </div>
+
+      <div class="file-bar-row">
+
+        <span>🖼️ Рисунок</span>
+
+        <div class="file-bar">
+          <div class="file-bar-fill"
+               style="width:19%"></div>
+        </div>
+
+        <span>3 Мбайта</span>
+
+      </div>
+
+      <div class="file-bar-row">
+
+        <span>🎵 Музыка</span>
+
+        <div class="file-bar">
+          <div class="file-bar-fill"
+               style="width:36%"></div>
+        </div>
+
+        <span>6 Мбайт</span>
+
+      </div>
+
+      <div class="file-bar-row">
+
+        <span>🎬 Видео</span>
+
+        <div class="file-bar">
+          <div class="file-bar-fill"
+               style="width:100%"></div>
+        </div>
+
+        <span>250 Мбайт</span>
+
+      </div>
+
+      <p style="font-size:.84rem;margin-top:18px">
+        Длина полос условная: она помогает
+        визуально сравнить файлы,
+        но не является точным масштабом.
+      </p>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>
+        Можно ли уменьшить размер файла?
+      </strong>
+
+      <p>
+        Иногда да. Для этого
+        используют специальные
+        способы сжатия данных.
+      </p>
+
+      <p>
+        Например, изображения
+        и видео могут занимать
+        меньше места после
+        сохранения в определённом
+        формате.
+      </p>
+
+      <p>
+        Некоторые способы сжатия
+        сохраняют исходные данные
+        точно, а другие уменьшают
+        объём за счёт частичной
+        потери деталей.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     11. ИЗМЕРЕНИЕ ИНФОРМАЦИИ В ЖИЗНИ
+=================================================== -->
+
+<section class="section" id="life">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        10 · Знания в повседневной жизни
+      </span>
+
+      <h2>Где нам встречаются единицы информации?</h2>
+
+      <p class="lead">
+        Мы постоянно пользуемся
+        цифровыми устройствами,
+        поэтому единицы измерения
+        объёма данных встречаются
+        почти каждый день.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card">
+
+        <div class="real-life-icon">📱</div>
+
+        <h3>Память смартфона</h3>
+
+        <p>
+          Устройство имеет
+          ограниченную ёмкость памяти.
+          В ней хранятся приложения,
+          фотографии и другие файлы.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="real-life-icon">💾</div>
+
+        <h3>USB-накопитель</h3>
+
+        <p>
+          Вместимость накопителя
+          показывает, какой объём
+          данных он может хранить.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="real-life-icon">⬇️</div>
+
+        <h3>Загрузка файлов</h3>
+
+        <p>
+          Перед скачиванием
+          можно посмотреть
+          размер файла и оценить,
+          сколько места он займёт.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="real-life-icon">🖥️</div>
+
+        <h3>Свободное место</h3>
+
+        <p>
+          Компьютер показывает,
+          сколько памяти
+          уже занято и сколько
+          осталось свободным.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="real-life-icon">🌐</div>
+
+        <h3>Интернет</h3>
+
+        <p>
+          Объём передаваемых данных
+          влияет на время
+          скачивания и отправки,
+          если скорость соединения
+          остаётся одинаковой.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>
+        Объём данных и скорость передачи — не одно и то же
+      </strong>
+
+      <p>
+        Объём файла
+        показывает, сколько
+        данных он содержит.
+      </p>
+
+      <p>
+        Скорость передачи
+        показывает, сколько
+        данных передаётся
+        за определённое время.
+      </p>
+
+      <p>
+        Например, скорость сети
+        часто измеряют
+        в битах в секунду,
+        а размер загружаемого файла —
+        в байтах и их кратных единицах.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     12. НЕБОЛЬШИЕ ЗАДАЧИ
+=================================================== -->
+
+<section class="section" id="tasks">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        11 · Проверь понимание
+      </span>
+
+      <h2>Попробуй решить три задачи</h2>
+
+      <p class="lead">
+        Перед тобой небольшие
+        вычисления по теме урока.
+      </p>
+
+      <p class="lead">
+        Сначала реши задачу
+        самостоятельно,
+        а затем открой
+        готовое решение
+        для проверки.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="task-card">
+
+        <span class="tag purple">
+          Задача 1
+        </span>
+
+        <h3 style="margin-top:14px">
+          Байты в биты
+        </h3>
+
+        <p>
+          Сколько битов
+          содержится в 7 байтах?
+        </p>
+
+        <div class="task-expression">
+          7 Б = ? бит
+        </div>
+
+        <button
+          class="btn secondary answer-button"
+          type="button"
+          data-answer="answer1"
+          aria-controls="answer1"
+          aria-expanded="false"
+        >
+          Показать решение
+        </button>
+
+        <div
+          class="task-answer"
+          id="answer1"
+          hidden
+        >
+          7 × 8 = 56 бит.
+          <br>
+          <strong>Ответ: 56 бит.</strong>
+        </div>
+
+      </article>
+
+      <article class="task-card">
+
+        <span class="tag purple">
+          Задача 2
+        </span>
+
+        <h3 style="margin-top:14px">
+          Байты в килобайты
+        </h3>
+
+        <p>
+          Сколько килобайтов
+          составляют 4096 байт?
+        </p>
+
+        <div class="task-expression">
+          4096 Б = ? Кбайт
+        </div>
+
+        <button
+          class="btn secondary answer-button"
+          type="button"
+          data-answer="answer2"
+          aria-controls="answer2"
+          aria-expanded="false"
+        >
+          Показать решение
+        </button>
+
+        <div
+          class="task-answer"
+          id="answer2"
+          hidden
+        >
+          4096 ÷ 1024 = 4 Кбайта.
+          <br>
+          <strong>Ответ: 4 Кбайта.</strong>
+        </div>
+
+      </article>
+
+      <article class="task-card">
+
+        <span class="tag purple">
+          Задача 3
+        </span>
+
+        <h3 style="margin-top:14px">
+          Объём сообщения
+        </h3>
+
+        <p>
+          В сообщении 10 символов.
+          Каждый занимает 2 байта.
+          Каков объём сообщения?
+        </p>
+
+        <div class="task-expression">
+          10 × 2 = ?
+        </div>
+
+        <button
+          class="btn secondary answer-button"
+          type="button"
+          data-answer="answer3"
+          aria-controls="answer3"
+          aria-expanded="false"
+        >
+          Показать решение
+        </button>
+
+        <div
+          class="task-answer"
+          id="answer3"
+          hidden
+        >
+          10 × 2 = 20 байт.
+          <br>
+          20 × 8 = 160 бит.
+          <br>
+          <strong>Ответ: 20 байт, или 160 бит.</strong>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     13. 12 ВОПРОСОВ
+=================================================== -->
+
+<section class="section" id="questions">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        12 · Закрепление знаний
+      </span>
+
+      <h2>Вопросы по уроку</h2>
+
+      <p class="lead">
+        Ответь на 12 вопросов.
+        Постарайся объяснять
+        ответы своими словами
+        и приводить примеры.
+      </p>
+
+    </div>
+
+    <div class="questions">
+
+      <div class="question">
+        <span class="question-number">01</span>
+        <p>
+          Для чего необходимо
+          измерять информацию?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">02</span>
+        <p>
+          Что такое бит?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">03</span>
+        <p>
+          Сколько возможных значений
+          имеет один двоичный разряд?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">04</span>
+        <p>
+          Что такое байт?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">05</span>
+        <p>
+          Сколько бит содержится
+          в одном байте?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">06</span>
+        <p>
+          Сколько различных комбинаций
+          можно составить
+          из восьми битов?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">07</span>
+        <p>
+          Какие единицы измерения
+          объёма информации существуют?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">08</span>
+        <p>
+          Сколько байтов содержится
+          в одном килобайте
+          в наших школьных задачах?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">09</span>
+        <p>
+          Как перевести байты в биты?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">10</span>
+        <p>
+          От чего зависит
+          объём текстового сообщения?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">11</span>
+        <p>
+          Почему изображения
+          и видеофайлы могут
+          занимать больше памяти,
+          чем небольшие
+          текстовые документы?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">12</span>
+        <p>
+          Где в повседневной жизни
+          используются единицы
+          измерения информации?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     14. ИТОГ УРОКА
+=================================================== -->
+
+<section class="section" id="summary">
+
+  <div class="container">
+
+    <div class="summary">
+
+      <span class="eyebrow">
+        13 · Завершение
+      </span>
+
+      <h2>Итог урока</h2>
+
+      <p class="lead">
+        Сегодня мы узнали,
+        зачем измеряют
+        объём цифровых данных,
+        познакомились с единицами
+        информации и научились
+        выполнять первые вычисления.
+      </p>
+
+      <div class="summary-grid">
+
+        <div class="summary-point">
+
+          <strong>
+            0️⃣ 1️⃣ Бит и байт
+          </strong>
+
+          <p>
+            Бит — единица
+            измерения информации.
+            Один байт содержит
+            восемь битов.
+          </p>
+
+        </div>
+
+        <div class="summary-point">
+
+          <strong>
+            📏 Крупные единицы
+          </strong>
+
+          <p>
+            Для больших объёмов
+            используются килобайты,
+            мегабайты, гигабайты
+            и терабайты.
+          </p>
+
+        </div>
+
+        <div class="summary-point">
+
+          <strong>
+            🧮 Вычисления
+          </strong>
+
+          <p>
+            Зная соотношения
+            единиц измерения,
+            можно переводить
+            значения и рассчитывать
+            объём сообщений.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="note green">
+
+        <strong>
+          Главный вывод урока
+        </strong>
+
+        <p>
+          Любая цифровая информация
+          занимает определённый
+          объём памяти.
+        </p>
+
+        <p>
+          Измеряя этот объём,
+          мы можем сравнивать
+          размеры файлов,
+          оценивать возможности
+          устройств и выполнять
+          вычисления.
+        </p>
+
+        <p>
+          <strong>
+            Важнейшее соотношение:
+            1 байт = 8 бит.
+          </strong>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  Информатика · 6 класс ·
+  Измерение информации ·
+  Бит, байт и единицы объёма данных
+</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+
+<script>
+"use strict";
+
+/* ===================================================
+   ЛАБОРАТОРИЯ №1
+   КОНСТРУКТОР БАЙТА
+=================================================== */
+
+/*
+  Восемь переключаемых битов.
+
+  Каждый бит имеет значение 0 или 1.
+
+  Мы показываем:
+  - двоичную последовательность;
+  - числовое значение последовательности.
+
+  Битам соответствуют веса:
+  128, 64, 32, 16, 8, 4, 2, 1.
+*/
+
+const bitsBoard =
+  document.getElementById("bitsBoard");
+
+const binaryResult =
+  document.getElementById("binaryResult");
+
+const decimalResult =
+  document.getElementById("decimalResult");
+
+
+let bits = [
+  0, 0, 0, 0,
+  0, 0, 0, 0
+];
+
+
+/* Пересчитываем значение байта. */
+
+function updateByte() {
+
+  const binaryString =
+    bits.join("");
+
+  binaryResult.textContent =
+    binaryString;
+
+  /* Преобразуем двоичное число
+     в десятичное. */
+
+  const decimal =
+    parseInt(binaryString, 2);
+
+  decimalResult.textContent =
+    decimal;
+
+}
+
+
+/* Создаём кнопки отдельных битов. */
+
+function renderBits() {
+
+  bitsBoard.replaceChildren();
+
+  bits.forEach((value, index) => {
+
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+    button.className = "bit-button";
+
+    if (value === 1) {
+      button.classList.add("one");
+    }
+
+    button.textContent =
+      value;
+
+    button.setAttribute(
+      "aria-label",
+      "Бит " +
+      (index + 1) +
+      ", значение " +
+      value +
+      ". Нажми для переключения."
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(value === 1)
+    );
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        bits[index] =
+          bits[index] === 0
+            ? 1
+            : 0;
+
+        renderBits();
+
+      }
+    );
+
+    bitsBoard.appendChild(button);
+
+  });
+
+  updateByte();
+
+}
+
+
+/* Установить определённую комбинацию. */
+
+function setBits(binaryString) {
+
+  bits = binaryString
+    .split("")
+    .map(symbol => Number(symbol));
+
+  renderBits();
+
+}
+
+
+/* Примеры. */
+
+document.getElementById(
+  "allZeros"
+).addEventListener(
+  "click",
+  () => setBits("00000000")
+);
+
+
+document.getElementById(
+  "allOnes"
+).addEventListener(
+  "click",
+  () => setBits("11111111")
+);
+
+
+document.getElementById(
+  "exampleByte"
+).addEventListener(
+  "click",
+  () => setBits("01000001")
+);
+
+
+renderBits();
+
+
+
+/* ===================================================
+   ЛАБОРАТОРИЯ №2
+   КАЛЬКУЛЯТОР ЕДИНИЦ ИНФОРМАЦИИ
+=================================================== */
+
+/*
+  В основе калькулятора лежит
+  перевод всех единиц в биты.
+
+  Школьные соотношения:
+  1 Б = 8 бит
+  1 Кбайт = 1024 Б
+  1 Мбайт = 1024 Кбайта
+  1 Гбайт = 1024 Мбайта
+  1 Тбайт = 1024 Гбайта
+
+  Это учебный калькулятор
+  для небольших значений.
+*/
+
+const amountInput =
+  document.getElementById("amountInput");
+
+const fromUnit =
+  document.getElementById("fromUnit");
+
+const toUnit =
+  document.getElementById("toUnit");
+
+const conversionResult =
+  document.getElementById("conversionResult");
+
+const conversionExplanation =
+  document.getElementById("conversionExplanation");
+
+
+/* Сколько бит содержится в единице. */
+
+const units = {
+
+  bit: {
+    bits: 1,
+    symbol: "бит",
+    name: "бит"
+  },
+
+  byte: {
+    bits: 8,
+    symbol: "Б",
+    name: "байт"
+  },
+
+  kb: {
+    bits: 8 * 1024,
+    symbol: "Кбайт",
+    name: "килобайт"
+  },
+
+  mb: {
+    bits: 8 * 1024 ** 2,
+    symbol: "Мбайт",
+    name: "мегабайт"
+  },
+
+  gb: {
+    bits: 8 * 1024 ** 3,
+    symbol: "Гбайт",
+    name: "гигабайт"
+  },
+
+  tb: {
+    bits: 8 * 1024 ** 4,
+    symbol: "Тбайт",
+    name: "терабайт"
+  }
+
+};
+
+
+/* Красиво оформляем число. */
+
+function formatNumber(value) {
+
+  if (!Number.isFinite(value)) {
+    return "Ошибка";
+  }
+
+  if (value === 0) {
+    return "0";
+  }
+
+  /* Для очень маленьких ненулевых
+     чисел сохраняем научную запись,
+     чтобы не получить ошибочный ноль. */
+
+  if (Math.abs(value) < 0.000001) {
+
+    return value.toExponential(3);
+
+  }
+
+  return new Intl.NumberFormat(
+    "ru-RU",
+    {
+      maximumSignificantDigits: 10
+    }
+  ).format(value);
+
+}
+
+
+/* Основная функция перевода. */
+
+function convertUnits() {
+
+  const amount =
+    Number(amountInput.value);
+
+  const source =
+    units[fromUnit.value];
+
+  const target =
+    units[toUnit.value];
+
+
+  /* Проверяем ввод. */
+
+  if (
+    amountInput.value.trim() === "" ||
+    !Number.isFinite(amount) ||
+    amount < 0 ||
+    amount > 1000000
+  ) {
+
+    conversionResult.textContent =
+      "Введите число от 0 до 1 000 000";
+
+    conversionExplanation.textContent =
+      "Проверь введённое значение.";
+
+    return;
+
+  }
+
+
+  /* Переводим исходное значение в биты. */
+
+  const totalBits =
+    amount * source.bits;
+
+
+  /* Переводим биты в конечную единицу. */
+
+  const converted =
+    totalBits / target.bits;
+
+
+  conversionResult.textContent =
+    formatNumber(converted) +
+    " " +
+    target.symbol;
+
+
+  /* Показываем принцип вычисления. */
+
+  if (fromUnit.value === toUnit.value) {
+
+    conversionExplanation.textContent =
+      "Единицы одинаковые, " +
+      "поэтому значение не меняется.";
+
+    return;
+
+  }
+
+
+  const ratio =
+    source.bits / target.bits;
+
+
+  if (ratio >= 1) {
+
+    conversionExplanation.textContent =
+      formatNumber(amount) +
+      " " +
+      source.symbol +
+      " × " +
+      formatNumber(ratio) +
+      " = " +
+      formatNumber(converted) +
+      " " +
+      target.symbol;
+
+  } else {
+
+    const divisor =
+      target.bits / source.bits;
+
+    conversionExplanation.textContent =
+      formatNumber(amount) +
+      " " +
+      source.symbol +
+      " ÷ " +
+      formatNumber(divisor) +
+      " = " +
+      formatNumber(converted) +
+      " " +
+      target.symbol;
+
+  }
+
+}
+
+
+/* Пересчёт при изменении данных. */
+
+amountInput.addEventListener(
+  "input",
+  convertUnits
+);
+
+fromUnit.addEventListener(
+  "change",
+  convertUnits
+);
+
+toUnit.addEventListener(
+  "change",
+  convertUnits
+);
+
+
+/* Готовые примеры для исследования. */
+
+function setConversion(
+  amount,
+  source,
+  target
+) {
+
+  amountInput.value =
+    amount;
+
+  fromUnit.value =
+    source;
+
+  toUnit.value =
+    target;
+
+  convertUnits();
+
+}
+
+
+document.getElementById(
+  "exampleConversion1"
+).addEventListener(
+  "click",
+  () => setConversion(5, "byte", "bit")
+);
+
+
+document.getElementById(
+  "exampleConversion2"
+).addEventListener(
+  "click",
+  () => setConversion(2048, "byte", "kb")
+);
+
+
+document.getElementById(
+  "exampleConversion3"
+).addEventListener(
+  "click",
+  () => setConversion(2, "mb", "kb")
+);
+
+
+convertUnits();
+
+
+
+/* ===================================================
+   ЛАБОРАТОРИЯ №3
+   ВЫЧИСЛЕНИЕ ОБЪЁМА ТЕКСТА
+=================================================== */
+
+/*
+  Упрощённая школьная модель.
+
+  Число символов определяется
+  для введённого текста.
+
+  Объём =
+  число символов × байтов на символ.
+
+  В данной модели пользователь
+  самостоятельно задаёт правило:
+  1, 2 или 4 байта на символ.
+
+  Это НЕ измерение реального размера
+  файла и НЕ подсчёт байтов UTF-8.
+*/
+
+const textInput =
+  document.getElementById("textInput");
+
+const bytesPerSymbol =
+  document.getElementById("bytesPerSymbol");
+
+const symbolVisual =
+  document.getElementById("symbolVisual");
+
+const symbolCount =
+  document.getElementById("symbolCount");
+
+const textByteCount =
+  document.getElementById("textByteCount");
+
+const textBitCount =
+  document.getElementById("textBitCount");
+
+const textCalculation =
+  document.getElementById("textCalculation");
+
+
+/* Подсчитываем объём текста. */
+
+function updateTextMeasurement() {
+
+  const text =
+    textInput.value;
+
+
+  /* Array.from разделяет текст
+     на Unicode-символы (кодовые точки).
+     Для обычного учебного текста
+     это удобная модель подсчёта. */
+
+  const characters =
+    Array.from(text);
+
+  const count =
+    characters.length;
+
+  const bytesEach =
+    Number(bytesPerSymbol.value);
+
+  const bytes =
+    count * bytesEach;
+
+  const bits =
+    bytes * 8;
+
+
+  /* Обновляем числовые показатели. */
+
+  symbolCount.textContent =
+    count;
+
+  textByteCount.textContent =
+    bytes;
+
+  textBitCount.textContent =
+    bits;
+
+
+  /* Показываем вычисление. */
+
+  textCalculation.textContent =
+    count +
+    " × " +
+    bytesEach +
+    " Б = " +
+    bytes +
+    " Б = " +
+    bits +
+    " бит";
+
+
+  /* Визуально показываем символы. */
+
+  symbolVisual.replaceChildren();
+
+
+  const visible =
+    characters.slice(0, 30);
+
+
+  visible.forEach(character => {
+
+    const cell =
+      document.createElement("div");
+
+    cell.className =
+      "symbol-cell";
+
+
+    /* Пробел показываем отдельным знаком,
+       чтобы ученик заметил,
+       что он тоже является символом. */
+
+    if (character === " ") {
+
+      cell.textContent = "␣";
+
+      cell.title = "Пробел";
+
+    } else if (
+      character === "\n"
+    ) {
+
+      cell.textContent = "↵";
+
+      cell.title = "Перенос строки";
+
+    } else {
+
+      cell.textContent =
+        character;
+
+    }
+
+    symbolVisual.appendChild(cell);
+
+  });
+
+
+  if (characters.length > 30) {
+
+    const additional =
+      document.createElement("div");
+
+    additional.className =
+      "symbol-cell";
+
+    additional.textContent = "…";
+
+    additional.title =
+      "Показаны первые 30 символов";
+
+    symbolVisual.appendChild(
+      additional
+    );
+
+  }
+
+
+  if (characters.length === 0) {
+
+    const message =
+      document.createElement("p");
+
+    message.textContent =
+      "Введи текст, чтобы увидеть его символы.";
+
+    symbolVisual.appendChild(
+      message
+    );
+
+  }
+
+}
+
+
+/* Обновление при вводе текста. */
+
+textInput.addEventListener(
+  "input",
+  updateTextMeasurement
+);
+
+
+/* Обновление при изменении условия. */
+
+bytesPerSymbol.addEventListener(
+  "change",
+  updateTextMeasurement
+);
+
+
+/* Примеры. */
+
+function loadTextExample(value) {
+
+  textInput.value = value;
+
+  updateTextMeasurement();
+
+}
+
+
+document.getElementById(
+  "exampleText1"
+).addEventListener(
+  "click",
+  () => loadTextExample("КОТ")
+);
+
+
+document.getElementById(
+  "exampleText2"
+).addEventListener(
+  "click",
+  () => loadTextExample("МИР")
+);
+
+
+document.getElementById(
+  "exampleText3"
+).addEventListener(
+  "click",
+  () => loadTextExample("ПРИВЕТ МИР")
+);
+
+
+updateTextMeasurement();
+
+
+
+/* ===================================================
+   ЛАБОРАТОРИЯ №4
+   ПОКАЗ И СКРЫТИЕ РЕШЕНИЙ
+=================================================== */
+
+const answerButtons =
+  document.querySelectorAll(
+    ".answer-button"
+  );
+
+
+answerButtons.forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      const answerId =
+        button.dataset.answer;
+
+      const answer =
+        document.getElementById(
+          answerId
+        );
+
+      if (!answer) {
+        return;
+      }
+
+
+      /* Переключаем видимость ответа. */
+
+      answer.hidden =
+        !answer.hidden;
+
+
+      const visible =
+        !answer.hidden;
+
+
+      button.textContent =
+        visible
+          ? "Скрыть решение"
+          : "Показать решение";
+
+
+      button.setAttribute(
+        "aria-expanded",
+        String(visible)
+      );
+
+    }
+  );
+
+});
+
+</script>
+
+</body>
+</html>
