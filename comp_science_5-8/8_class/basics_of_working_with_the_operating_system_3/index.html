@@ -1,0 +1,5985 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+  Основы работы с ОС. Часть 3 — 8 класс
+</title>
+
+<style>
+/* =====================================================
+   01. БАЗОВЫЕ НАСТРОЙКИ
+===================================================== */
+
+:root {
+  --bg: #f2f5fa;
+  --white: #ffffff;
+  --ink: #253249;
+  --muted: #61718b;
+  --line: #dce4ef;
+
+  --blue: #356cdb;
+  --blue-soft: #eaf1ff;
+  --cyan: #18a9ba;
+  --cyan-soft: #e4f8fa;
+  --purple: #805bd2;
+  --purple-soft: #f0eaff;
+  --green: #218e73;
+  --green-soft: #e4f6ee;
+  --orange: #df8c3f;
+  --orange-soft: #fff2e4;
+
+  --desktop: #112540;
+  --panel: #1d304a;
+
+  --radius: 21px;
+  --shadow: 0 16px 45px rgba(40,65,105,.075);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.7;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #f7b74e;
+  outline-offset: 3px;
+}
+
+h1, h2, h3, h4, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 6vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -.7px;
+}
+
+h3 {
+  font-size: 1.23rem;
+  line-height: 1.35;
+}
+
+p {
+  margin-bottom: 14px;
+  color: var(--muted);
+}
+
+strong {
+  color: var(--ink);
+}
+
+code,
+kbd {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+code {
+  color: #2860b9;
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid #bbc8dc;
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  background: white;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.container {
+  width: min(1140px, calc(100% - 36px));
+  margin: 0 auto;
+}
+
+.section {
+  padding: 39px 0;
+}
+
+.section-heading {
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 825px;
+  font-size: 1.075rem;
+}
+
+.grid {
+  display: grid;
+  gap: 19px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card {
+  min-width: 0;
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  background: var(--blue-soft);
+  font-size: 2rem;
+}
+
+.note {
+  margin-top: 22px;
+  padding: 21px 24px;
+  background: var(--blue-soft);
+  border-left: 5px solid var(--blue);
+  border-radius: 0 14px 14px 0;
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #285ebc;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+.note.green {
+  background: var(--green-soft);
+  border-color: var(--green);
+}
+
+.note.green strong {
+  color: var(--green);
+}
+
+.note.purple {
+  background: var(--purple-soft);
+  border-color: var(--purple);
+}
+
+.note.purple strong {
+  color: #7049bd;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: .79rem;
+  font-weight: 800;
+}
+
+.tag.purple {
+  background: var(--purple-soft);
+  color: var(--purple);
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  background: var(--blue);
+  color: white;
+  font-weight: 800;
+  transition: transform .15s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background: white;
+  color: var(--blue);
+  border-color: #cbd8ec;
+}
+
+.btn.purple {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.number-tag {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 39px;
+  height: 39px;
+  border-radius: 11px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 23px;
+  color: var(--muted);
+}
+
+.steps li {
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+.steps li::marker {
+  color: var(--blue);
+  font-weight: 800;
+}
+
+/* =====================================================
+   02. ГЛАВНЫЙ ЭКРАН
+===================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 82px 0;
+  background:
+    radial-gradient(
+      ellipse at 83% 30%,
+      rgba(72,160,220,.25),
+      transparent 49%
+    ),
+    radial-gradient(
+      ellipse at 8% 90%,
+      rgba(121,102,220,.18),
+      transparent 48%
+    ),
+    #101f37;
+  color: white;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  margin-bottom: 22px;
+  padding: 8px 14px;
+  border: 1px solid #55748c;
+  border-radius: 50px;
+  color: #a5e9ed;
+  background: rgba(255,255,255,.06);
+  font-size: .82rem;
+  font-weight: 850;
+}
+
+.hero h1 {
+  color: white;
+}
+
+.hero h1 span {
+  display: block;
+  color: #82dce8;
+}
+
+.hero p {
+  color: #c4d3e5;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  max-width: 570px;
+  margin: 25px 0;
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.hero-chips span {
+  padding: 8px 12px;
+  border: 1px solid #435c79;
+  border-radius: 8px;
+  background: rgba(255,255,255,.055);
+  font-size: .83rem;
+  font-weight: 700;
+}
+
+.hero-illustration {
+  padding: 17px;
+  border: 1px solid #526d83;
+  border-radius: 20px;
+  background: #21344d;
+  box-shadow: 0 25px 65px rgba(0,0,0,.3);
+}
+
+.hero-illustration-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 4px 15px;
+  color: #c6d6e5;
+  font-size: .8rem;
+}
+
+.hero-illustration-body {
+  position: relative;
+  overflow: hidden;
+  height: 320px;
+  border-radius: 11px;
+  background:
+    radial-gradient(
+      circle at 77% 24%,
+      rgba(104,204,227,.35),
+      transparent 40%
+    ),
+    linear-gradient(135deg,#173653,#344576);
+}
+
+.hero-mini-window {
+  position: absolute;
+  width: 73%;
+  height: 198px;
+  top: 48px;
+  left: 15%;
+  border: 1px solid #95b0ce;
+  border-radius: 11px;
+  background: #f7faff;
+  box-shadow: 0 17px 35px rgba(0,0,0,.22);
+  overflow: hidden;
+}
+
+.hero-mini-title {
+  padding: 11px;
+  background: #e3ebf8;
+  color: #354a66;
+  font-weight: 800;
+  font-size: .75rem;
+}
+
+.hero-mini-content {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 30px 8px;
+  font-size: 2.9rem;
+}
+
+.hero-mini-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 17px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  padding: 8px 13px;
+  background: #172d49;
+  border: 1px solid #4b7796;
+  border-radius: 8px;
+  color: #c2ecf3;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+/* =====================================================
+   03. ПОВТОРЕНИЕ ПРЕДЫДУЩЕГО УРОКА
+===================================================== */
+
+.recap-symbol {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  margin: -25px -25px 20px;
+  border-radius: 21px 21px 0 0;
+  background: var(--blue-soft);
+  font-size: 3.4rem;
+}
+
+.recap-card:nth-child(2) .recap-symbol {
+  background: var(--orange-soft);
+}
+
+.recap-card:nth-child(3) .recap-symbol {
+  background: var(--purple-soft);
+}
+
+/* =====================================================
+   04. СТРОЕНИЕ ОКНА
+===================================================== */
+
+.anatomy {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+}
+
+.anatomy-window {
+  overflow: hidden;
+  border: 2px solid #9cb2d4;
+  border-radius: 13px;
+  background: #f8fbff;
+}
+
+.anatomy-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  background: #dfeafd;
+  border-bottom: 1px solid #bdd0eb;
+  font-weight: 800;
+}
+
+.anatomy-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.anatomy-actions span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 27px;
+  background: white;
+  border: 1px solid #bed0ea;
+  border-radius: 5px;
+  font-size: .8rem;
+}
+
+.anatomy-toolbar {
+  padding: 12px 16px;
+  border-bottom: 1px solid #d6e3f2;
+  background: #f5f8fe;
+  font-size: .87rem;
+  color: #496787;
+}
+
+.anatomy-work {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  min-height: 210px;
+}
+
+.anatomy-sidebar {
+  padding: 17px;
+  background: #ecf3ff;
+  border-right: 1px solid #d6e3f2;
+  font-size: .85rem;
+}
+
+.anatomy-sidebar span {
+  display: block;
+  margin-bottom: 13px;
+}
+
+.anatomy-files {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 20px;
+  padding: 29px;
+}
+
+.anatomy-file {
+  min-width: 80px;
+  text-align: center;
+  font-size: .82rem;
+}
+
+.anatomy-file span {
+  display: block;
+  font-size: 2.7rem;
+}
+
+.anatomy-footer {
+  padding: 8px 15px;
+  border-top: 1px solid #d6e3f2;
+  background: #f4f7fc;
+  font-size: .78rem;
+  color: #57718d;
+}
+
+.anatomy-legend {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.legend-item {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 15px;
+  border-radius: 11px;
+  background: #f1f6fe;
+  font-size: .9rem;
+}
+
+.legend-item b {
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  height: 28px;
+  border-radius: 8px;
+  background: #dbe9ff;
+  color: var(--blue);
+}
+
+.legend-item strong {
+  display: block;
+}
+
+/* =====================================================
+   05. КНОПКИ ОКНА
+===================================================== */
+
+.window-action-card {
+  text-align: center;
+}
+
+.action-symbol {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 65px;
+  margin: 0 auto 18px;
+  border: 2px solid #a4bde9;
+  border-radius: 13px;
+  background: #eaf1ff;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--blue);
+}
+
+.window-action-card:nth-child(2) .action-symbol {
+  color: var(--green);
+  background: var(--green-soft);
+  border-color: #abd9c8;
+}
+
+.window-action-card:nth-child(3) .action-symbol {
+  color: #cf4f61;
+  background: #fff0f1;
+  border-color: #edbbc2;
+}
+
+/* =====================================================
+   06. ИНТЕРАКТИВНЫЙ РАБОЧИЙ СТОЛ
+===================================================== */
+
+.desktop-shell {
+  overflow: hidden;
+  border: 1px solid #445d7c;
+  border-radius: var(--radius);
+  background: #142741;
+  box-shadow: 0 20px 55px rgba(25,47,79,.2);
+}
+
+.demo-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 17px 22px;
+  background: #233b5a;
+  color: white;
+}
+
+.demo-topbar strong {
+  color: white;
+}
+
+.demo-topbar small {
+  color: #c3d5eb;
+}
+
+.desktop-stage {
+  position: relative;
+  height: 490px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(77,168,217,.28),
+      transparent 45%
+    ),
+    linear-gradient(138deg,#102843,#29446b);
+}
+
+.desktop-decoration {
+  position: absolute;
+  top: 35px;
+  left: 28px;
+  color: rgba(255,255,255,.55);
+  font-size: .83rem;
+  pointer-events: none;
+}
+
+.demo-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 180px;
+  min-height: 135px;
+  border: 1px solid #7e9fbd;
+  border-radius: 11px;
+  background: white;
+  box-shadow: 0 13px 38px rgba(0,0,0,.28);
+}
+
+.demo-window.active {
+  border-color: #83ddec;
+  box-shadow:
+    0 16px 43px rgba(0,0,0,.36),
+    0 0 0 2px rgba(105,223,237,.3);
+}
+
+.win-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px 9px 14px;
+  min-height: 41px;
+  background: #dce8f7;
+  color: #29405d;
+  font-size: .84rem;
+  font-weight: 800;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.demo-window:not(.active) .win-titlebar {
+  background: #d7dce4;
+}
+
+.win-titlebar:active {
+  cursor: grabbing;
+}
+
+.win-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.win-actions button {
+  width: 31px;
+  height: 29px;
+  padding: 0;
+  border: 1px solid #bdcee2;
+  border-radius: 6px;
+  background: #f9fbff;
+  color: #334c68;
+  font-size: .85rem;
+  font-weight: bold;
+}
+
+.win-actions button:hover {
+  background: #c7d9ee;
+}
+
+.win-actions .win-close:hover {
+  background: #ee6373;
+  border-color: #ee6373;
+  color: white;
+}
+
+.win-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 17px;
+  background: #fbfdff;
+  color: #35465d;
+  font-size: .88rem;
+}
+
+.win-content p {
+  font-size: .82rem;
+}
+
+.win-folder-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-top: 12px;
+  text-align: center;
+}
+
+.win-folder-row div {
+  font-size: 2rem;
+}
+
+.win-folder-row small {
+  display: block;
+  font-size: .72rem;
+}
+
+.win-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 48%,
+      #8da5bd 49%,
+      #8da5bd 55%,
+      transparent 56%
+    );
+}
+
+.demo-window.maximized .win-resize {
+  display: none;
+}
+
+.desktop-taskbar {
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 51px;
+  padding: 6px 13px;
+  background: rgba(11,22,38,.94);
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.desktop-taskbar button {
+  min-width: 0;
+  padding: 7px 12px;
+  border: 1px solid #47617c;
+  border-radius: 8px;
+  background: #263e5b;
+  color: #eef6ff;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.desktop-taskbar button.active {
+  border-color: #7edce5;
+  background: #24576a;
+}
+
+.desktop-taskbar button.closed {
+  opacity: .72;
+}
+
+.desktop-taskbar .task-start {
+  flex: 0 0 auto;
+  background: #3269ac;
+}
+
+.desktop-log {
+  padding: 18px 23px;
+  background: #eaf1fb;
+  color: #375276;
+  font-size: .93rem;
+}
+
+.desktop-log strong {
+  color: #285aae;
+}
+
+.desktop-help {
+  padding: 18px 23px;
+  background: white;
+  border-top: 1px solid #d8e3f1;
+}
+
+.desktop-help p {
+  margin-bottom: 0;
+  font-size: .9rem;
+}
+
+/* =====================================================
+   07. ФАЙЛОВАЯ СИСТЕМА И ПУТЬ
+===================================================== */
+
+.folder-tree {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #172943;
+  color: white;
+  font-family: Consolas, monospace;
+}
+
+.folder-tree .tree-line {
+  display: block;
+  padding: 7px 12px;
+  border-left: 2px solid #6e91b8;
+  color: #d9e9fb;
+  font-size: .96rem;
+  overflow-wrap: anywhere;
+}
+
+.folder-tree .level-1 {
+  margin-left: 18px;
+}
+
+.folder-tree .level-2 {
+  margin-left: 36px;
+}
+
+.folder-tree .level-3 {
+  margin-left: 54px;
+}
+
+.folder-tree .level-4 {
+  margin-left: 72px;
+}
+
+.folder-tree .highlight {
+  border-color: #7adbe4;
+  background: #20465b;
+  color: #aef4f5;
+  font-weight: 800;
+}
+
+.path-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 20px;
+  border: 1px solid #cddcf1;
+  border-radius: 15px;
+  background: #ebf2ff;
+}
+
+.path-part {
+  padding: 8px 11px;
+  border-radius: 8px;
+  background: white;
+  color: #3661a8;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.path-separator {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+/* =====================================================
+   08. ВИРТУАЛЬНЫЙ ФАЙЛОВЫЙ МЕНЕДЖЕР
+===================================================== */
+
+.explorer-shell {
+  overflow: hidden;
+  border: 1px solid #96acc7;
+  border-radius: 19px;
+  background: white;
+  box-shadow: 0 22px 55px rgba(33,61,104,.14);
+}
+
+.explorer-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 15px 21px;
+  background: #dfe9f7;
+  border-bottom: 1px solid #bed0e5;
+}
+
+.explorer-titlebar strong {
+  color: #2b4867;
+}
+
+.explorer-titlebar small {
+  color: #607d99;
+}
+
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+  background: #f5f8fc;
+}
+
+.explorer-tool {
+  padding: 8px 12px;
+  border: 1px solid #cbd8e8;
+  border-radius: 9px;
+  background: white;
+  color: #315374;
+  font-size: .87rem;
+  font-weight: 800;
+}
+
+.explorer-tool:hover {
+  background: #e8f1ff;
+}
+
+.explorer-tool:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.explorer-address {
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid #cfdbeb;
+  border-radius: 9px;
+  background: white;
+  color: #36516f;
+  font-size: .86rem;
+  overflow-wrap: anywhere;
+}
+
+.explorer-search {
+  flex: 1 1 190px;
+  width: 100%;
+  min-width: 0;
+  padding: 9px 13px;
+  border: 1px solid #becfe4;
+  border-radius: 9px;
+  background: white;
+  color: var(--ink);
+  font-size: .88rem;
+}
+
+.explorer-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 17px;
+  background: #eef3fb;
+  border-bottom: 1px solid var(--line);
+}
+
+.explorer-settings label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: #516782;
+  font-size: .83rem;
+  font-weight: 800;
+}
+
+.explorer-settings select {
+  max-width: 165px;
+  padding: 8px;
+  border: 1px solid #c7d6e8;
+  border-radius: 8px;
+  background: white;
+  color: #344f70;
+}
+
+.explorer-main {
+  display: grid;
+  grid-template-columns: 206px minmax(0, 1fr);
+  min-height: 345px;
+}
+
+.explorer-nav {
+  padding: 17px 9px;
+  background: #eaf0f9;
+  border-right: 1px solid #d2dfef;
+}
+
+.explorer-nav h4 {
+  padding-left: 10px;
+  margin-bottom: 10px;
+  color: #647991;
+  font-size: .77rem;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+
+.tree-nav-item {
+  display: block;
+  width: 100%;
+  padding: 9px 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #39516e;
+  text-align: left;
+  font-size: .84rem;
+  overflow-wrap: anywhere;
+}
+
+.tree-nav-item:hover {
+  background: #dae6f8;
+}
+
+.tree-nav-item.active {
+  background: #d0e1fc;
+  color: #245db5;
+  font-weight: 800;
+}
+
+.explorer-content {
+  min-width: 0;
+  padding: 17px;
+}
+
+.explorer-content-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #e1e8f1;
+}
+
+.explorer-content-heading strong {
+  color: #355072;
+}
+
+.explorer-content-heading small {
+  color: #71839a;
+}
+
+.file-items {
+  min-height: 200px;
+}
+
+.file-items.icons {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill,minmax(105px,1fr));
+  align-content: start;
+  gap: 9px;
+}
+
+.file-item {
+  min-width: 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #364c65;
+  text-align: left;
+}
+
+.file-item:hover {
+  border-color: #cbdaef;
+  background: #f2f7ff;
+}
+
+.file-item.selected {
+  border-color: #7aa6ed;
+  background: #e8f1ff;
+}
+
+.file-items.icons .file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 15px 7px;
+  text-align: center;
+}
+
+.file-icon {
+  flex: 0 0 auto;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.file-name {
+  min-width: 0;
+  font-size: .83rem;
+  overflow-wrap: anywhere;
+}
+
+.file-meta {
+  display: block;
+  color: #778ba4;
+  font-size: .73rem;
+}
+
+.file-items.list .file-item,
+.file-items.details .file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.file-items.list .file-icon,
+.file-items.details .file-icon {
+  font-size: 1.5rem;
+}
+
+.file-items.details .file-item {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.8fr)
+    minmax(0, 1fr)
+    75px
+    100px;
+  gap: 8px;
+}
+
+.details-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.details-heading {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.8fr)
+    minmax(0, 1fr)
+    75px
+    100px;
+  gap: 8px;
+  padding: 10px 12px;
+  color: #58718e;
+  background: #edf3fc;
+  border-radius: 8px;
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.explorer-empty {
+  padding: 35px 15px;
+  color: #7287a1;
+  text-align: center;
+}
+
+.explorer-selection {
+  padding: 15px 18px;
+  border-top: 1px solid var(--line);
+  background: #f2f6fc;
+  color: #4c6581;
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+
+.explorer-feedback {
+  padding: 14px 19px;
+  border-top: 1px solid #d3dfe9;
+  background: #e4f4ee;
+  color: #246c58;
+  font-size: .87rem;
+}
+
+.explorer-create {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+  padding: 15px 18px;
+  border-top: 1px solid var(--line);
+  background: white;
+}
+
+.explorer-create label {
+  font-weight: 800;
+  font-size: .83rem;
+}
+
+.explorer-create input {
+  flex: 1 1 170px;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid #c2d1e3;
+  border-radius: 9px;
+}
+
+.explorer-create button {
+  padding: 9px 13px;
+  border: 1px solid var(--blue);
+  border-radius: 9px;
+  background: var(--blue);
+  color: white;
+  font-weight: 800;
+  font-size: .84rem;
+}
+
+/* =====================================================
+   09. СПОСОБЫ ОТОБРАЖЕНИЯ И СОРТИРОВКА
+===================================================== */
+
+.view-example {
+  min-height: 160px;
+  margin-bottom: 18px;
+  padding: 17px;
+  border-radius: 14px;
+  background: #eef4fc;
+}
+
+.view-icons-demo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.view-icons-demo span {
+  font-size: 2.5rem;
+}
+
+.view-list-demo {
+  color: #486384;
+  font-size: .88rem;
+  line-height: 2.4;
+}
+
+.view-table-demo {
+  overflow-x: auto;
+}
+
+.view-table-demo table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .79rem;
+  color: #486384;
+}
+
+.view-table-demo td {
+  padding: 9px 5px;
+  border-bottom: 1px solid #cddbed;
+}
+
+.sort-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+
+.sort-table th,
+.sort-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #e0e7f1;
+  text-align: left;
+  font-size: .91rem;
+}
+
+.sort-table th {
+  background: #eaf2ff;
+  color: #315cac;
+}
+
+.sort-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+}
+
+/* =====================================================
+   10. ПОИСК И СРАВНЕНИЕ ОС
+===================================================== */
+
+.search-demo {
+  padding: 23px;
+  border: 1px solid #c7dff0;
+  border-radius: var(--radius);
+  background: #eaf5ff;
+}
+
+.search-field-demo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  max-width: 520px;
+  margin: 18px 0;
+  padding: 13px 16px;
+  border: 2px solid #9fc5e8;
+  border-radius: 12px;
+  background: white;
+  color: #2f649f;
+  font-family: Consolas, monospace;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.search-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.search-examples span {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: white;
+  color: #3b6ba4;
+  font-size: .85rem;
+  font-weight: 750;
+}
+
+.os-card-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.os-card-header .logo {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #e9f2ff;
+  font-size: 2.4rem;
+}
+
+.os-card-header h3 {
+  margin-bottom: 0;
+}
+
+/* =====================================================
+   11. ПРАКТИКА
+===================================================== */
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 20px;
+}
+
+.practice-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.practice-head {
+  padding: 23px;
+  background: #e4efff;
+}
+
+.practice-head.purple {
+  background: #eee7ff;
+}
+
+.practice-head h3 {
+  margin: 12px 0 8px;
+}
+
+.practice-head p {
+  margin-bottom: 0;
+}
+
+.practice-body {
+  padding: 25px;
+}
+
+.practice-result {
+  padding: 16px;
+  margin-top: 18px;
+  border: 1px solid #d2e2f2;
+  border-radius: 12px;
+  background: #f0f6ff;
+  font-size: .92rem;
+  color: #4d6480;
+}
+
+.practice-result strong {
+  color: #2b64c0;
+}
+
+/* =====================================================
+   12. ВОПРОСЫ
+===================================================== */
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+
+.question {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+}
+
+.question-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--purple-soft);
+  color: var(--purple);
+  font-weight: 900;
+}
+
+.question p {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: .94rem;
+}
+
+/* =====================================================
+   13. ИТОГ
+===================================================== */
+
+.final-card {
+  padding: 37px;
+  border: 1px solid #c7d9ed;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(
+      circle at right top,
+      rgba(75,155,230,.16),
+      transparent 47%
+    ),
+    white;
+}
+
+.final-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.final-point {
+  padding: 21px;
+  border: 1px solid #dbe6f5;
+  border-radius: 14px;
+  background: #f3f7ff;
+}
+
+.final-point strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #3264b9;
+  font-size: 1.06rem;
+}
+
+.final-point p {
+  margin-bottom: 0;
+  font-size: .9rem;
+}
+
+footer {
+  padding: 34px 20px 46px;
+  margin-top: 40px;
+  background: #e7edf6;
+  color: #71829a;
+  text-align: center;
+  font-size: .86rem;
+}
+
+/* =====================================================
+   14. АДАПТИВНАЯ ВЁРСТКА
+===================================================== */
+
+@media(max-width: 970px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-illustration {
+    width: min(100%, 550px);
+    margin: auto;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width: 730px) {
+  .explorer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer-nav {
+    border-right: 0;
+    border-bottom: 1px solid #d2dfef;
+    max-height: 190px;
+    overflow: auto;
+  }
+
+  .grid-2,
+  .practice-grid,
+  .final-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-stage {
+    height: 455px;
+  }
+}
+
+@media(max-width: 600px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 29px 0;
+  }
+
+  .hero {
+    padding: 48px 0;
+  }
+
+  h1 {
+    letter-spacing: -1px;
+  }
+
+  .grid-3,
+  .questions,
+  .anatomy-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .final-card,
+  .anatomy,
+  .folder-tree,
+  .practice-body {
+    padding: 19px;
+  }
+
+  .recap-symbol {
+    margin: -19px -19px 18px;
+  }
+
+  .anatomy-work {
+    grid-template-columns: 92px minmax(0,1fr);
+  }
+
+  .anatomy-sidebar {
+    padding: 12px 7px;
+    font-size: .72rem;
+  }
+
+  .anatomy-files {
+    gap: 9px;
+    padding: 18px 9px;
+  }
+
+  .anatomy-file {
+    min-width: 65px;
+  }
+
+  .desktop-stage {
+    height: 440px;
+  }
+
+  .win-content {
+    padding: 10px;
+  }
+
+  .win-folder-row {
+    gap: 8px;
+  }
+
+  .desktop-taskbar {
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .desktop-taskbar button {
+    padding: 7px 6px;
+    font-size: .7rem;
+  }
+
+  .explorer-content {
+    padding: 11px;
+  }
+
+  .explorer-settings {
+    align-items: stretch;
+  }
+
+  .explorer-settings label {
+    flex: 1 1 150px;
+  }
+
+  .explorer-settings select {
+    max-width: none;
+    flex: 1;
+  }
+
+  .file-items.details .file-item,
+  .details-heading {
+    grid-template-columns:
+      minmax(0,1.5fr) 75px;
+  }
+
+  .details-heading > :nth-child(2),
+  .details-heading > :nth-child(4),
+  .file-items.details .file-item > :nth-child(2),
+  .file-items.details .file-item > :nth-child(4) {
+    display: none;
+  }
+
+  .folder-tree .level-1 { margin-left: 9px; }
+  .folder-tree .level-2 { margin-left: 18px; }
+  .folder-tree .level-3 { margin-left: 27px; }
+  .folder-tree .level-4 { margin-left: 36px; }
+
+  .folder-tree .tree-line {
+    font-size: .77rem;
+    padding: 7px 8px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     01. ГЛАВНЫЙ ЭКРАН
+===================================================== -->
+
+<header class="hero">
+  <div class="container hero-layout">
+
+    <div>
+      <div class="hero-tag">
+        ИНФОРМАТИКА · 8 КЛАСС · ЧАСТЬ 3/4
+      </div>
+
+      <h1>
+        Управляем
+        <span>системой</span>
+      </h1>
+
+      <p class="hero-description">
+        Как работать сразу с несколькими окнами?
+        Где компьютер хранит наши файлы?
+        Как найти документ, если мы забыли,
+        в какой папке он находится?
+      </p>
+
+      <p class="hero-description">
+        Сегодня познакомимся с устройством
+        графического интерфейса и научимся
+        ориентироваться в файловой системе.
+      </p>
+
+      <div class="hero-chips">
+        <span>🪟 Окна</span>
+        <span>📁 Папки</span>
+        <span>🧭 Навигация</span>
+        <span>🔎 Поиск</span>
+      </div>
+    </div>
+
+    <div class="hero-illustration">
+
+      <div class="hero-illustration-top">
+        <span>Файловая система</span>
+        <span>Учебный интерфейс</span>
+      </div>
+
+      <div class="hero-illustration-body">
+
+        <div class="hero-mini-window">
+
+          <div class="hero-mini-title">
+            📁 Мои документы
+          </div>
+
+          <div class="hero-mini-content">
+            <span>📂</span>
+            <span>📄</span>
+            <span>🖼️</span>
+          </div>
+
+        </div>
+
+        <div class="hero-mini-caption">
+          Папки · Файлы · Управление
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- =====================================================
+     02. ПОВТОРЯЕМ ПРОШЛЫЙ УРОК
+===================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+      <span class="eyebrow">
+        01 · Повторение
+      </span>
+
+      <h2>Что мы уже знаем?</h2>
+
+      <p class="lead">
+        На прошлом занятии мы изучали
+        объекты операционной системы.
+        Перед тем как двигаться дальше,
+        вспомним три важных понятия.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card recap-card">
+
+        <div class="recap-symbol">📄</div>
+
+        <h3>Файл</h3>
+
+        <p>
+          Файл — это именованная совокупность
+          данных, хранящихся на устройстве.
+          Например, текстовый документ,
+          рисунок или аудиозапись.
+        </p>
+
+      </article>
+
+      <article class="card recap-card">
+
+        <div class="recap-symbol">📁</div>
+
+        <h3>Папка</h3>
+
+        <p>
+          Папка помогает упорядочивать
+          файлы и другие папки.
+          Благодаря папкам мы можем
+          распределять информацию по темам.
+        </p>
+
+      </article>
+
+      <article class="card recap-card">
+
+        <div class="recap-symbol">🔗</div>
+
+        <h3>Ярлык</h3>
+
+        <p>
+          Ярлык — ссылка на файл, папку
+          или программу. Он помогает
+          быстро открыть нужный объект.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Сегодня идём дальше</strong>
+
+      <p>
+        Теперь мы узнаем, как открываются
+        окна, как переходить между папками
+        и как находить нужные файлы.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     03. ЧТО ТАКОЕ ОКНО?
+===================================================== -->
+
+<section class="section" id="windows">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        02 · Графический интерфейс
+      </span>
+
+      <h2>Окна операционной системы</h2>
+
+      <p class="lead">
+        Когда мы открываем папку или запускаем
+        программу, на экране обычно появляется
+        специальная прямоугольная область.
+        Её называют <strong>окном</strong>.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Для чего нужны окна?</h3>
+
+      <p>
+        Представь рабочий стол, на котором
+        лежат несколько тетрадей.
+        Одну тетрадь ты используешь
+        для математики, другую — для русского
+        языка, третью — для рисования.
+      </p>
+
+      <p>
+        В компьютерной системе окна выполняют
+        похожую задачу: позволяют работать
+        с различными программами и папками,
+        не смешивая их содержимое.
+      </p>
+
+      <p>
+        Например, в одном окне можно
+        читать документ, в другом —
+        просматривать изображения,
+        а в третьем — открывать папки.
+      </p>
+
+    </div>
+
+    <div class="anatomy" style="margin-top:21px">
+
+      <h3>Из каких частей состоит окно?</h3>
+
+      <p>
+        Рассмотрим упрощённую модель
+        окна файлового менеджера.
+      </p>
+
+      <div class="anatomy-window">
+
+        <div class="anatomy-title">
+
+          <span>
+            ① 📁 Документы
+          </span>
+
+          <div class="anatomy-actions">
+            <span>─</span>
+            <span>□</span>
+            <span>✕</span>
+          </div>
+
+        </div>
+
+        <div class="anatomy-toolbar">
+          ③ ← Назад &nbsp; ↑ Вверх &nbsp;
+          ▸ Документы ▸ Учёба
+        </div>
+
+        <div class="anatomy-work">
+
+          <div class="anatomy-sidebar">
+            ④
+            <span>🏠 Главная</span>
+            <span>📁 Документы</span>
+            <span>🖼️ Изображения</span>
+          </div>
+
+          <div class="anatomy-files">
+            <div class="anatomy-file">
+              <span>📁</span>
+              Информатика
+            </div>
+
+            <div class="anatomy-file">
+              <span>📄</span>
+              Задание
+            </div>
+
+            <div class="anatomy-file">
+              <span>🖼️</span>
+              Рисунок
+            </div>
+          </div>
+
+        </div>
+
+        <div class="anatomy-footer">
+          ⑤ Сведения: 3 объекта
+        </div>
+
+      </div>
+
+      <div class="anatomy-legend">
+
+        <div class="legend-item">
+          <b>1</b>
+
+          <div>
+            <strong>Заголовок окна</strong>
+            Название открытой папки
+            или программы.
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <b>2</b>
+
+          <div>
+            <strong>Кнопки управления</strong>
+            Сворачивание, разворачивание
+            и закрытие окна.
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <b>3</b>
+
+          <div>
+            <strong>Панель инструментов</strong>
+            Команды для выполнения действий.
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <b>4</b>
+
+          <div>
+            <strong>Область навигации</strong>
+            Помогает быстро переходить
+            к папкам и разделам.
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <b>5</b>
+
+          <div>
+            <strong>Строка состояния</strong>
+            Дополнительные сведения
+            о содержимом.
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <b>★</b>
+
+          <div>
+            <strong>Рабочая область</strong>
+            Основная часть окна,
+            в которой отображаются данные.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     04. АКТИВНОЕ И НЕАКТИВНОЕ ОКНО
+===================================================== -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        03 · Работа с несколькими окнами
+      </span>
+
+      <h2>Активное и неактивное окно</h2>
+
+      <p class="lead">
+        На экране могут находиться
+        сразу несколько окон.
+        Но для ввода с клавиатуры
+        и выполнения большинства действий
+        выбирается определённое окно.
+      </p>
+
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+        <span class="tag">Активное окно</span>
+
+        <h3 style="margin-top:13px">
+          Окно, с которым мы работаем
+        </h3>
+
+        <p>
+          <strong>Активным</strong> называют окно,
+          которому сейчас принадлежит
+          управление с клавиатуры.
+        </p>
+
+        <p>
+          Обычно его заголовок выделен
+          заметнее, чем заголовки
+          остальных окон.
+        </p>
+      </div>
+
+      <div class="card">
+        <span class="tag purple">Неактивное окно</span>
+
+        <h3 style="margin-top:13px">
+          Другое открытое окно
+        </h3>
+
+        <p>
+          Неактивное окно может оставаться
+          на экране, но в данный момент
+          оно не получает обычный
+          ввод с клавиатуры.
+        </p>
+
+        <p>
+          Чтобы сделать его активным,
+          достаточно выбрать его,
+          например щелчком мыши.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>Пример</strong>
+
+      <p>
+        Ты пишешь текст в одном окне
+        и одновременно открыл папку
+        с изображениями в другом.
+      </p>
+
+      <p>
+        Если выбрать окно папки,
+        оно станет активным.
+        Сам текстовый редактор
+        при этом необязательно закрывать.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     05. КНОПКИ УПРАВЛЕНИЯ ОКНОМ
+===================================================== -->
+
+<section class="section" id="controls">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        04 · Основные действия
+      </span>
+
+      <h2>Сворачиваем, разворачиваем, закрываем</h2>
+
+      <p class="lead">
+        В верхней части многих окон
+        находятся три знакомые кнопки.
+        Важно понимать, чем отличается
+        действие каждой из них.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card window-action-card">
+
+        <div class="action-symbol">─</div>
+
+        <h3>Свернуть</h3>
+
+        <p>
+          Окно исчезает с рабочего стола,
+          но программа или папка
+          остаётся открытой.
+        </p>
+
+        <p>
+          Восстановить окно обычно можно
+          через кнопку на панели задач.
+        </p>
+      </article>
+
+      <article class="card window-action-card">
+
+        <div class="action-symbol">□</div>
+
+        <h3>Развернуть</h3>
+
+        <p>
+          Окно увеличивается до размера
+          доступной рабочей области экрана.
+        </p>
+
+        <p>
+          Повторное нажатие обычно
+          возвращает его к прежнему размеру.
+        </p>
+      </article>
+
+      <article class="card window-action-card">
+
+        <div class="action-symbol">✕</div>
+
+        <h3>Закрыть</h3>
+
+        <p>
+          Закрывает окно.
+          Если оно принадлежит программе,
+          это может завершить её работу.
+        </p>
+
+        <p>
+          Перед закрытием программа
+          иногда предлагает сохранить
+          изменения.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Не путай!</strong>
+
+      <p>
+        <strong>Свернуть</strong> — временно
+        убрать окно с экрана.
+      </p>
+
+      <p>
+        <strong>Закрыть</strong> — завершить
+        работу с данным окном.
+      </p>
+
+      <p>
+        <strong>Развернуть</strong> — увеличить
+        размер окна, не закрывая его.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     06. ЛАБОРАТОРИЯ УПРАВЛЕНИЯ ОКНАМИ
+===================================================== -->
+
+<section class="section" id="desktop-lab">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        05 · Интерактивная лаборатория
+      </span>
+
+      <h2>Попробуй управлять окнами</h2>
+
+      <p class="lead">
+        Внутри страницы создан
+        небольшой учебный рабочий стол.
+        На нём открыты два окна.
+        Попробуй управлять ими
+        как в настоящей операционной системе.
+      </p>
+
+    </div>
+
+    <div class="desktop-shell">
+
+      <div class="demo-topbar">
+        <strong>🪟 Лаборатория окон</strong>
+        <small>Учебная модель ОС</small>
+      </div>
+
+      <div class="desktop-stage" id="desktopStage">
+
+        <div class="desktop-decoration">
+          Рабочий стол · учебная модель
+        </div>
+
+        <!-- Окно файлов -->
+
+        <div
+          class="demo-window"
+          id="window-files"
+          data-window="files"
+        >
+
+          <div class="win-titlebar">
+
+            <span>📁 Документы</span>
+
+            <div class="win-actions">
+
+              <button
+                type="button"
+                data-action="minimize"
+                aria-label="Свернуть окно документов"
+                title="Свернуть"
+              >─</button>
+
+              <button
+                type="button"
+                data-action="maximize"
+                aria-label="Развернуть или восстановить окно документов"
+                title="Развернуть / восстановить"
+              >□</button>
+
+              <button
+                type="button"
+                class="win-close"
+                data-action="close"
+                aria-label="Закрыть окно документов"
+                title="Закрыть"
+              >✕</button>
+
+            </div>
+
+          </div>
+
+          <div class="win-content">
+
+            <strong>Папка «Документы»</strong>
+
+            <p>
+              Здесь находятся учебные файлы.
+            </p>
+
+            <div class="win-folder-row">
+              <div>📁<small>Учёба</small></div>
+              <div>📄<small>Заметки.txt</small></div>
+              <div>🖼️<small>Рисунок.png</small></div>
+            </div>
+
+          </div>
+
+          <div
+            class="win-resize"
+            title="Изменить размер окна"
+            aria-hidden="true"
+          ></div>
+
+        </div>
+
+        <!-- Окно заметок -->
+
+        <div
+          class="demo-window"
+          id="window-notes"
+          data-window="notes"
+        >
+
+          <div class="win-titlebar">
+
+            <span>📝 Заметки</span>
+
+            <div class="win-actions">
+
+              <button
+                type="button"
+                data-action="minimize"
+                aria-label="Свернуть окно заметок"
+                title="Свернуть"
+              >─</button>
+
+              <button
+                type="button"
+                data-action="maximize"
+                aria-label="Развернуть или восстановить окно заметок"
+                title="Развернуть / восстановить"
+              >□</button>
+
+              <button
+                type="button"
+                class="win-close"
+                data-action="close"
+                aria-label="Закрыть окно заметок"
+                title="Закрыть"
+              >✕</button>
+
+            </div>
+
+          </div>
+
+          <div class="win-content">
+            <strong>Мои заметки</strong>
+
+            <p>
+              Сегодня изучаем окна,
+              файлы, папки и поиск.
+            </p>
+
+            <p>
+              Окно можно передвигать
+              за строку заголовка.
+            </p>
+          </div>
+
+          <div
+            class="win-resize"
+            title="Изменить размер окна"
+            aria-hidden="true"
+          ></div>
+
+        </div>
+
+        <!-- Панель задач -->
+
+        <div class="desktop-taskbar">
+
+          <button
+            class="task-start"
+            type="button"
+            id="desktopReset"
+            title="Вернуть начальное состояние"
+          >
+            ⊞
+          </button>
+
+          <button
+            type="button"
+            data-task="files"
+            id="task-files"
+          >
+            📁 Документы
+          </button>
+
+          <button
+            type="button"
+            data-task="notes"
+            id="task-notes"
+          >
+            📝 Заметки
+          </button>
+
+        </div>
+
+      </div>
+
+      <div
+        class="desktop-log"
+        id="desktopLog"
+        role="status"
+        aria-live="polite"
+      >
+        <strong>Начало работы.</strong>
+        Выбери окно и попробуй кнопки управления.
+      </div>
+
+      <div class="desktop-help">
+
+        <p>
+          <strong>Что исследовать:</strong>
+          выбери одно из окон, сверни его,
+          восстанови через панель задач,
+          разверни на всю рабочую область,
+          а затем верни обычный размер.
+          Попробуй также перетащить окно
+          за заголовок и изменить его размер
+          за правый нижний угол.
+          Кнопка ⊞ возвращает исходное состояние.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="note green">
+      <strong>Панель задач</strong>
+
+      <p>
+        Панель задач помогает переключаться
+        между приложениями и восстанавливать
+        свёрнутые окна. Внешний вид
+        и расположение панели задач
+        зависят от операционной системы.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     07. ФАЙЛОВЫЙ МЕНЕДЖЕР
+===================================================== -->
+
+<section class="section" id="file-manager">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        06 · Работа с файлами
+      </span>
+
+      <h2>Что такое файловый менеджер?</h2>
+
+      <p class="lead">
+        Представь библиотеку, в которой
+        тысячи книг разбросаны
+        без порядка. Найти нужную
+        книгу было бы очень сложно.
+      </p>
+
+      <p class="lead">
+        С файлами на компьютере
+        похожая ситуация: чтобы удобно
+        хранить документы и изображения,
+        нужна система организации.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Файловый менеджер — наш проводник</h3>
+
+      <p>
+        <strong>Файловый менеджер</strong> —
+        программа, предназначенная
+        для просмотра папок и файлов,
+        а также выполнения действий
+        с ними.
+      </p>
+
+      <p>
+        Через файловый менеджер
+        можно открывать папки,
+        просматривать содержимое,
+        создавать новые папки,
+        копировать, перемещать,
+        удалять и искать файлы.
+      </p>
+
+      <p>
+        В Windows таким инструментом
+        является <strong>Проводник</strong>.
+        В Linux используются разные
+        файловые менеджеры, например
+        Thunar, Nemo и Dolphin.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3" style="margin-top:20px">
+
+      <article class="card">
+
+        <div class="card-icon">🧭</div>
+
+        <h3>Навигация</h3>
+
+        <p>
+          Позволяет переходить
+          между папками и определять,
+          где находится нужный файл.
+        </p>
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">📑</div>
+
+        <h3>Организация</h3>
+
+        <p>
+          Помогает упорядочивать
+          файлы по папкам и удобно
+          отображать их содержимое.
+        </p>
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">🔎</div>
+
+        <h3>Поиск</h3>
+
+        <p>
+          Позволяет находить объекты
+          по имени и другим признакам.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     08. СТРУКТУРА ПАПОК
+===================================================== -->
+
+<section class="section" id="hierarchy">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        07 · Иерархия папок
+      </span>
+
+      <h2>Как устроена файловая система?</h2>
+
+      <p class="lead">
+        Папки могут находиться внутри
+        других папок. Благодаря этому
+        образуется древовидная структура:
+        от общих разделов мы постепенно
+        переходим к более конкретным.
+      </p>
+
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="folder-tree">
+
+        <div class="tree-line">
+          💻 Этот компьютер
+        </div>
+
+        <div class="tree-line level-1">
+          📁 Документы
+        </div>
+
+        <div class="tree-line level-2">
+          📁 Учёба
+        </div>
+
+        <div class="tree-line level-3 highlight">
+          📁 Информатика
+        </div>
+
+        <div class="tree-line level-4 highlight">
+          📄 Задание.docx
+        </div>
+
+        <div class="tree-line level-2">
+          📄 План.txt
+        </div>
+
+        <div class="tree-line level-1">
+          📁 Изображения
+        </div>
+
+        <div class="tree-line level-2">
+          🖼️ Пейзаж.png
+        </div>
+
+        <div class="tree-line level-1">
+          📁 Загрузки
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Родительские и вложенные папки</h3>
+
+        <p>
+          Представь папку
+          <strong>«Учёба»</strong>.
+          Внутри неё находится
+          папка <strong>«Информатика»</strong>.
+        </p>
+
+        <p>
+          Папка «Учёба» называется
+          <strong>родительской</strong>
+          по отношению к «Информатике».
+        </p>
+
+        <p>
+          А «Информатика» является
+          <strong>вложенной папкой</strong>,
+          потому что находится
+          внутри другой папки.
+        </p>
+
+        <p>
+          Внутри «Информатики»
+          могут находиться файлы
+          или новые вложенные папки.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>Почему это удобно?</strong>
+
+      <p>
+        Если складывать все файлы
+        в одно место, среди них
+        сложно ориентироваться.
+        Гораздо удобнее разделить
+        документы по предметам,
+        проектам или другим темам.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     09. ПУТЬ К ФАЙЛУ
+===================================================== -->
+
+<section class="section" id="paths">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        08 · Расположение объектов
+      </span>
+
+      <h2>Что такое путь к файлу?</h2>
+
+      <p class="lead">
+        Имя файла показывает,
+        как он называется.
+        Но одного имени недостаточно,
+        чтобы однозначно определить,
+        где файл находится.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Пример</h3>
+
+      <p>
+        На компьютере могут существовать
+        два файла с одинаковым именем
+        <code>Задание.docx</code>,
+        но в разных папках.
+      </p>
+
+      <p>
+        Чтобы различать их,
+        нужно знать не только имя,
+        но и <strong>путь к файлу</strong>.
+      </p>
+
+      <p>
+        <strong>Путь к файлу</strong> —
+        последовательность папок,
+        указывающая его расположение
+        в файловой системе.
+      </p>
+
+    </div>
+
+    <div class="path-strip" style="margin-top:20px">
+
+      <span class="path-part">Документы</span>
+      <span class="path-separator">→</span>
+
+      <span class="path-part">Учёба</span>
+      <span class="path-separator">→</span>
+
+      <span class="path-part">Информатика</span>
+      <span class="path-separator">→</span>
+
+      <span class="path-part">Задание.docx</span>
+
+    </div>
+
+    <div class="note">
+      <strong>Адресная строка</strong>
+
+      <p>
+        В файловом менеджере
+        адресная строка показывает
+        текущее расположение.
+        В некоторых режимах
+        она отображается
+        как последовательность
+        папок, по которым можно
+        переходить щелчками.
+      </p>
+
+      <p>
+        Полный системный путь
+        может также включать
+        название диска в Windows
+        или расположение внутри
+        корневой файловой системы Linux.
+        Схема выше показывает
+        относительный путь внутри
+        пользовательских папок.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     10. ИНТЕРАКТИВНЫЙ ФАЙЛОВЫЙ МЕНЕДЖЕР
+===================================================== -->
+
+<section class="section" id="explorer-lab">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        09 · Главная лаборатория урока
+      </span>
+
+      <h2>Исследуй файловый менеджер</h2>
+
+      <p class="lead">
+        Теперь попробуем применить
+        новые знания. Ниже находится
+        виртуальный файловый менеджер.
+      </p>
+
+      <p class="lead">
+        Здесь можно переходить между
+        папками, выбирать файлы,
+        менять способ отображения,
+        сортировать содержимое
+        и выполнять поиск.
+      </p>
+
+    </div>
+
+    <div class="explorer-shell">
+
+      <!-- Заголовок -->
+
+      <div class="explorer-titlebar">
+
+        <strong>📁 Файловый менеджер</strong>
+
+        <small>
+          Учебная модель — настоящие файлы не изменяются
+        </small>
+
+      </div>
+
+      <!-- Команды навигации -->
+
+      <div class="explorer-toolbar">
+
+        <button
+          class="explorer-tool"
+          type="button"
+          id="explorerBack"
+          title="Назад"
+        >
+          ← Назад
+        </button>
+
+        <button
+          class="explorer-tool"
+          type="button"
+          id="explorerUp"
+          title="На уровень выше"
+        >
+          ↑ Вверх
+        </button>
+
+        <button
+          class="explorer-tool"
+          type="button"
+          id="explorerHome"
+          title="Этот компьютер"
+        >
+          🏠
+        </button>
+
+        <div
+          class="explorer-address"
+          id="explorerAddress"
+          aria-label="Текущий путь"
+        >
+          Этот компьютер
+        </div>
+
+        <input
+          type="search"
+          class="explorer-search"
+          id="explorerSearch"
+          placeholder="🔎 Поиск в текущей папке..."
+          aria-label="Поиск файлов и папок"
+        >
+
+      </div>
+
+      <!-- Режим отображения и сортировка -->
+
+      <div class="explorer-settings">
+
+        <label for="viewSelect">
+          Вид:
+
+          <select id="viewSelect">
+            <option value="icons">
+              Крупные значки
+            </option>
+
+            <option value="list">
+              Список
+            </option>
+
+            <option value="details">
+              Таблица
+            </option>
+          </select>
+
+        </label>
+
+        <label for="sortSelect">
+          Сортировка:
+
+          <select id="sortSelect">
+            <option value="name">
+              По имени
+            </option>
+
+            <option value="type">
+              По типу
+            </option>
+
+            <option value="size">
+              По размеру
+            </option>
+
+            <option value="date">
+              По дате
+            </option>
+          </select>
+
+        </label>
+
+        <button
+          class="explorer-tool"
+          id="explorerOpen"
+          type="button"
+        >
+          Открыть выбранное
+        </button>
+
+      </div>
+
+      <div class="explorer-main">
+
+        <!-- Левая панель папок -->
+
+        <aside class="explorer-nav">
+
+          <h4>Папки</h4>
+
+          <div id="explorerTree">
+            <!-- Создаётся JavaScript -->
+          </div>
+
+        </aside>
+
+        <!-- Основная область -->
+
+        <div class="explorer-content">
+
+          <div class="explorer-content-heading">
+
+            <strong id="currentFolderTitle">
+              Этот компьютер
+            </strong>
+
+            <small id="objectCount">
+              3 объекта
+            </small>
+
+          </div>
+
+          <div
+            class="file-items icons"
+            id="fileItems"
+            aria-label="Содержимое папки"
+          >
+            <!-- Создаётся JavaScript -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Сведения о выбранном объекте -->
+
+      <div
+        class="explorer-selection"
+        id="explorerSelection"
+        aria-live="polite"
+      >
+        Выбери файл или папку,
+        чтобы увидеть сведения об объекте.
+      </div>
+
+      <!-- Создание новой папки -->
+
+      <div class="explorer-create">
+
+        <label for="newFolderName">
+          📁 Новая папка:
+        </label>
+
+        <input
+          id="newFolderName"
+          type="text"
+          maxlength="40"
+          placeholder="Название папки"
+        >
+
+        <button
+          id="createFolder"
+          type="button"
+        >
+          + Создать
+        </button>
+
+      </div>
+
+      <div
+        class="explorer-feedback"
+        id="explorerFeedback"
+        role="status"
+        aria-live="polite"
+      >
+        Учебный файловый менеджер готов к работе.
+      </div>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>Что исследовать?</strong>
+
+      <p>
+        1. Открой папку «Документы».
+        Затем перейди в «Учёба»
+        и «Информатика».
+      </p>
+
+      <p>
+        2. Найди файл «Задание.docx»
+        и посмотри его расположение.
+      </p>
+
+      <p>
+        3. Переключи режим отображения:
+        значки, список, таблица.
+      </p>
+
+      <p>
+        4. Попробуй сортировать файлы
+        по имени, типу и размеру.
+      </p>
+
+      <p>
+        5. Введи в строку поиска
+        <code>.png</code> и посмотри,
+        какие изображения найдутся
+        в выбранной папке
+        и её вложенных папках.
+      </p>
+
+      <p>
+        6. Создай собственную папку
+        и найди её с помощью поиска.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     11. СПОСОБЫ ОТОБРАЖЕНИЯ
+===================================================== -->
+
+<section class="section" id="views">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        10 · Представление объектов
+      </span>
+
+      <h2>Как можно отображать файлы?</h2>
+
+      <p class="lead">
+        Файловый менеджер позволяет
+        изменять внешний вид списка
+        объектов. Это не изменяет
+        сами файлы — меняется
+        только способ их показа.
+      </p>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <article class="card">
+
+        <div class="view-example">
+          <div class="view-icons-demo">
+            <span>📁</span>
+            <span>📄</span>
+            <span>🖼️</span>
+          </div>
+        </div>
+
+        <h3>Крупные значки</h3>
+
+        <p>
+          Файлы и папки показаны
+          большими значками.
+          Этот режим удобен,
+          когда важно быстро
+          различать объекты
+          по их внешнему виду.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="view-example">
+          <div class="view-list-demo">
+            📁 Документы
+            <br>
+            📄 Заметки.txt
+            <br>
+            🖼️ Рисунок.png
+          </div>
+        </div>
+
+        <h3>Список</h3>
+
+        <p>
+          Объекты располагаются
+          друг за другом.
+          В таком виде удобно
+          просматривать большое
+          количество имён.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="view-example">
+
+          <div class="view-table-demo">
+
+            <table>
+              <tr>
+                <td>Имя</td>
+                <td>Тип</td>
+                <td>Размер</td>
+              </tr>
+
+              <tr>
+                <td>План</td>
+                <td>TXT</td>
+                <td>2 КБ</td>
+              </tr>
+
+              <tr>
+                <td>Фото</td>
+                <td>PNG</td>
+                <td>840 КБ</td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+
+        <h3>Таблица</h3>
+
+        <p>
+          Помимо имени можно видеть
+          тип файла, размер,
+          дату изменения
+          и другие свойства.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Какой режим выбрать?</strong>
+
+      <p>
+        Если нужно рассматривать
+        значки и миниатюры изображений,
+        удобны крупные значки.
+      </p>
+
+      <p>
+        Если нужно сравнить
+        размеры файлов или даты,
+        удобнее табличное представление.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     12. СОРТИРОВКА
+===================================================== -->
+
+<section class="section" id="sorting">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        11 · Организация информации
+      </span>
+
+      <h2>Что такое сортировка?</h2>
+
+      <p class="lead">
+        Представь, что в папке
+        находится сто файлов.
+        Как быстро найти самый большой
+        или самый недавно изменённый?
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Сортировка упорядочивает объекты</h3>
+
+      <p>
+        <strong>Сортировка</strong> —
+        расположение объектов
+        в определённом порядке
+        по выбранному признаку.
+      </p>
+
+      <p>
+        Например, файлы можно
+        расположить по алфавиту,
+        от меньшего размера к большему
+        или по дате изменения.
+      </p>
+
+    </div>
+
+    <div class="sort-wrap">
+
+      <table class="sort-table">
+
+        <thead>
+          <tr>
+            <th>Способ</th>
+            <th>Что происходит?</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>По имени</td>
+            <td>
+              Файлы упорядочиваются
+              по названиям.
+            </td>
+          </tr>
+
+          <tr>
+            <td>По типу</td>
+            <td>
+              Файлы группируются
+              по типу или расширению.
+            </td>
+          </tr>
+
+          <tr>
+            <td>По размеру</td>
+            <td>
+              Можно найти маленькие
+              или большие файлы.
+            </td>
+          </tr>
+
+          <tr>
+            <td>По дате</td>
+            <td>
+              Файлы упорядочиваются
+              по времени изменения.
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="note">
+      <strong>Обрати внимание</strong>
+
+      <p>
+        Сортировка не изменяет
+        содержимое файлов.
+        Она только меняет порядок,
+        в котором объекты
+        показаны в файловом менеджере.
+      </p>
+
+      <p>
+        В разных системах также
+        можно выбирать сортировку
+        по возрастанию или убыванию.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     13. ПОИСК ФАЙЛОВ
+===================================================== -->
+
+<section class="section" id="search">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        12 · Находим нужные данные
+      </span>
+
+      <h2>Поиск файлов и папок</h2>
+
+      <p class="lead">
+        Иногда человек помнит,
+        как называется документ,
+        но не помнит,
+        в какую папку его сохранил.
+      </p>
+
+      <p class="lead">
+        В такой ситуации помогает поиск.
+      </p>
+
+    </div>
+
+    <div class="search-demo">
+
+      <h3>Строка поиска</h3>
+
+      <p>
+        Многие файловые менеджеры
+        позволяют искать объекты
+        по имени или его части.
+      </p>
+
+      <div class="search-field-demo">
+        🔎 &nbsp; Задание
+      </div>
+
+      <p>
+        Например, если мы введём
+        слово <strong>«Задание»</strong>,
+        программа может найти
+        файлы, в названии которых
+        встречается это слово.
+      </p>
+
+      <div class="search-examples">
+        <span>Задание.docx</span>
+        <span>Задание_2.txt</span>
+        <span>Моё_задание.pdf</span>
+      </div>
+
+    </div>
+
+    <div class="grid grid-3" style="margin-top:20px">
+
+      <article class="card">
+
+        <div class="card-icon">🔤</div>
+
+        <h3>По имени</h3>
+
+        <p>
+          Если известно название
+          файла, его можно ввести
+          в поисковую строку.
+        </p>
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">✂️</div>
+
+        <h3>По части имени</h3>
+
+        <p>
+          Иногда достаточно
+          вспомнить только
+          несколько букв
+          из названия файла.
+        </p>
+      </article>
+
+      <article class="card">
+
+        <div class="card-icon">🖼️</div>
+
+        <h3>По расширению</h3>
+
+        <p>
+          Расширение помогает
+          определить тип файла.
+          Например, <code>.png</code>
+          часто используется
+          для изображений.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>Где выполняется поиск?</strong>
+
+      <p>
+        Поиск может выполняться
+        в выбранной папке,
+        во вложенных папках
+        или в более широкой области —
+        в зависимости от программы
+        и её настроек.
+      </p>
+
+      <p>
+        В нашей интерактивной
+        лаборатории поиск выполняется
+        по текущей папке
+        и всем вложенным папкам.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     14. WINDOWS И LINUX
+===================================================== -->
+
+<section class="section" id="systems">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        13 · Разные операционные системы
+      </span>
+
+      <h2>Windows и Linux: что общего?</h2>
+
+      <p class="lead">
+        Операционные системы
+        могут выглядеть по-разному,
+        но многие задачи
+        в них выполняются
+        по сходным принципам.
+      </p>
+
+    </div>
+
+    <div class="grid grid-2">
+
+      <article class="card">
+
+        <div class="os-card-header">
+
+          <div class="logo">🪟</div>
+
+          <div>
+            <span class="tag">Операционная система</span>
+            <h3>Windows</h3>
+          </div>
+
+        </div>
+
+        <p>
+          Для работы с файлами
+          обычно используется Проводник.
+        </p>
+
+        <p>
+          Он позволяет открывать
+          папки, просматривать файлы,
+          менять режим отображения,
+          сортировать и искать данные.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="os-card-header">
+
+          <div class="logo">🐧</div>
+
+          <div>
+            <span class="tag purple">Семейство ОС</span>
+            <h3>Linux</h3>
+          </div>
+
+        </div>
+
+        <p>
+          В Linux могут использоваться
+          разные файловые менеджеры,
+          например Thunar, Nemo
+          или Dolphin.
+        </p>
+
+        <p>
+          Они тоже помогают переходить
+          между папками, открывать
+          файлы, сортировать
+          содержимое и выполнять поиск.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note purple">
+
+      <strong>Главная идея</strong>
+
+      <p>
+        Не обязательно запоминать
+        расположение каждой кнопки
+        в каждой операционной системе.
+      </p>
+
+      <p>
+        Гораздо полезнее понимать
+        назначение инструментов:
+        как перейти к родительской папке,
+        как найти файл,
+        как изменить вид
+        и как отсортировать объекты.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     15. ПРАКТИКА И ЗАКРЕПЛЕНИЕ
+===================================================== -->
+
+<section class="section" id="practice">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        14 · Самостоятельная работа
+      </span>
+
+      <h2>Примени знания</h2>
+
+      <p class="lead">
+        Основной материал урока
+        мы уже изучили.
+        Теперь можно выбрать
+        подходящий способ закрепления.
+      </p>
+
+    </div>
+
+    <div class="practice-grid">
+
+      <article class="practice-card">
+
+        <div class="practice-head">
+
+          <span class="tag">
+            🖥️ Вариант 1
+          </span>
+
+          <h3>
+            Практическое задание
+          </h3>
+
+          <p>
+            Добровольная работа
+            при наличии компьютера.
+          </p>
+
+        </div>
+
+        <div class="practice-body">
+
+          <h3>
+            «Навигация и поиск в файловой системе»
+          </h3>
+
+          <ol class="steps">
+
+            <li>
+              Открой файловый менеджер.
+            </li>
+
+            <li>
+              Найди папку «Документы».
+            </li>
+
+            <li>
+              Создай папку «Информатика».
+            </li>
+
+            <li>
+              Внутри создай две папки:
+              «Тексты» и «Изображения».
+            </li>
+
+            <li>
+              Открой второе окно
+              файлового менеджера.
+            </li>
+
+            <li>
+              Попробуй свернуть,
+              развернуть и переместить окна.
+            </li>
+
+            <li>
+              Переключись между окнами.
+            </li>
+
+            <li>
+              Измени режим отображения
+              файлов и папок.
+            </li>
+
+            <li>
+              Отсортируй содержимое
+              папки по имени.
+            </li>
+
+            <li>
+              Найди папку «Информатика»
+              с помощью поиска.
+            </li>
+
+            <li>
+              Определи путь к ней.
+            </li>
+
+          </ol>
+
+          <div class="practice-result">
+            <strong>Результат:</strong>
+            созданная структура папок
+            и понимание способов
+            навигации, поиска
+            и управления окнами.
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="practice-card">
+
+        <div class="practice-head purple">
+
+          <span class="tag purple">
+            📖 Вариант 2
+          </span>
+
+          <h3>
+            Закрепление знаний
+          </h3>
+
+          <p>
+            Если возможности
+            выполнить практическую
+            работу нет.
+          </p>
+
+        </div>
+
+        <div class="practice-body">
+
+          <h3>
+            Ответь на вопросы
+          </h3>
+
+          <p>
+            Используй объяснения,
+            схемы и модели,
+            которые представлены
+            на этой странице.
+          </p>
+
+          <p>
+            В конце сайта находятся
+            <strong>12 вопросов</strong>
+            по всему материалу урока.
+          </p>
+
+          <p>
+            Отвечай своими словами.
+            Важно не просто запомнить
+            названия элементов,
+            а уметь объяснить,
+            как они работают.
+          </p>
+
+          <div class="practice-result">
+            <strong>Результат:</strong>
+            понимание работы с окнами,
+            папками, сортировкой
+            и поиском информации.
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     16. 12 ВОПРОСОВ
+===================================================== -->
+
+<section class="section" id="questions">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        15 · Закрепление
+      </span>
+
+      <h2>Вопросы по уроку</h2>
+
+      <p class="lead">
+        Ответь на вопросы,
+        если ты выбрал теоретический
+        вариант закрепления.
+        Они также помогут повторить
+        изученную тему.
+      </p>
+
+    </div>
+
+    <div class="questions">
+
+      <div class="question">
+        <span class="question-number">01</span>
+        <p>
+          Что называют окном
+          операционной системы?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">02</span>
+        <p>
+          Какие основные элементы
+          имеет окно программы?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">03</span>
+        <p>
+          Чем активное окно
+          отличается от неактивного?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">04</span>
+        <p>
+          Чем сворачивание окна
+          отличается от закрытия?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">05</span>
+        <p>
+          Для чего используется
+          файловый менеджер?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">06</span>
+        <p>
+          Что называют вложенной папкой?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">07</span>
+        <p>
+          Что такое путь к файлу?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">08</span>
+        <p>
+          Для чего нужна адресная строка
+          файлового менеджера?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">09</span>
+        <p>
+          Какие способы отображения
+          файлов существуют?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">10</span>
+        <p>
+          По каким признакам
+          можно сортировать файлы?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">11</span>
+        <p>
+          Как найти файл,
+          если известно только его имя?
+        </p>
+      </div>
+
+      <div class="question">
+        <span class="question-number">12</span>
+        <p>
+          Почему важно понимать
+          структуру файловой системы?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     17. ИТОГ УРОКА
+===================================================== -->
+
+<section class="section" id="summary">
+  <div class="container">
+
+    <div class="final-card">
+
+      <span class="eyebrow">
+        16 · Завершение
+      </span>
+
+      <h2>Итог урока</h2>
+
+      <p class="lead">
+        Сегодня мы познакомились
+        с управлением окнами
+        операционной системы
+        и изучили основные способы
+        работы с файловым менеджером.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+
+          <strong>🪟 Управление окнами</strong>
+
+          <p>
+            Мы умеем различать
+            активные и неактивные окна,
+            понимаем назначение кнопок
+            сворачивания, разворачивания
+            и закрытия.
+          </p>
+        </div>
+
+        <div class="final-point">
+
+          <strong>📁 Навигация</strong>
+
+          <p>
+            Мы знаем,
+            как устроены вложенные папки,
+            что такое путь к файлу
+            и как переходить
+            между разделами.
+          </p>
+        </div>
+
+        <div class="final-point">
+
+          <strong>🔎 Организация и поиск</strong>
+
+          <p>
+            Мы познакомились
+            с режимами отображения,
+            сортировкой и поиском
+            файлов и папок.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+
+        <strong>Главный вывод</strong>
+
+        <p>
+          Умение работать с операционной
+          системой заключается не только
+          в знании кнопок и команд.
+        </p>
+
+        <p>
+          Важно понимать,
+          как устроены файлы и папки,
+          как находить информацию
+          и как организовывать
+          работу с несколькими окнами.
+        </p>
+
+        <p>
+          Эти знания помогают
+          уверенно работать
+          с разными операционными системами.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 8 класс ·
+  Основы работы с операционной системой ·
+  Часть 3 из 4
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+"use strict";
+
+/* =====================================================
+   ЧАСТЬ 1.
+   ЛАБОРАТОРИЯ УПРАВЛЕНИЯ ОКНАМИ
+===================================================== */
+
+/*
+  В учебной модели два окна.
+
+  Каждое имеет:
+  - координаты;
+  - ширину и высоту;
+  - состояние свёрнуто / развёрнуто / закрыто;
+  - порядок расположения.
+*/
+
+const desktopStage =
+  document.getElementById("desktopStage");
+
+const desktopLog =
+  document.getElementById("desktopLog");
+
+const desktopReset =
+  document.getElementById("desktopReset");
+
+let topZ = 10;
+let activeWindow = "notes";
+
+let windowStates = {};
+
+
+/* =====================================================
+   01. НАЧАЛЬНЫЕ ПАРАМЕТРЫ ОКОН
+===================================================== */
+
+function createWindowStates() {
+
+  const availableWidth =
+    desktopStage.clientWidth;
+
+  const filesWidth =
+    Math.min(380, availableWidth - 24);
+
+  const notesWidth =
+    Math.min(290, availableWidth - 24);
+
+  windowStates = {
+
+    files: {
+      x: 20,
+      y: 42,
+      width: filesWidth,
+      height: 260,
+      minimized: false,
+      maximized: false,
+      closed: false,
+      restore: null,
+      z: 10
+    },
+
+    notes: {
+      x: Math.max(
+        28,
+        availableWidth - notesWidth - 28
+      ),
+      y: 135,
+      width: notesWidth,
+      height: 210,
+      minimized: false,
+      maximized: false,
+      closed: false,
+      restore: null,
+      z: 11
+    }
+
+  };
+
+  activeWindow = "notes";
+  topZ = 11;
+
+}
+
+
+/* =====================================================
+   02. СООБЩЕНИЕ О ДЕЙСТВИИ
+===================================================== */
+
+function writeDesktopLog(title, description) {
+
+  desktopLog.replaceChildren();
+
+  const strong =
+    document.createElement("strong");
+
+  strong.textContent = title + " ";
+
+  desktopLog.append(
+    strong,
+    document.createTextNode(description)
+  );
+
+}
+
+
+/* =====================================================
+   03. РАСЧЁТ ДОСТУПНОЙ ОБЛАСТИ
+===================================================== */
+
+function getDesktopArea() {
+
+  return {
+    width: desktopStage.clientWidth,
+    height: desktopStage.clientHeight - 51
+  };
+
+}
+
+
+/* =====================================================
+   04. ОТОБРАЖЕНИЕ СОСТОЯНИЯ ОКОН
+===================================================== */
+
+function renderDesktop() {
+
+  const area = getDesktopArea();
+
+  for (const id of ["files", "notes"]) {
+
+    const state = windowStates[id];
+
+    const element =
+      document.getElementById(
+        "window-" + id
+      );
+
+    const task =
+      document.getElementById(
+        "task-" + id
+      );
+
+    const hidden =
+      state.closed || state.minimized;
+
+    element.style.display =
+      hidden ? "none" : "flex";
+
+    element.classList.toggle(
+      "active",
+      activeWindow === id && !hidden
+    );
+
+    element.classList.toggle(
+      "maximized",
+      state.maximized
+    );
+
+    task.classList.toggle(
+      "active",
+      activeWindow === id && !hidden
+    );
+
+    task.classList.toggle(
+      "closed",
+      state.closed
+    );
+
+    task.setAttribute(
+      "aria-pressed",
+      String(activeWindow === id && !hidden)
+    );
+
+    if (hidden) {
+      continue;
+    }
+
+    let x = state.x;
+    let y = state.y;
+    let width = state.width;
+    let height = state.height;
+
+    if (state.maximized) {
+
+      x = 0;
+      y = 0;
+      width = area.width;
+      height = area.height;
+
+    } else {
+
+      width = Math.min(
+        width,
+        area.width
+      );
+
+      height = Math.min(
+        height,
+        area.height
+      );
+
+      x = Math.max(
+        0,
+        Math.min(
+          x,
+          area.width - width
+        )
+      );
+
+      y = Math.max(
+        0,
+        Math.min(
+          y,
+          area.height - height
+        )
+      );
+
+      state.x = x;
+      state.y = y;
+      state.width = width;
+      state.height = height;
+
+    }
+
+    element.style.left = x + "px";
+    element.style.top = y + "px";
+
+    element.style.width = width + "px";
+    element.style.height = height + "px";
+
+    element.style.zIndex = state.z;
+
+  }
+
+}
+
+
+/* =====================================================
+   05. АКТИВАЦИЯ ОКНА
+===================================================== */
+
+function activateWindow(id) {
+
+  const state = windowStates[id];
+
+  if (state.closed) {
+    state.closed = false;
+    state.minimized = false;
+  }
+
+  if (state.minimized) {
+    state.minimized = false;
+  }
+
+  topZ++;
+
+  state.z = topZ;
+
+  activeWindow = id;
+
+  renderDesktop();
+
+}
+
+
+/* =====================================================
+   06. СВОРАЧИВАНИЕ
+===================================================== */
+
+function minimizeWindow(id) {
+
+  const state = windowStates[id];
+
+  state.minimized = true;
+
+  if (activeWindow === id) {
+
+    const other =
+      id === "files" ? "notes" : "files";
+
+    const otherState =
+      windowStates[other];
+
+    activeWindow =
+      !otherState.closed &&
+      !otherState.minimized
+        ? other
+        : null;
+
+  }
+
+  renderDesktop();
+
+  writeDesktopLog(
+    "Окно свёрнуто.",
+    "Оно скрыто с рабочего стола, " +
+    "но может быть восстановлено через панель задач."
+  );
+
+}
+
+
+/* =====================================================
+   07. РАЗВОРАЧИВАНИЕ И ВОССТАНОВЛЕНИЕ
+===================================================== */
+
+function toggleMaximize(id) {
+
+  activateWindow(id);
+
+  const state = windowStates[id];
+
+  if (!state.maximized) {
+
+    state.restore = {
+      x: state.x,
+      y: state.y,
+      width: state.width,
+      height: state.height
+    };
+
+    state.maximized = true;
+
+    writeDesktopLog(
+      "Окно развёрнуто.",
+      "Оно занимает доступную рабочую область."
+    );
+
+  } else {
+
+    state.maximized = false;
+
+    if (state.restore) {
+
+      Object.assign(
+        state,
+        state.restore
+      );
+
+    }
+
+    writeDesktopLog(
+      "Размер восстановлен.",
+      "Окно вернулось к прежним размерам."
+    );
+
+  }
+
+  renderDesktop();
+
+}
+
+
+/* =====================================================
+   08. ЗАКРЫТИЕ
+===================================================== */
+
+function closeWindow(id) {
+
+  const state = windowStates[id];
+
+  state.closed = true;
+  state.minimized = false;
+
+  if (activeWindow === id) {
+
+    const other =
+      id === "files" ? "notes" : "files";
+
+    activeWindow =
+      !windowStates[other].closed &&
+      !windowStates[other].minimized
+        ? other
+        : null;
+
+  }
+
+  renderDesktop();
+
+  writeDesktopLog(
+    "Окно закрыто.",
+    "Чтобы открыть его снова в этой модели, " +
+    "нажми соответствующую кнопку на панели задач."
+  );
+
+}
+
+
+/* =====================================================
+   09. КНОПКИ УПРАВЛЕНИЯ
+===================================================== */
+
+document.querySelectorAll(
+  ".demo-window"
+).forEach(element => {
+
+  const id = element.dataset.window;
+
+  element.addEventListener(
+    "pointerdown",
+    () => {
+      if (!windowStates[id].closed) {
+        activateWindow(id);
+      }
+    }
+  );
+
+  element.querySelectorAll(
+    "[data-action]"
+  ).forEach(button => {
+
+    button.addEventListener(
+      "click",
+      event => {
+
+        event.stopPropagation();
+
+        const action =
+          button.dataset.action;
+
+        if (action === "minimize") {
+          minimizeWindow(id);
+        }
+
+        if (action === "maximize") {
+          toggleMaximize(id);
+        }
+
+        if (action === "close") {
+          closeWindow(id);
+        }
+
+      }
+    );
+
+  });
+
+});
+
+
+/* =====================================================
+   10. ПЕРЕКЛЮЧЕНИЕ ЧЕРЕЗ ПАНЕЛЬ ЗАДАЧ
+===================================================== */
+
+document.querySelectorAll(
+  "[data-task]"
+).forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      const id = button.dataset.task;
+
+      activateWindow(id);
+
+      writeDesktopLog(
+        "Окно выбрано.",
+        "Оно стало активным и отображается поверх других."
+      );
+
+    }
+  );
+
+});
+
+
+/* =====================================================
+   11. ПЕРЕТАСКИВАНИЕ ОКОН
+===================================================== */
+
+/*
+  Pointer Events работают как с мышью,
+  так и с прикосновениями на телефоне.
+
+  Во время перемещения используем
+  захват указателя.
+*/
+
+document.querySelectorAll(
+  ".demo-window"
+).forEach(element => {
+
+  const id = element.dataset.window;
+
+  const titlebar =
+    element.querySelector(".win-titlebar");
+
+  let dragInfo = null;
+
+  titlebar.addEventListener(
+    "pointerdown",
+    event => {
+
+      if (
+        event.target.closest(".win-actions")
+      ) {
+        return;
+      }
+
+      const state = windowStates[id];
+
+      if (state.maximized) {
+        return;
+      }
+
+      activateWindow(id);
+
+      dragInfo = {
+        startX: event.clientX,
+        startY: event.clientY,
+        initialX: state.x,
+        initialY: state.y
+      };
+
+      titlebar.setPointerCapture(
+        event.pointerId
+      );
+
+    }
+  );
+
+  titlebar.addEventListener(
+    "pointermove",
+    event => {
+
+      if (!dragInfo) {
+        return;
+      }
+
+      const state = windowStates[id];
+      const area = getDesktopArea();
+
+      const dx =
+        event.clientX - dragInfo.startX;
+
+      const dy =
+        event.clientY - dragInfo.startY;
+
+      state.x = Math.max(
+        0,
+        Math.min(
+          area.width - state.width,
+          dragInfo.initialX + dx
+        )
+      );
+
+      state.y = Math.max(
+        0,
+        Math.min(
+          area.height - state.height,
+          dragInfo.initialY + dy
+        )
+      );
+
+      renderDesktop();
+
+    }
+  );
+
+  function finishDrag() {
+
+    if (dragInfo) {
+
+      writeDesktopLog(
+        "Окно перемещено.",
+        "Положение окна изменилось, " +
+        "но его содержимое осталось прежним."
+      );
+
+    }
+
+    dragInfo = null;
+
+  }
+
+  titlebar.addEventListener(
+    "pointerup",
+    finishDrag
+  );
+
+  titlebar.addEventListener(
+    "pointercancel",
+    finishDrag
+  );
+
+  titlebar.addEventListener(
+    "lostpointercapture",
+    finishDrag
+  );
+
+});
+
+
+/* =====================================================
+   12. ИЗМЕНЕНИЕ РАЗМЕРА ОКНА
+===================================================== */
+
+document.querySelectorAll(
+  ".demo-window"
+).forEach(element => {
+
+  const id = element.dataset.window;
+
+  const handle =
+    element.querySelector(".win-resize");
+
+  let resizeInfo = null;
+
+  handle.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.stopPropagation();
+
+      const state = windowStates[id];
+
+      if (state.maximized) {
+        return;
+      }
+
+      activateWindow(id);
+
+      resizeInfo = {
+        startX: event.clientX,
+        startY: event.clientY,
+        width: state.width,
+        height: state.height
+      };
+
+      handle.setPointerCapture(
+        event.pointerId
+      );
+
+    }
+  );
+
+  handle.addEventListener(
+    "pointermove",
+    event => {
+
+      if (!resizeInfo) {
+        return;
+      }
+
+      const state = windowStates[id];
+      const area = getDesktopArea();
+
+      state.width = Math.max(
+        180,
+        Math.min(
+          area.width - state.x,
+          resizeInfo.width +
+          event.clientX -
+          resizeInfo.startX
+        )
+      );
+
+      state.height = Math.max(
+        135,
+        Math.min(
+          area.height - state.y,
+          resizeInfo.height +
+          event.clientY -
+          resizeInfo.startY
+        )
+      );
+
+      renderDesktop();
+
+    }
+  );
+
+  function finishResize() {
+
+    if (resizeInfo) {
+
+      writeDesktopLog(
+        "Размер изменён.",
+        "Теперь окно занимает больше " +
+        "или меньше места на рабочем столе."
+      );
+
+    }
+
+    resizeInfo = null;
+
+  }
+
+  handle.addEventListener(
+    "pointerup",
+    finishResize
+  );
+
+  handle.addEventListener(
+    "pointercancel",
+    finishResize
+  );
+
+  handle.addEventListener(
+    "lostpointercapture",
+    finishResize
+  );
+
+});
+
+
+/* =====================================================
+   13. СБРОС РАБОЧЕГО СТОЛА
+===================================================== */
+
+desktopReset.addEventListener(
+  "click",
+  resetDesktop
+);
+
+function resetDesktop() {
+
+  createWindowStates();
+
+  renderDesktop();
+
+  writeDesktopLog(
+    "Начальное положение.",
+    "Оба окна открыты. Попробуй команды управления."
+  );
+
+}
+
+window.addEventListener(
+  "resize",
+  renderDesktop
+);
+
+resetDesktop();
+
+
+/* =====================================================
+   ЧАСТЬ 2.
+   ВИРТУАЛЬНЫЙ ФАЙЛОВЫЙ МЕНЕДЖЕР
+===================================================== */
+
+/*
+  Вся файловая система этой модели
+  существует только в памяти страницы.
+
+  Мы не обращаемся к реальному
+  диску компьютера.
+
+  Каждый объект содержит:
+  - id;
+  - имя;
+  - тип (папка или файл);
+  - родительскую папку;
+  - размер;
+  - дату изменения.
+*/
+
+/* =====================================================
+   14. ДАННЫЕ ФАЙЛОВОЙ СИСТЕМЫ
+===================================================== */
+
+const objects = [
+
+  {
+    id: "root",
+    name: "Этот компьютер",
+    type: "folder",
+    parent: null,
+    size: 0,
+    date: "2026-10-01"
+  },
+
+  {
+    id: "docs",
+    name: "Документы",
+    type: "folder",
+    parent: "root",
+    size: 0,
+    date: "2026-10-05"
+  },
+
+  {
+    id: "pics",
+    name: "Изображения",
+    type: "folder",
+    parent: "root",
+    size: 0,
+    date: "2026-10-03"
+  },
+
+  {
+    id: "downloads",
+    name: "Загрузки",
+    type: "folder",
+    parent: "root",
+    size: 0,
+    date: "2026-10-02"
+  },
+
+  {
+    id: "study",
+    name: "Учёба",
+    type: "folder",
+    parent: "docs",
+    size: 0,
+    date: "2026-10-04"
+  },
+
+  {
+    id: "plan",
+    name: "План.txt",
+    type: "file",
+    parent: "docs",
+    size: 2,
+    date: "2026-10-06"
+  },
+
+  {
+    id: "informatics",
+    name: "Информатика",
+    type: "folder",
+    parent: "study",
+    size: 0,
+    date: "2026-10-07"
+  },
+
+  {
+    id: "schedule",
+    name: "Расписание.txt",
+    type: "file",
+    parent: "study",
+    size: 1,
+    date: "2026-10-05"
+  },
+
+  {
+    id: "examples",
+    name: "Примеры",
+    type: "folder",
+    parent: "informatics",
+    size: 0,
+    date: "2026-10-07"
+  },
+
+  {
+    id: "assignment",
+    name: "Задание.docx",
+    type: "file",
+    parent: "informatics",
+    size: 25,
+    date: "2026-10-08"
+  },
+
+  {
+    id: "notes",
+    name: "Конспект.pdf",
+    type: "file",
+    parent: "informatics",
+    size: 310,
+    date: "2026-10-06"
+  },
+
+  {
+    id: "project",
+    name: "Проект.png",
+    type: "file",
+    parent: "examples",
+    size: 840,
+    date: "2026-10-09"
+  },
+
+  {
+    id: "forest",
+    name: "Лес.png",
+    type: "file",
+    parent: "pics",
+    size: 920,
+    date: "2026-09-23"
+  },
+
+  {
+    id: "mountains",
+    name: "Горы.jpg",
+    type: "file",
+    parent: "pics",
+    size: 640,
+    date: "2026-09-29"
+  },
+
+  {
+    id: "archive",
+    name: "Архив.zip",
+    type: "file",
+    parent: "downloads",
+    size: 1250,
+    date: "2026-10-02"
+  }
+
+];
+
+
+/* =====================================================
+   15. СОСТОЯНИЕ ФАЙЛОВОГО МЕНЕДЖЕРА
+===================================================== */
+
+let currentFolder = "root";
+
+let selectedObject = null;
+
+let navigationHistory = [];
+
+let viewMode = "icons";
+
+let sortMode = "name";
+
+let nextId = 1;
+
+
+const explorerTree =
+  document.getElementById("explorerTree");
+
+const fileItems =
+  document.getElementById("fileItems");
+
+const explorerAddress =
+  document.getElementById("explorerAddress");
+
+const currentFolderTitle =
+  document.getElementById("currentFolderTitle");
+
+const objectCount =
+  document.getElementById("objectCount");
+
+const explorerSelection =
+  document.getElementById("explorerSelection");
+
+const explorerFeedback =
+  document.getElementById("explorerFeedback");
+
+const explorerSearch =
+  document.getElementById("explorerSearch");
+
+const explorerBack =
+  document.getElementById("explorerBack");
+
+const explorerUp =
+  document.getElementById("explorerUp");
+
+const explorerHome =
+  document.getElementById("explorerHome");
+
+const explorerOpen =
+  document.getElementById("explorerOpen");
+
+const viewSelect =
+  document.getElementById("viewSelect");
+
+const sortSelect =
+  document.getElementById("sortSelect");
+
+const newFolderName =
+  document.getElementById("newFolderName");
+
+const createFolderButton =
+  document.getElementById("createFolder");
+
+
+/* =====================================================
+   16. ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+===================================================== */
+
+function getObject(id) {
+
+  return objects.find(
+    item => item.id === id
+  );
+
+}
+
+
+function getChildren(parentId) {
+
+  return objects.filter(
+    item => item.parent === parentId
+  );
+
+}
+
+
+function getExtension(name) {
+
+  const index =
+    name.lastIndexOf(".");
+
+  return index >= 0
+    ? name.slice(index + 1).toLowerCase()
+    : "";
+
+}
+
+
+function getFileType(item) {
+
+  if (item.type === "folder") {
+    return "Папка";
+  }
+
+  const ext = getExtension(item.name);
+
+  return ext
+    ? ext.toUpperCase()
+    : "Файл";
+
+}
+
+
+function getFileIcon(item) {
+
+  if (item.type === "folder") {
+    return "📁";
+  }
+
+  const ext = getExtension(item.name);
+
+  const icons = {
+    txt: "📄",
+    docx: "📝",
+    pdf: "📕",
+    png: "🖼️",
+    jpg: "🖼️",
+    jpeg: "🖼️",
+    zip: "🗜️"
+  };
+
+  return icons[ext] || "📄";
+
+}
+
+
+function formatDate(value) {
+
+  const date =
+    new Date(value + "T12:00:00");
+
+  return date.toLocaleDateString(
+    "ru-RU"
+  );
+
+}
+
+
+function getPathObjects(id) {
+
+  const path = [];
+
+  let item = getObject(id);
+
+  while (item) {
+
+    path.unshift(item);
+
+    item = item.parent
+      ? getObject(item.parent)
+      : null;
+
+  }
+
+  return path;
+
+}
+
+
+function getPathText(id) {
+
+  return getPathObjects(id)
+    .map(item => item.name)
+    .join(" \\ ");
+
+}
+
+
+function showExplorerMessage(message) {
+
+  explorerFeedback.textContent =
+    message;
+
+}
+
+
+/* =====================================================
+   17. СОРТИРОВКА
+===================================================== */
+
+const collator = new Intl.Collator(
+  "ru",
+  {
+    numeric: true,
+    sensitivity: "base"
+  }
+);
+
+
+function sortObjects(items) {
+
+  return [...items].sort(
+    (a, b) => {
+
+      /* Папки показываем перед файлами. */
+
+      if (a.type !== b.type) {
+
+        return a.type === "folder"
+          ? -1
+          : 1;
+
+      }
+
+      let result = 0;
+
+      if (sortMode === "name") {
+
+        result = collator.compare(
+          a.name,
+          b.name
+        );
+
+      }
+
+      if (sortMode === "type") {
+
+        result = collator.compare(
+          getFileType(a),
+          getFileType(b)
+        );
+
+      }
+
+      if (sortMode === "size") {
+
+        result = a.size - b.size;
+
+      }
+
+      if (sortMode === "date") {
+
+        result = a.date.localeCompare(
+          b.date
+        );
+
+      }
+
+      return result ||
+        collator.compare(
+          a.name,
+          b.name
+        );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   18. ПОИСК ПО ТЕКУЩЕЙ ПАПКЕ
+===================================================== */
+
+/*
+  Поиск выполняется:
+  - в текущей папке;
+  - во всех вложенных папках.
+
+  Ищем по части имени.
+  Поэтому запрос ".png"
+  найдёт изображения PNG.
+*/
+
+function getDescendants(folderId) {
+
+  const result = [];
+
+  function walk(id) {
+
+    const children =
+      getChildren(id);
+
+    children.forEach(item => {
+
+      result.push(item);
+
+      if (item.type === "folder") {
+        walk(item.id);
+      }
+
+    });
+
+  }
+
+  walk(folderId);
+
+  return result;
+
+}
+
+
+function getVisibleObjects() {
+
+  const query =
+    explorerSearch.value
+      .trim()
+      .toLocaleLowerCase("ru");
+
+  let items;
+
+  if (query) {
+
+    items = getDescendants(
+      currentFolder
+    ).filter(item => {
+
+      return item.name
+        .toLocaleLowerCase("ru")
+        .includes(query);
+
+    });
+
+  } else {
+
+    items = getChildren(
+      currentFolder
+    );
+
+  }
+
+  return sortObjects(items);
+
+}
+
+
+/* =====================================================
+   19. ПЕРЕХОД МЕЖДУ ПАПКАМИ
+===================================================== */
+
+function openFolder(id, addHistory = true) {
+
+  const item = getObject(id);
+
+  if (!item || item.type !== "folder") {
+    return;
+  }
+
+  if (
+    addHistory &&
+    currentFolder !== id
+  ) {
+
+    navigationHistory.push(
+      currentFolder
+    );
+
+  }
+
+  currentFolder = id;
+
+  selectedObject = null;
+
+  explorerSearch.value = "";
+
+  renderExplorer();
+
+  showExplorerMessage(
+    "Открыта папка: " + item.name
+  );
+
+}
+
+
+function goBack() {
+
+  if (!navigationHistory.length) {
+    return;
+  }
+
+  const previous =
+    navigationHistory.pop();
+
+  openFolder(previous, false);
+
+}
+
+
+function goUp() {
+
+  const folder =
+    getObject(currentFolder);
+
+  if (folder && folder.parent) {
+
+    openFolder(folder.parent);
+
+  }
+
+}
+
+
+function goHome() {
+
+  openFolder("root");
+
+}
+
+
+/* =====================================================
+   20. ОТОБРАЖЕНИЕ ДЕРЕВА ПАПОК
+===================================================== */
+
+function renderExplorerTree() {
+
+  explorerTree.replaceChildren();
+
+  function appendFolder(id, depth) {
+
+    const item = getObject(id);
+
+    if (!item) {
+      return;
+    }
+
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+      "tree-nav-item";
+
+    button.textContent =
+      getFileIcon(item) +
+      " " +
+      item.name;
+
+    button.style.paddingLeft =
+      (8 + depth * 12) + "px";
+
+    if (id === currentFolder) {
+
+      button.classList.add(
+        "active"
+      );
+
+    }
+
+    button.addEventListener(
+      "click",
+      () => openFolder(id)
+    );
+
+    explorerTree.appendChild(
+      button
+    );
+
+    const children =
+      getChildren(id)
+        .filter(child => (
+          child.type === "folder"
+        ));
+
+    children.sort(
+      (a,b) => collator.compare(
+        a.name,
+        b.name
+      )
+    );
+
+    children.forEach(
+      child => appendFolder(
+        child.id,
+        depth + 1
+      )
+    );
+
+  }
+
+  appendFolder("root", 0);
+
+}
+
+
+/* =====================================================
+   21. ВЫБОР ФАЙЛА ИЛИ ПАПКИ
+===================================================== */
+
+function selectObject(id) {
+
+  selectedObject = id;
+
+  renderExplorer();
+
+}
+
+
+function updateSelectionInfo() {
+
+  explorerSelection.replaceChildren();
+
+  if (!selectedObject) {
+
+    explorerSelection.textContent =
+      "Выбери файл или папку, " +
+      "чтобы увидеть сведения об объекте.";
+
+    return;
+
+  }
+
+  const item =
+    getObject(selectedObject);
+
+  if (!item) {
+    return;
+  }
+
+  const info = [
+
+    item.name,
+
+    "Тип: " + getFileType(item),
+
+    item.type === "folder"
+      ? "Размер: —"
+      : "Размер: " + item.size + " КБ",
+
+    "Изменён: " + formatDate(item.date),
+
+    "Путь: " + getPathText(item.id)
+
+  ];
+
+  explorerSelection.textContent =
+    info.join(" | ");
+
+}
+
+
+/* =====================================================
+   22. СОЗДАНИЕ КНОПКИ ФАЙЛА
+===================================================== */
+
+function createFileButton(item, searchActive) {
+
+  const button =
+    document.createElement("button");
+
+  button.type = "button";
+
+  button.className =
+    "file-item";
+
+  if (selectedObject === item.id) {
+
+    button.classList.add(
+      "selected"
+    );
+
+  }
+
+  button.title =
+    getPathText(item.id);
+
+  const icon =
+    document.createElement("span");
+
+  icon.className = "file-icon";
+
+  icon.textContent =
+    getFileIcon(item);
+
+
+  const name =
+    document.createElement("span");
+
+  name.className = "file-name";
+
+  name.textContent =
+    item.name;
+
+
+  const meta =
+    document.createElement("span");
+
+  meta.className = "file-meta";
+
+  meta.textContent =
+    searchActive
+      ? getPathText(item.parent)
+      : getFileType(item);
+
+
+  if (viewMode === "details") {
+
+    const nameCell =
+      document.createElement("span");
+
+    nameCell.className =
+      "details-name";
+
+    nameCell.append(
+      icon,
+      name
+    );
+
+    const typeCell =
+      document.createElement("span");
+
+    typeCell.textContent =
+      getFileType(item);
+
+    const sizeCell =
+      document.createElement("span");
+
+    sizeCell.textContent =
+      item.type === "folder"
+        ? "—"
+        : item.size + " КБ";
+
+    const dateCell =
+      document.createElement("span");
+
+    dateCell.textContent =
+      formatDate(item.date);
+
+    button.append(
+      nameCell,
+      typeCell,
+      sizeCell,
+      dateCell
+    );
+
+  } else {
+
+    button.append(
+      icon,
+      name
+    );
+
+    if (viewMode === "icons") {
+      button.appendChild(meta);
+    }
+
+  }
+
+
+  /* Один щелчок выделяет объект. */
+
+  button.addEventListener(
+    "click",
+    () => selectObject(item.id)
+  );
+
+
+  /* Двойной щелчок открывает папку. */
+
+  button.addEventListener(
+    "dblclick",
+    () => openSelectedObject(item.id)
+  );
+
+  return button;
+
+}
+
+
+/* =====================================================
+   23. ОТКРЫТИЕ ВЫБРАННОГО ОБЪЕКТА
+===================================================== */
+
+function openSelectedObject(id) {
+
+  const item = getObject(id);
+
+  if (!item) {
+    return;
+  }
+
+  if (item.type === "folder") {
+
+    openFolder(item.id);
+
+  } else {
+
+    selectedObject = item.id;
+
+    renderExplorer();
+
+    showExplorerMessage(
+      "Выбран файл «" +
+      item.name +
+      "». В учебной модели " +
+      "файлы не запускаются."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   24. ОТРИСОВКА ФАЙЛОВОГО МЕНЕДЖЕРА
+===================================================== */
+
+function renderExplorer() {
+
+  const folder =
+    getObject(currentFolder);
+
+  if (!folder) {
+    return;
+  }
+
+  explorerAddress.textContent =
+    getPathText(currentFolder);
+
+  currentFolderTitle.textContent =
+    folder.name;
+
+  explorerBack.disabled =
+    navigationHistory.length === 0;
+
+  explorerUp.disabled =
+    folder.parent === null;
+
+
+  renderExplorerTree();
+
+
+  /* Результаты поиска или содержимое папки. */
+
+  const items =
+    getVisibleObjects();
+
+  const searchActive =
+    explorerSearch.value.trim() !== "";
+
+  objectCount.textContent =
+    items.length + " объект(ов)";
+
+
+  fileItems.className =
+    "file-items " + viewMode;
+
+  fileItems.replaceChildren();
+
+
+  /* Табличные заголовки. */
+
+  if (viewMode === "details") {
+
+    const header =
+      document.createElement("div");
+
+    header.className =
+      "details-heading";
+
+    ["Имя", "Тип", "Размер", "Изменён"]
+      .forEach(label => {
+
+        const cell =
+          document.createElement("span");
+
+        cell.textContent = label;
+
+        header.appendChild(cell);
+
+      });
+
+    fileItems.appendChild(
+      header
+    );
+
+  }
+
+
+  if (!items.length) {
+
+    const empty =
+      document.createElement("div");
+
+    empty.className =
+      "explorer-empty";
+
+    empty.textContent =
+      searchActive
+        ? "Ничего не найдено. " +
+          "Попробуй изменить запрос."
+        : "Эта папка пуста.";
+
+    fileItems.appendChild(
+      empty
+    );
+
+  } else {
+
+    items.forEach(item => {
+
+      fileItems.appendChild(
+        createFileButton(
+          item,
+          searchActive
+        )
+      );
+
+    });
+
+  }
+
+
+  updateSelectionInfo();
+
+}
+
+
+/* =====================================================
+   25. УПРАВЛЕНИЕ ФАЙЛОВЫМ МЕНЕДЖЕРОМ
+===================================================== */
+
+explorerBack.addEventListener(
+  "click",
+  goBack
+);
+
+explorerUp.addEventListener(
+  "click",
+  goUp
+);
+
+explorerHome.addEventListener(
+  "click",
+  goHome
+);
+
+
+explorerOpen.addEventListener(
+  "click",
+  () => {
+
+    if (!selectedObject) {
+
+      showExplorerMessage(
+        "Сначала выбери файл или папку."
+      );
+
+      return;
+
+    }
+
+    openSelectedObject(
+      selectedObject
+    );
+
+  }
+);
+
+
+/* Поиск обновляется при вводе текста. */
+
+explorerSearch.addEventListener(
+  "input",
+  () => {
+
+    selectedObject = null;
+
+    renderExplorer();
+
+  }
+);
+
+
+/* Переключение представления. */
+
+viewSelect.addEventListener(
+  "change",
+  () => {
+
+    viewMode = viewSelect.value;
+
+    renderExplorer();
+
+    showExplorerMessage(
+      "Способ отображения изменён."
+    );
+
+  }
+);
+
+
+/* Переключение сортировки. */
+
+sortSelect.addEventListener(
+  "change",
+  () => {
+
+    sortMode = sortSelect.value;
+
+    renderExplorer();
+
+    showExplorerMessage(
+      "Содержимое отсортировано."
+    );
+
+  }
+);
+
+
+/* =====================================================
+   26. СОЗДАНИЕ НОВОЙ ПАПКИ
+===================================================== */
+
+function createNewFolder() {
+
+  const name =
+    newFolderName.value.trim();
+
+  if (!name) {
+
+    showExplorerMessage(
+      "Введите название новой папки."
+    );
+
+    return;
+
+  }
+
+  /* Запрещаем разделители пути. */
+
+  if (/[\\/:*?"<>|]/.test(name)) {
+
+    showExplorerMessage(
+      "Название содержит недопустимые символы."
+    );
+
+    return;
+
+  }
+
+  /* Проверяем отсутствие папки
+     с таким же именем. */
+
+  const exists =
+    getChildren(currentFolder)
+      .some(item => (
+
+        item.name.toLocaleLowerCase("ru") ===
+        name.toLocaleLowerCase("ru")
+
+      ));
+
+  if (exists) {
+
+    showExplorerMessage(
+      "Объект с таким именем " +
+      "уже есть в этой папке."
+    );
+
+    return;
+
+  }
+
+  const id =
+    "new-folder-" + nextId++;
+
+  const today =
+    new Date()
+      .toISOString()
+      .slice(0,10);
+
+  objects.push({
+
+    id: id,
+    name: name,
+    type: "folder",
+    parent: currentFolder,
+    size: 0,
+    date: today
+
+  });
+
+  newFolderName.value = "";
+
+  explorerSearch.value = "";
+
+  selectedObject = id;
+
+  renderExplorer();
+
+  showExplorerMessage(
+    "Создана папка «" + name + "»."
+  );
+
+}
+
+
+createFolderButton.addEventListener(
+  "click",
+  createNewFolder
+);
+
+
+newFolderName.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Enter") {
+
+      createNewFolder();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   27. ПЕРВЫЙ ЗАПУСК
+===================================================== */
+
+renderExplorer();
+
+showExplorerMessage(
+  "Открой папку «Документы» " +
+  "и попробуй перейти к файлу «Задание.docx»."
+);
+
+</script>
+
+</body>
+</html>

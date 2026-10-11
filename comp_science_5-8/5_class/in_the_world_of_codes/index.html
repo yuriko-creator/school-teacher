@@ -1,0 +1,5145 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Урок информатики для 5 класса: способы восприятия информации, коды и кодирование сообщений."
+  >
+
+  <title>
+    Атлас информации — Информатика, 5 класс
+  </title>
+
+  <style>
+
+    /* =====================================================
+       01. ОБЩИЕ НАСТРОЙКИ И ЦВЕТОВАЯ ПАЛИТРА
+    ===================================================== */
+
+    :root {
+
+      --background: #f7f9fe;
+
+      --white: #ffffff;
+
+      --text: #26344b;
+
+      --muted: #62718b;
+
+      --line: #e0e7f2;
+
+      --blue: #477bea;
+      --blue-light: #eaf1ff;
+
+      --purple: #895ddd;
+      --purple-light: #f1eaff;
+
+      --orange: #f19a47;
+      --orange-light: #fff1e2;
+
+      --green: #33a987;
+      --green-light: #e4f8f0;
+
+      --pink: #e97da4;
+      --pink-light: #fff0f6;
+
+      --yellow: #ffcb66;
+      --yellow-light: #fff7de;
+
+      --navy: #253d72;
+
+      --radius: 22px;
+
+      --shadow:
+        0 15px 35px rgba(44, 67, 117, 0.07);
+
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+
+      background: var(--background);
+
+      color: var(--text);
+
+      font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      line-height: 1.7;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 4px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+
+      line-height: 1.08;
+
+      letter-spacing: -2px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+
+      line-height: 1.2;
+
+      letter-spacing: -0.7px;
+
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 1.24rem;
+
+      line-height: 1.35;
+
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--muted);
+
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 43px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 27px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+
+      margin-bottom: 12px;
+
+      color: var(--blue);
+
+      font-size: 0.78rem;
+
+      font-weight: 850;
+
+      letter-spacing: 1.6px;
+
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 800px;
+
+      font-size: 1.08rem;
+    }
+
+    .grid {
+      display: grid;
+
+      gap: 19px;
+    }
+
+    .grid-2 {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+
+      padding: 25px;
+
+      border: 1px solid var(--line);
+
+      border-radius: var(--radius);
+
+      background: white;
+
+      box-shadow: var(--shadow);
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-icon {
+      display: grid;
+
+      place-items: center;
+
+      width: 66px;
+      height: 66px;
+
+      margin-bottom: 18px;
+
+      border-radius: 19px;
+
+      background: var(--blue-light);
+
+      font-size: 2.2rem;
+    }
+
+    .callout {
+      margin-top: 23px;
+
+      padding: 22px 25px;
+
+      border-left: 5px solid var(--blue);
+
+      border-radius: 0 16px 16px 0;
+
+      background: var(--blue-light);
+    }
+
+    .callout strong {
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: #285cbf;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .callout.green {
+      background: var(--green-light);
+
+      border-color: var(--green);
+    }
+
+    .callout.green strong {
+      color: #198365;
+    }
+
+    .callout.purple {
+      background: var(--purple-light);
+
+      border-color: var(--purple);
+    }
+
+    .callout.purple strong {
+      color: #7448c3;
+    }
+
+    .tag {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding: 6px 12px;
+
+      border-radius: 100px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      font-size: 0.8rem;
+
+      font-weight: 800;
+    }
+
+    .tag.purple {
+      background: var(--purple-light);
+
+      color: var(--purple);
+    }
+
+    .tag.green {
+      background: var(--green-light);
+
+      color: var(--green);
+    }
+
+    .btn {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      min-height: 46px;
+
+      padding: 11px 19px;
+
+      border: 1px solid var(--blue);
+
+      border-radius: 12px;
+
+      background: var(--blue);
+
+      color: white;
+
+      font-weight: 800;
+
+      transition:
+        transform 0.16s,
+        filter 0.16s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+
+      filter: brightness(1.05);
+    }
+
+    .btn.secondary {
+      border-color: #ccdaf5;
+
+      background: white;
+
+      color: var(--blue);
+    }
+
+    .btn.purple {
+      border-color: var(--purple);
+
+      background: var(--purple);
+    }
+
+    .button-row {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 17px;
+    }
+
+    .mono {
+      font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+    }
+
+    /* =====================================================
+       02. ГЛАВНЫЙ ЭКРАН
+    ===================================================== */
+
+    .hero {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 75px 0 80px;
+
+      background:
+        radial-gradient(
+          circle at 90% 10%,
+          #ffeed9,
+          transparent 35%
+        ),
+
+        radial-gradient(
+          circle at 7% 95%,
+          #dfe7ff,
+          transparent 48%
+        ),
+
+        #eef4ff;
+
+      border-bottom:
+        1px solid #d9e5f8;
+    }
+
+    .hero::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      opacity: 0.32;
+
+      background-image:
+        radial-gradient(
+          #8ea5dc 1.4px,
+          transparent 1.4px
+        );
+
+      background-size: 30px 30px;
+
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      position: relative;
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      align-items: center;
+
+      gap: 42px;
+    }
+
+    .lesson-label {
+      display: inline-block;
+
+      padding: 9px 15px;
+
+      margin-bottom: 23px;
+
+      border: 1px solid #bacdfa;
+
+      border-radius: 50px;
+
+      background: rgba(255,255,255,0.8);
+
+      color: var(--blue);
+
+      font-size: 0.85rem;
+
+      font-weight: 850;
+    }
+
+    .hero h1 span {
+      display: block;
+
+      color: var(--blue);
+    }
+
+    .hero-description {
+      max-width: 540px;
+
+      margin: 25px 0;
+
+      color: #536480;
+
+      font-size: 1.1rem;
+    }
+
+    .hero-tags {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+    }
+
+    .hero-tags span {
+      display: inline-flex;
+
+      padding: 8px 12px;
+
+      border: 1px solid #d9e4f7;
+
+      border-radius: 10px;
+
+      background: white;
+
+      font-size: 0.85rem;
+
+      font-weight: 750;
+    }
+
+    /* =====================================================
+       03. ИЛЛЮСТРАЦИЯ ГЛАВНОГО ЭКРАНА
+    ===================================================== */
+
+    .hero-illustration {
+      position: relative;
+
+      display: grid;
+
+      place-items: center;
+
+      min-height: 440px;
+    }
+
+    .hero-orbit {
+      position: absolute;
+
+      width: 365px;
+      height: 365px;
+
+      border: 3px dashed #c3d3f4;
+
+      border-radius: 50%;
+    }
+
+    .hero-orbit::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 37px;
+
+      border: 2px solid rgba(71,123,234,0.12);
+
+      border-radius: 50%;
+    }
+
+    .hero-person {
+      position: relative;
+
+      z-index: 2;
+
+      display: grid;
+
+      place-items: center;
+
+      width: 195px;
+      height: 195px;
+
+      border: 7px solid white;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffe6a2,
+          #ffcba7
+        );
+
+      box-shadow:
+        0 15px 35px rgba(55,85,150,0.13);
+    }
+
+    .hero-person span {
+      font-size: 7rem;
+
+      line-height: 1;
+    }
+
+    .sense-bubble {
+      position: absolute;
+
+      z-index: 3;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      width: 103px;
+      height: 103px;
+
+      border: 5px solid white;
+
+      border-radius: 26px;
+
+      box-shadow: var(--shadow);
+
+      font-size: 2.7rem;
+    }
+
+    .sense-bubble small {
+      margin-top: 3px;
+
+      font-size: 0.7rem;
+
+      font-weight: 850;
+    }
+
+    .sense-bubble.eye {
+      top: 15px;
+      left: 37%;
+
+      background: #e0ecff;
+    }
+
+    .sense-bubble.ear {
+      top: 110px;
+      right: 1%;
+
+      background: #f2e8ff;
+    }
+
+    .sense-bubble.nose {
+      bottom: 22px;
+      right: 15%;
+
+      background: #e0f8ed;
+    }
+
+    .sense-bubble.taste {
+      bottom: 20px;
+      left: 11%;
+
+      background: #fff0e0;
+    }
+
+    .sense-bubble.touch {
+      top: 115px;
+      left: 0;
+
+      background: #ffeaf1;
+    }
+
+    /* =====================================================
+       04. ВВЕДЕНИЕ И ИНФОРМАЦИЯ
+    ===================================================== */
+
+    .intro-banner {
+      padding: 32px;
+
+      border: 1px solid #d3e0f7;
+
+      border-radius: var(--radius);
+
+      background:
+        linear-gradient(
+          120deg,
+          #e8f1ff,
+          #ffffff 65%,
+          #f3ebff
+        );
+    }
+
+    .intro-banner strong {
+      font-size: 1.25rem;
+    }
+
+    .intro-banner p:last-child {
+      margin-bottom: 0;
+    }
+
+    .information-flow {
+      display: grid;
+
+      grid-template-columns:
+        1fr auto 1fr auto 1fr;
+
+      align-items: center;
+
+      gap: 12px;
+
+      margin-top: 22px;
+
+      padding: 24px;
+
+      border: 1px solid var(--line);
+
+      border-radius: var(--radius);
+
+      background: white;
+    }
+
+    .flow-step {
+      min-width: 0;
+
+      padding: 20px 12px;
+
+      border-radius: 15px;
+
+      background: #f2f6ff;
+
+      text-align: center;
+    }
+
+    .flow-step .emoji {
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-size: 2.5rem;
+    }
+
+    .flow-step strong {
+      display: block;
+    }
+
+    .flow-step small {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 0.79rem;
+    }
+
+    .flow-arrow {
+      color: var(--blue);
+
+      font-size: 1.7rem;
+
+      font-weight: 900;
+    }
+
+    /* =====================================================
+       05. ПЯТЬ ОРГАНОВ ЧУВСТВ
+    ===================================================== */
+
+    .senses-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+      gap: 18px;
+    }
+
+    .sense-card {
+      grid-column: span 2;
+
+      overflow: hidden;
+
+      border: 1px solid var(--line);
+
+      border-radius: 21px;
+
+      background: white;
+
+      box-shadow: var(--shadow);
+    }
+
+    .sense-card:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .sense-card:nth-child(5) {
+      grid-column: 4 / span 2;
+    }
+
+    .sense-art {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 156px;
+
+      background: var(--blue-light);
+
+      font-size: 5rem;
+    }
+
+    .sense-card:nth-child(2) .sense-art {
+      background: var(--purple-light);
+    }
+
+    .sense-card:nth-child(3) .sense-art {
+      background: var(--green-light);
+    }
+
+    .sense-card:nth-child(4) .sense-art {
+      background: var(--orange-light);
+    }
+
+    .sense-card:nth-child(5) .sense-art {
+      background: var(--pink-light);
+    }
+
+    .sense-body {
+      padding: 23px;
+    }
+
+    .sense-body h3 {
+      margin-top: 11px;
+    }
+
+    .sense-example {
+      margin-top: 15px;
+
+      padding: 13px;
+
+      border-radius: 11px;
+
+      background: #f5f7fc;
+
+      font-size: 0.91rem;
+
+      color: #506078;
+    }
+
+    .sense-example strong {
+      display: block;
+
+      margin-bottom: 3px;
+
+      font-size: 0.79rem;
+
+      color: var(--blue);
+    }
+
+    /* =====================================================
+       06. ИНТЕРАКТИВНЫЕ СИТУАЦИИ
+    ===================================================== */
+
+    .situation-lab {
+      overflow: hidden;
+
+      border: 1px solid #cddbf4;
+
+      border-radius: var(--radius);
+
+      background: white;
+
+      box-shadow: var(--shadow);
+    }
+
+    .lab-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      padding: 20px 25px;
+
+      border-bottom: 1px solid #d7e3f6;
+
+      background: #eaf2ff;
+    }
+
+    .lab-header h3 {
+      margin-bottom: 0;
+    }
+
+    .lab-body {
+      padding: 27px;
+    }
+
+    .situation-buttons {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-bottom: 20px;
+    }
+
+    .situation-button {
+      padding: 11px 18px;
+
+      border: 2px solid #d8e3f3;
+
+      border-radius: 12px;
+
+      background: white;
+
+      color: var(--text);
+
+      font-weight: 800;
+    }
+
+    .situation-button.active {
+      border-color: var(--blue);
+
+      background: var(--blue-light);
+
+      color: #245fc8;
+    }
+
+    .situation-display {
+      display: grid;
+
+      grid-template-columns:
+        175px minmax(0, 1fr);
+
+      align-items: center;
+
+      gap: 25px;
+
+      padding: 25px;
+
+      border-radius: 17px;
+
+      background: #f6f9ff;
+    }
+
+    .situation-emoji {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 160px;
+
+      border-radius: 16px;
+
+      background: #e4edff;
+
+      font-size: 6rem;
+    }
+
+    .situation-info h3 {
+      margin-bottom: 10px;
+    }
+
+    .situation-info p {
+      margin-bottom: 0;
+    }
+
+    .situation-list {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+
+      margin-top: 16px;
+    }
+
+    .situation-item {
+      padding: 12px;
+
+      border: 1px solid #dce5f3;
+
+      border-radius: 10px;
+
+      background: white;
+
+      color: #506078;
+
+      font-size: 0.91rem;
+    }
+
+    .situation-item strong {
+      display: block;
+
+      color: var(--blue);
+    }
+
+    /* =====================================================
+       07. СИГНАЛЫ И ВОСПРИЯТИЕ
+    ===================================================== */
+
+    .signal-card {
+      text-align: center;
+    }
+
+    .signal-graphic {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 175px;
+
+      margin-bottom: 20px;
+
+      border-radius: 16px;
+
+      background: #eef4ff;
+    }
+
+    .signal-graphic .big-emoji {
+      font-size: 5rem;
+    }
+
+    .traffic-light {
+      display: grid;
+
+      gap: 9px;
+
+      width: 65px;
+
+      padding: 11px;
+
+      border-radius: 18px;
+
+      background: #28364b;
+    }
+
+    .traffic-light span {
+      display: block;
+
+      width: 43px;
+      height: 43px;
+
+      border-radius: 50%;
+    }
+
+    .traffic-light .red {
+      background: #ff646d;
+    }
+
+    .traffic-light .yellow {
+      background: #ffd365;
+    }
+
+    .traffic-light .green {
+      background: #50ca88;
+    }
+
+    /* =====================================================
+       08. ПОНЯТИЕ КОДА
+    ===================================================== */
+
+    .code-definition {
+      display: grid;
+
+      grid-template-columns:
+        150px minmax(0, 1fr);
+
+      align-items: center;
+
+      gap: 25px;
+
+      padding: 28px;
+
+      border: 1px solid #d9d4f7;
+
+      border-radius: var(--radius);
+
+      background: #f2edff;
+    }
+
+    .code-symbol {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 145px;
+
+      border-radius: 18px;
+
+      background: white;
+
+      color: var(--purple);
+
+      font-family: Consolas, monospace;
+
+      font-size: 3rem;
+
+      font-weight: 900;
+    }
+
+    .code-definition h3 {
+      color: #7049bb;
+    }
+
+    .code-definition p:last-child {
+      margin-bottom: 0;
+    }
+
+    .code-card {
+      min-width: 0;
+    }
+
+    .code-card .code-art {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 125px;
+
+      margin: -25px -25px 22px;
+
+      background: #eaf1ff;
+
+      border-radius:
+        var(--radius) var(--radius) 0 0;
+
+      font-size: 3.8rem;
+    }
+
+    .code-card:nth-child(2) .code-art {
+      background: #f1eaff;
+    }
+
+    .code-card:nth-child(3) .code-art {
+      background: #fff3e1;
+    }
+
+    .code-card:nth-child(4) .code-art {
+      background: #e9f9ed;
+    }
+
+    .code-card:nth-child(5) .code-art {
+      background: #fff0f6;
+    }
+
+    .code-card:nth-child(6) .code-art {
+      background: #edf3ff;
+    }
+
+    .code-card p {
+      font-size: 0.94rem;
+    }
+
+    /* =====================================================
+       09. СПОСОБЫ КОДИРОВАНИЯ
+    ===================================================== */
+
+    .methods-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 20px;
+    }
+
+    .method {
+      overflow: hidden;
+
+      border: 1px solid var(--line);
+
+      border-radius: 20px;
+
+      background: white;
+    }
+
+    .method-visual {
+      display: grid;
+
+      place-items: center;
+
+      min-height: 170px;
+
+      padding: 20px;
+
+      background: var(--blue-light);
+
+      text-align: center;
+    }
+
+    .method:nth-child(2) .method-visual {
+      background: var(--purple-light);
+    }
+
+    .method:nth-child(3) .method-visual {
+      background: var(--orange-light);
+    }
+
+    .method:nth-child(4) .method-visual {
+      background: var(--green-light);
+    }
+
+    .method-visual .example {
+      color: var(--blue);
+
+      font-size: clamp(2rem, 4vw, 3.3rem);
+
+      font-weight: 900;
+
+      letter-spacing: 5px;
+
+      overflow-wrap: anywhere;
+    }
+
+    .method:nth-child(2) .example {
+      color: var(--purple);
+    }
+
+    .method:nth-child(3) .example {
+      color: var(--orange);
+    }
+
+    .method:nth-child(4) .example {
+      color: var(--green);
+    }
+
+    .method-body {
+      padding: 23px;
+    }
+
+    .method-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* =====================================================
+       10. КОДИРОВАНИЕ И ДЕКОДИРОВАНИЕ
+    ===================================================== */
+
+    .coding-flow {
+      display: grid;
+
+      grid-template-columns:
+        1fr auto 1fr auto 1fr;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 25px;
+
+      border: 1px solid #d9d3f5;
+
+      border-radius: var(--radius);
+
+      background: white;
+    }
+
+    .coding-step {
+      padding: 21px 12px;
+
+      border: 1px solid #e0e6f2;
+
+      border-radius: 15px;
+
+      background: #f6f8fe;
+
+      text-align: center;
+    }
+
+    .coding-step small {
+      display: block;
+
+      margin-bottom: 10px;
+
+      color: var(--muted);
+    }
+
+    .coding-step .value {
+      display: block;
+
+      color: var(--purple);
+
+      font-size: clamp(1.25rem, 3vw, 2.25rem);
+
+      font-weight: 900;
+
+      overflow-wrap: anywhere;
+    }
+
+    .coding-arrow {
+      color: var(--purple);
+
+      font-size: 1.65rem;
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       11. ЛАБОРАТОРИЯ ЧИСЛОВОГО КОДИРОВАНИЯ
+    ===================================================== */
+
+    .cipher-lab {
+      overflow: hidden;
+
+      border: 1px solid #d5c6f5;
+
+      border-radius: var(--radius);
+
+      background: white;
+
+      box-shadow: var(--shadow);
+    }
+
+    .cipher-head {
+      padding: 22px 25px;
+
+      background:
+        linear-gradient(
+          110deg,
+          #e8deff,
+          #f8f3ff
+        );
+
+      border-bottom: 1px solid #ded2f7;
+    }
+
+    .cipher-head h3 {
+      margin: 10px 0 6px;
+    }
+
+    .cipher-head p {
+      margin-bottom: 0;
+    }
+
+    .cipher-body {
+      padding: 26px;
+    }
+
+    .alphabet-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(11, minmax(0, 1fr));
+
+      gap: 7px;
+
+      margin-top: 18px;
+    }
+
+    .alphabet-cell {
+      min-width: 0;
+
+      padding: 11px 3px;
+
+      border: 1px solid #e0d8f3;
+
+      border-radius: 9px;
+
+      background: #f8f4ff;
+
+      text-align: center;
+    }
+
+    .alphabet-cell b {
+      display: block;
+
+      color: #714abf;
+
+      font-size: 1.15rem;
+    }
+
+    .alphabet-cell small {
+      display: block;
+
+      color: #78849a;
+
+      font-family: Consolas, monospace;
+    }
+
+    .cipher-field {
+      display: block;
+
+      margin: 22px 0 10px;
+
+      font-weight: 800;
+    }
+
+    .cipher-input {
+      display: block;
+
+      width: 100%;
+
+      padding: 16px 18px;
+
+      border: 2px solid #ddd3f5;
+
+      border-radius: 12px;
+
+      outline: none;
+
+      background: #fcfaff;
+
+      color: var(--text);
+
+      font-size: 1.2rem;
+
+      font-weight: 800;
+
+      letter-spacing: 2px;
+    }
+
+    .cipher-input:focus {
+      border-color: var(--purple);
+    }
+
+    .cipher-output {
+      min-height: 100px;
+
+      margin-top: 16px;
+
+      padding: 20px;
+
+      border: 1px solid #d8c9f4;
+
+      border-radius: 13px;
+
+      background: #f5efff;
+    }
+
+    .cipher-output small {
+      display: block;
+
+      margin-bottom: 8px;
+
+      color: #7c65a7;
+
+      font-size: 0.81rem;
+
+      font-weight: 800;
+    }
+
+    .cipher-output output {
+      display: block;
+
+      color: #6941b2;
+
+      font-family: Consolas, monospace;
+
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+
+      font-weight: 900;
+
+      overflow-wrap: anywhere;
+    }
+
+    .cipher-warning {
+      min-height: 20px;
+
+      margin-top: 12px;
+
+      color: #a45845;
+
+      font-size: 0.88rem;
+    }
+
+    .cipher-example {
+      display: flex;
+
+      gap: 10px;
+
+      flex-wrap: wrap;
+
+      margin-top: 18px;
+    }
+
+    .cipher-example span {
+      padding: 8px 12px;
+
+      border-radius: 9px;
+
+      background: #f2eaff;
+
+      color: #6941b2;
+
+      font-family: Consolas, monospace;
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       12. АЗБУКА МОРЗЕ
+    ===================================================== */
+
+    .morse-board {
+      padding: 28px;
+
+      border: 1px solid #cfebe2;
+
+      border-radius: var(--radius);
+
+      background: white;
+    }
+
+    .morse-pattern {
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 20px;
+
+      min-height: 140px;
+
+      margin: 20px 0;
+
+      border-radius: 16px;
+
+      background: #eafaf3;
+    }
+
+    .morse-dot {
+      width: 27px;
+      height: 27px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+    }
+
+    .morse-dash {
+      width: 95px;
+      height: 27px;
+
+      border-radius: 18px;
+
+      background: var(--green);
+    }
+
+    .morse-message {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 10px;
+
+      margin-top: 20px;
+    }
+
+    .morse-letter {
+      padding: 16px 10px;
+
+      border: 1px solid #d5ece3;
+
+      border-radius: 11px;
+
+      background: #f4fcf8;
+
+      text-align: center;
+    }
+
+    .morse-letter strong {
+      display: block;
+
+      font-size: 1.8rem;
+    }
+
+    .morse-letter small {
+      display: block;
+
+      margin-top: 5px;
+
+      color: var(--green);
+
+      font-family: Consolas, monospace;
+
+      font-size: 1.2rem;
+
+      font-weight: 800;
+    }
+
+    .sound-indicator {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 10px 13px;
+
+      margin-top: 16px;
+
+      border-radius: 10px;
+
+      background: #e9f8f1;
+
+      color: #238266;
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       13. МИНИ-ЗАДАЧИ НА ДЕКОДИРОВАНИЕ
+    ===================================================== */
+
+    .challenge-card {
+      padding: 25px;
+
+      border: 1px solid var(--line);
+
+      border-radius: 18px;
+
+      background: white;
+    }
+
+    .challenge-code {
+      margin: 17px 0;
+
+      padding: 19px;
+
+      border-radius: 12px;
+
+      background: #f1ebff;
+
+      color: #7448c3;
+
+      font-family: Consolas, monospace;
+
+      font-size: clamp(1.1rem, 3vw, 1.55rem);
+
+      font-weight: 900;
+
+      text-align: center;
+
+      overflow-wrap: anywhere;
+    }
+
+    .challenge-answer {
+      margin-top: 14px;
+
+      padding: 14px;
+
+      border-radius: 11px;
+
+      background: #e6f8ed;
+
+      color: #207d60;
+
+      font-weight: 800;
+    }
+
+    .challenge-answer[hidden] {
+      display: none;
+    }
+
+    /* =====================================================
+       14. ВОПРОСЫ ДЛЯ ЗАКРЕПЛЕНИЯ
+    ===================================================== */
+
+    .questions {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 13px;
+    }
+
+    .question {
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 14px;
+
+      padding: 20px;
+
+      border: 1px solid var(--line);
+
+      border-radius: 14px;
+
+      background: white;
+    }
+
+    .question-number {
+      display: grid;
+
+      place-items: center;
+
+      flex: 0 0 39px;
+
+      width: 39px;
+      height: 39px;
+
+      border-radius: 11px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      font-weight: 900;
+    }
+
+    .question p {
+      margin: 5px 0 0;
+
+      color: var(--text);
+
+      font-size: 0.95rem;
+    }
+
+    /* =====================================================
+       15. ИТОГ УРОКА
+    ===================================================== */
+
+    .summary {
+      padding: 38px;
+
+      border: 1px solid #cfe3f6;
+
+      border-radius: var(--radius);
+
+      background:
+        radial-gradient(
+          circle at right top,
+          #dce8ff,
+          transparent 42%
+        ),
+        white;
+    }
+
+    .summary-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 15px;
+
+      margin-top: 25px;
+    }
+
+    .summary-point {
+      padding: 21px;
+
+      border: 1px solid #d7e5f7;
+
+      border-radius: 15px;
+
+      background: #f2f7ff;
+    }
+
+    .summary-point .emoji {
+      display: block;
+
+      margin-bottom: 10px;
+
+      font-size: 2.3rem;
+    }
+
+    .summary-point strong {
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: #2c63c7;
+    }
+
+    .summary-point p {
+      margin-bottom: 0;
+
+      font-size: 0.92rem;
+    }
+
+    .final-formula {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      margin-top: 25px;
+
+      padding: 20px;
+
+      border-radius: 15px;
+
+      background: #eef4ff;
+
+      text-align: center;
+
+      font-weight: 850;
+    }
+
+    .final-formula span {
+      padding: 10px 14px;
+
+      border-radius: 10px;
+
+      background: white;
+
+      color: #345fb0;
+    }
+
+    .final-formula b {
+      color: var(--purple);
+
+      font-size: 1.5rem;
+    }
+
+    footer {
+      padding: 34px 20px 43px;
+
+      margin-top: 35px;
+
+      background: #eaf0fa;
+
+      color: #75849c;
+
+      font-size: 0.87rem;
+
+      text-align: center;
+    }
+
+    /* =====================================================
+       16. АДАПТИВНОСТЬ
+    ===================================================== */
+
+    @media (max-width: 950px) {
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-illustration {
+        max-width: 520px;
+
+        width: 100%;
+
+        margin: 0 auto;
+      }
+
+      .senses-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .sense-card,
+      .sense-card:nth-child(4),
+      .sense-card:nth-child(5) {
+        grid-column: auto;
+      }
+
+      .sense-card:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .alphabet-grid {
+        grid-template-columns:
+          repeat(7, minmax(0, 1fr));
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .section {
+        padding: 31px 0;
+      }
+
+      .hero {
+        padding: 49px 0 35px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .methods-grid,
+      .questions,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .hero-illustration {
+        min-height: 345px;
+      }
+
+      .hero-orbit {
+        width: 275px;
+        height: 275px;
+      }
+
+      .hero-person {
+        width: 155px;
+        height: 155px;
+      }
+
+      .hero-person span {
+        font-size: 5.5rem;
+      }
+
+      .sense-bubble {
+        width: 77px;
+        height: 77px;
+
+        border-width: 4px;
+
+        border-radius: 19px;
+
+        font-size: 1.9rem;
+      }
+
+      .sense-bubble small {
+        font-size: 0.57rem;
+      }
+
+      .sense-bubble.eye {
+        top: 10px;
+      }
+
+      .sense-bubble.ear {
+        top: 90px;
+        right: 0;
+      }
+
+      .sense-bubble.touch {
+        top: 90px;
+      }
+
+      .sense-bubble.nose,
+      .sense-bubble.taste {
+        bottom: 10px;
+      }
+
+      .senses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sense-card:last-child {
+        grid-column: auto;
+      }
+
+      .sense-art {
+        min-height: 135px;
+
+        font-size: 4.1rem;
+      }
+
+      .information-flow,
+      .coding-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-arrow,
+      .coding-arrow {
+        text-align: center;
+
+        transform: rotate(90deg);
+      }
+
+      .situation-display {
+        grid-template-columns: 1fr;
+      }
+
+      .situation-emoji {
+        min-height: 120px;
+
+        font-size: 4.5rem;
+      }
+
+      .situation-list {
+        grid-template-columns: 1fr;
+      }
+
+      .code-definition {
+        grid-template-columns: 1fr;
+      }
+
+      .code-symbol {
+        min-height: 100px;
+      }
+
+      .code-card .code-art {
+        margin: -20px -20px 20px;
+      }
+
+      .alphabet-grid {
+        grid-template-columns:
+          repeat(6, minmax(0, 1fr));
+
+        gap: 5px;
+      }
+
+      .alphabet-cell {
+        padding: 8px 2px;
+      }
+
+      .alphabet-cell b {
+        font-size: 0.95rem;
+      }
+
+      .cipher-body,
+      .lab-body,
+      .summary,
+      .morse-board {
+        padding: 19px;
+      }
+
+      .question {
+        padding: 16px;
+      }
+
+      .morse-pattern {
+        min-height: 105px;
+      }
+
+      .morse-dash {
+        width: 70px;
+      }
+
+      .morse-message {
+        gap: 6px;
+      }
+
+      .morse-letter {
+        padding: 12px 5px;
+      }
+
+      .cipher-input {
+        font-size: 1rem;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ===================================================
+       01. ГЛАВНЫЙ ЭКРАН
+  =================================================== -->
+
+  <header class="hero">
+
+    <div class="container hero-layout">
+
+      <div class="hero-content">
+
+        <div class="lesson-label">
+          🌍 ИНФОРМАТИКА · 5 КЛАСС
+        </div>
+
+        <h1>
+          Атлас
+          <span>информации</span>
+        </h1>
+
+        <p class="hero-description">
+          Как мы узнаём, что происходит
+          вокруг? Почему красный сигнал
+          светофора означает «стой»?
+          И как можно превратить слово
+          в секретное сообщение?
+        </p>
+
+        <p class="hero-description">
+          Сегодня мы отправимся
+          в удивительный мир
+          <strong>органов чувств, знаков и кодов!</strong>
+        </p>
+
+        <div class="hero-tags">
+
+          <span>👁️ Восприятие</span>
+
+          <span>🔤 Коды</span>
+
+          <span>🔐 Кодирование</span>
+
+          <span>🧩 Загадки</span>
+
+        </div>
+
+      </div>
+
+      <!-- Иллюстрация органов чувств -->
+
+      <div class="hero-illustration">
+
+        <div class="hero-orbit"></div>
+
+        <div class="hero-person">
+          <span>🧑</span>
+        </div>
+
+        <div class="sense-bubble eye">
+          👁️
+          <small>Зрение</small>
+        </div>
+
+        <div class="sense-bubble ear">
+          👂
+          <small>Слух</small>
+        </div>
+
+        <div class="sense-bubble nose">
+          👃
+          <small>Обоняние</small>
+        </div>
+
+        <div class="sense-bubble taste">
+          👅
+          <small>Вкус</small>
+        </div>
+
+        <div class="sense-bubble touch">
+          ✋
+          <small>Осязание</small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <main>
+
+    <!-- =================================================
+         02. ИНФОРМАЦИЯ И ЧЕЛОВЕК
+    ================================================= -->
+
+    <section class="section" id="information">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            01 · Мир вокруг нас
+          </span>
+
+          <h2>
+            Как человек получает информацию?
+          </h2>
+
+          <p class="lead">
+            Представь обычное утро.
+            Ты проснулся, услышал
+            пение птиц, увидел солнечный
+            свет и почувствовал запах
+            приготовленного завтрака.
+          </p>
+
+          <p class="lead">
+            Откуда ты узнал обо всём этом?
+            Тебе помогли органы чувств!
+          </p>
+
+        </div>
+
+        <div class="intro-banner">
+
+          <strong>
+            Что такое информация?
+          </strong>
+
+          <p>
+            <strong>Информация</strong> —
+            это сведения об окружающем мире,
+            предметах, событиях и явлениях.
+          </p>
+
+          <p>
+            Например, когда мы узнаём,
+            что на улице идёт дождь,
+            что чай горячий или что
+            прозвенел школьный звонок,
+            мы получаем информацию.
+          </p>
+
+        </div>
+
+        <div class="information-flow">
+
+          <div class="flow-step">
+
+            <span class="emoji">🌦️</span>
+
+            <strong>Окружающий мир</strong>
+
+            <small>
+              Предметы и события
+            </small>
+
+          </div>
+
+          <span class="flow-arrow">→</span>
+
+          <div class="flow-step">
+
+            <span class="emoji">👁️👂</span>
+
+            <strong>Органы чувств</strong>
+
+            <small>
+              Воспринимают сигналы
+            </small>
+
+          </div>
+
+          <span class="flow-arrow">→</span>
+
+          <div class="flow-step">
+
+            <span class="emoji">🧠</span>
+
+            <strong>Человек</strong>
+
+            <small>
+              Получает и осмысливает сведения
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Запомни
+          </strong>
+
+          <p>
+            Человек узнаёт об окружающем
+            мире благодаря органам чувств.
+            Они помогают получать
+            различные сведения,
+            а мозг обрабатывает их.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         03. ПЯТЬ СПОСОБОВ ВОСПРИЯТИЯ ИНФОРМАЦИИ
+    ================================================= -->
+
+    <section class="section" id="senses">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            02 · Органы чувств
+          </span>
+
+          <h2>
+            Пять способов восприятия информации
+          </h2>
+
+          <p class="lead">
+            У человека есть несколько
+            способов получать сведения
+            об окружающем мире.
+            Рассмотрим пять основных.
+          </p>
+
+        </div>
+
+        <div class="senses-grid">
+
+          <!-- ЗРЕНИЕ -->
+
+          <article class="sense-card">
+
+            <div class="sense-art">
+              👁️
+            </div>
+
+            <div class="sense-body">
+
+              <span class="tag">
+                01 · Зрение
+              </span>
+
+              <h3>
+                Зрительная информация
+              </h3>
+
+              <p>
+                Мы получаем её
+                с помощью глаз.
+              </p>
+
+              <p>
+                Зрение позволяет
+                различать цвета,
+                формы, размеры,
+                движение и расположение
+                предметов.
+              </p>
+
+              <div class="sense-example">
+
+                <strong>Примеры</strong>
+
+                🌈 Радуга,
+                📖 книга,
+                🚦 светофор.
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- СЛУХ -->
+
+          <article class="sense-card">
+
+            <div class="sense-art">
+              👂
+            </div>
+
+            <div class="sense-body">
+
+              <span class="tag purple">
+                02 · Слух
+              </span>
+
+              <h3>
+                Слуховая информация
+              </h3>
+
+              <p>
+                Мы получаем её
+                с помощью ушей.
+              </p>
+
+              <p>
+                Слух помогает
+                воспринимать речь,
+                музыку, шум,
+                сигналы и другие звуки.
+              </p>
+
+              <div class="sense-example">
+
+                <strong>Примеры</strong>
+
+                🎵 Музыка,
+                🔔 звонок,
+                🐦 пение птиц.
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- ОБОНЯНИЕ -->
+
+          <article class="sense-card">
+
+            <div class="sense-art">
+              👃
+            </div>
+
+            <div class="sense-body">
+
+              <span class="tag green">
+                03 · Обоняние
+              </span>
+
+              <h3>
+                Обонятельная информация
+              </h3>
+
+              <p>
+                Мы получаем её
+                с помощью носа.
+              </p>
+
+              <p>
+                Обоняние позволяет
+                различать запахи.
+                Иногда запах помогает
+                узнать о предмете,
+                даже если мы его не видим.
+              </p>
+
+              <div class="sense-example">
+
+                <strong>Примеры</strong>
+
+                🌸 Цветы,
+                🍞 свежий хлеб,
+                🌲 хвойный лес.
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- ВКУС -->
+
+          <article class="sense-card">
+
+            <div class="sense-art">
+              👅
+            </div>
+
+            <div class="sense-body">
+
+              <span class="tag"
+                    style="
+                      background:var(--orange-light);
+                      color:#ba6c25;
+                    ">
+                04 · Вкус
+              </span>
+
+              <h3>
+                Вкусовая информация
+              </h3>
+
+              <p>
+                Её мы воспринимаем
+                с помощью вкусовых
+                рецепторов, расположенных
+                прежде всего на языке.
+              </p>
+
+              <p>
+                Они помогают различать
+                сладкий, кислый,
+                солёный, горький
+                и другие вкусы.
+              </p>
+
+              <div class="sense-example">
+
+                <strong>Примеры</strong>
+
+                🍬 Конфета,
+                🍋 лимон,
+                🧂 солёная пища.
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- ОСЯЗАНИЕ -->
+
+          <article class="sense-card">
+
+            <div class="sense-art">
+              ✋
+            </div>
+
+            <div class="sense-body">
+
+              <span class="tag"
+                    style="
+                      background:var(--pink-light);
+                      color:#c85d84;
+                    ">
+                05 · Осязание
+              </span>
+
+              <h3>
+                Осязательная информация
+              </h3>
+
+              <p>
+                Мы получаем её
+                с помощью рецепторов
+                кожи.
+              </p>
+
+              <p>
+                Осязание помогает
+                чувствовать прикосновения,
+                давление, особенности
+                поверхности предметов.
+                Кожа также воспринимает
+                тепло и холод.
+              </p>
+
+              <div class="sense-example">
+
+                <strong>Примеры</strong>
+
+                🧸 Мягкая игрушка,
+                🧊 холодный лёд,
+                🪨 шероховатый камень.
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Интересный факт
+          </strong>
+
+          <p>
+            Мы редко используем
+            только один орган чувств.
+            Когда едим яблоко,
+            мы можем одновременно
+            видеть его цвет,
+            ощущать вкус,
+            чувствовать запах
+            и слышать хруст.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         04. НЕСКОЛЬКО ОРГАНОВ ЧУВСТВ ОДНОВРЕМЕННО
+    ================================================= -->
+
+    <section class="section" id="situations">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            03 · Исследуем ситуации
+          </span>
+
+          <h2>
+            Одно событие — разные ощущения
+          </h2>
+
+          <p class="lead">
+            Одно и то же событие
+            можно воспринимать
+            несколькими способами.
+            Выбери ситуацию и посмотри,
+            какую информацию о ней
+            можно получить.
+          </p>
+
+        </div>
+
+        <div class="situation-lab">
+
+          <div class="lab-header">
+
+            <h3>
+              🔎 Лаборатория наблюдений
+            </h3>
+
+            <span class="tag">
+              Попробуй сам
+            </span>
+
+          </div>
+
+          <div class="lab-body">
+
+            <div class="situation-buttons">
+
+              <button
+                class="situation-button active"
+                type="button"
+                data-situation="apple"
+                aria-pressed="true"
+              >
+                🍎 Яблоко
+              </button>
+
+              <button
+                class="situation-button"
+                type="button"
+                data-situation="rain"
+                aria-pressed="false"
+              >
+                🌧️ Дождь
+              </button>
+
+              <button
+                class="situation-button"
+                type="button"
+                data-situation="flower"
+                aria-pressed="false"
+              >
+                🌸 Цветок
+              </button>
+
+            </div>
+
+            <div class="situation-display">
+
+              <div
+                class="situation-emoji"
+                id="situationEmoji"
+                aria-hidden="true"
+              >
+                🍎
+              </div>
+
+              <div class="situation-info">
+
+                <h3 id="situationTitle">
+                  Рассматриваем яблоко
+                </h3>
+
+                <p id="situationDescription">
+                  Один предмет может сообщать
+                  нам разную информацию.
+                </p>
+
+                <div
+                  class="situation-list"
+                  id="situationList"
+                  aria-live="polite"
+                >
+                  <!-- Создаётся JavaScript -->
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="callout green">
+
+          <strong>
+            Вывод
+          </strong>
+
+          <p>
+            Разные органы чувств
+            могут помогать нам
+            узнавать об одном
+            и том же предмете
+            или событии.
+          </p>
+
+          <p>
+            Иногда они дополняют
+            друг друга и позволяют
+            получить более полное
+            представление
+            об окружающем мире.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         05. СИГНАЛЫ И КОМПЬЮТЕР
+    ================================================= -->
+
+    <section class="section" id="signals">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            04 · Информация вокруг нас
+          </span>
+
+          <h2>
+            Информацию можно передавать по-разному
+          </h2>
+
+          <p class="lead">
+            Чтобы предупредить человека,
+            не всегда нужно произносить слова.
+            Иногда достаточно света,
+            звука или изображения.
+          </p>
+
+        </div>
+
+        <div class="grid grid-3">
+
+          <article class="card signal-card">
+
+            <div class="signal-graphic">
+
+              <div class="traffic-light">
+
+                <span class="red"></span>
+
+                <span class="yellow"></span>
+
+                <span class="green"></span>
+
+              </div>
+
+            </div>
+
+            <h3>Светофор</h3>
+
+            <p>
+              Человек видит сигнал
+              определённого цвета
+              и понимает,
+              какое действие
+              нужно выполнить.
+            </p>
+
+          </article>
+
+          <article class="card signal-card">
+
+            <div class="signal-graphic">
+
+              <span class="big-emoji">
+                🔔
+              </span>
+
+            </div>
+
+            <h3>Звуковой сигнал</h3>
+
+            <p>
+              Звонок или другой
+              условный звук
+              может сообщать
+              о начале события
+              или предупреждать.
+            </p>
+
+          </article>
+
+          <article class="card signal-card">
+
+            <div class="signal-graphic">
+
+              <span class="big-emoji">
+                🚸
+              </span>
+
+            </div>
+
+            <h3>Дорожный знак</h3>
+
+            <p>
+              Рисунок передаёт
+              определённое сообщение.
+              Чтобы его понять,
+              нужно знать
+              значение знака.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="card"
+             style="margin-top:20px">
+
+          <div class="grid grid-2"
+               style="align-items:center">
+
+            <div>
+
+              <h3>
+                А как компьютер сообщает нам информацию?
+              </h3>
+
+              <p>
+                Компьютер часто использует
+                экран и звуковые сигналы.
+              </p>
+
+              <p>
+                Например, на экране
+                может появиться сообщение
+                об ошибке, а приложение
+                может подать звук,
+                чтобы привлечь внимание.
+              </p>
+
+              <p>
+                Существуют также специальные
+                способы представления
+                информации для людей
+                с различными потребностями:
+                озвучивание текста,
+                субтитры,
+                увеличение изображения,
+                тактильные устройства.
+              </p>
+
+            </div>
+
+            <div class="signal-graphic"
+                 style="margin:0">
+
+              <span class="big-emoji">
+                💻🔊
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         06. ЧТО ТАКОЕ КОД?
+    ================================================= -->
+
+    <section class="section" id="codes">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            05 · В мире кодов
+          </span>
+
+          <h2>
+            Как знаки передают сообщения?
+          </h2>
+
+          <p class="lead">
+            Представь красный сигнал
+            светофора. Сам по себе
+            красный цвет — просто цвет.
+            Но на светофоре он
+            имеет особое значение.
+          </p>
+
+          <p class="lead">
+            Почему мы понимаем
+            это значение?
+            Потому что знаем
+            установленное правило.
+          </p>
+
+        </div>
+
+        <div class="code-definition">
+
+          <div class="code-symbol">
+            ? → !
+          </div>
+
+          <div>
+
+            <h3>
+              Что такое код?
+            </h3>
+
+            <p>
+              <strong>Код</strong> —
+              это система условных
+              знаков или сигналов,
+              с помощью которых
+              представляют информацию
+              по определённым правилам.
+            </p>
+
+            <p>
+              Например, если мы
+              договорились, что
+              один хлопок означает «да»,
+              а два хлопка — «нет»,
+              то создали простой код.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="callout purple">
+
+          <strong>
+            Важно знать правило
+          </strong>
+
+          <p>
+            Если один человек
+            придумал условные обозначения,
+            а другой не знает,
+            что они означают,
+            сообщение может остаться
+            непонятным.
+          </p>
+
+          <p>
+            Для правильной передачи
+            информации отправитель
+            и получатель должны
+            использовать согласованные
+            правила кодирования.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         07. КОДЫ В ПОВСЕДНЕВНОЙ ЖИЗНИ
+    ================================================= -->
+
+    <section class="section" id="everyday-codes">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            06 · Примеры вокруг нас
+          </span>
+
+          <h2>
+            Где мы встречаем коды?
+          </h2>
+
+          <p class="lead">
+            Коды используются
+            намного чаще, чем кажется.
+            Они помогают людям
+            записывать сведения,
+            ориентироваться,
+            узнавать предметы
+            и передавать сообщения.
+          </p>
+
+        </div>
+
+        <div class="grid grid-3">
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              🔤
+            </div>
+
+            <h3>
+              Буквы и алфавит
+            </h3>
+
+            <p>
+              Буквы — условные знаки,
+              с помощью которых
+              мы записываем
+              звуки речи и слова.
+            </p>
+
+          </article>
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              🔢
+            </div>
+
+            <h3>
+              Цифры
+            </h3>
+
+            <p>
+              Цифры используются
+              для записи чисел.
+              Например, запись
+              25 обозначает
+              число двадцать пять.
+            </p>
+
+          </article>
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              🚳
+            </div>
+
+            <h3>
+              Дорожные знаки
+            </h3>
+
+            <p>
+              Форма, цвет
+              и изображение
+              дорожного знака
+              помогают передавать
+              правила и предупреждения.
+            </p>
+
+          </article>
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              🗺️
+            </div>
+
+            <h3>
+              Условные знаки на картах
+            </h3>
+
+            <p>
+              На карте дороги,
+              реки, леса и другие
+              объекты обозначаются
+              специальными символами.
+            </p>
+
+          </article>
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              ▥
+            </div>
+
+            <h3>
+              Штрихкоды
+            </h3>
+
+            <p>
+              Сочетания полос
+              разной ширины
+              позволяют устройствам
+              считывать закодированные
+              данные о товаре.
+            </p>
+
+          </article>
+
+          <article class="card code-card">
+
+            <div class="code-art">
+              ▦
+            </div>
+
+            <h3>
+              QR-коды
+            </h3>
+
+            <p>
+              QR-код состоит
+              из множества тёмных
+              и светлых элементов.
+              В нём могут содержаться,
+              например, адрес сайта
+              или текст.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            А как понять код?
+          </strong>
+
+          <p>
+            Чтобы прочитать
+            условные знаки на карте,
+            мы смотрим легенду карты —
+            список обозначений
+            и их значений.
+          </p>
+
+          <p>
+            Чтобы понять дорожный знак,
+            нужно знать правила
+            дорожного движения.
+            А QR-код обычно считывается
+            специальной программой.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         08. СПОСОБЫ КОДИРОВАНИЯ
+    ================================================= -->
+
+    <section class="section" id="methods">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            07 · Представление информации
+          </span>
+
+          <h2>
+            Четыре способа кодирования
+          </h2>
+
+          <p class="lead">
+            Одно сообщение можно
+            представить с помощью
+            разных знаков и сигналов.
+            Рассмотрим четыре
+            распространённых способа.
+          </p>
+
+        </div>
+
+        <div class="methods-grid">
+
+          <article class="method">
+
+            <div class="method-visual">
+
+              <div class="example">
+                А Б В
+              </div>
+
+            </div>
+
+            <div class="method-body">
+
+              <span class="tag">
+                Способ №1
+              </span>
+
+              <h3 style="margin-top:12px">
+                Символьный
+              </h3>
+
+              <p>
+                Информация представляется
+                с помощью букв
+                и других специальных
+                символов.
+              </p>
+
+              <p>
+                <strong>Пример:</strong>
+                слово «ДОМ»
+                записано тремя буквами.
+              </p>
+
+            </div>
+
+          </article>
+
+          <article class="method">
+
+            <div class="method-visual">
+
+              <div class="example">
+                1 2 3
+              </div>
+
+            </div>
+
+            <div class="method-body">
+
+              <span class="tag purple">
+                Способ №2
+              </span>
+
+              <h3 style="margin-top:12px">
+                Числовой
+              </h3>
+
+              <p>
+                Для представления
+                сведений используются
+                числа.
+              </p>
+
+              <p>
+                <strong>Пример:</strong>
+                каждой букве
+                можно назначить
+                номер в алфавите.
+              </p>
+
+            </div>
+
+          </article>
+
+          <article class="method">
+
+            <div class="method-visual">
+
+              <div class="example">
+                ☀️ 🌧️ ❄️
+              </div>
+
+            </div>
+
+            <div class="method-body">
+
+              <span class="tag"
+                    style="
+                      color:#ba6c25;
+                      background:var(--orange-light);
+                    ">
+                Способ №3
+              </span>
+
+              <h3 style="margin-top:12px">
+                Графический
+              </h3>
+
+              <p>
+                Информация передаётся
+                с помощью рисунков,
+                значков и условных
+                изображений.
+              </p>
+
+              <p>
+                <strong>Пример:</strong>
+                значки погоды
+                в прогнозе.
+              </p>
+
+            </div>
+
+          </article>
+
+          <article class="method">
+
+            <div class="method-visual">
+
+              <div class="example">
+                ♪ ♫ ♪
+              </div>
+
+            </div>
+
+            <div class="method-body">
+
+              <span class="tag green">
+                Способ №4
+              </span>
+
+              <h3 style="margin-top:12px">
+                Звуковой
+              </h3>
+
+              <p>
+                Для передачи информации
+                используются звуковые
+                сигналы.
+              </p>
+
+              <p>
+                <strong>Пример:</strong>
+                один условный сигнал
+                означает начало действия,
+                другой — его завершение.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout green">
+
+          <strong>
+            Одно сообщение — разные коды
+          </strong>
+
+          <p>
+            Представим сообщение:
+            «Идёт дождь».
+          </p>
+
+          <p>
+            Его можно записать словами,
+            показать значком 🌧️
+            или передать заранее
+            условленным звуковым сигналом.
+          </p>
+
+          <p>
+            Смысл сообщения
+            при этом может сохраняться,
+            хотя форма его представления
+            меняется.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         09. КОДИРОВАНИЕ И ДЕКОДИРОВАНИЕ
+    ================================================= -->
+
+    <section class="section" id="coding">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            08 · Превращение сообщений
+          </span>
+
+          <h2>
+            Кодирование и декодирование
+          </h2>
+
+          <p class="lead">
+            Мы уже знаем, что информацию
+            можно представить
+            разными знаками.
+            А теперь узнаем,
+            как называется
+            такое преобразование.
+          </p>
+
+        </div>
+
+        <div class="grid grid-2">
+
+          <article class="card">
+
+            <div class="card-icon">
+              🔐
+            </div>
+
+            <h3>
+              Кодирование
+            </h3>
+
+            <p>
+              <strong>Кодирование</strong> —
+              представление информации
+              с помощью выбранного кода
+              по установленным правилам.
+            </p>
+
+            <p>
+              Например, вместо букв
+              можно записать
+              соответствующие им числа.
+            </p>
+
+          </article>
+
+          <article class="card">
+
+            <div class="card-icon"
+                 style="
+                   background:var(--green-light);
+                 ">
+              🔓
+            </div>
+
+            <h3>
+              Декодирование
+            </h3>
+
+            <p>
+              <strong>Декодирование</strong> —
+              восстановление исходного
+              сообщения по известным
+              правилам кодирования.
+            </p>
+
+            <p>
+              Например, по числам
+              можно определить,
+              какие буквы
+              они обозначают.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="coding-flow"
+             style="margin-top:20px">
+
+          <div class="coding-step">
+
+            <small>
+              Исходное сообщение
+            </small>
+
+            <span class="value">
+              КОТ
+            </span>
+
+          </div>
+
+          <span class="coding-arrow">
+            →
+          </span>
+
+          <div class="coding-step">
+
+            <small>
+              Кодирование
+            </small>
+
+            <span class="value">
+              12 16 20
+            </span>
+
+          </div>
+
+          <span class="coding-arrow">
+            →
+          </span>
+
+          <div class="coding-step">
+
+            <small>
+              Декодирование
+            </small>
+
+            <span class="value">
+              КОТ
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="callout purple">
+
+          <strong>
+            Почему слово КОТ превратилось в 12 16 20?
+          </strong>
+
+          <p>
+            Мы воспользовались
+            простым правилом:
+            каждая буква заменяется
+            её номером
+            в русском алфавите.
+          </p>
+
+          <p>
+            При этом мы считаем,
+            что буква <strong>Ё</strong>
+            занимает отдельное
+            седьмое место.
+          </p>
+
+          <p>
+            Поэтому:
+            К = 12,
+            О = 16,
+            Т = 20.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         10. ИНТЕРАКТИВНАЯ ЛАБОРАТОРИЯ КОДОВ
+    ================================================= -->
+
+    <section class="section" id="cipher">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            09 · Попробуй сам
+          </span>
+
+          <h2>
+            Лаборатория секретных сообщений
+          </h2>
+
+          <p class="lead">
+            Представь, что ты придумал
+            собственный способ
+            записывать сообщения.
+            Вместо каждой буквы
+            будешь использовать
+            её номер в алфавите.
+          </p>
+
+          <p class="lead">
+            Давай посмотрим,
+            как это работает.
+          </p>
+
+        </div>
+
+        <div class="cipher-lab">
+
+          <div class="cipher-head">
+
+            <span class="tag purple">
+              🔐 Интерактивное исследование
+            </span>
+
+            <h3>
+              Кодирование букв числами
+            </h3>
+
+            <p>
+              В этой лаборатории
+              используется русский алфавит
+              из 33 букв,
+              включая букву Ё.
+            </p>
+
+          </div>
+
+          <div class="cipher-body">
+
+            <h3>
+              Наше правило кодирования
+            </h3>
+
+            <p>
+              Каждой букве соответствует
+              номер её места
+              в алфавите.
+              Например:
+            </p>
+
+            <div class="cipher-example">
+
+              <span>А = 1</span>
+
+              <span>Б = 2</span>
+
+              <span>В = 3</span>
+
+              <span>Ё = 7</span>
+
+              <span>К = 12</span>
+
+              <span>Я = 33</span>
+
+            </div>
+
+            <h3 style="margin-top:27px">
+              Таблица нашего кода
+            </h3>
+
+            <div
+              class="alphabet-grid"
+              id="alphabetGrid"
+              aria-label="Русский алфавит и номера букв"
+            >
+              <!-- Таблица создаётся JavaScript -->
+            </div>
+
+            <label
+              class="cipher-field"
+              for="cipherInput"
+            >
+              Введи короткое слово
+              или сообщение
+            </label>
+
+            <input
+              class="cipher-input"
+              type="text"
+              id="cipherInput"
+              maxlength="48"
+              value="КОТ"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Например: МИР"
+            >
+
+            <div class="button-row">
+
+              <button
+                class="btn purple"
+                id="encodeButton"
+                type="button"
+              >
+                🔐 Закодировать
+              </button>
+
+              <button
+                class="btn secondary"
+                id="exampleCat"
+                type="button"
+              >
+                КОТ
+              </button>
+
+              <button
+                class="btn secondary"
+                id="exampleWorld"
+                type="button"
+              >
+                МИР
+              </button>
+
+              <button
+                class="btn secondary"
+                id="exampleSchool"
+                type="button"
+              >
+                ШКОЛА
+              </button>
+
+            </div>
+
+            <div class="cipher-output">
+
+              <small>
+                Результат кодирования
+              </small>
+
+              <output
+                id="cipherOutput"
+                aria-live="polite"
+              >
+                12 16 20
+              </output>
+
+            </div>
+
+            <p
+              class="cipher-warning"
+              id="cipherWarning"
+              role="status"
+            ></p>
+
+            <div class="callout purple">
+
+              <strong>
+                Исследовательский вопрос
+              </strong>
+
+              <p>
+                Попробуй записать
+                слово «МИР».
+              </p>
+
+              <p>
+                Затем поменяй порядок
+                двух букв и посмотри,
+                как изменится код.
+              </p>
+
+              <p>
+                Почему для восстановления
+                исходного слова важно
+                сохранять порядок чисел?
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         11. АЗБУКА МОРЗЕ
+    ================================================= -->
+
+    <section class="section" id="morse">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            10 · Сигналы вместо букв
+          </span>
+
+          <h2>
+            Азбука Морзе
+          </h2>
+
+          <p class="lead">
+            Числа — не единственный
+            способ заменить буквы.
+            Существуют системы кодирования,
+            в которых используются
+            последовательности
+            коротких и длинных сигналов.
+          </p>
+
+        </div>
+
+        <div class="morse-board">
+
+          <span class="tag green">
+            Знакомство с азбукой Морзе
+          </span>
+
+          <h3 style="margin-top:16px">
+            Точки и тире
+          </h3>
+
+          <p>
+            В азбуке Морзе
+            применяются короткие
+            и длинные сигналы.
+          </p>
+
+          <p>
+            На бумаге их удобно
+            показывать с помощью
+            <strong>точек и тире</strong>.
+          </p>
+
+          <p>
+            Например, буква
+            <strong>А</strong>
+            обозначается
+            последовательностью
+            «точка — тире».
+          </p>
+
+          <div class="morse-pattern">
+
+            <span
+              class="morse-dot"
+              aria-label="Точка"
+            ></span>
+
+            <span
+              class="morse-dash"
+              aria-label="Тире"
+            ></span>
+
+          </div>
+
+          <p style="text-align:center">
+
+            <strong>
+              А = · —
+            </strong>
+
+          </p>
+
+          <h3 style="margin-top:26px">
+            Как выглядит сообщение СОС?
+          </h3>
+
+          <div class="morse-message">
+
+            <div class="morse-letter">
+
+              <strong>С</strong>
+
+              <small>···</small>
+
+            </div>
+
+            <div class="morse-letter">
+
+              <strong>О</strong>
+
+              <small>———</small>
+
+            </div>
+
+            <div class="morse-letter">
+
+              <strong>С</strong>
+
+              <small>···</small>
+
+            </div>
+
+          </div>
+
+          <div class="callout green">
+
+            <strong>
+              Обрати внимание
+            </strong>
+
+            <p>
+              Азбуку Морзе можно
+              использовать
+              не только со звуком.
+              Последовательности сигналов
+              можно показывать
+              светом или записывать
+              точками и тире.
+            </p>
+
+            <p>
+              Это хороший пример того,
+              как один код
+              может передаваться
+              разными физическими сигналами.
+            </p>
+
+          </div>
+
+          <h3 style="margin-top:28px">
+            Послушай короткий и длинный сигнал
+          </h3>
+
+          <p>
+            Нажми на кнопки.
+            Если устройство позволяет
+            воспроизводить звук,
+            ты услышишь,
+            чем отличаются сигналы.
+            Их обозначения
+            также показаны на экране.
+          </p>
+
+          <div class="button-row">
+
+            <button
+              class="btn"
+              id="shortSound"
+              type="button"
+            >
+              🔊 Точка ·
+            </button>
+
+            <button
+              class="btn secondary"
+              id="longSound"
+              type="button"
+            >
+              🔊 Тире —
+            </button>
+
+          </div>
+
+          <div
+            class="sound-indicator"
+            id="soundIndicator"
+            role="status"
+            aria-live="polite"
+          >
+            🎵 Выбери сигнал
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         12. НЕБОЛЬШИЕ ЗАДАЧИ НА ДЕКОДИРОВАНИЕ
+    ================================================= -->
+
+    <section class="section" id="challenges">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            11 · Проверим правило
+          </span>
+
+          <h2>
+            Попробуй разгадать сообщения
+          </h2>
+
+          <p class="lead">
+            Перед тобой три коротких
+            сообщения. Используй
+            таблицу с номерами букв
+            из нашей лаборатории.
+          </p>
+
+          <p class="lead">
+            Сначала попробуй
+            ответить самостоятельно,
+            а затем открой ответ.
+          </p>
+
+        </div>
+
+        <div class="grid grid-3">
+
+          <article class="challenge-card">
+
+            <span class="tag purple">
+              Задание 1
+            </span>
+
+            <h3 style="margin-top:13px">
+              Какое это слово?
+            </h3>
+
+            <div class="challenge-code">
+              12 16 20
+            </div>
+
+            <p>
+              Найди буквы
+              с номерами 12, 16 и 20.
+            </p>
+
+            <button
+              type="button"
+              class="btn secondary reveal-button"
+              aria-expanded="false"
+              aria-controls="answer1"
+              data-answer="answer1"
+            >
+              Показать ответ
+            </button>
+
+            <div
+              class="challenge-answer"
+              id="answer1"
+              hidden
+            >
+              КОТ 🐱
+            </div>
+
+          </article>
+
+          <article class="challenge-card">
+
+            <span class="tag purple">
+              Задание 2
+            </span>
+
+            <h3 style="margin-top:13px">
+              Расшифруй слово
+            </h3>
+
+            <div class="challenge-code">
+              14 10 18
+            </div>
+
+            <p>
+              Каждому числу
+              соответствует
+              одна буква.
+            </p>
+
+            <button
+              type="button"
+              class="btn secondary reveal-button"
+              aria-expanded="false"
+              aria-controls="answer2"
+              data-answer="answer2"
+            >
+              Показать ответ
+            </button>
+
+            <div
+              class="challenge-answer"
+              id="answer2"
+              hidden
+            >
+              МИР 🌍
+            </div>
+
+          </article>
+
+          <article class="challenge-card">
+
+            <span class="tag purple">
+              Задание 3
+            </span>
+
+            <h3 style="margin-top:13px">
+              Узнай сообщение
+            </h3>
+
+            <div class="challenge-code">
+              5 16 14
+            </div>
+
+            <p>
+              Используй тот же
+              русский алфавит
+              из 33 букв.
+            </p>
+
+            <button
+              type="button"
+              class="btn secondary reveal-button"
+              aria-expanded="false"
+              aria-controls="answer3"
+              data-answer="answer3"
+            >
+              Показать ответ
+            </button>
+
+            <div
+              class="challenge-answer"
+              id="answer3"
+              hidden
+            >
+              ДОМ 🏠
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>
+            Почему удалось прочитать сообщения?
+          </strong>
+
+          <p>
+            Мы знали правило:
+            каждому числу
+            соответствует буква
+            с определённым номером
+            в алфавите.
+          </p>
+
+          <p>
+            Без этого правила
+            последовательность чисел
+            была бы непонятной.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         13. ВОПРОСЫ ПО УРОКУ
+    ================================================= -->
+
+    <section class="section" id="questions">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            12 · Закрепление знаний
+          </span>
+
+          <h2>
+            Вопросы по уроку
+          </h2>
+
+          <p class="lead">
+            Ответь на 12 вопросов
+            своими словами.
+            Если забыл ответ,
+            вернись к нужному
+            разделу урока.
+          </p>
+
+        </div>
+
+        <div class="questions">
+
+          <div class="question">
+
+            <span class="question-number">01</span>
+
+            <p>
+              Какими основными способами
+              человек воспринимает информацию?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">02</span>
+
+            <p>
+              Какие органы чувств
+              помогают человеку
+              получать информацию?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">03</span>
+
+            <p>
+              Что называют
+              зрительной информацией?
+              Приведи пример.
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">04</span>
+
+            <p>
+              Чем слуховая информация
+              отличается от зрительной?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">05</span>
+
+            <p>
+              Может ли человек
+              получать сведения
+              об одном событии
+              несколькими способами?
+              Приведи пример.
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">06</span>
+
+            <p>
+              Что такое код?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">07</span>
+
+            <p>
+              Для чего люди
+              используют коды?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">08</span>
+
+            <p>
+              Какие коды
+              встречаются
+              в повседневной жизни?
+              Назови несколько.
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">09</span>
+
+            <p>
+              Что называют
+              кодированием информации?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">10</span>
+
+            <p>
+              Что такое декодирование?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">11</span>
+
+            <p>
+              Какие основные способы
+              кодирования информации
+              мы изучили?
+            </p>
+
+          </div>
+
+          <div class="question">
+
+            <span class="question-number">12</span>
+
+            <p>
+              Почему для понимания
+              закодированного сообщения
+              необходимо знать
+              правило кодирования?
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =================================================
+         14. ИТОГ УРОКА
+    ================================================= -->
+
+    <section class="section" id="summary">
+
+      <div class="container">
+
+        <div class="summary">
+
+          <span class="eyebrow">
+            13 · Завершение
+          </span>
+
+          <h2>
+            Итог урока
+          </h2>
+
+          <p class="lead">
+            Сегодня мы узнали,
+            как человек получает
+            информацию об окружающем мире
+            и почему люди используют
+            разные знаки и сигналы
+            для передачи сообщений.
+          </p>
+
+          <div class="summary-grid">
+
+            <div class="summary-point">
+
+              <span class="emoji">
+                👁️👂
+              </span>
+
+              <strong>
+                Восприятие информации
+              </strong>
+
+              <p>
+                Органы чувств
+                помогают человеку
+                получать сведения
+                о предметах,
+                событиях и явлениях.
+              </p>
+
+            </div>
+
+            <div class="summary-point">
+
+              <span class="emoji">
+                🔤
+              </span>
+
+              <strong>
+                Коды
+              </strong>
+
+              <p>
+                Люди используют
+                условные знаки
+                и сигналы,
+                чтобы представлять
+                и передавать информацию.
+              </p>
+
+            </div>
+
+            <div class="summary-point">
+
+              <span class="emoji">
+                🔐
+              </span>
+
+              <strong>
+                Кодирование
+              </strong>
+
+              <p>
+                Сообщение можно
+                представить с помощью
+                разных кодов,
+                а затем восстановить
+                по известному правилу.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="final-formula">
+
+            <span>
+              Сообщение
+            </span>
+
+            <b>→</b>
+
+            <span>
+              Кодирование
+            </span>
+
+            <b>→</b>
+
+            <span>
+              Код
+            </span>
+
+          </div>
+
+          <div class="final-formula">
+
+            <span>
+              Код
+            </span>
+
+            <b>→</b>
+
+            <span>
+              Декодирование
+            </span>
+
+            <b>→</b>
+
+            <span>
+              Сообщение
+            </span>
+
+          </div>
+
+          <div class="callout green">
+
+            <strong>
+              Главный вывод урока
+            </strong>
+
+            <p>
+              Информация окружает нас
+              повсюду.
+              Мы воспринимаем её
+              с помощью органов чувств,
+              а для хранения
+              и передачи сообщений
+              используем различные
+              знаки и коды.
+            </p>
+
+            <p>
+              Знание правил кодирования
+              помогает правильно
+              понимать передаваемую
+              информацию.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    Информатика · 5 класс ·
+    Способы восприятия информации ·
+    В мире кодов
+
+  </footer>
+
+  <!-- ===================================================
+       15. JAVASCRIPT
+       Интерактивные элементы сайта
+  =================================================== -->
+
+  <script>
+
+    "use strict";
+
+
+    /* =================================================
+       ЛАБОРАТОРИЯ №1
+
+       Разные способы восприятия
+       одного предмета или события.
+    ================================================= */
+
+    const situationButtons =
+      document.querySelectorAll(
+        ".situation-button"
+      );
+
+    const situationEmoji =
+      document.getElementById(
+        "situationEmoji"
+      );
+
+    const situationTitle =
+      document.getElementById(
+        "situationTitle"
+      );
+
+    const situationDescription =
+      document.getElementById(
+        "situationDescription"
+      );
+
+    const situationList =
+      document.getElementById(
+        "situationList"
+      );
+
+
+    /* Данные для трёх ситуаций. */
+
+    const situations = {
+
+      apple: {
+
+        emoji: "🍎",
+
+        title: "Рассматриваем яблоко",
+
+        description:
+          "Один предмет можно изучать " +
+          "с помощью нескольких органов чувств.",
+
+        senses: [
+
+          [
+            "👁️ Зрение",
+            "Видим цвет и форму яблока."
+          ],
+
+          [
+            "👃 Обоняние",
+            "Чувствуем запах яблока."
+          ],
+
+          [
+            "👅 Вкус",
+            "Узнаём вкус яблока, когда едим его."
+          ],
+
+          [
+            "👂 Слух",
+            "Можем услышать хруст при укусе."
+          ]
+
+        ]
+
+      },
+
+      rain: {
+
+        emoji: "🌧️",
+
+        title: "Наблюдаем дождь",
+
+        description:
+          "О том, что идёт дождь, " +
+          "можно узнать разными способами.",
+
+        senses: [
+
+          [
+            "👁️ Зрение",
+            "Видим падающие капли и мокрые поверхности."
+          ],
+
+          [
+            "👂 Слух",
+            "Слышим шум дождя."
+          ],
+
+          [
+            "✋ Осязание",
+            "Ощущаем прикосновение капель к коже."
+          ],
+
+          [
+            "👃 Обоняние",
+            "Иногда чувствуем запах влажной земли."
+          ]
+
+        ]
+
+      },
+
+      flower: {
+
+        emoji: "🌸",
+
+        title: "Изучаем цветок",
+
+        description:
+          "Цветок тоже может сообщать " +
+          "нам разные сведения.",
+
+        senses: [
+
+          [
+            "👁️ Зрение",
+            "Рассматриваем цвет и форму лепестков."
+          ],
+
+          [
+            "👃 Обоняние",
+            "Можем почувствовать аромат."
+          ],
+
+          [
+            "✋ Осязание",
+            "Осторожно ощущаем поверхность лепестка."
+          ]
+
+        ]
+
+      }
+
+    };
+
+
+    /* Функция обновляет карточку ситуации. */
+
+    function showSituation(name) {
+
+      const data = situations[name];
+
+      if (!data) {
+        return;
+      }
+
+      situationEmoji.textContent =
+        data.emoji;
+
+      situationTitle.textContent =
+        data.title;
+
+      situationDescription.textContent =
+        data.description;
+
+      situationList.replaceChildren();
+
+
+      /* Создаём отдельные карточки ощущений. */
+
+      data.senses.forEach(item => {
+
+        const block =
+          document.createElement("div");
+
+        block.className =
+          "situation-item";
+
+        const title =
+          document.createElement("strong");
+
+        title.textContent =
+          item[0];
+
+        const description =
+          document.createElement("span");
+
+        description.textContent =
+          item[1];
+
+        block.append(
+          title,
+          description
+        );
+
+        situationList.appendChild(
+          block
+        );
+
+      });
+
+
+      /* Обновляем выбранную кнопку. */
+
+      situationButtons.forEach(button => {
+
+        const active =
+          button.dataset.situation === name;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(active)
+        );
+
+      });
+
+    }
+
+
+    /* Нажатия на кнопки ситуаций. */
+
+    situationButtons.forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          showSituation(
+            button.dataset.situation
+          );
+
+        }
+      );
+
+    });
+
+
+    /* Начальная ситуация. */
+
+    showSituation("apple");
+
+
+
+    /* =================================================
+       ЛАБОРАТОРИЯ №2
+
+       Кодирование русских букв
+       с помощью их номеров в алфавите.
+
+       Важно:
+       используем 33 буквы, включая Ё.
+    ================================================= */
+
+    const alphabet =
+      "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+
+
+    const alphabetGrid =
+      document.getElementById(
+        "alphabetGrid"
+      );
+
+    const cipherInput =
+      document.getElementById(
+        "cipherInput"
+      );
+
+    const cipherOutput =
+      document.getElementById(
+        "cipherOutput"
+      );
+
+    const cipherWarning =
+      document.getElementById(
+        "cipherWarning"
+      );
+
+
+    /* Создаём таблицу букв и номеров. */
+
+    function createAlphabetTable() {
+
+      alphabetGrid.replaceChildren();
+
+      for (
+        let index = 0;
+        index < alphabet.length;
+        index++
+      ) {
+
+        const cell =
+          document.createElement("div");
+
+        cell.className =
+          "alphabet-cell";
+
+        const letter =
+          document.createElement("b");
+
+        letter.textContent =
+          alphabet[index];
+
+        const number =
+          document.createElement("small");
+
+        number.textContent =
+          index + 1;
+
+        cell.append(
+          letter,
+          number
+        );
+
+        alphabetGrid.appendChild(
+          cell
+        );
+
+      }
+
+    }
+
+
+    /* Кодирование одного сообщения. */
+
+    function encodeMessage() {
+
+      const message =
+        cipherInput.value.toUpperCase();
+
+      const result = [];
+
+      const unsupported = new Set();
+
+
+      /* Разбираем символы сообщения. */
+
+      for (const symbol of message) {
+
+        /* Пробел между словами обозначим /. */
+
+        if (symbol === " ") {
+
+          result.push("/");
+
+          continue;
+
+        }
+
+
+        /* Ищем букву в алфавите. */
+
+        const index =
+          alphabet.indexOf(symbol);
+
+
+        if (index !== -1) {
+
+          result.push(
+            String(index + 1)
+          );
+
+        } else {
+
+          unsupported.add(symbol);
+
+        }
+
+      }
+
+
+      /* Выводим полученный код. */
+
+      cipherOutput.textContent =
+        result.length
+          ? result.join(" ")
+          : "Введите сообщение";
+
+
+      /* Объясняем ограничения кода. */
+
+      if (unsupported.size > 0) {
+
+        cipherWarning.textContent =
+          "В этой таблице кодируются " +
+          "только русские буквы и пробелы. " +
+          "Другие символы пропущены.";
+
+      } else {
+
+        cipherWarning.textContent =
+          "Пробел между словами обозначается знаком /.";
+
+      }
+
+    }
+
+
+    /* Кнопка кодирования. */
+
+    document.getElementById(
+      "encodeButton"
+    ).addEventListener(
+      "click",
+      encodeMessage
+    );
+
+
+    /* Обновление при изменении текста. */
+
+    cipherInput.addEventListener(
+      "input",
+      encodeMessage
+    );
+
+
+    /* Готовые примеры. */
+
+    function loadCipherExample(text) {
+
+      cipherInput.value = text;
+
+      encodeMessage();
+
+    }
+
+
+    document.getElementById(
+      "exampleCat"
+    ).addEventListener(
+      "click",
+      () => loadCipherExample("КОТ")
+    );
+
+
+    document.getElementById(
+      "exampleWorld"
+    ).addEventListener(
+      "click",
+      () => loadCipherExample("МИР")
+    );
+
+
+    document.getElementById(
+      "exampleSchool"
+    ).addEventListener(
+      "click",
+      () => loadCipherExample("ШКОЛА")
+    );
+
+
+    /* Первый запуск лаборатории. */
+
+    createAlphabetTable();
+
+    encodeMessage();
+
+
+
+    /* =================================================
+       ЛАБОРАТОРИЯ №3
+
+       Воспроизведение короткого
+       и длинного звукового сигнала.
+
+       Используется Web Audio API браузера.
+
+       Звук воспроизводится только
+       после нажатия кнопки пользователем.
+    ================================================= */
+
+    const shortSound =
+      document.getElementById(
+        "shortSound"
+      );
+
+    const longSound =
+      document.getElementById(
+        "longSound"
+      );
+
+    const soundIndicator =
+      document.getElementById(
+        "soundIndicator"
+      );
+
+
+    let audioContext = null;
+
+
+    /* Создание короткого звукового сигнала. */
+
+    async function playSignal(
+      duration,
+      label
+    ) {
+
+      soundIndicator.textContent =
+        label;
+
+
+      const AudioContextClass =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+
+      /* Если браузер не поддерживает звук,
+         сохраняем текстовое обозначение. */
+
+      if (!AudioContextClass) {
+
+        soundIndicator.textContent =
+          label +
+          " · Воспроизведение звука недоступно";
+
+        return;
+
+      }
+
+
+      try {
+
+        if (!audioContext) {
+
+          audioContext =
+            new AudioContextClass();
+
+        }
+
+
+        if (
+          audioContext.state === "suspended"
+        ) {
+
+          await audioContext.resume();
+
+        }
+
+
+        /* Создаём генератор звука. */
+
+        const oscillator =
+          audioContext.createOscillator();
+
+        const gain =
+          audioContext.createGain();
+
+
+        oscillator.type =
+          "sine";
+
+        oscillator.frequency.value =
+          600;
+
+
+        /* Тихая громкость для демонстрации. */
+
+        gain.gain.value =
+          0.06;
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+          audioContext.destination
+        );
+
+
+        const now =
+          audioContext.currentTime;
+
+
+        /* Плавное начало и окончание звука. */
+
+        gain.gain.setValueAtTime(
+          0.001,
+          now
+        );
+
+        gain.gain.linearRampToValueAtTime(
+          0.06,
+          now + 0.015
+        );
+
+        gain.gain.setValueAtTime(
+          0.06,
+          now + Math.max(
+            0.015,
+            duration - 0.025
+          )
+        );
+
+        gain.gain.linearRampToValueAtTime(
+          0.001,
+          now + duration
+        );
+
+
+        oscillator.start(now);
+
+        oscillator.stop(
+          now + duration + 0.01
+        );
+
+
+      } catch (error) {
+
+        soundIndicator.textContent =
+          label +
+          " · Звук не воспроизведён";
+
+      }
+
+    }
+
+
+    /* Короткий сигнал — точка. */
+
+    shortSound.addEventListener(
+      "click",
+      () => {
+
+        playSignal(
+          0.15,
+          "· Короткий сигнал — точка"
+        );
+
+      }
+    );
+
+
+    /* Длинный сигнал — тире. */
+
+    longSound.addEventListener(
+      "click",
+      () => {
+
+        playSignal(
+          0.45,
+          "— Длинный сигнал — тире"
+        );
+
+      }
+    );
+
+
+
+    /* =================================================
+       ЛАБОРАТОРИЯ №4
+
+       Показ и скрытие ответов
+       на задания по декодированию.
+    ================================================= */
+
+    const revealButtons =
+      document.querySelectorAll(
+        ".reveal-button"
+      );
+
+
+    revealButtons.forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const answerId =
+            button.dataset.answer;
+
+          const answer =
+            document.getElementById(
+              answerId
+            );
+
+          if (!answer) {
+            return;
+          }
+
+
+          /* Переключаем видимость ответа. */
+
+          answer.hidden =
+            !answer.hidden;
+
+
+          const visible =
+            !answer.hidden;
+
+
+          button.textContent =
+            visible
+              ? "Скрыть ответ"
+              : "Показать ответ";
+
+
+          button.setAttribute(
+            "aria-expanded",
+            String(visible)
+          );
+
+        }
+      );
+
+    });
+
+  </script>
+
+</body>
+
+</html>
