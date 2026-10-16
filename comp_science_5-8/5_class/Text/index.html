@@ -1,0 +1,2843 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Информатика, 5 класс. Текст как форма представления информации. Компьютер — основной инструмент подготовки текстов.">
+<title>Текст и компьютер — информатика, 5 класс</title>
+
+<style>
+:root {
+  --bg: #f5f8fc;
+  --paper: #fff;
+  --ink: #21334d;
+  --muted: #5b6d84;
+  --line: #dfe7f2;
+  --blue: #326bd4;
+  --navy: #163250;
+  --teal: #167f85;
+  --violet: #7654bd;
+  --orange: #c6783b;
+  --softblue: #eaf2ff;
+  --softgreen: #e7f6f2;
+  --softviolet: #f1edff;
+  --softorange: #fff2e6;
+  --shadow: 0 12px 36px rgba(32,65,102,.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.7 "Segoe UI", Arial, sans-serif;
+}
+
+h1, h2, h3, p, figure {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.75rem,6vw,5.3rem);
+  line-height: 1.07;
+  letter-spacing: -.055em;
+}
+
+h2 {
+  font-size: clamp(1.75rem,3.9vw,2.67rem);
+  line-height: 1.2;
+  letter-spacing: -.035em;
+}
+
+h3 {
+  font-size: 1.21rem;
+  line-height: 1.35;
+}
+
+p {
+  color: var(--muted);
+  margin-bottom: 13px;
+}
+
+strong {
+  color: var(--ink);
+}
+
+a {
+  color: #235fb9;
+  text-underline-offset: 3px;
+}
+
+.container {
+  width: min(1110px,calc(100% - 34px));
+  margin: auto;
+}
+
+.section {
+  padding: 49px 0;
+}
+
+.section:nth-of-type(even) {
+  background: #f0f5fb;
+}
+
+.eyebrow {
+  display: block;
+  margin: 0 0 12px;
+  font-size: .78rem;
+  font-weight: 900;
+  color: var(--blue);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: 1.065rem;
+  max-width: 840px;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.two {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+
+.three {
+  grid-template-columns: repeat(3,minmax(0,1fr));
+}
+
+.four {
+  grid-template-columns: repeat(4,minmax(0,1fr));
+}
+
+.card {
+  min-width: 0;
+  background: var(--paper);
+  padding: 23px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  box-shadow: var(--shadow);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.symbol {
+  display: grid;
+  place-items: center;
+  width: 57px;
+  height: 57px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  background: var(--softblue);
+  font-size: 1.92rem;
+}
+
+.note {
+  padding: 20px 23px;
+  margin-top: 21px;
+  border-radius: 0 13px 13px 0;
+  background: var(--softblue);
+  border-left: 5px solid var(--blue);
+}
+
+.note.green {
+  background: var(--softgreen);
+  border-color: var(--teal);
+}
+
+.note.orange {
+  background: var(--softorange);
+  border-color: var(--orange);
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+.caption {
+  font-size: .81rem;
+  color: #708197;
+  margin: 9px 0 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 99px;
+  background: var(--softblue);
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.tag.green {
+  background: var(--softgreen);
+  color: var(--teal);
+}
+
+.tag.violet {
+  background: var(--softviolet);
+  color: var(--violet);
+}
+
+/* ============================================
+   ПЕРВЫЙ ЭКРАН
+============================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 86% 17%,
+      #d4ebf7 0,
+      transparent 39%
+    ),
+    radial-gradient(
+      circle at 6% 96%,
+      #e2e0ff 0,
+      transparent 45%
+    ),
+    linear-gradient(125deg,#f3f8ff,#e9f4f6);
+  border-bottom: 1px solid #dce7f1;
+  padding: 79px 0 82px;
+}
+
+.hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .25;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      #739fba 1.2px,
+      transparent 1.2px
+    );
+  background-size: 27px 27px;
+}
+
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.07fr .93fr;
+  align-items: center;
+  gap: 33px;
+}
+
+.hero-label {
+  display: inline-block;
+  padding: 7px 12px;
+  border: 1px solid #c9dbeb;
+  background: #ffffffd6;
+  color: #336897;
+  border-radius: 99px;
+  font-weight: 900;
+  font-size: .78rem;
+  letter-spacing: .06em;
+  margin-bottom: 23px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--teal);
+}
+
+.hero p {
+  font-size: 1.11rem;
+  max-width: 560px;
+}
+
+.hero-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.hero-topics span {
+  padding: 7px 11px;
+  border-radius: 8px;
+  border: 1px solid #d2dfeb;
+  background: #fff;
+  color: #3c617e;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+/* Иллюстрация текстового процессора */
+
+.cover {
+  position: relative;
+  min-height: 390px;
+  display: grid;
+  align-items: end;
+}
+
+.paper-behind {
+  position: absolute;
+  right: 0;
+  top: 13px;
+  width: 75%;
+  height: 294px;
+  border-radius: 13px;
+  border: 1px solid #d6e1ed;
+  transform: rotate(8deg);
+  background:
+    repeating-linear-gradient(
+      #fff 0px,
+      #fff 32px,
+      #e7f0f8 33px,
+      #fff 34px
+    );
+  box-shadow: 0 15px 30px #20456822;
+}
+
+.editor-cover {
+  position: relative;
+  z-index: 2;
+  width: 91%;
+  margin: 0 8% 15px 0;
+  overflow: hidden;
+  border: 8px solid #2b4d6d;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 21px 42px #25476235;
+  transform: rotate(-2deg);
+}
+
+.cover-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 13px;
+  background: #dfeafb;
+  color: #3f5c7c;
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.cover-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 9px 12px;
+  background: #f6f9fe;
+  border-bottom: 1px solid #e1e8f2;
+  color: #4e6680;
+  font-size: .75rem;
+}
+
+.cover-toolbar i {
+  padding: 1px 7px;
+  border: 1px solid #d6e2ee;
+  border-radius: 4px;
+  font-style: normal;
+}
+
+.cover-page {
+  margin: 17px auto 23px;
+  width: 80%;
+  padding: 26px 22px;
+  background: #fff;
+  box-shadow: 0 0 0 1px #edf1f6;
+  min-height: 204px;
+}
+
+.cover-page h3 {
+  color: #2867ab;
+  text-align: center;
+  margin-bottom: 13px;
+}
+
+.cover-page p {
+  color: #53657e;
+  font: 1rem/1.6 Georgia,serif;
+}
+
+.cover-stamp {
+  position: absolute;
+  z-index: 3;
+  right: 1%;
+  bottom: 0;
+  width: 94px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  font-size: 3.5rem;
+  background: #f4e6c8;
+  border: 5px solid white;
+  border-radius: 23px;
+  box-shadow: var(--shadow);
+}
+
+/* ============================================
+   ФОРМЫ ПРЕДСТАВЛЕНИЯ ИНФОРМАЦИИ
+============================================ */
+
+.example-box {
+  display: grid;
+  place-items: center;
+  min-height: 106px;
+  border-radius: 12px;
+  background: #eef5ff;
+  margin-bottom: 14px;
+  font-size: 2.1rem;
+  font-weight: 850;
+  color: #416db1;
+}
+
+.example-box.numbers {
+  background: var(--softviolet);
+  color: var(--violet);
+  font-family: Consolas,monospace;
+}
+
+.example-box.pict {
+  background: var(--softgreen);
+  font-size: 3rem;
+}
+
+.message {
+  margin-top: 19px;
+  padding: 21px;
+  border: 1px solid #d7e4f1;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.message h3 {
+  margin-bottom: 8px;
+}
+
+.message-sheet {
+  font: 1.23rem/2 Georgia,serif;
+  border-radius: 10px;
+  padding: 17px 20px;
+  background:
+    repeating-linear-gradient(
+      #fdfefe 0,
+      #fdfefe 38px,
+      #e9f0f8 39px
+    );
+}
+
+.message-sheet .word {
+  background: #fff0b9;
+  border-radius: 3px;
+}
+
+.message-sheet .space {
+  background: #d2f3ed;
+  border-bottom: 2px dashed #43a797;
+}
+
+.message-sheet .punct {
+  background: #ffe1e9;
+  color: #b54067;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 9px;
+  font-size: .83rem;
+  color: var(--muted);
+}
+
+.legend b {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* ============================================
+   ИСТОРИЯ ПИСЬМЕННОСТИ
+============================================ */
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 15px;
+}
+
+.history-card {
+  overflow: hidden;
+  margin: 0;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.history-card img {
+  display: block;
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  background: #e6e0d6;
+}
+
+.history-card figcaption {
+  padding: 16px;
+}
+
+.history-card h3 {
+  font-size: 1.08rem;
+  margin-bottom: 6px;
+}
+
+.history-card p {
+  font-size: .86rem;
+  margin: 0;
+}
+
+.history-card small {
+  display: block;
+  font-size: .72rem;
+  margin-top: 10px;
+  color: #8090a2;
+}
+
+.history-card small a {
+  color: #557eb8;
+}
+
+.history-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 21px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.history-line span {
+  padding: 8px 12px;
+  background: var(--softblue);
+  border-radius: 8px;
+  font-weight: 850;
+  color: #476a98;
+}
+
+.history-line b {
+  color: var(--orange);
+}
+
+/* ============================================
+   СТРОЕНИЕ ТЕКСТА
+============================================ */
+
+.anatomy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.leaf {
+  padding: 27px;
+  border: 1px solid #dce6f0;
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(
+      #fff 0px,
+      #fff 37px,
+      #e8f0f9 38px,
+      #fff 39px
+    );
+  box-shadow: var(--shadow);
+}
+
+.leaf h3 {
+  text-align: center;
+  color: #2d659b;
+  font-family: Georgia,serif;
+}
+
+.leaf p {
+  font: 1rem/2 Georgia,serif;
+  color: #344b66;
+  text-indent: 24px;
+  margin-bottom: 14px;
+}
+
+.anatomy-pieces {
+  display: grid;
+  gap: 10px;
+}
+
+.piece {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.piece .token {
+  flex: 0 0 64px;
+  display: grid;
+  place-items: center;
+  height: 54px;
+  border-radius: 9px;
+  background: var(--softblue);
+  color: #326bd4;
+  font: 900 1.15rem Georgia,serif;
+}
+
+.piece:nth-child(2) .token {
+  background: var(--softgreen);
+  color: var(--teal);
+}
+
+.piece:nth-child(3) .token {
+  background: var(--softviolet);
+  color: var(--violet);
+}
+
+.piece:nth-child(4) .token {
+  background: var(--softorange);
+  color: var(--orange);
+}
+
+.piece strong {
+  display: block;
+}
+
+.piece small {
+  display: block;
+  color: var(--muted);
+}
+
+.punctuation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 19px;
+}
+
+.punctuation article {
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+
+.punctuation blockquote {
+  font: 700 1.45rem Georgia,serif;
+  color: #355a83;
+  margin: 11px 0;
+}
+
+.punctuation em {
+  font-style: normal;
+  color: #dc607e;
+  font-size: 2rem;
+}
+
+/* ============================================
+   КЛАВИАТУРА
+============================================ */
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(11,minmax(0,1fr));
+  gap: 6px;
+  padding: 17px;
+  margin-top: 18px;
+  border: 1px solid #acbfce;
+  border-radius: 16px;
+  background: linear-gradient(155deg,#dce7f2,#bbcedd);
+  box-shadow: 0 11px 21px #29486e18;
+}
+
+.key {
+  min-width: 0;
+  min-height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: #fff;
+  color: #39536e;
+  font-size: .85rem;
+  font-weight: 850;
+  box-shadow: 0 3px 0 #97adbd;
+}
+
+.key.special {
+  background: #e6f1ff;
+  color: #2b68b5;
+}
+
+.key.wide2 {
+  grid-column: span 2;
+}
+
+.key.wide3 {
+  grid-column: span 3;
+}
+
+.key.wide5 {
+  grid-column: span 5;
+}
+
+.keyboard-desc {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 11px;
+  margin-top: 17px;
+}
+
+.keyboard-desc div {
+  padding: 15px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.keyboard-desc strong {
+  display: block;
+}
+
+/* ============================================
+   МАКЕТЫ ТЕКСТОВЫХ ПРОГРАММ
+============================================ */
+
+.mock {
+  overflow: hidden;
+  border: 1px solid #bfcfdf;
+  border-radius: 13px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.window-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 11px;
+  background: #e2ecf8;
+  color: #355779;
+  font-size: .8rem;
+  font-weight: 850;
+}
+
+.window-menu {
+  padding: 8px 10px;
+  background: #f6f8fc;
+  border-bottom: 1px solid #dae5f0;
+  font-size: .75rem;
+  color: #56708e;
+}
+
+.window-body {
+  min-height: 196px;
+  padding: 20px;
+  color: #293c52;
+  background: #fff;
+}
+
+.plain-text {
+  font: 1rem/1.75 Consolas,"Courier New",monospace;
+}
+
+.fake-ribbon {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 9px;
+  background: #f5f8fc;
+  border-bottom: 1px solid var(--line);
+}
+
+.ribbon {
+  padding: 3px 7px;
+  border: 1px solid #d3dfe9;
+  border-radius: 5px;
+  background: #fff;
+  font-size: .76rem;
+  color: #4b6484;
+}
+
+.page-mat {
+  background: #e9eef5;
+  padding: 18px;
+}
+
+.page-small {
+  max-width: 300px;
+  min-height: 178px;
+  margin: auto;
+  padding: 21px;
+  background: white;
+  box-shadow: 0 5px 17px #263e5b19;
+}
+
+.page-small h4 {
+  margin: 0 0 11px;
+  text-align: center;
+  color: #2869b4;
+  font-size: 1.13rem;
+}
+
+.page-small p {
+  font: 1rem/1.6 Georgia,serif;
+  color: #3d4f68;
+}
+
+.use-case {
+  margin-top: 13px;
+  font-size: .93rem;
+}
+
+.software-label {
+  display: inline-block;
+  font-size: .75rem;
+  color: #4671a4;
+  background: var(--softblue);
+  padding: 4px 9px;
+  border-radius: 99px;
+  margin-bottom: 11px;
+}
+
+/* ============================================
+   ЭТАПЫ ПОДГОТОВКИ ТЕКСТА
+============================================ */
+
+.process {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 11px;
+}
+
+.process article {
+  text-align: center;
+  padding: 18px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.process span {
+  font-size: 2.2rem;
+  display: block;
+}
+
+.process b {
+  display: block;
+  color: var(--teal);
+  font-size: .76rem;
+  margin: 7px 0 4px;
+}
+
+.process strong {
+  display: block;
+}
+
+.process p {
+  font-size: .85rem;
+  margin: 4px 0 0;
+}
+
+.static-lesson {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.lesson-card {
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.lesson-card .doc {
+  min-height: 167px;
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid #e0e7ef;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: inset 0 0 0 5px #f9fbfd;
+  white-space: pre-line;
+  font: 1rem/1.75 Georgia,serif;
+}
+
+.lesson-card .doc.formatted {
+  font-size: 1.17rem;
+  text-align: center;
+  color: #2f63bd;
+  font-weight: bold;
+}
+
+.wrong {
+  background: #ffe4e1;
+  color: #b04d44;
+  text-decoration: line-through;
+}
+
+.right {
+  background: #dff7e9;
+  color: #1a805d;
+}
+
+.lesson-card p {
+  font-size: .9rem;
+  margin: 0;
+}
+
+/* ============================================
+   ФОРМАТЫ И СОХРАНЕНИЕ
+============================================ */
+
+.formats {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+}
+
+.format {
+  padding: 20px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.format span {
+  display: block;
+  font-size: 2.7rem;
+}
+
+.format strong {
+  display: block;
+  color: #2e639e;
+  font-size: 1.1rem;
+}
+
+.format p {
+  margin: 6px 0 0;
+  font-size: .89rem;
+}
+
+.dialog {
+  max-width: 620px;
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #becedf;
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.dialog .window-head {
+  padding: 12px 16px;
+}
+
+.dialog-content {
+  padding: 18px;
+}
+
+.address {
+  padding: 10px;
+  background: #f6f9fc;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  font-size: .85rem;
+  color: #527092;
+}
+
+.file-icons {
+  display: flex;
+  gap: 20px;
+  padding: 23px 12px;
+  font-size: .85rem;
+  color: #576b83;
+  flex-wrap: wrap;
+}
+
+.file-icons div {
+  text-align: center;
+}
+
+.file-icons b {
+  display: block;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.fake-field {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin: 9px 0;
+  font-size: .85rem;
+}
+
+.fake-field span {
+  padding: 8px;
+  border: 1px solid #cfdeeb;
+  border-radius: 7px;
+  color: #48637f;
+}
+
+.fake-save {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 18px;
+  background: #3e79ca;
+  border-radius: 7px;
+  color: #fff;
+  font-weight: 800;
+  font-size: .86rem;
+}
+
+.outflow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.outflow span {
+  padding: 12px;
+  border-radius: 11px;
+  background: var(--softblue);
+  font-weight: 850;
+}
+
+.outflow b {
+  color: var(--orange);
+  font-size: 1.4rem;
+}
+
+/* ============================================
+   ВОПРОСЫ И ИТОГ УРОКА
+============================================ */
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+
+.question {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fff;
+}
+
+.question b {
+  flex: 0 0 37px;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  background: var(--softviolet);
+  color: var(--violet);
+  border-radius: 9px;
+}
+
+.question p {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: .95rem;
+}
+
+.final {
+  padding: 32px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      #dbf1ea,
+      transparent 42%
+    ),
+    #fff;
+  border: 1px solid #cee0ea;
+  border-radius: 19px;
+}
+
+.final-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 13px;
+  margin: 20px 0;
+}
+
+.final-point {
+  padding: 18px;
+  background: #edf5ff;
+  border: 1px solid #deebf7;
+  border-radius: 12px;
+}
+
+.final-point strong {
+  display: block;
+  color: #305e9a;
+}
+
+.final-point p {
+  font-size: .88rem;
+  margin: 6px 0 0;
+}
+
+.sources {
+  font-size: .8rem;
+  color: #73839a;
+  padding: 20px 0 0;
+}
+
+.sources p {
+  font-size: .8rem;
+}
+
+.sources a {
+  color: #577eb3;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 28px 15px 39px;
+  background: #e7eef7;
+  color: #708099;
+  text-align: center;
+  font-size: .86rem;
+}
+
+/* ============================================
+   АДАПТИВНАЯ ВЁРСТКА
+============================================ */
+
+@media(max-width:960px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cover {
+    width: min(100%,540px);
+    margin: auto;
+  }
+
+  .history-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .four {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .process {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:680px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 34px 0;
+  }
+
+  .hero {
+    padding: 49px 0;
+  }
+
+  .two,
+  .three,
+  .four,
+  .anatomy,
+  .punctuation,
+  .static-lesson,
+  .questions,
+  .final-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .keyboard-desc {
+    grid-template-columns: 1fr;
+  }
+
+  .process {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .history-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .card,
+  .final {
+    padding: 19px;
+  }
+
+  .keyboard {
+    gap: 3px;
+    padding: 8px;
+  }
+
+  .key {
+    min-height: 32px;
+    font-size: .67rem;
+  }
+
+  .key.wide3 {
+    font-size: .56rem;
+  }
+}
+
+@media(max-width:430px) {
+  .history-grid,
+  .process,
+  .formats {
+    grid-template-columns: 1fr;
+  }
+
+  .hero .cover {
+    min-height: 290px;
+  }
+
+  .paper-behind {
+    height: 235px;
+  }
+
+  .cover-page {
+    min-height: 143px;
+    margin: 10px auto;
+    padding: 13px;
+  }
+
+  .cover-page h3 {
+    font-size: 1rem;
+  }
+
+  .cover-page p {
+    font-size: .77rem;
+  }
+
+  .cover-stamp {
+    width: 65px;
+    height: 65px;
+    font-size: 2.3rem;
+  }
+
+  .fake-field {
+    grid-template-columns: 1fr;
+  }
+
+  .file-icons {
+    gap: 9px;
+  }
+
+  .message-sheet {
+    font-size: 1rem;
+    padding: 11px;
+  }
+
+  .outflow {
+    gap: 6px;
+  }
+
+  .history-line {
+    gap: 5px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================
+     ГЛАВНЫЙ ЭКРАН
+============================================ -->
+
+<header class="hero">
+  <div class="container hero-inner">
+
+    <div>
+      <span class="hero-label">
+        ИНФОРМАТИКА · 5 КЛАСС
+      </span>
+
+      <h1>
+        Текст
+        <span>и компьютер</span>
+      </h1>
+
+      <p>
+        От древних записей на глине до
+        современных текстовых документов.
+        Узнаем, как текст помогает передавать
+        информацию и почему компьютер стал
+        удобным инструментом для его подготовки.
+      </p>
+
+      <p>
+        <strong>
+          Сегодня научимся различать ввод,
+          редактирование и форматирование текста
+        </strong>
+        — три важных действия при создании документа.
+      </p>
+
+      <div class="hero-topics">
+        <span>✍️ Письменность</span>
+        <span>🔤 Символы</span>
+        <span>💻 Текстовые программы</span>
+        <span>💾 Сохранение</span>
+      </div>
+    </div>
+
+    <div class="cover"
+         role="img"
+         aria-label="Схема окна текстового процессора с оформленным документом">
+
+      <div class="paper-behind"></div>
+
+      <div class="editor-cover">
+
+        <div class="cover-head">
+          <span>📄 Мой рассказ — текстовый процессор</span>
+          <span>— □ ×</span>
+        </div>
+
+        <div class="cover-toolbar">
+          <i>Шрифт</i>
+          <i>18</i>
+          <i><b>Ж</b></i>
+          <i><em>К</em></i>
+          <i>≡</i>
+          <i>• Список</i>
+        </div>
+
+        <div class="cover-page">
+          <h3>Мой первый текст</h3>
+
+          <p>
+            Сегодня я узнал, как люди
+            сохраняли сообщения.
+          </p>
+
+          <p>
+            Компьютер помогает
+            <strong>исправлять</strong>
+            и красиво оформлять текст.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="cover-stamp">📝</div>
+
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================
+     01. ФОРМЫ ПРЕДСТАВЛЕНИЯ ИНФОРМАЦИИ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      01 · Формы представления информации
+    </span>
+
+    <h2>Информацию можно записать текстом</h2>
+
+    <p class="lead">
+      <strong>Информация</strong> — сведения
+      о мире, предметах и событиях.
+
+      Её можно представить словами,
+      числами, изображениями
+      и другими способами.
+
+      <strong>Текстовая информация</strong> —
+      сведения, представленные
+      с помощью письменных знаков.
+    </p>
+
+    <div class="grid three">
+
+      <article class="card">
+        <div class="example-box">
+          «Идёт дождь»
+        </div>
+
+        <h3>🔤 Текстовая</h3>
+
+        <p>
+          Слова и предложения:
+          письма, рассказы, инструкции
+          и сообщения.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="example-box numbers">
+          +12 °C
+        </div>
+
+        <h3>🔢 Числовая</h3>
+
+        <p>
+          Температура, дата,
+          результат измерения
+          или вычисления.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="example-box pict">
+          🌧️☂️
+        </div>
+
+        <h3>🖼️ Графическая</h3>
+
+        <p>
+          Рисунки, фотографии,
+          карты и условные обозначения.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note green">
+      <strong>Один смысл — разные формы</strong>
+
+      <p>
+        Сообщение «Идёт дождь»,
+        значок тучи с каплями
+        и измеренное количество осадков
+        могут рассказывать об одном явлении,
+        но делают это по-разному.
+      </p>
+    </div>
+
+    <div class="grid two" style="margin-top:20px">
+
+      <article class="card">
+        <div class="symbol">📚</div>
+
+        <h3>Что такое текст?</h3>
+
+        <p>
+          <strong>Текст</strong> — записанная
+          последовательность символов,
+          слов и предложений.
+
+          В связном тексте предложения
+          обычно объединены общей темой
+          и смыслом.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol">✉️</div>
+
+        <h3>Для чего он нужен?</h3>
+
+        <p>
+          С помощью текста люди
+          сохраняют знания,
+          передают сообщения,
+          объясняют правила
+          и рассказывают истории.
+
+          К записанному можно
+          вернуться позднее.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     02. ИСТОРИЯ ПИСЬМЕННОСТИ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      02 · История письменности
+    </span>
+
+    <h2>Как люди научились сохранять слова?</h2>
+
+    <p class="lead">
+      Задолго до компьютеров человек
+      записывал важные сведения
+      на разных материалах.
+
+      Посмотри на
+      <strong>настоящие исторические предметы</strong>
+      и их изображения.
+    </p>
+
+    <div class="history-grid">
+
+      <figure class="history-card">
+
+        <img
+          loading="lazy"
+          src="img-1.jpg"
+          alt="Древняя глиняная табличка с клинописными знаками"
+        >
+
+        <figcaption>
+          <h3>Глиняная табличка</h3>
+
+          <p>
+            В древней Месопотамии
+            знаки вдавливали в мягкую глину,
+            затем таблички высушивали.
+          </p>
+
+          <small>
+            Фото:
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Cuneiform_Akkadian_clay_tablet_2.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wikimedia Commons · общественное достояние
+            </a>
+          </small>
+        </figcaption>
+
+      </figure>
+
+      <figure class="history-card">
+
+        <img
+          loading="lazy"
+          src="img-2.jpg"
+          alt="Древнеегипетский папирус с письменными знаками"
+        >
+
+        <figcaption>
+          <h3>Папирус</h3>
+
+          <p>
+            Из стеблей растения
+            изготавливали материал для письма.
+            Свитки было удобнее переносить.
+          </p>
+
+          <small>
+            Изображение:
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Egyptian_papyrus.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wikimedia Commons · общественное достояние
+            </a>
+          </small>
+        </figcaption>
+
+      </figure>
+
+      <figure class="history-card">
+
+        <img
+          loading="lazy"
+          src="img-3.jpg"
+          alt="Реконструкция старинного печатного станка в музее Гутенберга"
+        >
+
+        <figcaption>
+          <h3>Печатный станок</h3>
+
+          <p>
+            Печать позволила
+            значительно быстрее
+            делать много экземпляров книг
+            и других текстов.
+          </p>
+
+          <small>
+            Фото:
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Gutenberg-Presse_im_Gutenberg-Museum,_Mainz,_Deutschland_(48988294536).jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wikimedia Commons
+            </a>
+          </small>
+        </figcaption>
+
+      </figure>
+
+      <figure class="history-card">
+
+        <img
+          loading="lazy"
+          src="img-4.jpg"
+          alt="Старинная механическая пишущая машинка Underwood"
+        >
+
+        <figcaption>
+          <h3>Пишущая машинка</h3>
+
+          <p>
+            Текст печатали клавишами
+            сразу на бумаге.
+            Исправлять ошибки было непросто.
+          </p>
+
+          <small>
+            Фото: Alf van Beem,
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Underwood_typewrighter_pic2.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wikimedia Commons · CC0
+            </a>
+          </small>
+        </figcaption>
+
+      </figure>
+
+    </div>
+
+    <div class="history-line"
+         aria-label="Упрощённая схема развития способов записи">
+
+      <span>🪨 Глина и камень</span>
+      <b>→</b>
+      <span>📜 Рукописные тексты</span>
+      <b>→</b>
+      <span>📖 Печатные книги</span>
+      <b>→</b>
+      <span>💻 Электронные документы</span>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>Это упрощённая схема</strong>
+
+      <p>
+        Разные способы записи
+        сосуществовали в разных странах.
+
+        Люди также использовали
+        пергамент, бумагу, перья,
+        ручки и другие материалы.
+
+        Главный результат изобретения
+        письменности — возможность
+        <strong>
+          сохранять информацию для тех,
+          кто прочитает её позже
+        </strong>.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     03. СТРОЕНИЕ ТЕКСТА
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      03 · Строение текста
+    </span>
+
+    <h2>Текст собирается из маленьких частей</h2>
+
+    <p class="lead">
+      Буквы, цифры, пробелы
+      и знаки препинания —
+      это <strong>символы</strong>.
+
+      Из букв образуются слова,
+      из слов — предложения,
+      из предложений — абзацы
+      и целые тексты.
+    </p>
+
+    <div class="anatomy">
+
+      <div class="leaf">
+        <h3>Осенний парк</h3>
+
+        <p>
+          Сегодня мы гуляли по парку.
+          На дорожках лежали жёлтые листья.
+        </p>
+
+        <p>
+          Дул прохладный ветер.
+          Нам понравилась прогулка!
+        </p>
+      </div>
+
+      <div class="anatomy-pieces">
+
+        <div class="piece">
+          <span class="token">А</span>
+
+          <div>
+            <strong>Символ</strong>
+            <small>
+              Буква, цифра,
+              знак препинания, пробел
+            </small>
+          </div>
+        </div>
+
+        <div class="piece">
+          <span class="token">лес</span>
+
+          <div>
+            <strong>Слово</strong>
+            <small>
+              Например: «дерево»,
+              «осень», «парк»
+            </small>
+          </div>
+        </div>
+
+        <div class="piece">
+          <span class="token">.</span>
+
+          <div>
+            <strong>Предложение</strong>
+            <small>
+              «На дорожках лежали листья.»
+            </small>
+          </div>
+        </div>
+
+        <div class="piece">
+          <span class="token">¶</span>
+
+          <div>
+            <strong>Абзац</strong>
+            <small>
+              Часть текста, помогающая
+              разделять мысли
+            </small>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="message">
+
+      <h3>
+        Посмотрим на предложение
+        как на набор элементов
+      </h3>
+
+      <div class="message-sheet">
+        <span class="word">Маша</span><span class="space">&nbsp;</span><span class="word">читает</span><span class="space">&nbsp;</span><span class="word">книгу</span><span class="punct">.</span>
+      </div>
+
+      <div class="legend">
+
+        <span>
+          <b style="background:#fff0b9"></b>
+          Слова
+        </span>
+
+        <span>
+          <b style="background:#d2f3ed"></b>
+          Пробелы
+        </span>
+
+        <span>
+          <b style="background:#ffe1e9"></b>
+          Знаки препинания
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="punctuation">
+
+      <article>
+        <span class="tag">Восклицание</span>
+
+        <blockquote>
+          Пойдём гулять<em>!</em>
+        </blockquote>
+
+        <p>
+          Говорящий эмоционально
+          предлагает прогулку.
+        </p>
+      </article>
+
+      <article>
+        <span class="tag violet">Вопрос</span>
+
+        <blockquote>
+          Пойдём гулять<em>?</em>
+        </blockquote>
+
+        <p>
+          Говорящий спрашивает,
+          состоится ли прогулка.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Почему символы важны?</strong>
+
+      <p>
+        Замена буквы может изменить слово,
+        а знак препинания — смысл
+        или интонацию предложения.
+
+        Поэтому при подготовке документов
+        нужно внимательно проверять написанное.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     04. КОМПЬЮТЕР И ТЕКСТ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      04 · Компьютер и текст
+    </span>
+
+    <h2>
+      Почему компьютер удобен
+      для подготовки текстов?
+    </h2>
+
+    <p class="lead">
+      Текст можно написать ручкой
+      на бумаге, но на компьютере
+      легче исправлять его,
+      переставлять части,
+      оформлять, сохранять
+      и передавать другим людям.
+    </p>
+
+    <div class="grid three">
+
+      <article class="card">
+        <div class="symbol">⌨️</div>
+
+        <h3>Ввод</h3>
+
+        <p>
+          Набираем буквы, цифры
+          и знаки с клавиатуры.
+          Текст сразу появляется на экране.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softgreen)">
+          ✏️
+        </div>
+
+        <h3>Редактирование</h3>
+
+        <p>
+          Исправляем ошибки,
+          добавляем слова,
+          удаляем лишние фрагменты.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softviolet)">
+          🎨
+        </div>
+
+        <h3>Форматирование</h3>
+
+        <p>
+          Изменяем шрифт, размер,
+          цвет, выравнивание
+          и оформление заголовков.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol">💾</div>
+
+        <h3>Хранение</h3>
+
+        <p>
+          Сохраняем документ
+          в виде файла
+          и открываем его снова.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softgreen)">
+          📤
+        </div>
+
+        <h3>Передача</h3>
+
+        <p>
+          Отправляем копию текста
+          через разрешённые
+          средства связи.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softorange)">
+          🖨️
+        </div>
+
+        <h3>Печать</h3>
+
+        <p>
+          Получаем бумажный
+          экземпляр электронного документа.
+        </p>
+      </article>
+
+    </div>
+
+    <h3 style="margin-top:28px">
+      Основные клавиши для текста
+    </h3>
+
+    <p>
+      Это схема отдельных клавиш,
+      а не полная точная клавиатура.
+
+      Рассмотри, для чего нужны
+      специальные клавиши.
+    </p>
+
+    <div class="keyboard"
+         role="img"
+         aria-label="Схема клавиатуры с буквенными клавишами, Shift, Enter, Backspace и пробелом">
+
+      <span class="key">Й</span>
+      <span class="key">Ц</span>
+      <span class="key">У</span>
+      <span class="key">К</span>
+      <span class="key">Е</span>
+      <span class="key">Н</span>
+      <span class="key">Г</span>
+      <span class="key">Ш</span>
+      <span class="key">Щ</span>
+      <span class="key">З</span>
+      <span class="key">Х</span>
+
+      <span class="key">Ф</span>
+      <span class="key">Ы</span>
+      <span class="key">В</span>
+      <span class="key">А</span>
+      <span class="key">П</span>
+      <span class="key">Р</span>
+      <span class="key">О</span>
+      <span class="key">Л</span>
+      <span class="key">Д</span>
+      <span class="key">Ж</span>
+      <span class="key">Э</span>
+
+      <span class="key special wide2">Shift</span>
+      <span class="key">Я</span>
+      <span class="key">Ч</span>
+      <span class="key">С</span>
+      <span class="key">М</span>
+      <span class="key">И</span>
+      <span class="key">Т</span>
+      <span class="key">Ь</span>
+      <span class="key special wide2">Enter</span>
+
+      <span class="key special wide2">Ctrl</span>
+      <span class="key special">Alt</span>
+      <span class="key special wide5">Пробел</span>
+      <span class="key special wide3">Backspace</span>
+
+    </div>
+
+    <div class="keyboard-desc">
+
+      <div>
+        <strong>Пробел</strong>
+        Отделяет слова друг от друга.
+      </div>
+
+      <div>
+        <strong>Enter</strong>
+        Обычно начинает новый абзац.
+      </div>
+
+      <div>
+        <strong>Backspace</strong>
+        Удаляет символ слева от курсора.
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     05. ТЕКСТОВЫЕ ПРОГРАММЫ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      05 · Программы для текста
+    </span>
+
+    <h2>Текстовый редактор и текстовый процессор</h2>
+
+    <p class="lead">
+      <strong>Текстовый редактор</strong>
+      позволяет создавать и изменять текст.
+
+      <strong>Текстовый процессор</strong>
+      дополнительно предоставляет
+      развитые средства оформления документа:
+      заголовки, списки, таблицы, изображения.
+    </p>
+
+    <div class="grid two">
+
+      <article class="card">
+
+        <span class="software-label">
+          ПРОСТОЙ ТЕКСТ
+        </span>
+
+        <h3>🗒️ Простой текстовый редактор</h3>
+
+        <div class="mock"
+             role="img"
+             aria-label="Статический учебный макет Блокнота с двумя строками обычного текста">
+
+          <div class="window-head">
+            <span>📄 Заметки.txt — Блокнот</span>
+            <span>— □ ×</span>
+          </div>
+
+          <div class="window-menu">
+            Файл &nbsp; Правка &nbsp; Вид
+          </div>
+
+          <div class="window-body plain-text">
+            Сегодня я узнал, что такое текст.
+            <br>
+            Компьютер помогает его исправлять.
+          </div>
+
+        </div>
+
+        <p class="use-case">
+          Подходит для простых текстовых заметок.
+
+          Формат <strong>TXT</strong>
+          сохраняет символы,
+          но не оформление вроде
+          цветного заголовка
+          или полужирных слов.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <span class="software-label">
+          ОФОРМЛЕННЫЙ ДОКУМЕНТ
+        </span>
+
+        <h3>📘 Текстовый процессор</h3>
+
+        <div class="mock"
+             role="img"
+             aria-label="Статический учебный макет текстового процессора с панелью оформления и документом">
+
+          <div class="window-head">
+            <span>
+              📄 Мой доклад — текстовый процессор
+            </span>
+            <span>— □ ×</span>
+          </div>
+
+          <div class="window-menu">
+            Файл &nbsp; Главная &nbsp; Вставка &nbsp; Вид
+          </div>
+
+          <div class="fake-ribbon">
+            <span class="ribbon">Шрифт ▾</span>
+            <span class="ribbon">16 ▾</span>
+            <span class="ribbon"><b>Ж</b></span>
+            <span class="ribbon"><em>К</em></span>
+            <span class="ribbon">≡</span>
+            <span class="ribbon">▦ Таблица</span>
+          </div>
+
+          <div class="page-mat">
+            <div class="page-small">
+
+              <h4>Мой первый доклад</h4>
+
+              <p>
+                Я могу выделить
+                <strong>важное</strong>
+                слово, сделать заголовок
+                крупнее и расположить
+                текст аккуратно.
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+        <p class="use-case">
+          Подходит для докладов,
+          школьных проектов и документов.
+
+          Примеры:
+          <strong>
+            Microsoft Word,
+            LibreOffice Writer,
+            Р7-Офис
+          </strong>.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>
+        Это схемы, а не настоящие скриншоты
+      </strong>
+
+      <p>
+        Макеты специально упрощены,
+        чтобы увидеть различие между программами.
+
+        Внешний вид реальных редакторов
+        зависит от их названия и версии.
+
+        Текстовый процессор тоже является
+        разновидностью программы
+        для редактирования текста.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     06. ЭТАПЫ ПОДГОТОВКИ ДОКУМЕНТА
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      06 · Подготовка документа
+    </span>
+
+    <h2>От набора букв до готового файла</h2>
+
+    <p class="lead">
+      Документ обычно проходит
+      несколько этапов.
+
+      Порядок удобен для понимания,
+      но в реальной работе можно
+      возвращаться назад
+      и продолжать исправления.
+    </p>
+
+    <div class="process">
+
+      <article>
+        <span>⌨️</span>
+        <b>ШАГ 1</b>
+        <strong>Ввод</strong>
+        <p>Набрать текст</p>
+      </article>
+
+      <article>
+        <span>✏️</span>
+        <b>ШАГ 2</b>
+        <strong>Редактирование</strong>
+        <p>Исправить ошибки</p>
+      </article>
+
+      <article>
+        <span>🎨</span>
+        <b>ШАГ 3</b>
+        <strong>Форматирование</strong>
+        <p>Изменить внешний вид</p>
+      </article>
+
+      <article>
+        <span>🔎</span>
+        <b>ШАГ 4</b>
+        <strong>Проверка</strong>
+        <p>Перечитать</p>
+      </article>
+
+      <article>
+        <span>💾</span>
+        <b>ШАГ 5</b>
+        <strong>Сохранение</strong>
+        <p>Записать в файл</p>
+      </article>
+
+    </div>
+
+    <h3 style="margin-top:28px">
+      Один текст на трёх этапах
+    </h3>
+
+    <div class="static-lesson">
+
+      <article class="lesson-card">
+
+        <span class="tag">1 · Ввод</span>
+
+        <div class="doc">Мой <span class="wrong">кампьютер</span> помогает учиться.
+Я пишу рассказы.</div>
+
+        <p>
+          Текст набрали с ошибкой.
+          Слова и предложения
+          уже появились.
+        </p>
+
+      </article>
+
+      <article class="lesson-card">
+
+        <span class="tag green">
+          2 · Редактирование
+        </span>
+
+        <div class="doc">Мой <span class="right">компьютер</span> помогает учиться.
+Я пишу рассказы.</div>
+
+        <p>
+          Исправили одну букву.
+
+          Изменилось
+          <strong>содержание</strong>
+          текста.
+        </p>
+
+      </article>
+
+      <article class="lesson-card">
+
+        <span class="tag violet">
+          3 · Форматирование
+        </span>
+
+        <div class="doc formatted">Мой компьютер помогает учиться.
+Я пишу рассказы.</div>
+
+        <p>
+          Увеличили размер,
+          изменили цвет и выравнивание.
+
+          <strong>
+            Слова остались прежними.
+          </strong>
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>Запомни различие!</strong>
+
+      <p>
+        <strong>Редактирование</strong> —
+        изменение содержимого текста:
+        исправление, добавление
+        и удаление символов.
+
+        <strong>Форматирование</strong> —
+        изменение внешнего вида:
+        шрифта, размера, цвета,
+        начертания и расположения текста.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     07. ХРАНЕНИЕ ДОКУМЕНТОВ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      07 · Текстовый документ как файл
+    </span>
+
+    <h2>Сохранить — значит не потерять работу</h2>
+
+    <p class="lead">
+      <strong>Текстовый документ</strong>
+      можно сохранить в файле.
+
+      При сохранении выбирают имя,
+      место хранения (папку)
+      и формат.
+
+      Позже файл можно снова
+      открыть и изменить.
+    </p>
+
+    <div class="formats">
+
+      <article class="format">
+        <span>📄</span>
+        <strong>.txt</strong>
+        <p>
+          Обычный текст без сложного оформления.
+        </p>
+      </article>
+
+      <article class="format">
+        <span>📘</span>
+        <strong>.docx</strong>
+        <p>
+          Документ с оформлением,
+          списками и изображениями.
+        </p>
+      </article>
+
+      <article class="format">
+        <span>📗</span>
+        <strong>.odt</strong>
+        <p>
+          Открытый формат оформленных
+          текстовых документов.
+        </p>
+      </article>
+
+    </div>
+
+    <h3 style="text-align:center;margin-top:28px">
+      Схема окна «Сохранить как…»
+    </h3>
+
+    <div class="dialog"
+         role="img"
+         aria-label="Статический учебный макет окна Сохранить как с папкой Документы, именем файла Мой рассказ.txt и типом текстовый документ">
+
+      <div class="window-head">
+        <span>💾 Сохранить как…</span>
+        <span>□ ×</span>
+      </div>
+
+      <div class="dialog-content">
+
+        <div class="address">
+          📁 Этот компьютер › Документы
+        </div>
+
+        <div class="file-icons">
+
+          <div>
+            <b>📁</b>
+            Информатика
+          </div>
+
+          <div>
+            <b>📁</b>
+            Рассказы
+          </div>
+
+          <div>
+            <b>📄</b>
+            Заметки.txt
+          </div>
+
+        </div>
+
+        <div class="fake-field">
+          <strong>Имя файла:</strong>
+          <span>Мой рассказ.txt</span>
+        </div>
+
+        <div class="fake-field">
+          <strong>Тип файла:</strong>
+          <span>Текстовый документ (.txt) ▾</span>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end">
+          <span class="fake-save">
+            Сохранить
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="caption" style="text-align:center">
+      Статический учебный макет.
+      Расположение команд отличается
+      в разных операционных системах
+      и программах.
+    </p>
+
+    <div class="grid two" style="margin-top:22px">
+
+      <article class="card">
+        <div class="symbol">📤</div>
+
+        <h3>Хранение и передача</h3>
+
+        <p>
+          Электронный документ можно
+          держать в папке на накопителе,
+          копировать и передавать
+          через разрешённые средства связи.
+
+          Существуют электронные письма
+          и облачные хранилища.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol">🖨️</div>
+
+        <h3>Печать на бумаге</h3>
+
+        <p>
+          Принтер переносит текст на бумагу.
+
+          <strong>Струйные</strong>
+          принтеры используют капли чернил,
+          <strong>лазерные</strong> — тонер.
+
+          Полученный лист —
+          бумажная копия документа.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="outflow" style="margin-top:18px">
+      <span>📄 Документ</span>
+      <b>→</b>
+      <span>💻 Команда «Печать»</span>
+      <b>→</b>
+      <span>🖨️ Принтер</span>
+      <b>→</b>
+      <span>📃 Бумажный лист</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     08. ТЕКСТЫ В ЖИЗНИ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      08 · Тексты в повседневной жизни
+    </span>
+
+    <h2>Где пригодится умение готовить тексты?</h2>
+
+    <div class="grid three">
+
+      <article class="card">
+        <div class="symbol">🎒</div>
+
+        <h3>В школе</h3>
+
+        <p>
+          Сообщения, доклады,
+          сочинения, проекты,
+          записи и инструкции.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softgreen)">
+          📰
+        </div>
+
+        <h3>В профессиях</h3>
+
+        <p>
+          Работа писателей, журналистов,
+          учителей, редакторов
+          и многих других специалистов.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softviolet)">
+          ✉️
+        </div>
+
+        <h3>В общении</h3>
+
+        <p>
+          Письма, приглашения,
+          объявления и сообщения
+          помогают людям
+          обмениваться сведениями.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>Сначала смысл, затем украшение</strong>
+
+      <p>
+        Хороший текст должен быть
+        понятным и грамотным.
+
+        Красивое оформление
+        облегчает чтение,
+        но не заменяет
+        проверку содержания
+        и исправление ошибок.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     09. ЗАКРЕПЛЕНИЕ
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      09 · Закрепление
+    </span>
+
+    <h2>12 вопросов по уроку</h2>
+
+    <p class="lead">
+      Ответь своими словами.
+      Все необходимые определения,
+      примеры и схемы есть
+      в этом учебнике.
+    </p>
+
+    <div class="questions">
+
+      <div class="question">
+        <b>01</b>
+        <p>
+          Что называют текстовой информацией?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>02</b>
+        <p>
+          Почему текст является одной из
+          распространённых форм
+          представления информации?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>03</b>
+        <p>
+          Какие материалы люди использовали
+          для записи текстов в прошлом?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>04</b>
+        <p>
+          Почему появление письменности
+          стало важным событием
+          в истории человечества?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>05</b>
+        <p>
+          Из каких основных элементов
+          состоит письменный текст?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>06</b>
+        <p>
+          Почему изменение одного символа
+          или знака препинания
+          может изменить смысл сообщения?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>07</b>
+        <p>
+          Какие преимущества даёт компьютер
+          при подготовке текстов?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>08</b>
+        <p>
+          Что такое текстовый редактор
+          и для чего он предназначен?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>09</b>
+        <p>
+          Чем текстовый процессор отличается
+          от простого текстового редактора?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>10</b>
+        <p>
+          Какие основные этапы подготовки
+          текстового документа существуют?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>11</b>
+        <p>
+          Чем редактирование текста
+          отличается от форматирования?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>12</b>
+        <p>
+          Как можно сохранить, передать
+          и распечатать текстовый документ?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     10. ИТОГ УРОКА
+============================================ -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        10 · Итог урока
+      </span>
+
+      <h2>
+        От письменного знака
+        до электронного документа
+      </h2>
+
+      <p class="lead">
+        Мы познакомились с текстовой информацией,
+        историей письменности и основными
+        возможностями компьютера
+        при подготовке документов.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+          <strong>🔤 Текст — это информация</strong>
+
+          <p>
+            Символы, слова, предложения
+            и абзацы помогают передавать мысли.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>✏️ Документ можно изменять</strong>
+
+          <p>
+            Ввод создаёт текст,
+            редактирование исправляет,
+            форматирование оформляет.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>💾 Результат можно сохранить</strong>
+
+          <p>
+            Файл открывают повторно,
+            передают другим или печатают.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+
+        <strong>Главный вывод</strong>
+
+        <p>
+          <strong>
+            Компьютер — универсальный
+            инструмент подготовки текстов.
+          </strong>
+
+          Он помогает работать
+          быстрее и аккуратнее,
+          но грамотность, содержание
+          и проверка написанного
+          остаются задачами человека.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="sources">
+      <p>
+        <strong>Об изображениях.</strong>
+        Исторические фотографии загружаются
+        из Wikimedia Commons и сопровождаются
+        ссылками на их страницы
+        с авторами и лицензиями.
+
+        Схемы, окна программ, клавиатура
+        и другие учебные иллюстрации
+        созданы средствами HTML/CSS.
+
+        Если внешний сервер временно недоступен,
+        текст урока и схемы остаются видимыми.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 5 класс ·
+  Текст как форма представления информации ·
+  Компьютер — основной инструмент подготовки текстов
+</footer>
+
+</body>
+</html>
