@@ -1,0 +1,2220 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Информатика, 8 класс. Основы работы с операционной системой, часть 4 из 4: практическая работа с файлами и папками.">
+<title>Файлы под контролем — Основы работы с ОС · 8 класс</title>
+<style>
+:root{--ink:#21324b;--muted:#60718b;--bg:#f3f6fb;--paper:#fff;--line:#dbe4f0;--navy:#102640;--navy2:#203b5b;--blue:#3574db;--bluep:#e8f0fe;--cyan:#16a5b8;--green:#22876e;--greenp:#e5f6ee;--violet:#745bd0;--violetp:#f0ecff;--orange:#dd8a41;--orangep:#fff2e4;--radius:21px;--shadow:0 15px 40px rgba(34,65,107,.075)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #ebac48;outline-offset:3px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1.08;letter-spacing:-.045em}
+h2{font-size:clamp(1.85rem,3.8vw,2.72rem);line-height:1.2;letter-spacing:-.025em}
+h3{font-size:1.24rem;line-height:1.35}
+p{color:var(--muted);margin-bottom:14px}
+strong{color:var(--ink)}
+code,kbd{font-family:Consolas,"Courier New",monospace}
+code{color:#2b5da9;overflow-wrap:anywhere}
+kbd{display:inline-block;padding:3px 8px;border:1px solid #b5c6dd;border-bottom-width:3px;border-radius:7px;color:#28445d;background:#fff;font-size:.85rem;font-weight:bold}
+.container{width:min(1130px,calc(100% - 34px));margin:auto}
+.section{padding:42px 0}
+.eyebrow{display:block;margin-bottom:11px;font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:var(--blue)}
+.lead{max-width:830px;font-size:1.08rem}
+.grid{display:grid;gap:18px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{min-width:0;padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.card p:last-child{margin-bottom:0}
+.tile{display:grid;place-items:center;width:61px;height:61px;margin-bottom:17px;border-radius:17px;background:var(--bluep);font-size:2rem}
+.tag{display:inline-block;padding:6px 12px;border-radius:99px;background:var(--bluep);color:#285fbd;font-size:.79rem;font-weight:850}
+.tag.green{background:var(--greenp);color:var(--green)}
+.tag.violet{background:var(--violetp);color:var(--violet)}
+.note{padding:20px 23px;margin-top:21px;border-left:5px solid var(--blue);border-radius:0 15px 15px 0;background:var(--bluep)}
+.note strong{display:block;margin-bottom:6px;color:#285cb0}
+.note p:last-child{margin-bottom:0}
+.note.green{background:var(--greenp);border-color:var(--green)}
+.note.green strong{color:var(--green)}
+.note.orange{background:var(--orangep);border-color:var(--orange)}
+.note.orange strong{color:#a6672b}
+.btn{min-height:43px;padding:9px 15px;border:1px solid var(--blue);border-radius:10px;background:var(--blue);color:#fff;font-weight:800;transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn.secondary{background:#fff;color:#2c63b6;border-color:#becfe8}
+.btn.danger{background:#b94b5f;border-color:#b94b5f}
+.btn.green{background:var(--green);border-color:var(--green)}
+.btn:disabled{opacity:.43;cursor:not-allowed;transform:none}
+.button-row{display:flex;flex-wrap:wrap;gap:9px}
+.steps{padding-left:23px;color:var(--muted)}
+.steps li{padding-left:5px;margin-bottom:10px}
+.steps li::marker{font-weight:800;color:var(--blue)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:81px 0;color:#fff;background:radial-gradient(ellipse at 82% 12%,rgba(39,160,198,.26),transparent 48%),radial-gradient(ellipse at 5% 90%,rgba(121,106,222,.18),transparent 50%),#10223b}
+.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:37px 37px;pointer-events:none}
+.hero-in{position:relative;display:grid;grid-template-columns:1.06fr .94fr;gap:36px;align-items:center}
+.hero-pill{display:inline-block;padding:8px 14px;margin-bottom:23px;border:1px solid #4d758c;border-radius:40px;color:#92e4ea;font-weight:850;font-size:.81rem}
+.hero h1{color:#fff}
+.hero h1 span{display:block;color:#8fe4e9}
+.hero p{color:#c5d5e5;max-width:560px;font-size:1.1rem}
+.hero-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:21px}
+.hero-chips span{border:1px solid #4c637e;border-radius:9px;padding:7px 11px;background:#ffffff0d;font-size:.82rem;font-weight:800}
+.hero-window{padding:14px;border:1px solid #688099;border-radius:20px;background:#263c59;box-shadow:0 22px 58px #060d1e60;transform:rotate(1deg)}
+.hero-title{padding:8px 11px;background:#dceafa;color:#335274;border-radius:8px 8px 0 0;font-size:.82rem;font-weight:850}
+.hero-bar{padding:10px;background:#f2f6fc;color:#526983;font-size:.73rem;border-bottom:1px solid #dae4f1}
+.hero-window-body{display:grid;grid-template-columns:107px 1fr;min-height:245px;background:#fff;color:#3b5474}
+.hero-side{padding:15px 8px;background:#eaf1fb;font-size:.75rem;line-height:2.7}
+.hero-files{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-content:start;padding:22px}
+.hero-file{padding:13px 3px;text-align:center;border:1px solid #e0eafa;border-radius:9px;font-size:.75rem}
+.hero-file b{display:block;font-size:2.25rem}
+.hero-status{background:#e5edf8;padding:8px 11px;color:#647b96;font-size:.72rem;border-radius:0 0 8px 8px}
+
+/* Content visuals */
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:20px;background:#fff;border:1px solid var(--line);border-radius:16px}
+.flow span{padding:10px 13px;background:var(--bluep);color:#365da7;border-radius:9px;font-weight:850}
+.flow b{color:var(--violet);font-size:1.4rem}
+.shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.shortcut{padding:19px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:15px}
+.shortcut strong{display:block;margin:9px 0 5px}
+.shortcut small{color:var(--muted)}
+.comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.compare{background:#f0f6ff;border:1px solid #d8e6fa;border-radius:16px;padding:20px}
+.compare:nth-child(2){background:#f1edff;border-color:#ded5fa}
+.mini-file-flow{display:flex;align-items:center;justify-content:space-around;gap:9px;font-size:2.7rem;margin:13px 0;padding:16px;background:#fff;border-radius:10px}
+.mini-file-flow b{font-size:1.2rem;color:var(--blue)}
+.tree-chart{background:#172d48;color:#e8f1ff;border-radius:17px;padding:21px 24px;font: .99rem/2.05 Consolas,monospace;overflow-wrap:anywhere}
+.tree-chart div{border-left:2px solid #6f90af;padding-left:11px}
+.tree-chart .one{margin-left:19px}
+.tree-chart .two-level{margin-left:38px}
+.tree-chart .three-level{margin-left:57px}
+.tree-chart .highlight{color:#a9f0e8;background:#234a5f;border-radius:5px}
+.image-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.screenshot{padding:14px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow)}
+.screenshot img{display:block;width:100%;object-fit:contain;background:#edf2fa;border:1px solid #e3e8f1;border-radius:10px}
+.screenshot h3{margin:14px 0 7px}
+.screenshot p{font-size:.91rem}
+.credit{font-size:.76rem;color:var(--muted)}
+.credit a{color:#326bbf}
+
+/* Simulator */
+.lab{margin-top:18px;border:1px solid #9cb1cd;border-radius:20px;background:white;overflow:hidden;box-shadow:0 20px 58px #2d4c811e}
+.lab-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;background:#dfeaf7;color:#2b4a68;padding:16px 19px;border-bottom:1px solid #c7d7eb}
+.lab-title strong{color:#2b4a68}
+.lab-title small{color:#65809e}
+.lab-actions{display:flex;flex-wrap:wrap;gap:7px;padding:13px;background:#f5f8fc;border-bottom:1px solid #dce5f1}
+.lab-actions button,.lab-small-btn{border:1px solid #c9d8e9;border-radius:8px;padding:8px 11px;background:#fff;color:#315578;font-size:.85rem;font-weight:800}
+.lab-actions button:hover,.lab-small-btn:hover{background:#e9f2ff}
+.lab-actions button:disabled,.lab-small-btn:disabled{opacity:.4;cursor:not-allowed}
+.lab-actions .warn{color:#a24754}
+.lab-address{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 17px;background:#edf3fb;border-bottom:1px solid #dce5f1;font-size:.82rem}
+.crumb{border:0;background:#fff;color:#2e5da5;border-radius:7px;padding:6px 9px;font-weight:800}
+.crumb:hover{background:#dce9ff}
+.lab-search{margin-left:auto;min-width:160px;max-width:255px;width:100%;padding:8px 10px;border:1px solid #c3d4eb;border-radius:8px}
+.lab-main{display:grid;grid-template-columns:203px minmax(0,1fr);min-height:345px}
+.lab-sidebar{padding:14px 10px;background:#e8eff9;border-right:1px solid #d3e0f0}
+.lab-sidebar button{display:block;width:100%;text-align:left;margin:3px 0;padding:9px;border:0;border-radius:8px;color:#355171;background:transparent;font-size:.86rem}
+.lab-sidebar button:hover{background:#d9e6f9}
+.lab-sidebar button.active{background:#d0e1fb;color:#245ba6;font-weight:850}
+.lab-content{min-width:0;padding:16px}
+.lab-content-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:11px}
+.lab-content-top strong{color:#315270}
+.lab-content-top span{font-size:.8rem;color:var(--muted)}
+.lab-view{display:flex;gap:8px;align-items:center;font-size:.79rem;color:var(--muted)}
+.lab-view select{padding:6px;border:1px solid #ccd8e9;border-radius:8px;color:#345374;background:#fff}
+.file-list{min-height:185px;display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;align-content:start}
+.file-list.rows{display:block}
+.file-entry{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;padding:13px 5px;border:1px solid transparent;border-radius:10px;background:#fff;color:#334e69;overflow-wrap:anywhere;text-align:center}
+.file-entry:hover{background:#eff5ff;border-color:#d0e0f5}
+.file-entry[aria-pressed="true"]{background:#e3efff;border-color:#7ca9ef}
+.file-entry .emoji{font-size:2.15rem}
+.file-entry .name{font-size:.84rem;line-height:1.28}
+.file-entry small{font-size:.72rem;color:#8290a3}
+.rows .file-entry{flex-direction:row;align-items:center;text-align:left;width:100%;padding:9px}
+.rows .file-entry .emoji{font-size:1.4rem}
+.lab-empty{grid-column:1/-1;text-align:center;padding:40px 10px;color:var(--muted)}
+.lab-create{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:13px 16px;background:#f4f7fc;border-top:1px solid var(--line)}
+.lab-create label{font-size:.85rem;font-weight:800}
+.lab-create select,.lab-create input{min-width:0;padding:8px 9px;border:1px solid #c5d5e8;border-radius:8px;background:#fff;color:#334d68}
+.lab-create input{flex:1 1 180px}
+.lab-create button{padding:8px 12px;border:1px solid var(--blue);border-radius:8px;background:var(--blue);color:#fff;font-size:.85rem;font-weight:800}
+.lab-details{padding:13px 18px;background:#f0f5fd;border-top:1px solid #dce7f3;font-size:.86rem;color:#4d6682;overflow-wrap:anywhere;min-height:51px}
+.lab-status{padding:13px 18px;background:#e2f4ee;color:#256e58;border-top:1px solid #c9e5d8;font-size:.89rem;min-height:51px}
+.lab-help{padding:13px 18px;background:#fff;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line)}
+
+/* Progress / practice */
+.progress{border:1px solid #d8e3f2;border-radius:18px;background:#fff;padding:22px;margin-top:20px}
+.progress-meter{height:13px;border-radius:99px;overflow:hidden;background:#e5ecf5;margin:14px 0}
+.progress-meter span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2ca78d,#4b8add);transition:width .2s}
+.progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.milestone{display:flex;align-items:flex-start;gap:9px;padding:11px 12px;border-radius:9px;background:#f3f6fa;color:#607087;font-size:.88rem}
+.milestone .check{flex:0 0 22px;display:grid;place-items:center;height:22px;border:1px solid #bdcade;border-radius:6px;background:#fff;color:#fff;font-weight:bold}
+.milestone.done{background:#e6f6ef;color:#20785c}
+.milestone.done .check{background:#228d70;border-color:#228d70}
+.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.route{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:20px}
+.route-head{padding:21px;background:var(--bluep)}
+.route-head.alt{background:var(--violetp)}
+.route-head h3{margin:11px 0 6px}
+.route-head p{margin:0}
+.route-content{padding:22px}
+.route-content .steps{font-size:.91rem}
+.question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.question{display:flex;gap:12px;align-items:flex-start;background:#fff;padding:17px;border:1px solid var(--line);border-radius:12px}
+.question b{display:grid;place-items:center;flex:0 0 37px;height:37px;border-radius:10px;background:var(--violetp);color:var(--violet)}
+.question p{margin:3px 0 0;color:var(--ink);font-size:.92rem}
+.final{border:1px solid #cee0ef;border-radius:22px;padding:34px;background:radial-gradient(circle at 100% 0,#dff1fb,transparent 46%),#fff}
+.final-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:22px}
+.final-point{background:#eef4fe;border:1px solid #dce8f7;border-radius:13px;padding:19px}
+.final-point strong{display:block;margin-bottom:7px;color:#315fae}
+.final-point p{font-size:.91rem;margin:0}
+footer{padding:30px 15px 42px;margin-top:36px;background:#e7eef7;text-align:center;color:#72829a;font-size:.85rem}
+
+@media(max-width:980px){
+.hero-in{grid-template-columns:1fr}
+.hero-window{max-width:560px;margin:auto}
+.three{grid-template-columns:repeat(2,minmax(0,1fr))}
+.shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:730px){
+.two,.three,.comparison,.image-compare,.routes,.question-grid,.final-grid{grid-template-columns:1fr}
+.lab-main{grid-template-columns:1fr}
+.lab-sidebar{border-right:0;border-bottom:1px solid #d3e0f0;display:flex;gap:5px;flex-wrap:wrap}
+.lab-sidebar button{width:auto}
+.lab-search{margin-left:0;max-width:none}
+.progress-grid{grid-template-columns:1fr}
+.lab-main{min-height:240px}
+}
+@media(max-width:560px){
+.container{width:calc(100% - 24px)}
+.section{padding:30px 0}
+.hero{padding:52px 0}
+.card,.final{padding:19px}
+.hero-in{gap:20px}
+.hero-window{transform:none}
+.hero-window-body{min-height:190px;grid-template-columns:86px 1fr}
+.hero-side{font-size:.68rem}
+.hero-files{gap:6px;padding:10px}
+.hero-file{font-size:.65rem}
+.hero-file b{font-size:1.7rem}
+.shortcuts{grid-template-columns:1fr}
+.tree-chart{font-size:.79rem;padding:15px 10px}
+.tree-chart .one{margin-left:10px}
+.tree-chart .two-level{margin-left:21px}
+.tree-chart .three-level{margin-left:32px}
+.lab-actions{padding:9px}
+.lab-actions button{flex:1 1 100px}
+.lab-content{padding:11px}
+.lab-create{padding:11px}
+.question{padding:14px}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*:before,*:after{transition:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="container hero-in">
+    <div>
+      <span class="hero-pill">
+        ИНФОРМАТИКА · 8 КЛАСС · ЧАСТЬ 4/4 · ПЗ
+      </span>
+      <h1>Файлы <span>под контролем</span></h1>
+      <p>
+        Ты уже умеешь открывать окна, переходить по папкам
+        и находить файлы. Теперь пора научиться
+        <strong style="color:#fff">упорядочивать информацию</strong>:
+        создавать, копировать, перемещать, переименовывать
+        и восстанавливать объекты.
+      </p>
+      <div class="hero-chips">
+        <span>📁 Создание</span>
+        <span>📋 Копирование</span>
+        <span>↔️ Перемещение</span>
+        <span>♻️ Корзина</span>
+      </div>
+    </div>
+    <div class="hero-window" aria-hidden="true">
+      <div class="hero-title">
+        📁 Учебный архив
+        <span style="float:right">─ □ ✕</span>
+      </div>
+      <div class="hero-bar">
+        ← Назад &nbsp; ↑ &nbsp; Документы › Учебный архив
+      </div>
+      <div class="hero-window-body">
+        <div class="hero-side">
+          🏠 Главная<br>
+          📁 Документы<br>
+          🖼️ Изображения<br>
+          ♻️ Корзина
+        </div>
+        <div class="hero-files">
+          <div class="hero-file"><b>📁</b>Тексты</div>
+          <div class="hero-file"><b>📁</b>Изображения</div>
+          <div class="hero-file"><b>📁</b>Материалы</div>
+          <div class="hero-file"><b>📄</b>Заметки.txt</div>
+        </div>
+      </div>
+      <div class="hero-status">4 объекта · файлы и папки</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 01. Повторение -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">01 · Вспоминаем</span>
+    <h2>Как устроена файловая система?</h2>
+    <p class="lead">
+      На предыдущем уроке мы изучили файловый менеджер,
+      адресную строку и иерархию папок. Папки помогают
+      организовать документы так же, как разделы
+      в школьном портфеле.
+    </p>
+    <div class="grid three">
+      <div class="card">
+        <div class="tile">📄</div>
+        <h3>Файл</h3>
+        <p>
+          Именованная совокупность данных:
+          текст, рисунок, аудиозапись, программа.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tile">📁</div>
+        <h3>Папка</h3>
+        <p>
+          Место для организации файлов и других папок.
+          Папки могут быть вложены друг в друга.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tile">🧭</div>
+        <h3>Файловый менеджер</h3>
+        <p>
+          Программа для просмотра файловой системы
+          и управления файлами и папками.
+        </p>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Почему важно упорядочивать файлы?</strong>
+      <p>
+        Если учебные документы разбросаны по разным папкам,
+        их трудно найти. Названия «Информатика», «Тексты»,
+        «Материалы» подсказывают, где искать информацию.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 02. Операции -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">02 · Операции с объектами</span>
+    <h2>Что можно делать с файлами и папками?</h2>
+    <p class="lead">
+      Файловый менеджер позволяет не только просматривать
+      содержимое папок, но и изменять их организацию.
+    </p>
+    <div class="grid three">
+      <article class="card">
+        <div class="tile">➕</div>
+        <h3>Создавать</h3>
+        <p>
+          Подготовить новый файл или папку. Документ
+          обычно создаётся и сохраняется
+          в соответствующей программе.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile" style="background:var(--violetp)">✏️</div>
+        <h3>Переименовывать</h3>
+        <p>
+          Менять название объекта, не изменяя содержимое
+          файла. Расширение лучше сохранять прежним.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile" style="background:var(--greenp)">📋</div>
+        <h3>Копировать</h3>
+        <p>
+          Создавать ещё один экземпляр в другом
+          расположении. Исходный файл остаётся на месте.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile">↔️</div>
+        <h3>Перемещать</h3>
+        <p>
+          Изменять расположение объекта: после переноса
+          его больше нет в старой папке.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile" style="background:var(--orangep)">🗑️</div>
+        <h3>Удалять</h3>
+        <p>
+          Убирать ненужные объекты. При обычном удалении
+          некоторые из них сначала попадают в корзину.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile">🔎</div>
+        <h3>Просматривать свойства</h3>
+        <p>
+          Узнавать имя, тип, размер, расположение
+          и дату изменения объекта.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 03. Создание и переименование -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">03 · Создание и переименование</span>
+    <h2>Сначала создадим порядок</h2>
+    <div class="grid two">
+      <article class="card">
+        <h3>📁 Создание папки</h3>
+        <ol class="steps">
+          <li>Открой место, где нужна папка.</li>
+          <li>
+            Выбери «Создать папку»
+            (иногда через контекстное меню).
+          </li>
+          <li>Введи понятное название.</li>
+          <li>Подтверди создание клавишей Enter.</li>
+        </ol>
+        <p>
+          Пример: в «Документах» создать «Учебный архив»,
+          а внутри — «Тексты», «Изображения» и «Материалы».
+        </p>
+      </article>
+      <article class="card">
+        <h3>📝 Переименование</h3>
+        <ol class="steps">
+          <li>Выдели нужный объект.</li>
+          <li>Выбери «Переименовать».</li>
+          <li>
+            Измени имя, не затрагивая расширение файла.
+          </li>
+          <li>Нажми Enter и проверь результат.</li>
+        </ol>
+        <p>
+          Например, <code>Заметки.txt</code>
+          можно назвать <code>Учебные заметки.txt</code>.
+        </p>
+      </article>
+    </div>
+    <div class="note orange">
+      <strong>Имя файла и расширение — не одно и то же</strong>
+      <p>
+        В имени <code>Рисунок.png</code> слово «Рисунок» —
+        основная часть названия, а <code>.png</code> —
+        расширение, связанное с форматом файла.
+        Случайное изменение расширения может помешать
+        системе правильно открыть файл.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 04. Выделение -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">04 · Работа с выделением</span>
+    <h2>Как выбрать сразу несколько объектов?</h2>
+    <p class="lead">
+      Чтобы выполнить одну команду для нескольких файлов,
+      сначала нужно выделить необходимые объекты.
+    </p>
+    <div class="grid three">
+      <article class="card">
+        <div class="tile">👆</div>
+        <h3>Один объект</h3>
+        <p>
+          Обычно достаточно одного щелчка мышью
+          по файлу или папке.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile" style="background:var(--violetp)">⇧</div>
+        <h3>Соседние объекты</h3>
+        <p>
+          В типичных файловых менеджерах: выдели первый,
+          удерживай <kbd>Shift</kbd> и выбери последний.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile" style="background:var(--greenp)">⌃</div>
+        <h3>Несколько отдельных</h3>
+        <p>
+          Удерживай <kbd>Ctrl</kbd> при выборе
+          нужных объектов. <kbd>Ctrl</kbd> + <kbd>A</kbd>
+          обычно выделяет всё содержимое.
+        </p>
+      </article>
+    </div>
+    <div class="note">
+      <strong>На телефоне — другой способ</strong>
+      <p>
+        В учебном файловом менеджере ниже объекты
+        выбираются отдельными нажатиями, поэтому
+        одновременно выделять несколько файлов
+        удобно и без клавиатуры.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 05. Копирование и перемещение -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">05 · Копирование и перемещение</span>
+    <h2>Копия или перенос?</h2>
+    <p class="lead">
+      Обе операции позволяют разместить объект
+      в другой папке, но результат различается.
+    </p>
+    <div class="comparison">
+      <div class="compare">
+        <span class="tag green">📋 Копирование</span>
+        <div class="mini-file-flow">
+          <span>📄</span><b>→</b><span>📄 📄</span>
+        </div>
+        <h3>Два экземпляра</h3>
+        <p>
+          Исходный файл остаётся там, где был.
+          В новой папке появляется копия.
+        </p>
+        <p>
+          <strong>Команды:</strong>
+          <kbd>Ctrl</kbd> + <kbd>C</kbd>,
+          затем <kbd>Ctrl</kbd> + <kbd>V</kbd>.
+        </p>
+      </div>
+      <div class="compare">
+        <span class="tag violet">✂️ Перемещение</span>
+        <div class="mini-file-flow">
+          <span>▫️</span><b>→</b><span>📄</span>
+        </div>
+        <h3>Новое расположение</h3>
+        <p>
+          Файл оказывается в папке назначения,
+          а из исходной папки исчезает.
+        </p>
+        <p>
+          <strong>Команды:</strong>
+          <kbd>Ctrl</kbd> + <kbd>X</kbd>,
+          затем <kbd>Ctrl</kbd> + <kbd>V</kbd>.
+        </p>
+      </div>
+    </div>
+    <div class="flow" style="margin-top:20px">
+      <span>Выделить</span><b>→</b>
+      <span>Копировать / Вырезать</span><b>→</b>
+      <span>Открыть нужную папку</span><b>→</b>
+      <span>Вставить</span>
+    </div>
+    <div class="note">
+      <strong>Буфер обмена</strong>
+      <p>
+        Это временная область, используемая системой
+        для передачи данных между операциями и программами.
+        После «Копировать» или «Вырезать» выполни
+        «Вставить» в нужной папке. Результат
+        перетаскивания мышью может различаться —
+        лучше смотреть, какое действие предлагает
+        файловый менеджер.
+      </p>
+    </div>
+    <div class="shortcuts" style="margin-top:20px">
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>C</kbd>
+        <strong>Копировать</strong>
+        <small>Сделать копию</small>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>X</kbd>
+        <strong>Вырезать</strong>
+        <small>Подготовить к переносу</small>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>V</kbd>
+        <strong>Вставить</strong>
+        <small>Поместить в папку</small>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>Z</kbd>
+        <strong>Отменить</strong>
+        <small>Если операция поддерживает отмену</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06. Удаление и свойства -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">06 · Удаление и свойства</span>
+    <h2>Корзина и свойства файла</h2>
+    <div class="grid two">
+      <article class="card">
+        <div class="tile" style="background:var(--orangep)">♻️</div>
+        <h3>Корзина помогает исправить ошибку</h3>
+        <p>
+          При обычном удалении из файлового менеджера
+          объект часто помещается в корзину. Пока
+          он там находится, его можно восстановить
+          через команду «Восстановить».
+        </p>
+        <p>
+          <strong>Важно:</strong> не все виды удаления
+          используют корзину. Удаление с некоторых
+          носителей, из отдельных приложений или
+          специальной командой может быть окончательным.
+        </p>
+      </article>
+      <article class="card">
+        <div class="tile">ℹ️</div>
+        <h3>Зачем нужны свойства файла?</h3>
+        <p>
+          Через свойства можно узнать тип и расширение,
+          размер, путь к файлу, дату изменения
+          и другие сведения. Отображаемые поля
+          зависят от системы и объекта.
+        </p>
+        <p>
+          Для просмотра свойств обычно используют
+          контекстное меню или отдельную команду
+          файлового менеджера.
+        </p>
+      </article>
+    </div>
+    <div class="note orange">
+      <strong>Работаем безопасно</strong>
+      <p>
+        Создавай, копируй и удаляй только специально
+        подготовленные учебные файлы. Не меняй
+        неизвестные системные папки или чужие документы.
+        В лаборатории ниже все действия происходят
+        лишь внутри веб-страницы и не затрагивают
+        настоящий диск.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 07. Учебный файловый менеджер -->
+<section class="section" id="lab-section">
+  <div class="container">
+    <span class="eyebrow">07 · Интерактивная лаборатория</span>
+    <h2>Учебный файловый менеджер</h2>
+    <p class="lead">
+      В этой модели можно по-настоящему выполнять
+      <strong>действия внутри виртуальной файловой системы</strong>:
+      создавать папки и текстовые файлы,
+      переименовывать, выделять несколько объектов,
+      копировать, вырезать, вставлять,
+      удалять в корзину и восстанавливать.
+    </p>
+
+    <div class="lab" id="explorerLab" tabindex="-1">
+      <div class="lab-title">
+        <strong>📁 Файловый менеджер · Учебная ОС</strong>
+        <small>Все изменения — только на этой странице</small>
+      </div>
+
+      <div class="lab-actions" role="toolbar"
+           aria-label="Операции с файлами">
+        <button type="button" id="backBtn">← Назад</button>
+        <button type="button" id="upBtn">↑ Вверх</button>
+        <button type="button" id="openBtn">📂 Открыть</button>
+        <button type="button" id="copyBtn">📋 Копировать</button>
+        <button type="button" id="cutBtn">✂️ Вырезать</button>
+        <button type="button" id="pasteBtn">📥 Вставить</button>
+        <button type="button" id="renameBtn">✏️ Переименовать</button>
+        <button type="button" class="warn" id="deleteBtn">🗑️ Удалить</button>
+        <button type="button" id="restoreBtn">♻️ Восстановить</button>
+        <button type="button" id="undoBtn">↶ Отменить</button>
+        <button type="button" id="resetBtn">⟲ Сброс</button>
+      </div>
+
+      <div class="lab-address">
+        <strong>Адрес:</strong>
+        <div id="breadcrumbs"
+             style="display:flex;gap:6px;flex-wrap:wrap"></div>
+        <input
+          class="lab-search"
+          type="search"
+          id="searchInput"
+          placeholder="🔎 Найти по имени..."
+          aria-label="Поиск файлов в папке"
+        >
+      </div>
+
+      <div class="lab-main">
+        <aside class="lab-sidebar" id="folderNav"
+               aria-label="Область навигации"></aside>
+
+        <div class="lab-content">
+          <div class="lab-content-top">
+            <strong id="folderHeading">Документы</strong>
+            <div class="lab-view">
+              <label for="viewMode">Вид:</label>
+              <select id="viewMode">
+                <option value="icons">Значки</option>
+                <option value="rows">Список</option>
+              </select>
+              <label for="sortMode">Сортировать:</label>
+              <select id="sortMode">
+                <option value="name">Имя</option>
+                <option value="type">Тип</option>
+                <option value="size">Размер</option>
+              </select>
+            </div>
+            <span id="itemCount">0 объектов</span>
+          </div>
+
+          <div class="file-list" id="fileList"
+               aria-label="Содержимое папки"></div>
+        </div>
+      </div>
+
+      <div class="lab-create">
+        <label for="createKind">Создать:</label>
+        <select id="createKind">
+          <option value="folder">📁 Папку</option>
+          <option value="file">📄 Текстовый файл</option>
+        </select>
+        <input id="newName" maxlength="50"
+               placeholder="Введите название"
+               aria-label="Название нового объекта">
+        <button type="button" id="createBtn">＋ Создать</button>
+      </div>
+
+      <div class="lab-details" id="selectionInfo" aria-live="polite">
+        Выбери один или несколько объектов.
+        Двойное нажатие открывает папку.
+      </div>
+      <div class="lab-status" id="labStatus"
+           role="status" aria-live="polite">
+        Начни с папки «Документы». Создай в ней «Учебный архив».
+      </div>
+      <div class="lab-help">
+        <strong>Подсказка:</strong>
+        нажатие выделяет или снимает выделение;
+        двойное нажатие открывает папку.
+        На телефоне выдели папку и нажми «Открыть».
+        После «Копировать» или «Вырезать»
+        перейди к папке назначения и нажми «Вставить».
+        Для переименования сначала выдели ровно один объект.
+        <kbd>Ctrl</kbd>+<kbd>C</kbd>,
+        <kbd>X</kbd>, <kbd>V</kbd>, <kbd>A</kbd>
+        работают при взаимодействии с этой лабораторией,
+        кроме полей ввода.
+      </div>
+    </div>
+
+    <div class="progress">
+      <h3>🎯 Учебная миссия: «Организуй архив»</h3>
+      <p>
+        Задания отмечаются автоматически, когда ты выполняешь
+        операции в модели. Это необязательное исследование,
+        которое помогает понять последовательность работы.
+      </p>
+      <div class="progress-meter"
+           aria-label="Прогресс задания">
+        <span id="progressFill"></span>
+      </div>
+      <strong id="progressLabel">0 из 8 шагов</strong>
+      <div class="progress-grid" id="milestones"></div>
+    </div>
+
+    <div class="note green">
+      <strong>Как исправить ошибку?</strong>
+      <p>
+        Кнопка «Отменить» возвращает предыдущую операцию
+        в этой модели. В настоящем файловом менеджере
+        отмена поддерживается не для всех действий.
+        Если учебный объект попал в корзину,
+        открой корзину и нажми «Восстановить».
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 08. Windows и Linux -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">08 · Сравним операционные системы</span>
+    <h2>Один принцип — разные интерфейсы</h2>
+    <p class="lead">
+      Windows использует Проводник, а в Linux
+      доступны разные файловые менеджеры, например Thunar.
+      Кнопки и оформление могут отличаться, но задачи
+      остаются знакомыми: открывать, копировать,
+      перемещать и искать файлы.
+    </p>
+    <div class="image-compare">
+      <figure class="screenshot" style="margin:0">
+        <img
+          loading="lazy"
+          src="img-1.png"
+          alt="Пример окна файлового менеджера в Windows 11 с папкой и изображением"
+        >
+        <h3>🪟 Проводник Windows</h3>
+        <p>
+          Область навигации, содержимое папки,
+          панель команд и сведения о файлах.
+        </p>
+        <div class="credit">
+          Иллюстрация:
+          <a
+            href="https://betawiki.net/wiki/File:Windows11-10.0.25276.1000-FileExplorer.webp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >BetaWiki, снимок интерфейса Windows 11</a>.
+        </div>
+      </figure>
+
+      <figure class="screenshot" style="margin:0">
+        <img
+          loading="lazy"
+          src="img-2.png"
+          alt="Окно файлового менеджера Thunar в Linux: область папок слева, файлы справа"
+        >
+        <h3>🐧 Thunar в Linux</h3>
+        <p>
+          Здесь тоже есть список папок, рабочая область,
+          переход по расположениям и команды файловых операций.
+        </p>
+        <div class="credit">
+          Иллюстрация:
+          <a
+            href="https://commons.wikimedia.org/wiki/File:Thunar-1.6.2.png"
+            target="_blank"
+            rel="noopener noreferrer"
+          >LockerX / Wikimedia Commons, GPL</a>.
+          Показана более ранняя версия интерфейса.
+        </div>
+      </figure>
+    </div>
+    <div class="note">
+      <strong>Почему используются реальные изображения?</strong>
+      <p>
+        Они помогают узнавать знакомые элементы в настоящих
+        программах. Если Интернет недоступен, картинки
+        могут не загрузиться, но схемы, объяснения
+        и виртуальный файловый менеджер продолжат
+        работать без сети.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 09. Практическая работа -->
+<section class="section" id="practice">
+  <div class="container">
+    <span class="eyebrow">09 · Практическая работа и закрепление</span>
+    <h2>Выбери подходящий маршрут</h2>
+    <p class="lead">
+      Все изучают основные операции с файлами и папками.
+      Для закрепления можно добровольно выполнить
+      практическое задание в настоящей операционной
+      системе либо ответить на вопросы после изучения
+      схем и примеров.
+    </p>
+
+    <div class="routes">
+      <article class="route">
+        <div class="route-head">
+          <span class="tag">🖥️ Вариант 1</span>
+          <h3>ПЗ «Организация учебных файлов и папок»</h3>
+          <p>
+            При наличии компьютера. Работай только
+            с собственными учебными файлами.
+          </p>
+        </div>
+        <div class="route-content">
+          <ol class="steps">
+            <li>
+              Открой файловый менеджер и перейди
+              в папку «Документы».
+            </li>
+            <li>Создай папку «Учебный архив».</li>
+            <li>
+              Внутри создай папки «Тексты»,
+              «Изображения» и «Материалы».
+            </li>
+            <li>
+              В текстовом редакторе создай документ
+              «Заметки», напиши несколько предложений
+              об операционной системе и сохрани
+              в «Учебном архиве».
+            </li>
+            <li>Аналогично создай документ «План работы».</li>
+            <li>
+              Скопируй «Заметки» в папку «Тексты».
+              Проверь, что исходный файл остался.
+            </li>
+            <li>
+              Перемести «План работы» в папку «Материалы».
+            </li>
+            <li>
+              Переименуй копию «Заметки»
+              в «Учебные заметки»,
+              сохранив расширение файла.
+            </li>
+            <li>
+              Посмотри свойства одного из созданных
+              файлов: имя, тип, размер и расположение.
+            </li>
+            <li>
+              Создай папку «Временная», удали её обычным
+              способом и восстанови из корзины,
+              если она туда попала.
+            </li>
+            <li>
+              Проверь структуру папок
+              и сохрани все документы.
+            </li>
+          </ol>
+
+          <div class="note green">
+            <strong>Результат</strong>
+            <p>
+              Упорядоченная папка «Учебный архив»,
+              в которой ты самостоятельно создал,
+              скопировал, переместил и переименовал
+              учебные объекты.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article class="route">
+        <div class="route-head alt">
+          <span class="tag violet">📖 Вариант 2</span>
+          <h3>Закрепление по материалам сайта</h3>
+          <p>
+            Полноценный теоретический маршрут,
+            если практическая работа сейчас недоступна.
+          </p>
+        </div>
+        <div class="route-content">
+          <p>
+            Используй разделы сайта и учебную модель,
+            чтобы разобраться в последовательности
+            файловых операций. Затем
+            <strong>ответь на 12 вопросов</strong>
+            следующего раздела.
+          </p>
+          <p>
+            Объясни своими словами, что получится,
+            если скопировать документ из «Учебного архива»
+            в «Тексты», а затем переместить другой документ
+            в «Материалы». В чём разница?
+          </p>
+          <p>
+            Особое внимание удели корзине,
+            сохранению расширения файла
+            и выбору нескольких объектов.
+          </p>
+          <div class="note">
+            <strong>Подумай</strong>
+            <p>
+              Если файл «Заметки.txt» имеется
+              в двух папках, как узнать,
+              это копии или один файл в новом месте?
+              Какие признаки помогут проверить результат?
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Вопросы -->
+<section class="section" id="questions">
+  <div class="container">
+    <span class="eyebrow">10 · Закрепление знаний</span>
+    <h2>12 вопросов по уроку</h2>
+    <p class="lead">
+      Ответь на вопросы своими словами. Если что-то
+      забылось, найди нужное объяснение или схему в уроке.
+    </p>
+    <div class="question-grid">
+      <div class="question">
+        <b>01</b>
+        <p>Какие основные операции можно выполнять с файлами и папками?</p>
+      </div>
+      <div class="question">
+        <b>02</b>
+        <p>Как создать новую папку в файловом менеджере?</p>
+      </div>
+      <div class="question">
+        <b>03</b>
+        <p>Чем переименование файла отличается от изменения его содержимого?</p>
+      </div>
+      <div class="question">
+        <b>04</b>
+        <p>Как выделить несколько файлов для выполнения общей операции?</p>
+      </div>
+      <div class="question">
+        <b>05</b>
+        <p>Что называют копированием файла?</p>
+      </div>
+      <div class="question">
+        <b>06</b>
+        <p>Чем копирование отличается от перемещения?</p>
+      </div>
+      <div class="question">
+        <b>07</b>
+        <p>Для чего используется буфер обмена?</p>
+      </div>
+      <div class="question">
+        <b>08</b>
+        <p>Какие сочетания клавиш применяются для копирования, вырезания и вставки?</p>
+      </div>
+      <div class="question">
+        <b>09</b>
+        <p>Что происходит с файлом при обычном удалении в корзину?</p>
+      </div>
+      <div class="question">
+        <b>10</b>
+        <p>Как восстановить случайно удалённый файл, если он находится в корзине?</p>
+      </div>
+      <div class="question">
+        <b>11</b>
+        <p>Какие сведения можно узнать в свойствах файла?</p>
+      </div>
+      <div class="question">
+        <b>12</b>
+        <p>Почему важно правильно организовывать файлы и осторожно выполнять операции с ними?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Итог -->
+<section class="section">
+  <div class="container">
+    <div class="final">
+      <span class="eyebrow">11 · Итог урока и всего цикла</span>
+      <h2>Файловая система стала понятнее</h2>
+      <p class="lead">
+        Теперь ты знаешь, как управлять не только окнами,
+        но и файлами: создавать удобную структуру папок,
+        копировать и перемещать объекты, проверять свойства
+        и восстанавливать некоторые удалённые данные.
+      </p>
+      <div class="final-grid">
+        <div class="final-point">
+          <strong>📁 Организация</strong>
+          <p>
+            Создание папок, понятные имена,
+            вложенные каталоги.
+          </p>
+        </div>
+        <div class="final-point">
+          <strong>📋 Действия</strong>
+          <p>
+            Выделение, копирование,
+            перемещение и переименование.
+          </p>
+        </div>
+        <div class="final-point">
+          <strong>♻️ Осторожность</strong>
+          <p>
+            Корзина, восстановление, проверка
+            результата и забота о файлах.
+          </p>
+        </div>
+      </div>
+      <div class="note green">
+        <strong>Главный вывод</strong>
+        <p>
+          Уверенная работа с операционной системой
+          начинается с понимания общих принципов.
+          Зная их, ты сможешь ориентироваться
+          в разных файловых менеджерах
+          и поддерживать порядок в цифровых материалах.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 8 класс ·
+  Основы работы с операционной системой ·
+  Часть 4 из 4
+</footer>
+
+<script>
+"use strict";
+
+/* =====================================================
+   ВИРТУАЛЬНАЯ ФАЙЛОВАЯ СИСТЕМА
+
+   Все данные сохраняются только в памяти вкладки.
+   Настоящие файлы компьютера не изменяются.
+===================================================== */
+
+const $ = id => document.getElementById(id);
+
+let nextId = 10;
+
+let items = [];
+let trash = [];
+let clipboard = null;
+let current = "docs";
+let selected = new Set();
+let history = [];
+let navHistory = [];
+let usedUndo = false;
+let renamed = false;
+let restored = false;
+let focusLab = false;
+
+/* Исходное содержимое учебного компьютера */
+
+const seed = () => [
+  {
+    id:"root",
+    name:"Этот компьютер",
+    kind:"folder",
+    parent:null,
+    size:0
+  },
+  {
+    id:"docs",
+    name:"Документы",
+    kind:"folder",
+    parent:"root",
+    size:0
+  },
+  {
+    id:"pics",
+    name:"Изображения",
+    kind:"folder",
+    parent:"root",
+    size:0
+  },
+  {
+    id:"downloads",
+    name:"Загрузки",
+    kind:"folder",
+    parent:"root",
+    size:0
+  },
+  {
+    id:"sample",
+    name:"Пример.txt",
+    kind:"file",
+    parent:"docs",
+    size:2,
+    content:"Небольшой учебный пример."
+  },
+  {
+    id:"image",
+    name:"Пейзаж.png",
+    kind:"file",
+    parent:"pics",
+    size:840,
+    content:""
+  }
+];
+
+/* =====================================================
+   ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+===================================================== */
+
+function byId(id) {
+  return items.find(x => x.id === id);
+}
+
+function children(id) {
+  return items.filter(x => x.parent === id);
+}
+
+function ancestors(id) {
+  const list = [];
+  let x = byId(id);
+
+  while(x) {
+    list.unshift(x);
+    x = x.parent ? byId(x.parent) : null;
+  }
+
+  return list;
+}
+
+function pathOf(id) {
+  return ancestors(id)
+    .map(x => x.name)
+    .join(" \\ ");
+}
+
+function isUnder(id, parent) {
+  let x = byId(id);
+
+  while(x) {
+    if(x.id === parent) return true;
+    x = x.parent ? byId(x.parent) : null;
+  }
+
+  return false;
+}
+
+function isTrashed(id) {
+  return trash.some(t => isUnder(id,t.id));
+}
+
+function uniqueName(parent,name,ignore=null) {
+  return !children(parent).some(x =>
+    x.id !== ignore &&
+    !isTrashed(x.id) &&
+    x.name.toLocaleLowerCase("ru") ===
+    name.toLocaleLowerCase("ru")
+  );
+}
+
+function nameOkay(name) {
+  return !!name &&
+    name !== "." &&
+    name !== ".." &&
+    !/[\\/:*?"<>|]/.test(name) &&
+    name.length <= 50;
+}
+
+function announce(s) {
+  $("labStatus").textContent = s;
+}
+
+/* Сохранение состояния для отмены */
+
+function saveUndo() {
+  history.push({
+    items: structuredClone(items),
+    trash: structuredClone(trash),
+    clipboard: structuredClone(clipboard),
+    current,
+    selected:[...selected],
+    renamed,
+    restored
+  });
+
+  if(history.length > 35) {
+    history.shift();
+  }
+}
+
+/* =====================================================
+   СБРОС ЛАБОРАТОРИИ
+===================================================== */
+
+function reset() {
+  nextId = 10;
+  items = seed();
+  trash = [];
+  clipboard = null;
+  current = "docs";
+  selected = new Set();
+  history = [];
+  navHistory = [];
+  renamed = false;
+  restored = false;
+  $("searchInput").value = "";
+
+  render();
+
+  announce(
+    "Начни с папки «Документы». " +
+    "Создай в ней «Учебный архив»."
+  );
+}
+
+/* =====================================================
+   СОРТИРОВКА
+===================================================== */
+
+function sortList(a) {
+  const sort = $("sortMode").value;
+
+  const collator = new Intl.Collator("ru",{
+    numeric:true,
+    sensitivity:"base"
+  });
+
+  return [...a].sort((x,y) => {
+    if(x.kind !== y.kind) {
+      return x.kind === "folder" ? -1 : 1;
+    }
+
+    let result = sort === "size"
+      ? x.size - y.size
+      : sort === "type"
+        ? collator.compare(
+            x.kind === "file"
+              ? x.name.split(".").pop()
+              : "папка",
+            y.kind === "file"
+              ? y.name.split(".").pop()
+              : "папка"
+          )
+        : collator.compare(x.name,y.name);
+
+    return result || collator.compare(x.name,y.name);
+  });
+}
+
+function icon(x) {
+  return x.kind === "folder"
+    ? "📁"
+    : x.name.endsWith(".png")
+      ? "🖼️"
+      : "📄";
+}
+
+function visibleItems() {
+  if(current === "trash") {
+    return trash
+      .map(t => byId(t.id))
+      .filter(Boolean);
+  }
+
+  let list = children(current)
+    .filter(x => !isTrashed(x.id));
+
+  const query = $("searchInput")
+    .value
+    .trim()
+    .toLocaleLowerCase("ru");
+
+  if(query) {
+    list = items.filter(x =>
+      x.id !== "root" &&
+      x.id !== current &&
+      !isTrashed(x.id) &&
+      isUnder(x.id,current) &&
+      x.name.toLocaleLowerCase("ru").includes(query)
+    );
+  }
+
+  return sortList(list);
+}
+
+/* =====================================================
+   ХЛЕБНЫЕ КРОШКИ И ДЕРЕВО ПАПОК
+===================================================== */
+
+function crumbs() {
+  const box = $("breadcrumbs");
+  box.replaceChildren();
+
+  const arr = current === "trash"
+    ? [{id:"trash",name:"Корзина"}]
+    : ancestors(current);
+
+  arr.forEach((x,i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "crumb";
+    b.textContent = (i ? "› " : "") + x.name;
+
+    b.addEventListener("click",() => navigate(x.id));
+
+    box.appendChild(b);
+  });
+}
+
+function navTree() {
+  const nav = $("folderNav");
+  nav.replaceChildren();
+
+  function add(id,level) {
+    const x = byId(id);
+
+    if(!x || isTrashed(id)) return;
+
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = "📁 " + x.name;
+    b.style.paddingLeft = 8 + level * 12 + "px";
+    b.classList.toggle("active",current === id);
+
+    b.addEventListener("click",() => navigate(id));
+
+    nav.appendChild(b);
+
+    sortList(
+      children(id).filter(x =>
+        x.kind === "folder" &&
+        !isTrashed(x.id)
+      )
+    ).forEach(x => add(x.id,level + 1));
+  }
+
+  add("root",0);
+
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = "♻️ Корзина (" + trash.length + ")";
+  b.classList.toggle("active",current === "trash");
+
+  b.addEventListener("click",() => navigate("trash"));
+
+  nav.appendChild(b);
+}
+
+/* =====================================================
+   ОТОБРАЖЕНИЕ ФАЙЛОВОГО МЕНЕДЖЕРА
+===================================================== */
+
+function render() {
+  if(
+    current !== "trash" &&
+    (!byId(current) || isTrashed(current))
+  ) {
+    current = "docs";
+  }
+
+  selected = new Set(
+    [...selected].filter(id =>
+      visibleItems().some(x => x.id === id)
+    )
+  );
+
+  crumbs();
+  navTree();
+
+  $("folderHeading").textContent =
+    current === "trash"
+      ? "Корзина"
+      : byId(current).name;
+
+  const arr = visibleItems();
+
+  $("itemCount").textContent =
+    arr.length + " объект(ов)";
+
+  const list = $("fileList");
+
+  list.className =
+    "file-list" +
+    ($("viewMode").value === "rows" ? " rows" : "");
+
+  list.replaceChildren();
+
+  arr.forEach(x => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "file-entry";
+
+    b.setAttribute(
+      "aria-pressed",
+      String(selected.has(x.id))
+    );
+
+    b.title = pathOf(x.id);
+
+    const emoji = document.createElement("span");
+    emoji.className = "emoji";
+    emoji.textContent = icon(x);
+
+    const title = document.createElement("span");
+    title.className = "name";
+    title.textContent = x.name;
+
+    const sm = document.createElement("small");
+    sm.textContent =
+      x.kind === "folder"
+        ? "Папка"
+        : x.size + " КБ";
+
+    b.append(emoji,title,sm);
+
+    b.addEventListener("click",() => {
+      if(selected.has(x.id)) {
+        selected.delete(x.id);
+      } else {
+        selected.add(x.id);
+      }
+
+      render();
+    });
+
+    b.addEventListener("dblclick",() => {
+      if(x.kind === "folder" && current !== "trash") {
+        navigate(x.id);
+      }
+    });
+
+    list.appendChild(b);
+  });
+
+  if(!arr.length) {
+    const p = document.createElement("div");
+    p.className = "lab-empty";
+    p.textContent = $("searchInput").value
+      ? "Ничего не найдено"
+      : "Папка пуста";
+
+    list.appendChild(p);
+  }
+
+  const chosen = [...selected]
+    .map(byId)
+    .filter(Boolean);
+
+  $("selectionInfo").textContent = !chosen.length
+    ? "Ничего не выделено. Выбери объект для просмотра свойств."
+    : chosen.length > 1
+      ? "Выделено объектов: " + chosen.length +
+        ". Теперь можно копировать, вырезать " +
+        "или удалить их вместе."
+      : "Свойства: " + chosen[0].name +
+        " · " +
+        (chosen[0].kind === "folder" ? "папка" : "файл") +
+        " · " +
+        (chosen[0].kind === "folder"
+          ? "—"
+          : chosen[0].size + " КБ") +
+        " · Путь: " + pathOf(chosen[0].id) +
+        " · Изменён: 16.10.2026 (учебная дата)";
+
+  $("backBtn").disabled = !navHistory.length;
+  $("upBtn").disabled =
+    current === "root" || current === "trash";
+
+  $("openBtn").disabled =
+    chosen.length !== 1 ||
+    chosen[0].kind !== "folder" ||
+    current === "trash";
+
+  $("copyBtn").disabled =
+    !chosen.length || current === "trash";
+
+  $("cutBtn").disabled =
+    !chosen.length || current === "trash";
+
+  $("pasteBtn").disabled =
+    !clipboard || current === "trash";
+
+  $("renameBtn").disabled =
+    chosen.length !== 1 || current === "trash";
+
+  $("deleteBtn").disabled =
+    !chosen.length || current === "trash";
+
+  $("restoreBtn").disabled =
+    !chosen.length || current !== "trash";
+
+  $("undoBtn").disabled = !history.length;
+
+  $("createBtn").disabled = current === "trash";
+
+  updateProgress();
+}
+
+/* =====================================================
+   НАВИГАЦИЯ
+===================================================== */
+
+function navigate(id,back=false) {
+  if(current !== id && !back) {
+    navHistory.push(current);
+  }
+
+  current = id;
+  selected.clear();
+  $("searchInput").value = "";
+
+  render();
+}
+
+/* =====================================================
+   СОЗДАНИЕ ФАЙЛА ИЛИ ПАПКИ
+===================================================== */
+
+function create() {
+  const kind = $("createKind").value;
+  let name = $("newName").value.trim();
+
+  if(current === "trash") return;
+
+  if(kind === "file" && !name.includes(".")) {
+    name += ".txt";
+  }
+
+  if(
+    kind === "file" &&
+    !name.toLowerCase().endsWith(".txt")
+  ) {
+    announce(
+      "В этой лаборатории создаются только файлы .txt"
+    );
+    return;
+  }
+
+  if(!nameOkay(name)) {
+    announce(
+      "Укажи корректное имя без символов \\ / : * ? \" < > |"
+    );
+    return;
+  }
+
+  if(!uniqueName(current,name)) {
+    announce("Здесь уже есть объект с таким именем.");
+    return;
+  }
+
+  saveUndo();
+
+  const obj = {
+    id:"n" + nextId++,
+    name,
+    kind,
+    parent:current,
+    size:kind === "folder" ? 0 : 2,
+    content:kind === "file"
+      ? "Операционная система помогает управлять файлами и программами."
+      : ""
+  };
+
+  items.push(obj);
+  $("newName").value = "";
+  selected = new Set([obj.id]);
+
+  render();
+
+  announce(
+    "Создано: " + name +
+    ". Объект находится в текущей папке."
+  );
+}
+
+/* =====================================================
+   ПЕРЕИМЕНОВАНИЕ
+===================================================== */
+
+function rename() {
+  if(selected.size !== 1) return;
+
+  const x = byId([...selected][0]);
+  let name = prompt("Новое имя:",x.name);
+
+  if(name === null) return;
+
+  name = name.trim();
+
+  if(x.kind === "file") {
+    const ext =
+      x.name.slice(x.name.lastIndexOf("."));
+
+    if(
+      !name.toLowerCase().endsWith(
+        ext.toLowerCase()
+      )
+    ) {
+      if(name.includes(".")) {
+        announce(
+          "Для учебного файла сохрани прежнее расширение " +
+          ext
+        );
+        return;
+      }
+
+      name += ext;
+    }
+  }
+
+  if(
+    !nameOkay(name) ||
+    !uniqueName(x.parent,name,x.id)
+  ) {
+    announce(
+      "Не удалось переименовать: проверь имя " +
+      "и отсутствие совпадений."
+    );
+    return;
+  }
+
+  saveUndo();
+
+  const old = x.name;
+  x.name = name;
+  renamed = true;
+
+  render();
+
+  announce(
+    "Переименовано: «" + old +
+    "» → «" + name +
+    "». Содержимое не изменилось."
+  );
+}
+
+/* =====================================================
+   БУФЕР ОБМЕНА
+===================================================== */
+
+function chooseClipboard(mode) {
+  if(!selected.size) return;
+
+  clipboard = {
+    mode,
+    ids:[...selected]
+  };
+
+  render();
+
+  announce(
+    (mode === "copy"
+      ? "Скопировано в буфер: "
+      : "Подготовлено к перемещению: ") +
+    clipboard.ids.length +
+    " объект(ов). Открой папку назначения " +
+    "и нажми «Вставить»."
+  );
+}
+
+/* Копирование дерева папок */
+
+function copyTree(id,to) {
+  const x = byId(id);
+
+  const ext =
+    x.kind === "file" && x.name.includes(".")
+      ? x.name.slice(x.name.lastIndexOf("."))
+      : "";
+
+  let name = x.name;
+  let k = 1;
+
+  while(!uniqueName(to,name)) {
+    const base = ext
+      ? x.name.slice(0,-ext.length)
+      : x.name;
+
+    name =
+      base +
+      " (копия" +
+      (k > 1 ? " " + k : "") +
+      ")" +
+      ext;
+
+    k++;
+  }
+
+  const idNew = "n" + nextId++;
+
+  items.push({
+    ...x,
+    id:idNew,
+    name,
+    parent:to
+  });
+
+  if(x.kind === "folder") {
+    children(id)
+      .filter(c => !isTrashed(c.id))
+      .forEach(c => copyTree(c.id,idNew));
+  }
+
+  return idNew;
+}
+
+/* =====================================================
+   ВСТАВКА
+===================================================== */
+
+function paste() {
+  if(!clipboard || current === "trash") return;
+
+  const valid = clipboard.ids
+    .map(byId)
+    .filter(x => x && !isTrashed(x.id));
+
+  if(!valid.length) {
+    clipboard = null;
+    render();
+    return;
+  }
+
+  if(
+    clipboard.mode === "cut" &&
+    valid.some(x => isUnder(current,x.id))
+  ) {
+    announce(
+      "Нельзя переместить папку внутрь самой себя."
+    );
+    return;
+  }
+
+  if(
+    clipboard.mode === "cut" &&
+    valid.some(x =>
+      !uniqueName(current,x.name,x.id)
+    )
+  ) {
+    announce(
+      "В папке назначения уже есть объект с таким именем."
+    );
+    return;
+  }
+
+  saveUndo();
+
+  let done = 0;
+
+  valid.forEach(x => {
+    if(clipboard.mode === "copy") {
+      copyTree(x.id,current);
+    } else if(x.parent !== current) {
+      x.parent = current;
+      done++;
+    }
+  });
+
+  if(clipboard.mode === "copy") {
+    done = valid.length;
+  }
+
+  const op = clipboard.mode;
+  selected.clear();
+
+  if(op === "cut") {
+    clipboard = null;
+  }
+
+  render();
+
+  announce(
+    done
+      ? (op === "copy"
+          ? "Созданы копии: "
+          : "Перемещено: ") +
+        done + " объект(ов)."
+      : "Объекты уже находятся в этой папке."
+  );
+}
+
+/* =====================================================
+   УДАЛЕНИЕ В КОРЗИНУ
+===================================================== */
+
+function trashSelected() {
+  if(!selected.size) return;
+
+  saveUndo();
+
+  const ids = [...selected].filter(id =>
+    ![...selected].some(
+      other =>
+        other !== id &&
+        isUnder(id,other)
+    )
+  );
+
+  ids.forEach(id => {
+    trash.push({
+      id,
+      originalParent:byId(id).parent
+    });
+  });
+
+  selected.clear();
+
+  render();
+
+  announce(
+    "Объект(ы) перемещены в учебную корзину. " +
+    "Их можно восстановить."
+  );
+}
+
+/* =====================================================
+   ВОССТАНОВЛЕНИЕ
+===================================================== */
+
+function restoreSelected() {
+  if(
+    current !== "trash" ||
+    !selected.size
+  ) return;
+
+  saveUndo();
+
+  let count = 0;
+
+  for(const id of [...selected]) {
+    const t = trash.find(x => x.id === id);
+
+    if(!t) continue;
+
+    const x = byId(id);
+    let destination = t.originalParent;
+
+    if(
+      !byId(destination) ||
+      isTrashed(destination)
+    ) {
+      destination = "docs";
+    }
+
+    let newName = x.name;
+    let j = 1;
+
+    while(
+      !uniqueName(destination,newName,id)
+    ) {
+      newName =
+        x.name +
+        " (восстановлен " +
+        j++ +
+        ")";
+    }
+
+    x.name = newName;
+    x.parent = destination;
+
+    trash = trash.filter(v => v.id !== id);
+    count++;
+  }
+
+  selected.clear();
+  restored = true;
+
+  render();
+
+  announce(
+    "Восстановлено: " + count +
+    " объект(ов). Они вернулись в прежнее " +
+    "расположение, если оно доступно."
+  );
+}
+
+/* =====================================================
+   ОТМЕНА
+===================================================== */
+
+function undo() {
+  if(!history.length) return;
+
+  const state = history.pop();
+
+  items = state.items;
+  trash = state.trash;
+  clipboard = state.clipboard;
+  current = state.current;
+  selected = new Set(state.selected);
+  renamed = state.renamed;
+  restored = state.restored;
+
+  render();
+
+  announce("Последняя операция отменена.");
+}
+
+/* =====================================================
+   УЧЕБНАЯ МИССИЯ — 8 ЭТАПОВ
+===================================================== */
+
+const progressNames = [
+  "Создать «Учебный архив» в «Документах»",
+  "Добавить папки «Тексты», «Изображения», «Материалы»",
+  "Создать «Заметки.txt» и «План работы.txt»",
+  "Скопировать «Заметки.txt» в «Тексты»",
+  "Переместить «План работы.txt» в «Материалы»",
+  "Переименовать копию в «Учебные заметки.txt»",
+  "Создать и удалить папку «Временная»",
+  "Восстановить папку «Временная» из корзины"
+];
+
+function updateProgress() {
+  const arc = children("docs").find(x =>
+    x.name === "Учебный архив" &&
+    !isTrashed(x.id)
+  );
+
+  let values = Array(8).fill(false);
+
+  if(arc) {
+    values[0] = true;
+
+    const inside = children(arc.id)
+      .filter(x => !isTrashed(x.id));
+
+    const t = inside.find(x =>
+      x.name === "Тексты" &&
+      x.kind === "folder"
+    );
+
+    const i = inside.find(x =>
+      x.name === "Изображения" &&
+      x.kind === "folder"
+    );
+
+    const m = inside.find(x =>
+      x.name === "Материалы" &&
+      x.kind === "folder"
+    );
+
+    values[1] = !!(t && i && m);
+
+    values[2] =
+      inside.some(x => x.name === "Заметки.txt") &&
+      (
+        inside.some(x =>
+          x.name === "План работы.txt"
+        ) ||
+        (
+          m &&
+          children(m.id).some(x =>
+            x.name === "План работы.txt"
+          )
+        )
+      );
+
+    values[3] = !!(
+      t &&
+      children(t.id).some(x =>
+        x.name === "Заметки.txt" ||
+        x.name === "Учебные заметки.txt"
+      )
+    );
+
+    values[4] = !!(
+      m &&
+      children(m.id).some(x =>
+        x.name === "План работы.txt"
+      )
+    );
+
+    values[5] = !!(
+      t &&
+      children(t.id).some(x =>
+        x.name === "Учебные заметки.txt"
+      )
+    );
+
+    values[6] =
+      trash.some(x =>
+        byId(x.id)?.name === "Временная"
+      ) ||
+      restored;
+
+    values[7] =
+      restored &&
+      inside.some(x =>
+        x.name === "Временная"
+      );
+  }
+
+  const box = $("milestones");
+  box.replaceChildren();
+
+  values.forEach((v,index) => {
+    const el = document.createElement("div");
+    el.className =
+      "milestone" + (v ? " done" : "");
+
+    const span = document.createElement("span");
+    span.className = "check";
+    span.textContent = v ? "✓" : "";
+
+    const label = document.createElement("span");
+    label.textContent = progressNames[index];
+
+    el.append(span,label);
+    box.appendChild(el);
+  });
+
+  const done = values.filter(Boolean).length;
+
+  $("progressLabel").textContent =
+    done + " из 8 шагов";
+
+  $("progressFill").style.width =
+    (done / 8 * 100) + "%";
+}
+
+/* =====================================================
+   ОБРАБОТЧИКИ КНОПОК
+===================================================== */
+
+$("backBtn").addEventListener("click",() => {
+  if(navHistory.length) {
+    navigate(navHistory.pop(),true);
+  }
+});
+
+$("upBtn").addEventListener("click",() => {
+  if(
+    current !== "trash" &&
+    byId(current)?.parent
+  ) {
+    navigate(byId(current).parent);
+  }
+});
+
+$("openBtn").addEventListener("click",() => {
+  if(selected.size === 1) {
+    const x = byId([...selected][0]);
+
+    if(x.kind === "folder") {
+      navigate(x.id);
+    }
+  }
+});
+
+$("copyBtn").addEventListener(
+  "click",
+  () => chooseClipboard("copy")
+);
+
+$("cutBtn").addEventListener(
+  "click",
+  () => chooseClipboard("cut")
+);
+
+$("pasteBtn").addEventListener(
+  "click",
+  paste
+);
+
+$("renameBtn").addEventListener(
+  "click",
+  rename
+);
+
+$("deleteBtn").addEventListener(
+  "click",
+  trashSelected
+);
+
+$("restoreBtn").addEventListener(
+  "click",
+  restoreSelected
+);
+
+$("undoBtn").addEventListener(
+  "click",
+  undo
+);
+
+$("resetBtn").addEventListener("click",() => {
+  if(
+    confirm(
+      "Сбросить только учебную файловую систему?"
+    )
+  ) {
+    reset();
+  }
+});
+
+$("createBtn").addEventListener(
+  "click",
+  create
+);
+
+$("newName").addEventListener("keydown",e => {
+  if(e.key === "Enter") {
+    create();
+  }
+});
+
+$("searchInput").addEventListener(
+  "input",
+  render
+);
+
+$("viewMode").addEventListener(
+  "change",
+  render
+);
+
+$("sortMode").addEventListener(
+  "change",
+  render
+);
+
+/* =====================================================
+   ГОРЯЧИЕ КЛАВИШИ
+
+   Действуют только внутри лаборатории,
+   если пользователь не редактирует поле.
+===================================================== */
+
+$("explorerLab").addEventListener(
+  "keydown",
+  e => {
+    if(
+      ["INPUT","TEXTAREA","SELECT"]
+        .includes(e.target.tagName)
+    ) return;
+
+    if(
+      !(e.ctrlKey || e.metaKey)
+    ) return;
+
+    const k = e.key.toLowerCase();
+
+    if(
+      !["a","c","x","v","z"].includes(k)
+    ) return;
+
+    e.preventDefault();
+
+    if(k === "a") {
+      selected = new Set(
+        visibleItems().map(x => x.id)
+      );
+      render();
+    }
+
+    if(k === "c") {
+      chooseClipboard("copy");
+    }
+
+    if(k === "x") {
+      chooseClipboard("cut");
+    }
+
+    if(k === "v") {
+      paste();
+    }
+
+    if(k === "z") {
+      undo();
+    }
+  }
+);
+
+/* Запуск лаборатории */
+
+reset();
+
+</script>
+</body>
+</html>
