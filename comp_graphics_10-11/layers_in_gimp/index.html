@@ -1,0 +1,3139 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Информатика, 10–11 класс. Слои в GIMP: атрибуты, прозрачность, перемещение, порядок и удаление.">
+<title>Слои в GIMP — информатика, 10–11 класс</title>
+<style>
+
+/* ============================================
+   GIMP DARK THEME
+   Тёмная графитовая тема в стиле GIMP
+   ============================================ */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #202020;
+  --paper: #303030;
+  --ink: #ededed;
+  --muted: #c1c5cb;
+  --line: #494b4d;
+
+  --blue: #95b9ee;
+  --navy: #181818;
+  --teal: #8acfb6;
+  --violet: #c5a8fa;
+  --amber: #f1bc7b;
+  --red: #f69da5;
+
+  --sb: #2b3b48;
+  --sg: #293d37;
+  --sv: #3a3346;
+  --sa: #43362c;
+  --sr: #493036;
+
+  --shadow: 0 14px 32px #00000040;
+}
+
+/* ============================================
+   01. ОСНОВНЫЕ СТИЛИ
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.72 "Segoe UI", Arial, sans-serif;
+}
+
+h1, h2, h3, h4, p, figure {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 6vw, 5.15rem);
+  line-height: 1.07;
+  letter-spacing: -.05em;
+}
+
+h2 {
+  font-size: clamp(1.78rem, 3.8vw, 2.7rem);
+  line-height: 1.19;
+  letter-spacing: -.03em;
+}
+
+h3 {
+  font-size: 1.22rem;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+p {
+  color: var(--muted);
+  margin-bottom: 13px;
+}
+
+strong {
+  color: var(--ink);
+}
+
+a {
+  color: #9fc4fa;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #c3dcff;
+}
+
+code, kbd {
+  font-family: Consolas, monospace;
+  font-size: .92em;
+}
+
+kbd {
+  padding: 2px 7px;
+  border: 1px solid #565a5f;
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  background: #3c3c3c;
+  color: #d3dfef;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.container {
+  width: min(1120px, calc(100% - 34px));
+  margin: auto;
+}
+
+.section {
+  padding: 48px 0;
+}
+
+.section:nth-of-type(even) {
+  background: #252525;
+}
+
+.eyebrow {
+  display: block;
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.lead {
+  font-size: 1.07rem;
+  max-width: 870px;
+}
+
+.grid {
+  display: grid;
+  gap: 17px;
+}
+
+.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* ============================================
+   02. КАРТОЧКИ И ИНФОРМАЦИОННЫЕ БЛОКИ
+   ============================================ */
+
+.card {
+  min-width: 0;
+  padding: 23px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  box-shadow: var(--shadow);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.icon-tile {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  background: var(--sb);
+  font-size: 1.95rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 99px;
+  background: var(--sb);
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.tag.green {
+  background: var(--sg);
+  color: var(--teal);
+}
+
+.tag.violet {
+  background: var(--sv);
+  color: var(--violet);
+}
+
+.tag.orange {
+  background: var(--sa);
+  color: var(--amber);
+}
+
+.note {
+  padding: 19px 23px;
+  margin-top: 20px;
+  border-left: 5px solid var(--blue);
+  border-radius: 0 13px 13px 0;
+  background: var(--sb);
+}
+
+.note.green {
+  background: var(--sg);
+  border-color: var(--teal);
+}
+
+.note.orange {
+  background: var(--sa);
+  border-color: var(--amber);
+}
+
+.note.red {
+  background: var(--sr);
+  border-color: var(--red);
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.note p:last-child {
+  margin: 0;
+}
+
+.caption {
+  font-size: .82rem;
+  color: #b5b9c0;
+  margin: 9px 0 0;
+}
+
+.steps {
+  padding-left: 22px;
+  color: var(--muted);
+}
+
+.steps li {
+  margin: 0 0 9px;
+  padding-left: 4px;
+}
+
+.steps li::marker {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+/* ============================================
+   03. ГЛАВНЫЙ ЭКРАН
+   ============================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 79px 0;
+
+  background:
+    radial-gradient(
+      circle at 83% 12%,
+      #32434d,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 5% 100%,
+      #33303b,
+      transparent 45%
+    ),
+    linear-gradient(
+      125deg,
+      #2b2b2b,
+      #232323
+    );
+
+  border-bottom: 1px solid #454545;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .23;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      #6d6f72 1px,
+      transparent 1px
+    );
+
+  background-size: 28px 28px;
+}
+
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.02fr .98fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.hero-label {
+  display: inline-block;
+  padding: 7px 13px;
+  margin-bottom: 22px;
+  border: 1px solid #5a5a5a;
+  border-radius: 99px;
+  background: #343434;
+  color: #dedede;
+  font-weight: 900;
+  font-size: .8rem;
+}
+
+.hero h1 span {
+  display: block;
+  color: #9edfc6;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 530px;
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.hero-chips span {
+  padding: 7px 10px;
+  border: 1px solid #535353;
+  border-radius: 8px;
+  background: #383838;
+  color: #e3e4e6;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+/* ============================================
+   04. ИЛЛЮСТРАЦИЯ ОКНА GIMP
+   ============================================ */
+
+.cover-scene {
+  position: relative;
+  min-height: 380px;
+  display: grid;
+  place-items: center;
+}
+
+.cover-window {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 475px);
+  overflow: hidden;
+  background: #292929;
+  border: 7px solid #171717;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px #0009;
+  transform: rotate(-2deg);
+}
+
+.window-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  background: #3d3d3d;
+  color: #f1f1f1;
+  font-size: .81rem;
+  font-weight: 850;
+}
+
+.window-menu {
+  padding: 7px 12px;
+  background: #303030;
+  border-bottom: 1px solid #4b4b4b;
+  color: #cdd0d4;
+  font-size: .73rem;
+}
+
+.cover-inside {
+  display: grid;
+  grid-template-columns: 1fr 124px;
+  gap: 9px;
+  padding: 11px;
+}
+
+.cover-inside .landscape {
+  min-height: 218px;
+}
+
+.cover-layer-list {
+  padding: 9px 6px;
+  border: 1px solid #505050;
+  border-radius: 8px;
+  background: #333333;
+}
+
+.cover-layer-list strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: .76rem;
+}
+
+.cover-layer-list span {
+  display: block;
+  padding: 6px 5px;
+  margin: 6px 0;
+  border-radius: 5px;
+  background: #444;
+  font-size: .72rem;
+  color: #efefef;
+}
+
+.cover-float {
+  position: absolute;
+  z-index: 4;
+  right: -6px;
+  bottom: 1px;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 5px solid #555;
+  border-radius: 22px;
+  background: #68513c;
+  font-size: 2.8rem;
+  box-shadow: var(--shadow);
+}
+
+/* ============================================
+   05. ИЛЛЮСТРАЦИЯ ПЕЙЗАЖА
+   Цветные объекты сохраняют яркость
+   ============================================ */
+
+.landscape {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 205px;
+  border: 1px solid #52616d;
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      #9fd8f0 0%,
+      #d9f0f8 65%,
+      #9dcd8a 66%,
+      #5ea36c 100%
+    );
+}
+
+.landscape .sun {
+  position: absolute;
+  z-index: 1;
+  top: 14%;
+  left: 67%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ffdb75;
+  box-shadow: 0 0 0 12px #ffe59d77;
+}
+
+.landscape .hill-back {
+  position: absolute;
+  z-index: 1;
+  left: -10%;
+  right: -10%;
+  bottom: 9%;
+  height: 49%;
+  border-radius: 70% 70% 0 0;
+  background: #8dbb90;
+  transform: rotate(-7deg);
+}
+
+.landscape .hill-front {
+  position: absolute;
+  z-index: 2;
+  left: -10%;
+  right: -10%;
+  bottom: -33%;
+  height: 79%;
+  border-radius: 55% 60% 0 0;
+  background: #4f996d;
+  transform: rotate(9deg);
+}
+
+.landscape .tree {
+  position: absolute;
+  z-index: 3;
+  left: 23%;
+  bottom: 12%;
+  width: 17px;
+  height: 79px;
+  border-radius: 4px;
+  background: #805c42;
+}
+
+.landscape .tree::before {
+  content: "";
+  position: absolute;
+  left: -34px;
+  bottom: 40px;
+  width: 84px;
+  height: 85px;
+  border-radius: 50% 50% 45% 45%;
+  background: #2e8161;
+
+  box-shadow:
+    21px 4px 0 #36906a,
+    -13px 8px 0 #327a58;
+}
+
+.landscape .heading {
+  position: absolute;
+  z-index: 4;
+  top: 12%;
+  left: 8%;
+  font-size: clamp(14px, 2vw, 22px);
+  font-weight: 950;
+  letter-spacing: .03em;
+  color: #fff;
+  text-shadow: 0 3px 7px #1e406e7c;
+}
+
+.landscape .cloud {
+  position: absolute;
+  z-index: 2;
+  top: 28%;
+  left: 12%;
+  width: 61px;
+  height: 22px;
+  background: #ffffffd9;
+  border-radius: 40px;
+  box-shadow: 17px -7px 0 1px #ffffffd9;
+}
+
+.landscape.no-tree .tree,
+.landscape.no-sun .sun,
+.landscape.no-title .heading {
+  display: none;
+}
+
+.landscape.transparent-sun .sun {
+  opacity: .45;
+}
+
+.landscape .frame {
+  position: absolute;
+  z-index: 5;
+  left: 17%;
+  bottom: 9%;
+  width: 105px;
+  height: 131px;
+  border: 2px dashed #fff8;
+  pointer-events: none;
+}
+
+.landscape .frame::before {
+  content: "Границы слоя";
+  position: absolute;
+  left: 0;
+  bottom: -22px;
+  color: white;
+  text-shadow: 0 1px 3px #173d4b;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   06. СЛОИ В РАЗРЕЗЕ
+   ============================================ */
+
+.stack-illustration {
+  position: relative;
+  min-height: 245px;
+  padding: 22px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      130deg,
+      #2b3034,
+      #282828
+    );
+
+  border: 1px solid var(--line);
+  border-radius: 17px;
+}
+
+.stack-layer {
+  position: relative;
+  width: min(100%, 365px);
+  min-height: 53px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 2px solid #67839e;
+  background: #34485acb;
+  box-shadow: 0 8px 15px #0004;
+  transform: skew(-11deg);
+}
+
+.stack-layer:nth-child(1) {
+  background: #594735dc;
+  border-color: #9c7752;
+}
+
+.stack-layer:nth-child(2) {
+  background: #365047e0;
+  border-color: #648f83;
+}
+
+.stack-layer:nth-child(3) {
+  background: #394756;
+  border-color: #6685a4;
+}
+
+.stack-layer span {
+  font-size: 1.8rem;
+  transform: skew(11deg);
+}
+
+.stack-layer strong {
+  font-size: .93rem;
+  transform: skew(11deg);
+  color: #f0f0f0;
+}
+
+.stack-illustration small {
+  color: var(--muted);
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* ============================================
+   07. РЕАЛЬНЫЕ СКРИНШОТЫ
+   ============================================ */
+
+.real-shot {
+  min-width: 0;
+  padding: 17px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  box-shadow: var(--shadow);
+}
+
+.real-shot img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 330px;
+  object-fit: contain;
+  background: #252525;
+  border: 1px solid #494949;
+  border-radius: 10px;
+}
+
+.real-shot figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.real-shot figcaption strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.real-shot figcaption small {
+  font-size: .78rem;
+  color: #a8b0bc;
+}
+
+/* ============================================
+   08. МАКЕТ ПАНЕЛИ СЛОЁВ GIMP
+   ============================================ */
+
+.panel-wrap {
+  padding: 17px;
+  background: #292929;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.layer-panel {
+  max-width: 405px;
+  margin: auto;
+  overflow: hidden;
+  background: #2b2b2b;
+  color: #f0f0f0;
+  border: 1px solid #565656;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px #0006;
+}
+
+.panel-head {
+  padding: 10px 14px;
+  background: #222;
+  font-size: .83rem;
+  font-weight: 900;
+  color: #f1f1f1;
+}
+
+.panel-settings {
+  padding: 12px;
+  border-bottom: 1px solid #505050;
+}
+
+.panel-setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 7px 0;
+  font-size: .82rem;
+}
+
+.panel-value {
+  padding: 4px 9px;
+  border: 1px solid #616161;
+  border-radius: 6px;
+  background: #424242;
+  color: #f4f4f4;
+}
+
+.opacity-track {
+  height: 9px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #545454;
+}
+
+.opacity-track::after {
+  content: "";
+  display: block;
+  width: 74%;
+  height: 100%;
+  background: #91b8df;
+}
+
+.panel-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #464646;
+  font-size: .86rem;
+}
+
+.panel-row.selected {
+  background: #506885;
+}
+
+.mini-thumb {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 36px;
+  flex: 0 0 43px;
+  border: 1px solid #8b98a6;
+  border-radius: 4px;
+
+  background:
+    linear-gradient(
+      45deg,
+      #b5b5b5 25%,
+      transparent 25%,
+      transparent 75%,
+      #b5b5b5 75%
+    ),
+    linear-gradient(
+      45deg,
+      #b5b5b5 25%,
+      #fff 25%,
+      #fff 75%,
+      #b5b5b5 75%
+    );
+
+  background-size: 12px 12px;
+  background-position: 0 0, 6px 6px;
+
+  color: #203445;
+  font-weight: 900;
+}
+
+.mini-thumb.sky {
+  background:
+    linear-gradient(
+      #a4d7ed 68%,
+      #66a270 68%
+    );
+}
+
+.mini-thumb.sunny::after {
+  content: "";
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #ffd577;
+}
+
+.mini-thumb.treeish::after {
+  content: "";
+  width: 22px;
+  height: 26px;
+  border-radius: 50% 50% 30% 30%;
+  background: #388a62;
+}
+
+.panel-row .eye {
+  width: 23px;
+  flex: 0 0 23px;
+  color: #fafafa;
+  text-align: center;
+}
+
+.panel-row .name {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 10px 12px;
+  background: #242424;
+  color: #d0d5dc;
+  font-size: 1.2rem;
+}
+
+.callout-numbers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.callout-numbers div {
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.callout-numbers b {
+  color: #a8cafa;
+}
+
+/* ============================================
+   09. АТРИБУТЫ СЛОЁВ
+   ============================================ */
+
+.attribute {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.attribute .symbol {
+  display: grid;
+  place-items: center;
+  flex: 0 0 49px;
+  height: 49px;
+  border-radius: 12px;
+  background: var(--sb);
+  font-size: 1.7rem;
+}
+
+.attribute h3 {
+  margin: 0 0 5px;
+}
+
+.attribute p {
+  margin: 0;
+}
+
+.ruler-demo {
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.ruler {
+  display: flex;
+  height: 15px;
+  overflow: hidden;
+  margin: 12px 0;
+  background: #4a4a4a;
+  border-radius: 20px;
+}
+
+.ruler i {
+  display: block;
+  width: 48%;
+  background: #89c8aa;
+}
+
+.ruler-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+/* ============================================
+   10. ДЕМОНСТРАЦИЯ ПРОЗРАЧНОСТИ
+   ============================================ */
+
+.opacity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.opacity-example {
+  padding: 11px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.checker {
+  position: relative;
+  height: 97px;
+  overflow: hidden;
+  border-radius: 9px;
+
+  background-color: #bcbcbc;
+
+  background-image:
+    linear-gradient(
+      45deg,
+      #888 25%,
+      transparent 25%,
+      transparent 75%,
+      #888 75%
+    ),
+    linear-gradient(
+      45deg,
+      #888 25%,
+      transparent 25%,
+      transparent 75%,
+      #888 75%
+    );
+
+  background-size: 22px 22px;
+  background-position: 0 0, 11px 11px;
+}
+
+.checker .disc {
+  position: absolute;
+  width: 68px;
+  height: 68px;
+  left: calc(50% - 34px);
+  top: 14px;
+  border-radius: 50%;
+  background: #eb9471;
+}
+
+.checker.half .disc {
+  opacity: .5;
+}
+
+.checker.zero .disc {
+  opacity: 0;
+}
+
+.opacity-example strong {
+  display: block;
+  margin-top: 9px;
+}
+
+.opacity-example p {
+  margin: 3px 0 0;
+  font-size: .82rem;
+}
+
+/* ============================================
+   11. ПОРЯДОК НАЛОЖЕНИЯ
+   ============================================ */
+
+.order-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.order-card {
+  padding: 17px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.order-scene {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      #bfe3f3 0 65%,
+      #78bc88 65%
+    );
+}
+
+.order-scene .shape-a {
+  position: absolute;
+  top: 28px;
+  left: 18%;
+  width: 105px;
+  height: 105px;
+  border-radius: 14px;
+  background: #efb35e;
+  box-shadow: 0 4px 7px #694e4027;
+}
+
+.order-scene .shape-b {
+  position: absolute;
+  top: 51px;
+  left: 42%;
+  width: 108px;
+  height: 92px;
+  border-radius: 50%;
+  background: #6d77d1;
+  box-shadow: 0 4px 7px #303f7f20;
+}
+
+.order-scene.reversed .shape-a {
+  z-index: 3;
+}
+
+.order-scene:not(.reversed) .shape-b {
+  z-index: 3;
+}
+
+.order-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.order-labels span {
+  padding: 5px 10px;
+  background: var(--sb);
+  border-radius: 7px;
+  color: #c2d8ec;
+  font-size: .81rem;
+  font-weight: 800;
+}
+
+/* ============================================
+   12. ПЕРЕМЕЩЕНИЕ ПО ХОЛСТУ
+   ============================================ */
+
+.move-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.move-pair .landscape {
+  min-height: 215px;
+}
+
+.move-pair .landscape .tree {
+  left: 22%;
+}
+
+.move-pair .landscape.moved .tree {
+  left: 65%;
+}
+
+.move-pair .landscape .heading {
+  font-size: 18px;
+}
+
+.move-pair .landscape .sun {
+  top: 16%;
+  left: 75%;
+  width: 48px;
+  height: 48px;
+}
+
+.move-pair figure {
+  margin: 0;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.move-pair figcaption {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.move-pair figcaption strong {
+  display: block;
+}
+
+/* ============================================
+   13. СКРЫТИЕ И УДАЛЕНИЕ СЛОЁВ
+   ============================================ */
+
+.hide-delete {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hd-card {
+  padding: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.hd-card .landscape {
+  min-height: 162px;
+}
+
+.hd-card .landscape .tree {
+  bottom: 9%;
+  left: 38%;
+  height: 65px;
+}
+
+.hd-card .landscape .tree::before {
+  width: 72px;
+  height: 72px;
+}
+
+.hd-card h3 {
+  margin-top: 13px;
+}
+
+.hd-card p {
+  margin: 0;
+  font-size: .88rem;
+}
+
+.layers-state {
+  padding: 12px 10px;
+  margin-top: 10px;
+  background: #3c454f;
+  border-radius: 9px;
+  color: #e0e7ee;
+  font-size: .8rem;
+}
+
+.layers-state span {
+  display: block;
+}
+
+.layers-state .hidden {
+  opacity: .74;
+  text-decoration: line-through;
+}
+
+.layers-state .deleted {
+  color: #ffadb4;
+  text-decoration: line-through;
+}
+
+/* ============================================
+   14. СОХРАНЕНИЕ И ЭКСПОРТ
+   ============================================ */
+
+.export-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.export-box {
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  text-align: center;
+}
+
+.export-box .big {
+  font-size: 3.3rem;
+}
+
+.export-box strong {
+  display: block;
+  margin: 5px 0;
+  font-size: 1.1rem;
+}
+
+.export-box p {
+  margin: 0;
+  font-size: .92rem;
+}
+
+.export-arrow {
+  display: grid;
+  place-items: center;
+  color: #a8d7c0;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+/* ============================================
+   15. ВОПРОСЫ ПО УРОКУ
+   ============================================ */
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.question {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.question b {
+  display: grid;
+  place-items: center;
+  flex: 0 0 37px;
+  height: 37px;
+  background: var(--sv);
+  color: var(--violet);
+  border-radius: 9px;
+}
+
+.question p {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: .94rem;
+}
+
+/* ============================================
+   16. ИТОГ УРОКА
+   ============================================ */
+
+.final {
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+
+  background:
+    radial-gradient(
+      circle at 95% 0,
+      #32483f,
+      transparent 43%
+    ),
+    var(--paper);
+}
+
+.final-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin: 19px 0;
+}
+
+.final-point {
+  padding: 19px;
+  background: #2b3948;
+  border-radius: 12px;
+}
+
+.final-point strong {
+  display: block;
+  color: #bad7fa;
+}
+
+.final-point p {
+  margin: 6px 0 0;
+  font-size: .9rem;
+}
+
+.sources {
+  margin: 25px 0;
+  color: #b9c0ca;
+  font-size: .83rem;
+}
+
+.sources a {
+  word-break: break-word;
+}
+
+footer {
+  padding: 29px 15px 41px;
+  margin-top: 31px;
+  background: #1a1a1a;
+  color: #b8bec7;
+  text-align: center;
+  font-size: .86rem;
+}
+
+/* ============================================
+   17. АДАПТИВНАЯ ВЁРСТКА
+   ============================================ */
+
+@media (max-width: 970px) {
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cover-scene {
+    max-width: 550px;
+    margin: auto;
+    width: 100%;
+  }
+
+  .four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hide-delete {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 34px 0;
+  }
+
+  .hero {
+    padding: 51px 0;
+  }
+
+  .two,
+  .three,
+  .four,
+  .order-compare,
+  .move-pair,
+  .questions,
+  .final-grid,
+  .hide-delete {
+    grid-template-columns: 1fr;
+  }
+
+  .callout-numbers {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .final {
+    padding: 19px;
+  }
+
+  .hero-inner {
+    gap: 18px;
+  }
+
+  .opacity-grid {
+    gap: 7px;
+  }
+
+  .opacity-example {
+    padding: 7px;
+  }
+
+  .opacity-example p {
+    font-size: .75rem;
+  }
+
+  .export-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .export-arrow {
+    transform: rotate(90deg);
+  }
+
+  .real-shot img {
+    height: 290px;
+  }
+}
+
+@media (max-width: 450px) {
+
+  .cover-scene {
+    min-height: 285px;
+  }
+
+  .cover-inside {
+    grid-template-columns: 1fr 88px;
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .cover-inside .landscape {
+    min-height: 172px;
+  }
+
+  .cover-layer-list strong {
+    font-size: .65rem;
+  }
+
+  .cover-layer-list span {
+    font-size: .62rem;
+    padding: 5px 2px;
+  }
+
+  .cover-float {
+    width: 57px;
+    height: 57px;
+    font-size: 1.9rem;
+  }
+
+  .cover-window {
+    border-width: 5px;
+  }
+
+  .window-menu {
+    font-size: .63rem;
+  }
+
+  .landscape .tree {
+    transform: scale(.75);
+    transform-origin: bottom center;
+  }
+
+  .landscape .heading {
+    font-size: 15px;
+  }
+
+  .opacity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checker {
+    height: 90px;
+  }
+
+  .real-shot img {
+    height: 245px;
+  }
+
+  .panel-wrap {
+    padding: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ГЛАВНЫЙ ЭКРАН -->
+<header class="hero">
+  <div class="container hero-inner">
+
+    <div>
+      <span class="hero-label">
+        ИНФОРМАТИКА · 10–11 КЛАСС · GIMP
+      </span>
+
+      <h1>
+        Магия
+        <span>слоёв</span>
+      </h1>
+
+      <p>
+        Почему в графическом редакторе фон,
+        надписи и объекты удобно размещать
+        по отдельности? Как изменить порядок
+        элементов, переместить рисунок
+        и удалить ненужный слой?
+      </p>
+
+      <p>
+        <strong>
+          На уроке разберём устройство
+          многослойного изображения
+          и научимся различать основные
+          действия со слоями GIMP.
+        </strong>
+      </p>
+
+      <div class="hero-chips">
+        <span>🗂️ Структура</span>
+        <span>⚙️ Атрибуты</span>
+        <span>↔️ Перемещение</span>
+        <span>♻️ Удаление</span>
+      </div>
+    </div>
+
+    <div
+      class="cover-scene"
+      role="img"
+      aria-label="Учебный макет GIMP с многослойным пейзажем и списком слоёв"
+    >
+      <div class="cover-window">
+        <div class="window-head">
+          <span>🎨 Пейзаж.xcf — GIMP</span>
+          <span>— □ ×</span>
+        </div>
+
+        <div class="window-menu">
+          Файл &nbsp; Правка &nbsp;
+          Выделение &nbsp; Вид &nbsp;
+          Изображение &nbsp; Слой
+        </div>
+
+        <div class="cover-inside">
+          <div class="landscape">
+            <div class="sun"></div>
+            <div class="cloud"></div>
+            <div class="hill-back"></div>
+            <div class="hill-front"></div>
+            <div class="tree"></div>
+            <div class="heading">
+              МОЙ ПЕЙЗАЖ
+            </div>
+          </div>
+
+          <div class="cover-layer-list">
+            <strong>▤ Слои</strong>
+            <span>👁 Заголовок</span>
+            <span>👁 Дерево</span>
+            <span>👁 Солнце</span>
+            <span>👁 Фон</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-float">🎨</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 01. ПОВТОРЕНИЕ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      01 · Вспоминаем графический редактор
+    </span>
+
+    <h2>
+      GIMP работает с растровыми изображениями
+    </h2>
+
+    <p class="lead">
+      <strong>Растровое изображение</strong>
+      состоит из пикселей — маленьких
+      элементов изображения. GIMP позволяет
+      открывать рисунки и фотографии,
+      редактировать их, добавлять надписи,
+      изменять цвета и создавать композиции
+      из нескольких объектов.
+    </p>
+
+    <div class="grid three">
+      <article class="card">
+        <div class="icon-tile">🟦</div>
+        <h3>Пиксели</h3>
+        <p>
+          Хранят цветовые данные изображения.
+          Из множества пикселей складывается
+          фотография или рисунок.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sg)">
+          🛠️
+        </div>
+        <h3>Инструменты</h3>
+        <p>
+          Помогают рисовать, выделять,
+          перемещать и преобразовывать
+          части изображения.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sv)">
+          🗂️
+        </div>
+        <h3>Проект</h3>
+        <p>
+          Рабочее изображение может включать
+          множество слоёв, каждый из которых
+          редактируется отдельно.
+        </p>
+      </article>
+    </div>
+
+    <div class="note">
+      <strong>Представь задачу</strong>
+      <p>
+        Ты создаёшь плакат о природе:
+        фотография служит фоном,
+        поверх неё расположен рисунок дерева,
+        а вверху — заголовок.
+        Если всё объединено в один слой,
+        менять отдельные элементы неудобно.
+        Слои решают эту проблему.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02. ПОНЯТИЕ СЛОЯ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      02 · Что такое слой
+    </span>
+
+    <h2>
+      Один рисунок — несколько прозрачных листов
+    </h2>
+
+    <p class="lead">
+      <strong>Слой</strong> — отдельный элемент
+      изображения, который может содержать
+      пиксели, текст или другие данные.
+      Слои можно представить как прозрачные
+      листы, наложенные один на другой.
+      GIMP показывает их совместный результат.
+    </p>
+
+    <div class="grid two">
+
+      <div class="stack-illustration"
+           role="img"
+           aria-label="Три условных листа: заголовок, дерево, фон">
+
+        <div class="stack-layer">
+          <span>🔤</span>
+          <strong>Слой «Заголовок»</strong>
+        </div>
+
+        <div class="stack-layer">
+          <span>🌳</span>
+          <strong>Слой «Дерево»</strong>
+        </div>
+
+        <div class="stack-layer">
+          <span>🏞️</span>
+          <strong>Слой «Фон»</strong>
+        </div>
+
+        <small>
+          Верхний лист расположен поверх нижнего.
+        </small>
+      </div>
+
+      <div class="card">
+        <h3>Что получится при совмещении?</h3>
+
+        <div class="landscape"
+             role="img"
+             aria-label="Пейзаж: небо, солнце, дерево и текст Мой пейзаж">
+
+          <div class="sun"></div>
+          <div class="cloud"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+          <div class="tree"></div>
+          <div class="heading">
+            МОЙ ПЕЙЗАЖ
+          </div>
+        </div>
+
+        <p class="caption">
+          Все элементы выглядят как одна картинка,
+          но в проекте GIMP могут храниться отдельно.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="note green">
+      <strong>Преимущество слоёв</strong>
+      <p>
+        Можно переместить надпись,
+        не затрагивая дерево и фон;
+        скрыть солнце, не стирая его;
+        изменить прозрачность одного объекта
+        или удалить ненужный элемент.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03. ВИДЫ СЛОЁВ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      03 · Какие бывают слои
+    </span>
+
+    <h2>
+      У каждого слоя — своя задача
+    </h2>
+
+    <div class="grid four">
+
+      <article class="card">
+        <div class="icon-tile">🏞️</div>
+        <h3>Фон</h3>
+        <p>
+          Базовая фотография или заливка.
+          Часто находится внизу списка.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sg)">
+          🌳
+        </div>
+        <h3>Обычный слой</h3>
+        <p>
+          Рисунок или объект с прозрачными
+          участками вокруг него.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sv)">
+          🔤
+        </div>
+        <h3>Текстовый слой</h3>
+        <p>
+          Надпись, созданная инструментом «Текст».
+          Её можно перемещать отдельно.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sa)">
+          🗃️
+        </div>
+        <h3>Группа</h3>
+        <p>
+          Объединяет несколько слоёв
+          для удобной организации проекта.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Важная особенность</strong>
+      <p>
+        Обычный слой не обязан занимать
+        весь холст: его ширина, высота
+        и расположение могут отличаться
+        от размеров всего изображения.
+        Для прозрачных областей
+        используется альфа-канал.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 04. ДИАЛОГ СЛОИ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      04 · Диалог «Слои»
+    </span>
+
+    <h2>
+      Центр управления многослойным изображением
+    </h2>
+
+    <p class="lead">
+      Чтобы управлять слоями,
+      открой диалог <strong>«Слои»</strong>:
+      <strong>
+        Окна → Стыкуемые диалоги → Слои
+      </strong>.
+
+      В нём отображаются миниатюры,
+      названия, видимость и порядок всех слоёв.
+      Обычно верхняя строка списка
+      соответствует верхнему слою изображения.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="real-shot">
+        <img
+          loading="lazy"
+          src="img-1.png"
+          alt="Реальный скриншот панели слоёв GIMP 2.10 с полями Mode и Opacity, значками видимости и нижними командами"
+        >
+
+        <figcaption>
+          <strong>Реальная панель GIMP</strong>
+
+          Здесь видны режим слоя, непрозрачность,
+          значки глаз, миниатюры,
+          названия и кнопки операций.
+
+          <small>
+            Официальный сайт GIMP,
+            пример интерфейса версии 2.10.18.
+            В GIMP 3 расположение элементов
+            может немного отличаться.
+            <a
+              href="https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Источник изображения</a>.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div>
+        <div class="panel-wrap">
+          <div class="layer-panel"
+               role="img"
+               aria-label="Учебный макет панели слоёв с режимом, непрозрачностью, выбранным слоем и четырьмя уровнями">
+
+            <div class="panel-head">▤ Слои</div>
+
+            <div class="panel-settings">
+              <div class="panel-setting">
+                <span>Режим</span>
+                <span class="panel-value">
+                  Нормальный ▾
+                </span>
+              </div>
+
+              <div class="panel-setting">
+                <span>Непрозрачность</span>
+                <span class="panel-value">75 %</span>
+              </div>
+
+              <div class="opacity-track"></div>
+            </div>
+
+            <div class="panel-row selected">
+              <span class="eye">👁</span>
+              <span class="mini-thumb">Т</span>
+              <span class="name">Заголовок</span>
+              ✦
+            </div>
+
+            <div class="panel-row">
+              <span class="eye">👁</span>
+              <span class="mini-thumb treeish"></span>
+              <span class="name">Дерево</span>
+            </div>
+
+            <div class="panel-row">
+              <span class="eye">👁</span>
+              <span class="mini-thumb sunny"></span>
+              <span class="name">Солнце</span>
+            </div>
+
+            <div class="panel-row">
+              <span class="eye">👁</span>
+              <span class="mini-thumb sky"></span>
+              <span class="name">Фон</span>
+            </div>
+
+            <div class="panel-actions">
+              <span>＋</span>
+              <span>▣</span>
+              <span>↑</span>
+              <span>↓</span>
+              <span>⧉</span>
+              <span>🗑</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="caption">
+          Учебная схема специально упрощена;
+          обозначения команд могут отличаться
+          по версии GIMP.
+        </p>
+
+        <div class="callout-numbers">
+          <div>
+            <b>① Глаз:</b>
+            показать или скрыть слой.
+          </div>
+
+          <div>
+            <b>② Миниатюра:</b>
+            что находится на слое.
+          </div>
+
+          <div>
+            <b>③ Строка:</b>
+            имя и выбранный активный слой.
+          </div>
+
+          <div>
+            <b>④ Кнопки:</b>
+            создать, поднять, опустить,
+            дублировать или удалить.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note orange">
+      <strong>Активный слой</strong>
+
+      <p>
+        Прежде чем рисовать, перемещать
+        или удалять объект, проверь,
+        какая строка выделена.
+        Если выбрать другой слой,
+        команда может изменить
+        не тот элемент изображения.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 05. АТРИБУТЫ СЛОЯ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      05 · Атрибуты слоя
+    </span>
+
+    <h2>
+      Какие свойства есть у каждого слоя?
+    </h2>
+
+    <p class="lead">
+      <strong>Атрибуты слоя</strong> —
+      характеристики, определяющие его имя,
+      отображение, положение
+      и способ взаимодействия
+      с другими слоями.
+    </p>
+
+    <div class="grid two">
+
+      <article class="card attribute">
+        <span class="symbol">🏷️</span>
+        <div>
+          <h3>Имя</h3>
+          <p>
+            Помогает различать слои.
+            «Дерево» понятнее,
+            чем «Слой #7».
+          </p>
+        </div>
+      </article>
+
+      <article class="card attribute">
+        <span class="symbol">👁️</span>
+        <div>
+          <h3>Видимость</h3>
+          <p>
+            Глаз включает и выключает
+            показ слоя, не удаляя его.
+          </p>
+        </div>
+      </article>
+
+      <article class="card attribute">
+        <span class="symbol">◐</span>
+        <div>
+          <h3>Непрозрачность</h3>
+          <p>
+            Регулируется от 0 до 100 %.
+            При уменьшении нижние слои
+            видны сильнее.
+          </p>
+        </div>
+      </article>
+
+      <article class="card attribute">
+        <span class="symbol">🎛️</span>
+        <div>
+          <h3>Режим наложения</h3>
+          <p>
+            Определяет, как цвета слоя
+            взаимодействуют с изображением
+            под ним. Базовый режим —
+            «Нормальный».
+          </p>
+        </div>
+      </article>
+
+      <article class="card attribute">
+        <span class="symbol">📐</span>
+        <div>
+          <h3>Размер и положение</h3>
+          <p>
+            Ширина, высота и смещение
+            по горизонтали X
+            и вертикали Y.
+          </p>
+        </div>
+      </article>
+
+      <article class="card attribute">
+        <span class="symbol">🔒</span>
+        <div>
+          <h3>Блокировка</h3>
+          <p>
+            Защищает от случайного рисования,
+            перемещения или изменения прозрачности —
+            в зависимости от вида блокировки.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="grid two" style="margin-top:19px">
+
+      <div class="card">
+        <h3>Как переименовать слой?</h3>
+
+        <ol class="steps">
+          <li>
+            Выбери слой в диалоге «Слои».
+          </li>
+          <li>
+            Дважды щёлкни по его названию
+            или вызови контекстное меню.
+          </li>
+          <li>
+            Введи новое имя,
+            например «Заголовок».
+          </li>
+          <li>
+            Подтверди изменение.
+          </li>
+        </ol>
+
+        <p>
+          В контекстном меню также доступна
+          команда
+          <strong>
+            «Изменить атрибуты слоя…»
+          </strong>.
+        </p>
+      </div>
+
+      <figure class="real-shot">
+        <img
+          loading="lazy"
+          src="img-2.png"
+          alt="Официальный скриншот диалога создания слоя GIMP с полями имени, режима, непрозрачности, размеров, смещений и блокировками"
+        >
+
+        <figcaption>
+          <strong>
+            Диалог создания нового слоя
+          </strong>
+
+          Реальный интерфейс GIMP:
+          можно задать название, режим,
+          непрозрачность, размеры,
+          положение и начальную заливку.
+
+          <small>
+            Снимок из
+            <a
+              href="https://docs.gimp.org/3.2/en/gimp-layer-new.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >официального руководства GIMP 3.2</a>.
+            Подписи в этой иллюстрации
+            на английском языке;
+            расположение настроек близко
+            по смыслу к GIMP 3.0.
+          </small>
+        </figcaption>
+      </figure>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 06. ПРОЗРАЧНОСТЬ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      06 · Альфа-канал и прозрачность
+    </span>
+
+    <h2>
+      Почему сквозь слой видно фон?
+    </h2>
+
+    <p class="lead">
+      <strong>Альфа-канал</strong> позволяет
+      задавать прозрачность пикселей.
+      В GIMP полностью прозрачные участки
+      слоя обычно показаны серо-белой
+      «шахматной» сеткой, если под ними
+      нет видимого изображения.
+    </p>
+
+    <div class="opacity-grid">
+
+      <div class="opacity-example">
+        <div class="checker">
+          <div class="disc"></div>
+        </div>
+        <strong>100 %</strong>
+        <p>Непрозрачный объект</p>
+      </div>
+
+      <div class="opacity-example">
+        <div class="checker half">
+          <div class="disc"></div>
+        </div>
+        <strong>50 %</strong>
+        <p>Объект частично прозрачен</p>
+      </div>
+
+      <div class="opacity-example">
+        <div class="checker zero">
+          <div class="disc"></div>
+        </div>
+        <strong>0 %</strong>
+        <p>Объект невидим</p>
+      </div>
+
+    </div>
+
+    <div class="note green">
+      <strong>
+        Прозрачность ≠ скрытие
+      </strong>
+
+      <p>
+        Если установить непрозрачность 0 %,
+        слой перестанет быть виден,
+        но останется включённым в списке.
+        Значок глаза управляет видимостью
+        независимо. В обоих случаях
+        сам слой остаётся в проекте.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h3>Зачем нужна блокировка?</h3>
+
+      <div class="grid three">
+        <p>
+          <strong>🔐 Пиксели:</strong>
+          чтобы случайно не закрасить
+          рисунок кистью.
+        </p>
+        <p>
+          <strong>📍 Положение и размер:</strong>
+          чтобы объект не сместился.
+        </p>
+        <p>
+          <strong>▫️ Альфа-канал:</strong>
+          чтобы защитить текущую
+          прозрачность слоя.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07. ПОРЯДОК СЛОЁВ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      07 · Порядок наложения
+    </span>
+
+    <h2>Кто окажется впереди?</h2>
+
+    <p class="lead">
+      Слои располагаются в
+      <strong>стопке</strong>.
+      Непрозрачная часть верхнего слоя
+      закрывает нижний.
+      Когда мы меняем порядок строк
+      в панели «Слои», объекты могут
+      выглядеть по-другому,
+      даже если по холсту они не двигались.
+    </p>
+
+    <div class="order-compare">
+
+      <article class="order-card">
+
+        <span class="tag">Вариант А</span>
+
+        <h3 style="margin-top:11px">
+          Синий круг поверх квадрата
+        </h3>
+
+        <div class="order-scene"
+             role="img"
+             aria-label="Синий круг заслоняет часть оранжевого квадрата">
+          <div class="shape-a"></div>
+          <div class="shape-b"></div>
+        </div>
+
+        <div class="order-labels">
+          <span>↑ Синий круг</span>
+          <span>↓ Оранжевый квадрат</span>
+        </div>
+      </article>
+
+      <article class="order-card">
+
+        <span class="tag violet">
+          Вариант Б
+        </span>
+
+        <h3 style="margin-top:11px">
+          Квадрат поверх синего круга
+        </h3>
+
+        <div class="order-scene reversed"
+             role="img"
+             aria-label="Оранжевый квадрат заслоняет часть синего круга">
+          <div class="shape-a"></div>
+          <div class="shape-b"></div>
+        </div>
+
+        <div class="order-labels">
+          <span>↑ Оранжевый квадрат</span>
+          <span>↓ Синий круг</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>
+        Как изменить порядок?
+      </strong>
+
+      <p>
+        В диалоге «Слои» выбери нужный слой
+        и используй команды
+        <strong>«Поднять слой»</strong>
+        или
+        <strong>«Опустить слой»</strong>.
+
+        Также в GIMP можно перетащить
+        строку слоя в другое место списка.
+
+        Изменится порядок наложения,
+        а не положение объекта на холсте.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 08. ПЕРЕМЕЩЕНИЕ ПО ХОЛСТУ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      08 · Перемещение по холсту
+    </span>
+
+    <h2>
+      Как передвинуть один объект,
+      не затронув остальные?
+    </h2>
+
+    <p class="lead">
+      Инструмент
+      <strong>«Перемещение»</strong>
+      изменяет расположение содержимого
+      слоя на холсте.
+      Он вызывается клавишей <kbd>M</kbd>
+      либо выбирается на панели инструментов.
+
+      Чтобы двигать именно нужный объект,
+      важно проверить настройки инструмента.
+    </p>
+
+    <div class="move-pair">
+
+      <figure>
+        <div class="landscape">
+          <div class="sun"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+          <div class="tree"></div>
+          <div class="heading">ПЕЙЗАЖ</div>
+        </div>
+
+        <figcaption>
+          <strong>До перемещения</strong>
+          Дерево находится в левой части холста.
+        </figcaption>
+      </figure>
+
+      <figure>
+        <div class="landscape moved">
+          <div class="sun"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+          <div class="tree"></div>
+          <div class="heading">ПЕЙЗАЖ</div>
+        </div>
+
+        <figcaption>
+          <strong>После перемещения</strong>
+          Дерево переместилось вправо,
+          но фон и надпись остались прежними.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="grid two" style="margin-top:19px">
+
+      <article class="card">
+        <h3>Порядок действий</h3>
+
+        <ol class="steps">
+          <li>
+            Выбери слой «Дерево»
+            в панели «Слои».
+          </li>
+          <li>
+            Активируй инструмент
+            «Перемещение» (<kbd>M</kbd>).
+          </li>
+          <li>
+            В параметрах инструмента выбери
+            режим <strong>перемещения
+            выбранных слоёв</strong>.
+          </li>
+          <li>
+            Перетащи дерево по холсту
+            и проверь результат.
+          </li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h3>
+          Если двигается не тот объект
+        </h3>
+
+        <p>
+          Проверь, какой слой выбран.
+          У инструмента есть режим,
+          при котором GIMP пытается выбрать
+          слой под указателем.
+
+          Если надо переместить именно
+          активный слой, используй
+          соответствующий режим.
+
+          Убедись, что перемещение
+          не заблокировано.
+        </p>
+
+        <p>
+          <strong>Помни:</strong>
+          изменение положения на холсте
+          не меняет автоматически
+          порядок слоёв.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 09. СРАВНЕНИЕ ВИДОВ ПЕРЕМЕЩЕНИЯ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      09 · Два разных вида перемещения
+    </span>
+
+    <h2>
+      Не путай место на холсте
+      и место в списке
+    </h2>
+
+    <div class="grid two">
+
+      <article class="card">
+        <div class="icon-tile">↔️</div>
+
+        <h3>
+          Перемещение по холсту
+        </h3>
+
+        <p>
+          Меняет
+          <strong>координаты объекта</strong>:
+          дерево было слева, стало справа.
+          Обычно используют инструмент
+          «Перемещение».
+        </p>
+
+        <div class="ruler-demo">
+          <div class="ruler-labels">
+            <span>Было: X = 35</span>
+            <span>Стало: X = 170</span>
+          </div>
+          <div class="ruler">
+            <i></i>
+          </div>
+          <p class="caption">
+            Условные координаты в пикселях
+            для учебного примера.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sv)">
+          ↕️
+        </div>
+
+        <h3>
+          Перемещение в стопке
+        </h3>
+
+        <p>
+          Меняет
+          <strong>порядок наложения</strong>:
+          объект может оказаться
+          впереди или позади другого,
+          но его координаты остаются теми же.
+        </p>
+
+        <div class="layers-state">
+          <span>↑ Заголовок</span>
+          <span>↑ Дерево</span>
+          <span>↓ Фон</span>
+        </div>
+
+        <div class="layers-state">
+          <span>↑ Дерево</span>
+          <span>↑ Заголовок</span>
+          <span>↓ Фон</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="note orange">
+      <strong>Проверь себя</strong>
+
+      <p>
+        Если надпись оказалась
+        за изображением дерева,
+        нужно ли её двигать по холсту?
+
+        Не обязательно: иногда достаточно
+        поднять текстовый слой
+        выше слоя дерева.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 10. СКРЫТИЕ И УДАЛЕНИЕ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      10 · Скрытие и удаление
+    </span>
+
+    <h2>
+      «Не видно» ещё не означает «удалено»
+    </h2>
+
+    <p class="lead">
+      При редактировании важно различать
+      <strong>скрытие слоя</strong>,
+      <strong>удаление слоя</strong>
+      и <strong>очистку его содержимого</strong>.
+      Результат может выглядеть одинаково,
+      но состояние проекта будет различаться.
+    </p>
+
+    <div class="hide-delete">
+
+      <article class="hd-card">
+
+        <span class="tag green">
+          Слой виден
+        </span>
+
+        <div class="landscape" style="margin-top:12px">
+          <div class="sun"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+          <div class="tree"></div>
+        </div>
+
+        <h3>Исходная композиция</h3>
+
+        <p>
+          Слой «Дерево» включён,
+          и дерево отображается на холсте.
+        </p>
+
+        <div class="layers-state">
+          <span>👁 Дерево</span>
+          <span>👁 Фон</span>
+        </div>
+
+      </article>
+
+      <article class="hd-card">
+
+        <span class="tag orange">
+          Слой скрыт
+        </span>
+
+        <div class="landscape no-tree"
+             style="margin-top:12px">
+          <div class="sun"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+        </div>
+
+        <h3>Временно скрыли</h3>
+
+        <p>
+          Значок глаза выключен,
+          однако слой «Дерево»
+          остался в проекте.
+        </p>
+
+        <div class="layers-state">
+          <span class="hidden">
+            ◌ Дерево (скрыт)
+          </span>
+          <span>👁 Фон</span>
+        </div>
+
+      </article>
+
+      <article class="hd-card">
+
+        <span class="tag"
+              style="background:var(--sr);color:var(--red)">
+          Слой удалён
+        </span>
+
+        <div class="landscape no-tree"
+             style="margin-top:12px">
+          <div class="sun"></div>
+          <div class="hill-back"></div>
+          <div class="hill-front"></div>
+        </div>
+
+        <h3>Удалили из проекта</h3>
+
+        <p>
+          Строки «Дерево» больше нет:
+          слой исключён из структуры изображения.
+        </p>
+
+        <div class="layers-state">
+          <span class="deleted">
+            Дерево — удалено
+          </span>
+          <span>👁 Фон</span>
+        </div>
+
+      </article>
+
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+
+      <article class="card">
+        <h3>Как скрыть слой?</h3>
+
+        <ol class="steps">
+          <li>
+            Найди строку слоя.
+          </li>
+          <li>
+            Нажми на значок глаза.
+          </li>
+          <li>
+            Чтобы вернуть слой,
+            включи видимость снова.
+          </li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h3>Как удалить слой?</h3>
+
+        <ol class="steps">
+          <li>
+            Выбери нужный слой.
+          </li>
+          <li>
+            Используй кнопку удаления
+            в диалоге «Слои»,
+            контекстное меню
+            или команду меню
+            «Слой → Удалить слои».
+          </li>
+          <li>
+            Проверь, как изменилась композиция.
+          </li>
+        </ol>
+      </article>
+
+    </div>
+
+    <div class="note red">
+      <strong>
+        Удаление — действие серьёзнее скрытия
+      </strong>
+
+      <p>
+        Если нужно лишь временно убрать
+        объект с экрана, лучше скрыть слой.
+
+        Если удалили по ошибке,
+        сразу попробуй команду
+        <kbd>Ctrl</kbd> + <kbd>Z</kbd> —
+        отмену действия,
+        пока она доступна.
+
+        Очистка содержимого слоя
+        отличается от удаления:
+        пустой слой может остаться в проекте.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 11. СОХРАНЕНИЕ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      11 · Сохранение результата
+    </span>
+
+    <h2>
+      XCF для проекта, PNG или JPEG —
+      для готовой картинки
+    </h2>
+
+    <p class="lead">
+      В GIMP команды
+      <strong>«Сохранить»</strong>
+      и <strong>«Экспортировать»</strong>
+      решают разные задачи.
+
+      Собственный формат
+      <strong>XCF</strong> сохраняет
+      многослойную структуру.
+
+      Экспорт в PNG или JPEG создаёт
+      изображение для просмотра и обмена,
+      но не сохраняет редактируемую
+      стопку слоёв GIMP.
+    </p>
+
+    <div class="export-flow">
+
+      <div class="export-box">
+        <div class="big">🗂️</div>
+
+        <span class="tag green">
+          Рабочий проект
+        </span>
+
+        <strong>пейзаж.xcf</strong>
+
+        <p>
+          Слои, имена, их порядок
+          и параметры остаются доступны
+          для следующего редактирования
+          в GIMP.
+        </p>
+      </div>
+
+      <div class="export-arrow">→</div>
+
+      <div class="export-box">
+        <div class="big">🖼️</div>
+
+        <span class="tag">
+          Готовое изображение
+        </span>
+
+        <strong>
+          пейзаж.png / .jpg
+        </strong>
+
+        <p>
+          Можно разместить на сайте
+          или отправить другому человеку.
+
+          Исходный многослойный проект
+          лучше оставить отдельно.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="note green">
+      <strong>
+        Как правильно закончить работу?
+      </strong>
+
+      <p>
+        Сначала сохрани рабочий файл
+        через <strong>Файл → Сохранить</strong>
+        (<kbd>Ctrl</kbd> + <kbd>S</kbd>),
+        затем при необходимости используй
+        <strong>
+          Файл → Экспортировать как…
+        </strong>.
+
+        Не заменяй исходный XCF
+        единственной картинкой
+        PNG или JPEG.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 12. ПРИМЕНЕНИЕ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      12 · Где пригодятся слои
+    </span>
+
+    <h2>
+      Слои делают сложный дизайн управляемым
+    </h2>
+
+    <div class="grid three">
+
+      <article class="card">
+        <div class="icon-tile">📢</div>
+
+        <h3>Плакаты</h3>
+
+        <p>
+          Отдельно размещают фон,
+          фотографии, логотипы и заголовки.
+          Любой элемент можно исправить позже.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sg)">
+          🖼️
+        </div>
+
+        <h3>Коллажи</h3>
+
+        <p>
+          Несколько фотографий совмещают
+          в одном изображении,
+          меняют их прозрачность
+          и расположение.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon-tile"
+             style="background:var(--sv)">
+          🎨
+        </div>
+
+        <h3>Цифровые рисунки</h3>
+
+        <p>
+          Фон, персонажи и детали рисунка
+          могут находиться на разных слоях,
+          что облегчает исправления.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>
+        Небольшая задача на размышление
+      </strong>
+
+      <p>
+        Представь, что на плакате
+        фон закрывает заголовок.
+        Какая операция поможет?
+
+        Если заголовок виден,
+        но расположен слишком низко,
+        нужна уже другая операция.
+
+        Ответы объясняются
+        в разделах 7–9.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 13. ВОПРОСЫ -->
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      13 · Закрепление материала
+    </span>
+
+    <h2>12 вопросов по уроку</h2>
+
+    <p class="lead">
+      Ответь своими словами,
+      опираясь на схемы и примеры.
+
+      Особое внимание удели действиям,
+      которые внешне похожи,
+      но по-разному изменяют проект.
+    </p>
+
+    <div class="questions">
+
+      <div class="question">
+        <b>01</b>
+        <p>
+          Что называют слоем
+          в графическом редакторе GIMP?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>02</b>
+        <p>
+          Какие преимущества даёт
+          использование нескольких слоёв
+          при создании изображения?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>03</b>
+        <p>
+          Для чего предназначен
+          диалог «Слои»?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>04</b>
+        <p>
+          Что такое активный слой
+          и почему важно правильно
+          его выбирать?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>05</b>
+        <p>
+          Какие основные атрибуты
+          имеет слой?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>06</b>
+        <p>
+          Как изменяются видимость
+          и непрозрачность слоя?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>07</b>
+        <p>
+          Что такое альфа-канал
+          и для чего он используется?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>08</b>
+        <p>
+          Как влияет порядок расположения
+          слоёв на итоговое изображение?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>09</b>
+        <p>
+          Как переместить слой по холсту
+          с помощью инструмента
+          «Перемещение»?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>10</b>
+        <p>
+          Чем перемещение слоя по холсту
+          отличается от изменения его положения
+          в списке слоёв?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>11</b>
+        <p>
+          Чем скрытие слоя
+          отличается от его удаления?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>12</b>
+        <p>
+          Почему многослойный проект
+          рекомендуется сохранять
+          в формате XCF?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 14. ИТОГ УРОКА -->
+<section class="section">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        14 · Итог урока
+      </span>
+
+      <h2>
+        Слои — основа гибкого редактирования
+      </h2>
+
+      <p class="lead">
+        Сегодня мы выяснили, как GIMP
+        собирает изображение из нескольких слоёв,
+        какие свойства можно менять
+        и почему скрытие, удаление,
+        перемещение по холсту
+        и изменение порядка — разные операции.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+          <strong>🗂️ Структура</strong>
+          <p>
+            Каждый объект можно хранить отдельно
+            и выбирать нужный активный слой.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>⚙️ Управление</strong>
+          <p>
+            Видимость, непрозрачность,
+            блокировки, положение
+            и порядок влияют на результат.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>💾 Сохранение</strong>
+          <p>
+            XCF сохраняет рабочие слои
+            для дальнейшего редактирования.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+        <strong>Главный вывод</strong>
+
+        <p>
+          <strong>
+            Слои позволяют изменять
+            отдельные части изображения,
+            не переделывая всю композицию.
+          </strong>
+
+          Чтобы работать уверенно,
+          нужно понимать, какой слой выбран,
+          где он находится на холсте
+          и на каком месте стоит
+          в общей стопке.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="sources">
+      <strong>Справочные материалы:</strong>
+      официальное русскоязычное руководство GIMP —
+      <a
+        href="https://docs.gimp.org/3.0/ru/gimp-dialogs-structure.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >диалог «Слои»</a>,
+      <a
+        href="https://docs.gimp.org/3.0/ru/gimp-tool-move.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >инструмент «Перемещение»</a>,
+      <a
+        href="https://docs.gimp.org/3.0/ru/gimp-images-out.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >сохранение и экспорт</a>.
+
+      Реальные снимки интерфейса
+      взяты из официальных материалов GIMP;
+      остальные иллюстрации —
+      учебные схемы HTML/CSS.
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 10–11 класс · GIMP ·
+  Слои, атрибуты, перемещение и удаление
+</footer>
+
+</body>
+</html>
