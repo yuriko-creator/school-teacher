@@ -1,0 +1,3384 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Информатика, 5 класс. Искусственный интеллект и его роль в жизни человека. Компьютер. Информация. Часть 2 из 2.">
+<title>Экспедиция в мир ИИ · Часть 2 · 5 класс</title>
+
+<style>
+/* ============================================
+   ОСНОВНЫЕ НАСТРОЙКИ
+============================================ */
+
+:root {
+  --ink: #283753;
+  --muted: #61728c;
+  --line: #dce6f4;
+  --paper: #fff;
+  --bg: #f6f9ff;
+  --blue: #3d77e4;
+  --blue-bg: #eaf2ff;
+  --purple: #805bd6;
+  --purple-bg: #f0ebff;
+  --teal: #209a87;
+  --teal-bg: #e6f8f2;
+  --orange: #dc853c;
+  --orange-bg: #fff1e3;
+  --pink: #d76c9c;
+  --pink-bg: #ffecf5;
+  --round: 22px;
+  --shadow: 0 14px 38px rgba(38,65,110,.075);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font: 16px/1.72 "Segoe UI", Arial, sans-serif;
+}
+
+button, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 3px solid #edac52;
+  outline-offset: 3px;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.65rem, 7vw, 5.2rem);
+  line-height: 1.09;
+  letter-spacing: -.055em;
+}
+
+h2 {
+  font-size: clamp(1.85rem, 4vw, 2.72rem);
+  line-height: 1.18;
+  letter-spacing: -.035em;
+  margin-bottom: 13px;
+}
+
+h3 {
+  font-size: 1.19rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+p {
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+strong {
+  color: var(--ink);
+}
+
+.container {
+  width: min(1110px, calc(100% - 32px));
+  margin: auto;
+}
+
+.section {
+  padding: 42px 0;
+}
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-size: .77rem;
+  font-weight: 900;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 820px;
+  font-size: 1.08rem;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.two {
+  grid-template-columns: repeat(2, minmax(0,1fr));
+}
+
+.three {
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+
+.card {
+  min-width: 0;
+  background: var(--paper);
+  padding: 24px;
+  border-radius: var(--round);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.tile-icon {
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  background: var(--blue-bg);
+  font-size: 2.3rem;
+  margin-bottom: 15px;
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 50px;
+  padding: 5px 12px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  font-size: .8rem;
+  font-weight: 850;
+}
+
+.tag.purple {
+  background: var(--purple-bg);
+  color: var(--purple);
+}
+
+.tag.teal {
+  background: var(--teal-bg);
+  color: var(--teal);
+}
+
+.tag.orange {
+  background: var(--orange-bg);
+  color: #a86528;
+}
+
+.note {
+  margin-top: 20px;
+  padding: 20px 22px;
+  background: var(--blue-bg);
+  border-left: 5px solid var(--blue);
+  border-radius: 0 15px 15px 0;
+}
+
+.note strong {
+  display: block;
+  color: #2b5eb6;
+  margin-bottom: 5px;
+}
+
+.note p:last-child {
+  margin: 0;
+}
+
+.note.green {
+  background: var(--teal-bg);
+  border-color: var(--teal);
+}
+
+.note.green strong {
+  color: #177866;
+}
+
+.note.orange {
+  background: var(--orange-bg);
+  border-color: var(--orange);
+}
+
+.note.orange strong {
+  color: #aa6829;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  border: 1px solid var(--blue);
+  border-radius: 11px;
+  background: var(--blue);
+  color: white;
+  padding: 9px 16px;
+  font-weight: 800;
+  transition: transform .14s, filter .14s;
+}
+
+.btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.btn.secondary {
+  background: white;
+  color: var(--blue);
+  border-color: #c4d6ef;
+}
+
+.btn.purple {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.btn.green {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.btn:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.small {
+  font-size: .87rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ============================================
+   ГЛАВНЫЙ ЭКРАН
+============================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 89% 15%,
+      #e4dcff 0,
+      transparent 39%
+    ),
+    radial-gradient(
+      circle at 10% 100%,
+      #d7f4ee 0,
+      transparent 46%
+    ),
+    #eaf2ff;
+  padding: 76px 0 80px;
+  border-bottom: 1px solid #d7e3f4;
+}
+
+.hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .3;
+  background-image:
+    radial-gradient(
+      #99b1d9 1.3px,
+      transparent 1.3px
+    );
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.04fr .96fr;
+  align-items: center;
+  gap: 30px;
+}
+
+.hero-badge {
+  display: inline-block;
+  border: 1px solid #b8cdf1;
+  background: rgba(255,255,255,.85);
+  border-radius: 100px;
+  padding: 8px 14px;
+  color: #315db5;
+  font-size: .8rem;
+  font-weight: 900;
+  margin-bottom: 23px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--purple);
+}
+
+.hero p {
+  max-width: 540px;
+  font-size: 1.12rem;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.hero-tags span {
+  padding: 7px 11px;
+  background: white;
+  border: 1px solid #dce5f5;
+  border-radius: 9px;
+  font-size: .83rem;
+  font-weight: 800;
+}
+
+.hero-art {
+  position: relative;
+  min-height: 415px;
+  display: grid;
+  place-items: center;
+}
+
+.hero-ring {
+  position: absolute;
+  width: 365px;
+  height: 365px;
+  border: 3px dashed #c3d3f0;
+  border-radius: 50%;
+}
+
+.hero-center {
+  position: relative;
+  z-index: 2;
+  width: 210px;
+  height: 210px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border-radius: 36px;
+  border: 8px solid white;
+  background:
+    linear-gradient(140deg,#5389ea,#8d6bdc);
+  color: white;
+  box-shadow: 0 20px 42px #6373bd42;
+}
+
+.hero-center .art-icon {
+  display: block;
+  font-size: 5.2rem;
+  line-height: 1.1;
+}
+
+.hero-center strong {
+  display: block;
+  color: white;
+  font-size: 1.15rem;
+  letter-spacing: .08em;
+}
+
+.orbit-item {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  background: white;
+  border: 5px solid white;
+  border-radius: 24px;
+  font-size: 2.65rem;
+  box-shadow: var(--shadow);
+}
+
+.orbit-item.one {
+  top: 12px;
+  left: 12%;
+  background: #e4f3ff;
+}
+
+.orbit-item.two {
+  top: 100px;
+  right: 0;
+  background: #f4e9ff;
+}
+
+.orbit-item.three {
+  bottom: 15px;
+  left: 7%;
+  background: #fff0dc;
+}
+
+.orbit-item.four {
+  bottom: 18px;
+  right: 10%;
+  background: #e4f8ee;
+}
+
+/* ============================================
+   ОБЪЯСНЕНИЯ И НАГЛЯДНЫЕ СХЕМЫ
+============================================ */
+
+.reminder {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 23px;
+  background:
+    linear-gradient(110deg,#e6f0ff,#fff 72%);
+  border: 1px solid #d8e5f6;
+  border-radius: 18px;
+}
+
+.reminder-emoji {
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  width: 78px;
+  height: 78px;
+  background: white;
+  border-radius: 20px;
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns:
+    1fr auto 1fr auto 1fr auto 1fr;
+  gap: 9px;
+  align-items: stretch;
+  padding: 21px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+}
+
+.pipe-step {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  text-align: center;
+  padding: 17px 9px;
+  background: #f0f5ff;
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.pipe-step .emoji {
+  font-size: 2.4rem;
+}
+
+.pipe-step strong {
+  font-size: .94rem;
+}
+
+.pipe-step small {
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.pipe-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--purple);
+  font-weight: 900;
+  font-size: 1.6rem;
+}
+
+.data-kind {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-kind:nth-child(2) .tile-icon {
+  background: var(--purple-bg);
+}
+
+.data-kind:nth-child(3) .tile-icon {
+  background: var(--teal-bg);
+}
+
+.data-kind:nth-child(4) .tile-icon {
+  background: var(--orange-bg);
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.definition-banner {
+  padding: 24px;
+  border: 1px solid #d4dff2;
+  border-radius: 18px;
+  background:
+    linear-gradient(100deg,#edf3ff,#f8f5ff);
+}
+
+.definition-banner p:last-child {
+  margin: 0;
+}
+
+/* ============================================
+   ИНТЕРАКТИВНЫЕ ЛАБОРАТОРИИ
+============================================ */
+
+.lab {
+  overflow: hidden;
+  border: 1px solid #d3def0;
+  border-radius: 23px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.lab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 20px 24px;
+  background: #eaf1ff;
+  border-bottom: 1px solid #d3dff0;
+}
+
+.lab-header h3 {
+  margin: 0;
+}
+
+.lab-body {
+  padding: 25px;
+}
+
+/* Компьютерное зрение */
+
+.vision-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0,.9fr)
+    minmax(0,1.1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.photo-box {
+  display: grid;
+  place-items: center;
+  min-height: 230px;
+  border: 9px solid white;
+  border-radius: 17px;
+  outline: 1px solid #cbddf0;
+  background:
+    linear-gradient(#d4eaff 65%,#add49c 65%);
+  box-shadow: 0 8px 20px #294f8610;
+  overflow: hidden;
+}
+
+.photo-emoji {
+  font-size: 8rem;
+  line-height: 1;
+  transition: filter .18s,transform .18s;
+}
+
+.photo-box.blurred .photo-emoji {
+  filter: blur(6px);
+}
+
+.photo-box.rotated .photo-emoji {
+  transform: rotate(48deg);
+}
+
+.vision-info {
+  padding: 21px;
+  border-radius: 15px;
+  background: #f4f7ff;
+}
+
+.vision-info h3 {
+  margin-bottom: 9px;
+}
+
+.vision-info p:last-child {
+  margin-bottom: 0;
+}
+
+.lab .result {
+  margin-top: 17px;
+  padding: 17px 19px;
+  border-radius: 13px;
+  background: #e9f7f1;
+  color: #246d59;
+  min-height: 74px;
+}
+
+.lab .result strong {
+  color: #20755a;
+}
+
+.lab .result.warning {
+  background: var(--orange-bg);
+  color: #8d5e30;
+}
+
+.lab .result.warning strong {
+  color: #a6672a;
+}
+
+/* Распознавание речи */
+
+.speech-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  margin: 19px 0;
+}
+
+.speech-step {
+  text-align: center;
+  min-width: 0;
+  border-radius: 13px;
+  background: #f2f5fe;
+  padding: 17px 12px;
+  min-height: 145px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.speech-step .emoji {
+  display: block;
+  font-size: 2.7rem;
+  margin-bottom: 9px;
+}
+
+.speech-step strong {
+  display: block;
+  font-size: .95rem;
+}
+
+.speech-step small {
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+.speech-arrow {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--purple);
+}
+
+.speech-select {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  padding: 12px;
+  border: 2px solid #d1ddf1;
+  border-radius: 11px;
+  background: white;
+  color: var(--ink);
+}
+
+/* Работа с текстом */
+
+.text-example {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.text-pane {
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid #dce3f2;
+  border-radius: 14px;
+  background: #f6f8fe;
+}
+
+.text-pane strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.text-pane p {
+  margin: 0;
+}
+
+.text-arrow {
+  font-size: 1.9rem;
+  color: var(--purple);
+  font-weight: 900;
+}
+
+/* Поиск и генерация */
+
+.search-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.search-side {
+  padding: 22px;
+  border-radius: 17px;
+  border: 1px solid #d9e4f2;
+  background: #f2f7ff;
+}
+
+.search-side:nth-child(2) {
+  background: #f3edff;
+  border-color: #e1d5f6;
+}
+
+.search-side .big {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.search-side h3 {
+  margin-bottom: 10px;
+}
+
+.search-side p:last-child {
+  margin: 0;
+}
+
+/* Запросы к ИИ */
+
+.prompt-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.prompt-side {
+  padding: 21px;
+  border: 1px solid #dfd8f4;
+  border-radius: 15px;
+  background: #f8f5ff;
+}
+
+.prompt-side h3 {
+  margin-bottom: 10px;
+}
+
+.prompt-quote {
+  padding: 15px;
+  border: 1px solid #e1d9f5;
+  background: white;
+  border-radius: 11px;
+  min-height: 96px;
+  color: #4e5d7b;
+  font-weight: 750;
+}
+
+.prompt-side .prompt-description {
+  margin: 13px 0 0;
+  font-size: .92rem;
+}
+
+.prompt-side.active {
+  border: 2px solid var(--purple);
+  background: #f0eaff;
+}
+
+/* Проверка утверждений */
+
+.fact-statement {
+  padding: 23px;
+  border: 2px dashed #d1b8e8;
+  border-radius: 16px;
+  background: #faf6ff;
+  text-align: center;
+  margin: 16px 0;
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: #553d8a;
+}
+
+.fact-feedback {
+  padding: 16px 18px;
+  background: #e8f7ef;
+  border-radius: 12px;
+  margin-top: 16px;
+  min-height: 72px;
+}
+
+.fact-feedback.miss {
+  background: #fff1e3;
+}
+
+.fact-feedback p {
+  margin: 4px 0 0;
+}
+
+.fact-feedback[hidden] {
+  display: none;
+}
+
+/* Безопасность */
+
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 17px;
+}
+
+.safety-card {
+  padding: 23px;
+  border-radius: 17px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.safety-card h3 {
+  margin-top: 10px;
+}
+
+.safety-card .emoji {
+  font-size: 2.2rem;
+}
+
+/* Человек и ИИ */
+
+.collab-flow {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 9px;
+  margin: 22px 0;
+}
+
+.collab-step {
+  padding: 18px 11px;
+  text-align: center;
+  border: 1px solid #dce5f4;
+  border-radius: 13px;
+  background: #f2f6ff;
+}
+
+.collab-step .emoji {
+  display: block;
+  font-size: 2.2rem;
+}
+
+.collab-step strong {
+  display: block;
+  line-height: 1.35;
+  margin-top: 9px;
+  font-size: .91rem;
+}
+
+.collab-step small {
+  color: var(--muted);
+  font-size: .77rem;
+}
+
+/* Вопросы */
+
+.question-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+
+.question {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.q-num {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--purple-bg);
+  color: var(--purple);
+  font-weight: 900;
+}
+
+.question p {
+  color: var(--ink);
+  margin: 4px 0 0;
+  font-size: .95rem;
+}
+
+/* Итог урока */
+
+.summary {
+  padding: 35px;
+  border: 1px solid #d4e0f1;
+  border-radius: 23px;
+  background:
+    radial-gradient(
+      circle at right top,
+      #e6dfff 0,
+      transparent 45%
+    ),
+    white;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.summary-box {
+  padding: 19px;
+  background: #f3f6ff;
+  border: 1px solid #e0e6f5;
+  border-radius: 14px;
+}
+
+.summary-box .emoji {
+  display: block;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.summary-box strong {
+  display: block;
+  color: #345fbb;
+}
+
+.summary-box p {
+  font-size: .91rem;
+  margin: 7px 0 0;
+}
+
+footer {
+  margin-top: 38px;
+  padding: 33px 18px 44px;
+  text-align: center;
+  font-size: .86rem;
+  color: #73829b;
+  background: #e9eff8;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+============================================ */
+
+@media(max-width:970px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-art {
+    width: min(100%,500px);
+    margin: auto;
+  }
+
+  .data-grid {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:700px) {
+  .two,
+  .three,
+  .search-box,
+  .prompt-display,
+  .safety-grid,
+  .question-grid,
+  .summary-grid,
+  .vision-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .pipe-arrow {
+    transform: rotate(90deg);
+  }
+
+  .speech-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .speech-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+  }
+
+  .text-example {
+    grid-template-columns: 1fr;
+  }
+
+  .text-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+  }
+
+  .collab-flow {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:520px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 30px 0;
+  }
+
+  .hero {
+    padding: 47px 0 34px;
+  }
+
+  h1 {
+    letter-spacing: -.03em;
+  }
+
+  .card,
+  .summary,
+  .lab-body {
+    padding: 19px;
+  }
+
+  .hero-art {
+    min-height: 320px;
+  }
+
+  .hero-ring {
+    width: 265px;
+    height: 265px;
+  }
+
+  .hero-center {
+    width: 154px;
+    height: 154px;
+    border-radius: 26px;
+  }
+
+  .hero-center .art-icon {
+    font-size: 3.6rem;
+  }
+
+  .orbit-item {
+    width: 70px;
+    height: 70px;
+    border-radius: 19px;
+    font-size: 2rem;
+  }
+
+  .orbit-item.one {
+    top: 5px;
+    left: 5%;
+  }
+
+  .orbit-item.two {
+    top: 78px;
+  }
+
+  .orbit-item.three {
+    bottom: 9px;
+    left: 3%;
+  }
+
+  .orbit-item.four {
+    bottom: 8px;
+    right: 5%;
+  }
+
+  .reminder {
+    grid-template-columns: 1fr;
+  }
+
+  .data-grid,
+  .collab-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-header {
+    padding: 17px 19px;
+  }
+
+  .photo-box {
+    min-height: 175px;
+  }
+
+  .photo-emoji {
+    font-size: 6.5rem;
+  }
+
+  .button-row .btn {
+    flex: 1 1 125px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *:before,
+  *:after {
+    transition: none!important;
+    animation: none!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================
+     ГЛАВНЫЙ ЭКРАН
+============================================ -->
+
+<header class="hero">
+  <div class="container hero-layout">
+
+    <div>
+
+      <span class="hero-badge">
+        🤖 ИНФОРМАТИКА · 5 КЛАСС · ЧАСТЬ 2 ИЗ 2
+      </span>
+
+      <h1>
+        Экспедиция
+        <span>в мир ИИ</span>
+      </h1>
+
+      <p>
+        Как компьютер «видит» фотографии,
+        распознаёт речь и работает с текстом?
+        Почему один вопрос к ИИ полезнее другого?
+        И как не поверить ошибочному ответу?
+      </p>
+
+      <p>
+        Сегодня узнаем,
+        <strong>
+          как искусственный интеллект
+          работает с информацией и как человеку
+          использовать его с умом.
+        </strong>
+      </p>
+
+      <div class="hero-tags">
+        <span>🖼️ Изображения</span>
+        <span>🎙️ Речь</span>
+        <span>📝 Текст</span>
+        <span>🔎 Проверка</span>
+      </div>
+
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+
+      <div class="hero-ring"></div>
+
+      <div class="hero-center">
+        <div>
+          <span class="art-icon">💻</span>
+          <strong>ДАННЫЕ + ИИ</strong>
+        </div>
+      </div>
+
+      <div class="orbit-item one">🖼️</div>
+      <div class="orbit-item two">💬</div>
+      <div class="orbit-item three">🎵</div>
+      <div class="orbit-item four">🔎</div>
+
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================
+     01. ПОВТОРЕНИЕ
+============================================ -->
+
+<section class="section" id="recap">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        01 · Вспоминаем предыдущий урок
+      </span>
+
+      <h2>Что мы уже знаем об ИИ?</h2>
+
+      <p class="lead">
+        На прошлом уроке мы выяснили,
+        что искусственный интеллект —
+        технология, созданная людьми.
+        Он может помогать решать сложные задачи,
+        но не является живым существом
+        и способен ошибаться.
+      </p>
+
+    </div>
+
+    <div class="grid three">
+
+      <article class="card">
+
+        <div class="tile-icon">💻</div>
+
+        <h3>ИИ — это технология</h3>
+
+        <p>
+          Она работает в компьютерных системах
+          и помогает выполнять задачи:
+          распознавать объекты, переводить текст,
+          находить закономерности.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--purple-bg)">
+          📚
+        </div>
+
+        <h3>Многие системы обучаются</h3>
+
+        <p>
+          При обучении модели используют
+          данные и примеры. На них система
+          учится находить признаки
+          и закономерности.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--teal-bg)">
+          🧑‍🏫
+        </div>
+
+        <h3>Человек проверяет</h3>
+
+        <p>
+          Убедительно написанный ответ
+          не обязательно правильный.
+          Важную информацию нужно проверять,
+          а решения остаются за людьми.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Сегодняшняя задача</strong>
+
+      <p>
+        Понять, с какими данными работает ИИ,
+        как появляются ответы и что делать,
+        чтобы использовать их полезно
+        и безопасно.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     02. ИНФОРМАЦИЯ И ДАННЫЕ
+============================================ -->
+
+<section class="section" id="data">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        02 · Компьютер и информация
+      </span>
+
+      <h2>Как информация превращается в данные?</h2>
+
+      <p class="lead">
+        Представь фотографию щенка,
+        голосовое сообщение или предложение
+        в книге. Для человека это разные виды
+        информации. Компьютер же обрабатывает
+        их в цифровой форме.
+      </p>
+
+    </div>
+
+    <div class="definition-banner">
+
+      <h3>Информация и данные — в чём разница?</h3>
+
+      <p>
+        <strong>Информация</strong> —
+        сведения о предметах, событиях и явлениях.
+      </p>
+
+      <p>
+        <strong>Данные</strong> — сведения,
+        представленные в определённой форме
+        для хранения, передачи и обработки.
+      </p>
+
+      <p>
+        В компьютере данные записываются
+        в цифровом виде. Например,
+        фотография хранится как набор
+        цифровых данных, а текст —
+        в виде кодов символов.
+      </p>
+
+    </div>
+
+    <div class="data-grid">
+
+      <article class="card data-kind">
+
+        <div class="tile-icon">🔢</div>
+
+        <h3>Числа</h3>
+
+        <p>
+          Температура, оценки,
+          результаты измерений.
+        </p>
+
+      </article>
+
+      <article class="card data-kind">
+
+        <div class="tile-icon">📝</div>
+
+        <h3>Текст</h3>
+
+        <p>
+          Буквы, слова, предложения
+          и документы.
+        </p>
+
+      </article>
+
+      <article class="card data-kind">
+
+        <div class="tile-icon">🖼️</div>
+
+        <h3>Изображения</h3>
+
+        <p>
+          Фотографии, рисунки и схемы.
+        </p>
+
+      </article>
+
+      <article class="card data-kind">
+
+        <div class="tile-icon">🎵</div>
+
+        <h3>Звук</h3>
+
+        <p>
+          Речь, музыка и звуковые записи.
+        </p>
+
+      </article>
+
+    </div>
+
+    <h3 style="margin-top:27px">
+      Как человек и ИИ работают вместе?
+    </h3>
+
+    <div class="pipeline">
+
+      <div class="pipe-step">
+        <span class="emoji">🧑</span>
+        <strong>Человек</strong>
+        <small>Ставит задачу</small>
+      </div>
+
+      <span class="pipe-arrow">→</span>
+
+      <div class="pipe-step">
+        <span class="emoji">💾</span>
+        <strong>Данные</strong>
+        <small>Текст, звук, фото</small>
+      </div>
+
+      <span class="pipe-arrow">→</span>
+
+      <div class="pipe-step">
+        <span class="emoji">⚙️</span>
+        <strong>Система ИИ</strong>
+        <small>Обрабатывает данные</small>
+      </div>
+
+      <span class="pipe-arrow">→</span>
+
+      <div class="pipe-step">
+        <span class="emoji">✅</span>
+        <strong>Человек</strong>
+        <small>Проверяет результат</small>
+      </div>
+
+    </div>
+
+    <div class="note green">
+
+      <strong>Почему качество данных важно?</strong>
+
+      <p>
+        Если фотография слишком размыта
+        или запись речи содержит сильный шум,
+        системе может быть трудно правильно
+        распознать информацию.
+      </p>
+
+      <p>
+        Недостаточные и ошибочные данные
+        тоже могут привести
+        к неправильным результатам.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     03. КОМПЬЮТЕРНОЕ ЗРЕНИЕ
+============================================ -->
+
+<section class="section" id="vision">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        03 · ИИ и изображения
+      </span>
+
+      <h2>Как компьютер распознаёт фотографии?</h2>
+
+      <p class="lead">
+        <strong>Компьютерное зрение</strong> —
+        направление компьютерных технологий,
+        позволяющее системам обрабатывать
+        изображения и находить на них
+        объекты и другие особенности.
+      </p>
+
+      <p class="lead">
+        Цифровое растровое изображение
+        состоит из маленьких элементов —
+        <strong>пикселей</strong>.
+        Компьютерная модель анализирует
+        данные изображения и может определить,
+        например, где находится кошка.
+      </p>
+
+    </div>
+
+    <div class="lab">
+
+      <div class="lab-header">
+
+        <h3>🔍 Лаборатория «Узнай животное»</h3>
+
+        <span class="tag purple">
+          Учебная демонстрация
+        </span>
+
+      </div>
+
+      <div class="lab-body">
+
+        <p>
+          Выбери условие съёмки.
+          Посмотри, почему изображение
+          бывает легко или трудно распознать.
+        </p>
+
+        <div class="vision-grid">
+
+          <div class="photo-box" id="visionPhoto">
+            <span
+              class="photo-emoji"
+              aria-hidden="true"
+            >🐱</span>
+          </div>
+
+          <div class="vision-info">
+
+            <h3 id="visionTitle">
+              Хорошо видна кошка
+            </h3>
+
+            <p id="visionDescription">
+              Изображение достаточно чёткое,
+              поэтому на нём легко заметить
+              животное и его характерные признаки.
+            </p>
+
+            <div class="button-row">
+
+              <button
+                type="button"
+                class="btn"
+                data-vision="clear"
+                aria-pressed="true"
+              >
+                Чёткое фото
+              </button>
+
+              <button
+                type="button"
+                class="btn secondary"
+                data-vision="blur"
+                aria-pressed="false"
+              >
+                Размытое
+              </button>
+
+              <button
+                type="button"
+                class="btn secondary"
+                data-vision="angle"
+                aria-pressed="false"
+              >
+                Необычный ракурс
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="result"
+          id="visionResult"
+          role="status"
+          aria-live="polite"
+        >
+          <strong>Возможный результат:</strong>
+          система распознавания может правильно
+          определить кошку.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="grid three" style="margin-top:19px">
+
+      <article class="card">
+
+        <div class="tile-icon">📷</div>
+
+        <h3>Фотографии</h3>
+
+        <p>
+          Поиск объектов на снимках
+          и сортировка фотографий
+          по содержимому.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--orange-bg)">
+          🚗
+        </div>
+
+        <h3>Транспорт</h3>
+
+        <p>
+          Некоторые системы помощи водителю
+          распознают разметку и дорожные знаки.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--teal-bg)">
+          🌱
+        </div>
+
+        <h3>Растения</h3>
+
+        <p>
+          Анализ фотографий может помогать
+          специалистам замечать признаки
+          проблем у растений.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>Важно!</strong>
+
+      <p>
+        Кнопки выше не запускают настоящий ИИ:
+        они показывают
+        <strong>
+          возможные трудности распознавания
+        </strong>.
+      </p>
+
+      <p>
+        Реальная система может правильно
+        определить и размытый снимок —
+        это зависит от модели и изображения.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     04. ЗВУК И РЕЧЬ
+============================================ -->
+
+<section class="section" id="speech">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        04 · ИИ и звук
+      </span>
+
+      <h2>Как компьютер работает с речью?</h2>
+
+      <p class="lead">
+        Когда человек говорит,
+        возникают звуковые волны.
+        Микрофон помогает записать
+        звук в цифровом виде.
+      </p>
+
+      <p class="lead">
+        После этого программа может
+        попробовать определить
+        произнесённые слова.
+      </p>
+
+    </div>
+
+    <div class="grid two">
+
+      <article class="card">
+
+        <div class="tile-icon">🎙️</div>
+
+        <h3>Распознавание речи</h3>
+
+        <p>
+          Программа превращает запись
+          человеческой речи в текст.
+          Так работает голосовой ввод
+          и некоторые системы субтитров.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--purple-bg)">
+          🔊
+        </div>
+
+        <h3>Синтез речи</h3>
+
+        <p>
+          Обратная задача:
+          компьютер создаёт звучащую
+          речь по тексту.
+          Например, может озвучить
+          сообщение или инструкцию.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="lab" style="margin-top:20px">
+
+      <div class="lab-header">
+
+        <h3>
+          🎤 Лаборатория «От слов к команде»
+        </h3>
+
+        <span class="tag purple">
+          Учебная демонстрация
+        </span>
+
+      </div>
+
+      <div class="lab-body">
+
+        <label for="speechChoice">
+          <strong>
+            Выбери фразу, которую человек
+            произносит устройству:
+          </strong>
+        </label>
+
+        <select
+          class="speech-select"
+          id="speechChoice"
+        >
+          <option value="alarm">
+            «Поставь будильник на семь утра»
+          </option>
+
+          <option value="music">
+            «Включи спокойную музыку»
+          </option>
+
+          <option value="weather">
+            «Какая сегодня погода?»
+          </option>
+        </select>
+
+        <div class="speech-flow">
+
+          <div class="speech-step">
+
+            <span class="emoji">🗣️</span>
+
+            <strong>Речь</strong>
+
+            <small>Звуковой сигнал</small>
+
+          </div>
+
+          <span class="speech-arrow">→</span>
+
+          <div class="speech-step">
+
+            <span class="emoji">📝</span>
+
+            <strong id="speechTranscript">
+              Поставь будильник на семь утра
+            </strong>
+
+            <small>Распознанный текст</small>
+
+          </div>
+
+          <span class="speech-arrow">→</span>
+
+          <div class="speech-step">
+
+            <span class="emoji">⚙️</span>
+
+            <strong id="speechAction">
+              Установить будильник
+            </strong>
+
+            <small>Определённая задача</small>
+
+          </div>
+
+        </div>
+
+        <div class="result">
+
+          <strong>В чём разница?</strong>
+
+          Распознать слова и понять,
+          какое действие нужно выполнить, —
+          не одно и то же.
+          Некоторые устройства используют
+          для этого несколько разных
+          программных технологий.
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Почему возникают ошибки?</strong>
+
+      <p>
+        Сильный шум, плохая запись
+        или нечёткое произношение
+        могут затруднить распознавание речи.
+      </p>
+
+      <p>
+        В нашей демонстрации используются
+        готовые фразы: микрофон не включается
+        и голос не записывается.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     05. РАБОТА С ТЕКСТОМ
+============================================ -->
+
+<section class="section" id="text">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        05 · ИИ и текст
+      </span>
+
+      <h2>Как ИИ помогает работать с текстом?</h2>
+
+      <p class="lead">
+        Компьютеры хранят текст
+        с помощью кодов символов.
+        Современные системы ИИ умеют
+        обрабатывать тексты:
+        находить подходящие слова,
+        переводить, пересказывать
+        и предлагать новые формулировки.
+      </p>
+
+    </div>
+
+    <div class="grid three">
+
+      <article class="card">
+
+        <div class="tile-icon">🌍</div>
+
+        <h3>Перевод</h3>
+
+        <p>
+          ИИ может перевести предложение
+          на другой язык.
+          Перевод нужно проверять,
+          особенно если в нём
+          есть необычные слова.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--teal-bg)">
+          📖
+        </div>
+
+        <h3>Краткий пересказ</h3>
+
+        <p>
+          Большой текст можно представить
+          коротким сообщением,
+          сохранив главную мысль.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--purple-bg)">
+          ✏️
+        </div>
+
+        <h3>Помощь с формулировкой</h3>
+
+        <p>
+          Система может предложить
+          более простой вариант объяснения
+          или исправить опечатку.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="card" style="margin-top:20px">
+
+      <span class="tag teal">
+        Наглядный пример
+      </span>
+
+      <h3 style="margin-top:12px">
+        Как выглядит краткий пересказ?
+      </h3>
+
+      <div class="text-example">
+
+        <div class="text-pane">
+
+          <strong>Исходный текст</strong>
+
+          <p>
+            «Осенью многие деревья сбрасывают
+            листья. Становится холоднее,
+            день укорачивается, и деревья
+            готовятся к зимнему периоду».
+          </p>
+
+        </div>
+
+        <span class="text-arrow">→</span>
+
+        <div class="text-pane"
+             style="background:var(--teal-bg)">
+
+          <strong>Краткий пересказ</strong>
+
+          <p>
+            «Осенью деревья готовятся к зиме,
+            поэтому многие сбрасывают листья».
+          </p>
+
+        </div>
+
+      </div>
+
+      <p class="small" style="margin-top:15px">
+        Это заранее составленный учебный пример,
+        а не ответ подключённой языковой модели.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     06. ПОИСК И ПОДБОР ИНФОРМАЦИИ
+============================================ -->
+
+<section class="section" id="search">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        06 · Ищем и подбираем информацию
+      </span>
+
+      <h2>
+        Поиск в Интернете и ответ ИИ —
+        это одно и то же?
+      </h2>
+
+      <p class="lead">
+        Нет. Обычная поисковая система
+        помогает находить существующие страницы.
+        Система ИИ может составлять новый
+        связный ответ на основе обработки данных.
+      </p>
+
+      <p class="lead">
+        Некоторые современные сервисы
+        умеют сочетать оба способа.
+      </p>
+
+    </div>
+
+    <div class="search-box">
+
+      <article class="search-side">
+
+        <span class="big">🔍</span>
+
+        <h3>Поиск существующих материалов</h3>
+
+        <p>
+          Ты вводишь ключевые слова,
+          а система предлагает сайты,
+          страницы и документы,
+          где может находиться
+          нужная информация.
+        </p>
+
+        <p>
+          <strong>Например:</strong>
+          «Почему осенью желтеют листья?» —
+          и список подходящих страниц.
+        </p>
+
+      </article>
+
+      <article class="search-side">
+
+        <span class="big">💬</span>
+
+        <h3>Создание ответа системой ИИ</h3>
+
+        <p>
+          Ты задаёшь вопрос,
+          и система создаёт объяснение.
+          Оно может звучать понятно
+          и уверенно, но содержать ошибку.
+        </p>
+
+        <p>
+          <strong>Поэтому:</strong>
+          для важных сведений проверяй
+          факты по надёжным источникам.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+
+      <article class="card">
+
+        <div class="tile-icon">🎵</div>
+
+        <h3>Рекомендации</h3>
+
+        <p>
+          Некоторые приложения используют
+          данные о прослушиваниях
+          или просмотрах, чтобы предлагать
+          пользователю новые песни и видео.
+        </p>
+
+      </article>
+
+      <article class="card">
+
+        <div class="tile-icon"
+             style="background:var(--orange-bg)">
+          🖼️
+        </div>
+
+        <h3>Поиск по изображению</h3>
+
+        <p>
+          Система может находить визуально
+          похожие фотографии или помогать
+          определять, что изображено на снимке.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     07. ПРАВИЛЬНЫЙ ЗАПРОС
+============================================ -->
+
+<section class="section" id="prompt">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        07 · Учимся задавать вопросы
+      </span>
+
+      <h2>
+        Почему важно правильно
+        сформулировать запрос?
+      </h2>
+
+      <p class="lead">
+        <strong>Запрос</strong> —
+        это сообщение, которым человек
+        объясняет системе, что нужно сделать.
+      </p>
+
+      <p class="lead">
+        Чем понятнее вопрос
+        и условия задачи, тем легче
+        получить подходящий ответ.
+      </p>
+
+    </div>
+
+    <div class="lab">
+
+      <div class="lab-header">
+
+        <h3>💡 Лаборатория «Улучши вопрос»</h3>
+
+        <span class="tag purple">
+          Попробуй сам
+        </span>
+
+      </div>
+
+      <div class="lab-body">
+
+        <p>
+          Выбери один из запросов.
+          Посмотри, чем может
+          отличаться результат.
+        </p>
+
+        <div class="button-row">
+
+          <button
+            type="button"
+            class="btn"
+            id="vaguePrompt"
+            aria-pressed="true"
+          >
+            Общий запрос
+          </button>
+
+          <button
+            type="button"
+            class="btn secondary"
+            id="clearPrompt"
+            aria-pressed="false"
+          >
+            Точный запрос
+          </button>
+
+        </div>
+
+        <div class="prompt-display">
+
+          <div class="prompt-side active"
+               id="promptCard">
+
+            <h3>🧑 Запрос ученика</h3>
+
+            <div class="prompt-quote"
+                 id="promptText">
+              «Расскажи о природе».
+            </div>
+
+            <p class="prompt-description"
+               id="promptWhy">
+              Слишком широкая тема.
+              Система не знает,
+              что именно тебя интересует.
+            </p>
+
+          </div>
+
+          <div class="prompt-side">
+
+            <h3>💻 Возможный ответ</h3>
+
+            <div
+              class="prompt-quote"
+              id="promptResponse"
+              aria-live="polite"
+            >
+              «Природа включает растения,
+              животных, воздух, воду,
+              горы и другие объекты…»
+            </div>
+
+            <p class="prompt-description"
+               id="promptLesson">
+              Ответ может быть правильным,
+              но не обязательно решит
+              твою учебную задачу.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="note green">
+
+          <strong>
+            Из чего состоит хороший запрос?
+          </strong>
+
+          <p>
+            Назови <strong>тему</strong>,
+            объясни <strong>задачу</strong>
+            и укажи <strong>условия</strong>.
+          </p>
+
+          <p>
+            Например:
+            «Объясни простыми словами
+            для 5 класса, почему осенью
+            листья меняют цвет.
+            Приведи один пример».
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>
+        Запрос — не волшебная команда
+      </strong>
+
+      <p>
+        Даже на хорошо сформулированный
+        вопрос ИИ может ответить неправильно.
+        Чёткий запрос помогает уточнить задачу,
+        но не гарантирует достоверность.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     08. ПРОВЕРКА ФАКТОВ
+============================================ -->
+
+<section class="section" id="checking">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        08 · Проверяем достоверность
+      </span>
+
+      <h2>
+        Убедительный ответ —
+        ещё не доказательство
+      </h2>
+
+      <p class="lead">
+        ИИ может сформулировать неверное
+        утверждение так, будто оно
+        точно известно.
+      </p>
+
+      <p class="lead">
+        Поэтому важные факты следует
+        проверять: обратиться к учебнику,
+        авторитетному источнику
+        или спросить учителя.
+      </p>
+
+    </div>
+
+    <div class="lab">
+
+      <div class="lab-header">
+
+        <h3>
+          🧐 Лаборатория «Правда или ошибка?»
+        </h3>
+
+        <span class="tag orange">
+          Учебные утверждения
+        </span>
+
+      </div>
+
+      <div class="lab-body">
+
+        <p>
+          Прочитай утверждение,
+          выбери ответ и посмотри объяснение.
+          Фразы здесь придуманы для тренировки:
+          это не реальные ответы ИИ.
+        </p>
+
+        <span class="tag purple"
+              id="factCounter">
+          Утверждение 1 из 3
+        </span>
+
+        <div class="fact-statement"
+             id="factStatement">
+          Все птицы умеют летать.
+        </div>
+
+        <div class="button-row">
+
+          <button
+            type="button"
+            class="btn green"
+            id="factYes"
+          >
+            ✓ Верно
+          </button>
+
+          <button
+            type="button"
+            class="btn"
+            id="factNo"
+          >
+            ✕ Неверно
+          </button>
+
+          <button
+            type="button"
+            class="btn secondary"
+            id="factNext"
+          >
+            Следующее →
+          </button>
+
+        </div>
+
+        <div
+          class="fact-feedback"
+          id="factFeedback"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+
+      </div>
+
+    </div>
+
+    <div class="note">
+
+      <strong>Как проверять сообщения?</strong>
+
+      <p>
+        1. Заметь слова «всегда», «все»,
+        «никогда»: они требуют особенно
+        внимательной проверки.
+      </p>
+
+      <p>
+        2. Уточни числа, даты и имена.
+      </p>
+
+      <p>
+        3. Найди подтверждение в учебнике
+        или надёжном источнике.
+      </p>
+
+      <p>
+        4. Если сомневаешься — спроси
+        учителя или другого
+        компетентного взрослого.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     09. БЕЗОПАСНОСТЬ
+============================================ -->
+
+<section class="section" id="safety">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        09 · Безопасность в цифровом мире
+      </span>
+
+      <h2>
+        Как пользоваться ИИ ответственно?
+      </h2>
+
+      <p class="lead">
+        Умные технологии могут быть
+        полезными помощниками.
+        Но при работе с любым
+        онлайн-сервисом необходимо
+        соблюдать правила безопасности
+        и уважать других людей.
+      </p>
+
+    </div>
+
+    <div class="safety-grid">
+
+      <article class="safety-card">
+
+        <span class="emoji">🔒</span>
+
+        <h3>Береги личные данные</h3>
+
+        <p>
+          Не отправляй незнакомым сервисам
+          пароли, домашний адрес, документы
+          и другую конфиденциальную информацию.
+        </p>
+
+      </article>
+
+      <article class="safety-card">
+
+        <span class="emoji">📷</span>
+
+        <h3>Осторожно с фотографиями</h3>
+
+        <p>
+          Не загружай личные снимки
+          и чужие фотографии без разрешения.
+          При необходимости обсуди это
+          с родителями или учителем.
+        </p>
+
+      </article>
+
+      <article class="safety-card">
+
+        <span class="emoji">🧠</span>
+
+        <h3>Думай самостоятельно</h3>
+
+        <p>
+          Используй ИИ,
+          чтобы лучше понять тему,
+          найти идеи и проверить
+          своё объяснение,
+          а не просто переписать
+          готовый ответ.
+        </p>
+
+      </article>
+
+      <article class="safety-card">
+
+        <span class="emoji">🛡️</span>
+
+        <h3>Соблюдай правила сервисов</h3>
+
+        <p>
+          У разных приложений есть
+          возрастные ограничения
+          и условия использования.
+          Пользуйся только подходящими
+          и разрешёнными тебе инструментами.
+        </p>
+
+      </article>
+
+    </div>
+
+    <div class="note orange">
+
+      <strong>
+        Можно ли верить необычной фотографии?
+      </strong>
+
+      <p>
+        Не всегда. С помощью современных
+        программ можно создавать
+        или изменять изображения.
+      </p>
+
+      <p>
+        Если картинка выглядит удивительно,
+        сначала проверь её источник
+        и не распространяй
+        сомнительные сведения.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     10. ЧЕЛОВЕК И ИИ
+============================================ -->
+
+<section class="section" id="cooperation">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        10 · Работаем вместе
+      </span>
+
+      <h2>
+        Человек ставит задачу — ИИ помогает
+      </h2>
+
+      <p class="lead">
+        Компьютер может быстро обработать
+        множество данных. ИИ способен
+        подсказать варианты.
+      </p>
+
+      <p class="lead">
+        Но человеку нужны знания,
+        опыт и критическое мышление,
+        чтобы оценить результат.
+      </p>
+
+    </div>
+
+    <div class="collab-flow">
+
+      <div class="collab-step">
+        <span class="emoji">🧑‍🎓</span>
+        <strong>1. Задача</strong>
+        <small>Что нужно узнать?</small>
+      </div>
+
+      <div class="collab-step">
+        <span class="emoji">⌨️</span>
+        <strong>2. Запрос</strong>
+        <small>Уточняем вопрос</small>
+      </div>
+
+      <div class="collab-step">
+        <span class="emoji">💻</span>
+        <strong>3. Обработка</strong>
+        <small>ИИ предлагает ответ</small>
+      </div>
+
+      <div class="collab-step">
+        <span class="emoji">🔍</span>
+        <strong>4. Проверка</strong>
+        <small>Сверяем факты</small>
+      </div>
+
+      <div class="collab-step">
+        <span class="emoji">✅</span>
+        <strong>5. Решение</strong>
+        <small>Принимает человек</small>
+      </div>
+
+    </div>
+
+    <div class="reminder">
+
+      <span class="reminder-emoji">💡</span>
+
+      <div>
+
+        <h3>Пример из учёбы</h3>
+
+        <p style="margin:0">
+          Ученик просит объяснить сложный
+          термин простыми словами,
+          сравнивает объяснение с учебником
+          и затем самостоятельно
+          выполняет задание.
+          Так ИИ помогает учиться,
+          а не заменяет обучение.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     11. ВОПРОСЫ
+============================================ -->
+
+<section class="section" id="questions">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        11 · Закрепление знаний
+      </span>
+
+      <h2>12 вопросов по уроку</h2>
+
+      <p class="lead">
+        Ответь на все вопросы своими словами.
+        Для этого урока практическая работа
+        не предусмотрена: интерактивные
+        лаборатории помогают понять теорию,
+        а вопросы закрепляют изученное.
+      </p>
+
+    </div>
+
+    <div class="question-grid">
+
+      <div class="question">
+        <b class="q-num">01</b>
+        <p>
+          Что называют данными
+          и как они связаны с информацией?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">02</b>
+        <p>
+          Какие виды информации
+          может обрабатывать компьютер?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">03</b>
+        <p>
+          Что такое компьютерное зрение?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">04</b>
+        <p>
+          Как искусственный интеллект
+          может определять объекты
+          на фотографиях?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">05</b>
+        <p>
+          Что называют распознаванием речи?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">06</b>
+        <p>
+          Где применяется преобразование
+          речи в текст?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">07</b>
+        <p>
+          Какие задачи может выполнять
+          ИИ при работе с текстом?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">08</b>
+        <p>
+          Как искусственный интеллект
+          помогает искать и подбирать
+          информацию?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">09</b>
+        <p>
+          Что такое запрос к системе
+          искусственного интеллекта?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">10</b>
+        <p>
+          Почему запрос желательно
+          формулировать точно и понятно?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">11</b>
+        <p>
+          Почему необходимо проверять
+          информацию, полученную
+          от искусственного интеллекта?
+        </p>
+      </div>
+
+      <div class="question">
+        <b class="q-num">12</b>
+        <p>
+          Какие правила безопасного
+          использования ИИ
+          необходимо соблюдать?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     12. ИТОГ УРОКА
+============================================ -->
+
+<section class="section" id="summary">
+  <div class="container">
+
+    <div class="summary">
+
+      <span class="eyebrow">
+        12 · Итог урока
+      </span>
+
+      <h2>Что мы узнали?</h2>
+
+      <p class="lead">
+        Сегодня мы продолжили знакомство
+        с искусственным интеллектом
+        и выяснили, как компьютерные
+        системы работают с изображениями,
+        звуками и текстами.
+      </p>
+
+      <div class="summary-grid">
+
+        <div class="summary-box">
+
+          <span class="emoji">💾</span>
+
+          <strong>Информация и данные</strong>
+
+          <p>
+            Для обработки компьютер
+            представляет сведения
+            в цифровом виде.
+          </p>
+
+        </div>
+
+        <div class="summary-box">
+
+          <span class="emoji">🖼️🎙️</span>
+
+          <strong>Разные задачи ИИ</strong>
+
+          <p>
+            ИИ может распознавать
+            изображения и речь,
+            помогать работать
+            с текстом и рекомендациями.
+          </p>
+
+        </div>
+
+        <div class="summary-box">
+
+          <span class="emoji">🧠</span>
+
+          <strong>Самостоятельное мышление</strong>
+
+          <p>
+            Важно правильно задавать вопросы,
+            проверять факты и соблюдать
+            правила безопасности.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="note green">
+
+        <strong>
+          Главный вывод двух уроков
+        </strong>
+
+        <p>
+          <strong>
+            Искусственный интеллект —
+            созданный человеком инструмент.
+          </strong>
+        </p>
+
+        <p>
+          Он помогает работать с информацией,
+          но не гарантирует правильность
+          каждого ответа.
+        </p>
+
+        <p>
+          Польза от ИИ зависит
+          не только от технологий,
+          но и от того, насколько внимательно
+          и ответственно ими пользуется человек.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 5 класс ·
+  Искусственный интеллект и его роль в жизни человека ·
+  «Компьютер. Информация» · Часть 2 из 2
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+
+     Все демонстрации работают автономно.
+     Настоящий ИИ не подключается.
+============================================ -->
+
+<script>
+"use strict";
+
+/* ============================================
+   01. КОМПЬЮТЕРНОЕ ЗРЕНИЕ
+============================================ */
+
+const visionModes = {
+
+  clear: {
+
+    title: "Хорошо видна кошка",
+
+    description:
+      "Изображение достаточно чёткое, " +
+      "поэтому можно различить очертания " +
+      "животного и его характерные признаки.",
+
+    result:
+      "Возможный результат: система " +
+      "распознавания может правильно " +
+      "определить кошку.",
+
+    warning: false
+
+  },
+
+  blur: {
+
+    title: "Фотография размыта",
+
+    description:
+      "Когда изображение нечёткое, " +
+      "детали становятся хуже заметны. " +
+      "Системе может не хватить признаков " +
+      "для правильного распознавания.",
+
+    result:
+      "Возможный результат: система " +
+      "может ошибиться или затрудниться " +
+      "с определением объекта.",
+
+    warning: true
+
+  },
+
+  angle: {
+
+    title: "Необычный ракурс",
+
+    description:
+      "Если предмет показан под непривычным " +
+      "углом, его видимые признаки меняются. " +
+      "Некоторые системы справляются с этим, " +
+      "а другие могут ошибаться.",
+
+    result:
+      "Возможный результат: модель может " +
+      "правильно распознать кошку, " +
+      "но возможна и ошибка.",
+
+    warning: true
+
+  }
+
+};
+
+
+const visionPhoto =
+  document.getElementById("visionPhoto");
+
+const visionTitle =
+  document.getElementById("visionTitle");
+
+const visionDescription =
+  document.getElementById("visionDescription");
+
+const visionResult =
+  document.getElementById("visionResult");
+
+
+function setVision(mode) {
+
+  const data = visionModes[mode];
+
+  if (!data) return;
+
+  visionPhoto.className =
+    "photo-box" +
+    (
+      mode === "blur"
+        ? " blurred"
+        : mode === "angle"
+          ? " rotated"
+          : ""
+    );
+
+  visionTitle.textContent =
+    data.title;
+
+  visionDescription.textContent =
+    data.description;
+
+  visionResult.classList.toggle(
+    "warning",
+    data.warning
+  );
+
+  visionResult.replaceChildren();
+
+  const strong =
+    document.createElement("strong");
+
+  strong.textContent =
+    "Возможный результат: ";
+
+  visionResult.append(
+    strong,
+    document.createTextNode(
+      data.result.replace(
+        /^Возможный результат:\s*/,
+        ""
+      )
+    )
+  );
+
+  document.querySelectorAll(
+    "[data-vision]"
+  ).forEach(button => {
+
+    const active =
+      button.dataset.vision === mode;
+
+    button.className =
+      active ? "btn" : "btn secondary";
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
+    );
+
+  });
+
+}
+
+
+document.querySelectorAll(
+  "[data-vision]"
+).forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => setVision(
+      button.dataset.vision
+    )
+  );
+
+});
+
+
+setVision("clear");
+
+
+/* ============================================
+   02. РЕЧЬ → ТЕКСТ → КОМАНДА
+
+   Готовые учебные примеры.
+   Микрофон не используется.
+============================================ */
+
+const speechData = {
+
+  alarm: [
+    "Поставь будильник на семь утра",
+    "Установить будильник"
+  ],
+
+  music: [
+    "Включи спокойную музыку",
+    "Включить музыку"
+  ],
+
+  weather: [
+    "Какая сегодня погода?",
+    "Получить сведения о погоде"
+  ]
+
+};
+
+
+const speechChoice =
+  document.getElementById("speechChoice");
+
+
+function updateSpeech() {
+
+  const values =
+    speechData[speechChoice.value];
+
+  document.getElementById(
+    "speechTranscript"
+  ).textContent = values[0];
+
+  document.getElementById(
+    "speechAction"
+  ).textContent = values[1];
+
+}
+
+
+speechChoice.addEventListener(
+  "change",
+  updateSpeech
+);
+
+updateSpeech();
+
+
+/* ============================================
+   03. СРАВНЕНИЕ ЗАПРОСОВ
+============================================ */
+
+const vaguePrompt =
+  document.getElementById("vaguePrompt");
+
+const clearPrompt =
+  document.getElementById("clearPrompt");
+
+const promptText =
+  document.getElementById("promptText");
+
+const promptWhy =
+  document.getElementById("promptWhy");
+
+const promptResponse =
+  document.getElementById("promptResponse");
+
+const promptLesson =
+  document.getElementById("promptLesson");
+
+
+function setPrompt(clear) {
+
+  promptText.textContent = clear
+
+    ? "«Объясни простыми словами для 5 класса, " +
+      "почему осенью листья меняют цвет. " +
+      "Приведи один пример»."
+
+    : "«Расскажи о природе».";
+
+
+  promptWhy.textContent = clear
+
+    ? "Указаны тема, задача " +
+      "и желаемая форма ответа."
+
+    : "Слишком широкая тема. " +
+      "Система не знает, " +
+      "что именно тебя интересует.";
+
+
+  promptResponse.textContent = clear
+
+    ? "«Осенью становится меньше света. " +
+      "В листьях разрушается зелёный пигмент, " +
+      "и становятся заметнее жёлтые " +
+      "и оранжевые оттенки. Например, " +
+      "листья берёзы часто желтеют»."
+
+    : "«Природа включает растения, " +
+      "животных, воздух, воду, " +
+      "горы и другие объекты…»";
+
+
+  promptLesson.textContent = clear
+
+    ? "Такой ответ ближе к задаче ученика. " +
+      "Однако факты всё равно " +
+      "необходимо проверять."
+
+    : "Ответ может быть правильным, " +
+      "но не обязательно решит " +
+      "твою учебную задачу.";
+
+
+  vaguePrompt.className =
+    clear ? "btn secondary" : "btn";
+
+  clearPrompt.className =
+    clear ? "btn" : "btn secondary";
+
+  vaguePrompt.setAttribute(
+    "aria-pressed",
+    String(!clear)
+  );
+
+  clearPrompt.setAttribute(
+    "aria-pressed",
+    String(clear)
+  );
+
+}
+
+
+vaguePrompt.addEventListener(
+  "click",
+  () => setPrompt(false)
+);
+
+clearPrompt.addEventListener(
+  "click",
+  () => setPrompt(true)
+);
+
+setPrompt(false);
+
+
+/* ============================================
+   04. ПРОВЕРКА ФАКТОВ
+============================================ */
+
+const facts = [
+
+  {
+
+    text:
+      "Все птицы умеют летать.",
+
+    correct: false,
+
+    explanation:
+      "Утверждение неверно. " +
+      "Есть птицы, которые не летают, " +
+      "например страусы и пингвины."
+
+  },
+
+  {
+
+    text:
+      "У треугольника три стороны.",
+
+    correct: true,
+
+    explanation:
+      "Верно. По определению треугольник " +
+      "имеет три стороны и три вершины."
+
+  },
+
+  {
+
+    text:
+      "Каждый год состоит ровно из 365 дней.",
+
+    correct: false,
+
+    explanation:
+      "Неверно. В високосном году 366 дней, " +
+      "поэтому слово «каждый» делает " +
+      "утверждение неправильным."
+
+  }
+
+];
+
+
+let factIndex = 0;
+
+
+const factStatement =
+  document.getElementById("factStatement");
+
+const factCounter =
+  document.getElementById("factCounter");
+
+const factFeedback =
+  document.getElementById("factFeedback");
+
+const factYes =
+  document.getElementById("factYes");
+
+const factNo =
+  document.getElementById("factNo");
+
+
+function showFact() {
+
+  const fact = facts[factIndex];
+
+  factStatement.textContent =
+    fact.text;
+
+  factCounter.textContent =
+    "Утверждение " +
+    (factIndex + 1) +
+    " из " +
+    facts.length;
+
+  factFeedback.hidden = true;
+
+  factFeedback.replaceChildren();
+
+  factFeedback.classList.remove("miss");
+
+  factYes.disabled = false;
+
+  factNo.disabled = false;
+
+}
+
+
+function answerFact(answer) {
+
+  const fact = facts[factIndex];
+
+  const success =
+    answer === fact.correct;
+
+  factFeedback.hidden = false;
+
+  factFeedback.classList.toggle(
+    "miss",
+    !success
+  );
+
+  factFeedback.replaceChildren();
+
+  const title =
+    document.createElement("strong");
+
+  title.textContent = success
+
+    ? "Верно!"
+
+    : "Посмотри объяснение:";
+
+
+  const paragraph =
+    document.createElement("p");
+
+  paragraph.textContent =
+    fact.explanation;
+
+
+  factFeedback.append(
+    title,
+    paragraph
+  );
+
+  factYes.disabled = true;
+
+  factNo.disabled = true;
+
+}
+
+
+factYes.addEventListener(
+  "click",
+  () => answerFact(true)
+);
+
+factNo.addEventListener(
+  "click",
+  () => answerFact(false)
+);
+
+
+document.getElementById(
+  "factNext"
+).addEventListener(
+  "click",
+  () => {
+
+    factIndex =
+      (factIndex + 1) % facts.length;
+
+    showFact();
+
+  }
+);
+
+
+showFact();
+
+</script>
+
+</body>
+</html>
