@@ -1,0 +1,2493 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Информатика, 7 класс. Точные построения в Paint: линии, квадрат, окружность, координаты, масштаб, сетка и выравнивание.">
+<title>Точные построения — Paint, 7 класс</title>
+<style>
+:root{
+  --bg:#f5f8fc;
+  --paper:#fff;
+  --ink:#21354e;
+  --muted:#5e7087;
+  --blue:#326ac6;
+  --teal:#128780;
+  --purple:#7956b7;
+  --orange:#c58539;
+  --line:#dde7f2;
+  --bsoft:#eaf2ff;
+  --gsoft:#e5f5f1;
+  --psoft:#f1edfb;
+  --osoft:#fff2e4;
+  --shadow:0 14px 36px #29476b12;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16px/1.7 "Segoe UI",Arial,sans-serif;
+}
+
+h1,h2,h3,p,figure{margin-top:0}
+h1{
+  font-size:clamp(2.7rem,6vw,5rem);
+  line-height:1.07;
+  letter-spacing:-.05em;
+}
+h2{
+  font-size:clamp(1.75rem,3.7vw,2.65rem);
+  line-height:1.18;
+  letter-spacing:-.035em;
+}
+h3{
+  font-size:1.2rem;
+  line-height:1.3;
+  margin-bottom:9px;
+}
+p{
+  color:var(--muted);
+  margin-bottom:12px;
+}
+strong{color:var(--ink)}
+a{
+  color:var(--blue);
+  text-underline-offset:3px;
+}
+.container{
+  width:min(1100px,calc(100% - 34px));
+  margin:auto;
+}
+.section{padding:45px 0}
+.section:nth-of-type(even){background:#eff4fa}
+.eyebrow{
+  display:block;
+  font-size:.79rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--blue);
+  font-weight:900;
+  margin-bottom:11px;
+}
+.lead{
+  font-size:1.075rem;
+  max-width:860px;
+}
+.grid{
+  display:grid;
+  gap:16px;
+}
+.two{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.three{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.card{
+  min-width:0;
+  padding:22px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:17px;
+  box-shadow:var(--shadow);
+}
+.card p:last-child{margin-bottom:0}
+.note{
+  padding:19px 22px;
+  border-left:5px solid var(--blue);
+  border-radius:0 13px 13px 0;
+  background:var(--bsoft);
+  margin-top:20px;
+}
+.note.green{
+  background:var(--gsoft);
+  border-color:var(--teal);
+}
+.note.orange{
+  background:var(--osoft);
+  border-color:var(--orange);
+}
+.note strong{
+  display:block;
+  margin-bottom:5px;
+}
+.note p:last-child{margin:0}
+.tag{
+  display:inline-block;
+  padding:5px 11px;
+  border-radius:99px;
+  font-size:.78rem;
+  font-weight:850;
+  background:var(--bsoft);
+  color:var(--blue);
+}
+.tag.green{
+  background:var(--gsoft);
+  color:var(--teal);
+}
+.tag.purple{
+  background:var(--psoft);
+  color:var(--purple);
+}
+.icon{
+  width:55px;
+  height:55px;
+  display:grid;
+  place-items:center;
+  margin-bottom:14px;
+  border-radius:14px;
+  background:var(--bsoft);
+  font-size:1.85rem;
+}
+.caption{
+  margin-top:9px;
+  color:#77899f;
+  font-size:.81rem;
+}
+.steps{
+  color:var(--muted);
+  padding-left:23px;
+}
+.steps li{
+  margin-bottom:8px;
+  padding-left:4px;
+}
+.steps li::marker{
+  font-weight:900;
+  color:var(--blue);
+}
+kbd{
+  padding:2px 8px;
+  border-radius:7px;
+  border:1px solid #becfe0;
+  border-bottom-width:3px;
+  background:#fff;
+  color:#345b92;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* Обложка */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:74px 0 80px;
+  background:
+    radial-gradient(circle at 84% 14%,#cfeae9,transparent 43%),
+    radial-gradient(circle at 8% 100%,#e3e0fb,transparent 43%),
+    linear-gradient(125deg,#f3f8ff,#eaf5f8);
+  border-bottom:1px solid #dae7f3;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.27;
+  pointer-events:none;
+  background-image:
+    radial-gradient(#679db3 1px,transparent 1px);
+  background-size:26px 26px;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.04fr .96fr;
+  align-items:center;
+  gap:31px;
+  position:relative;
+}
+.hero-label{
+  display:inline-block;
+  padding:8px 13px;
+  border:1px solid #cbdfea;
+  background:#ffffffde;
+  color:#35698a;
+  border-radius:99px;
+  font-size:.79rem;
+  font-weight:900;
+  margin-bottom:22px;
+}
+.hero h1 span{
+  display:block;
+  color:var(--teal);
+}
+.hero p{
+  font-size:1.1rem;
+  max-width:545px;
+}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+.chips span{
+  padding:6px 11px;
+  background:#fff;
+  border:1px solid #d4e3ef;
+  border-radius:9px;
+  font-size:.82rem;
+  font-weight:800;
+  color:#42637f;
+}
+.hero-art{
+  position:relative;
+  min-height:365px;
+  display:grid;
+  place-items:center;
+}
+.hero-paper{
+  position:absolute;
+  right:0;
+  top:0;
+  width:86%;
+  height:305px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #fff 0 27px,
+      #e8f1fc 28px,
+      #fff 29px
+    );
+  border:1px solid #d6e3ef;
+  border-radius:16px;
+  transform:rotate(7deg);
+  box-shadow:var(--shadow);
+}
+.hero-window{
+  position:relative;
+  z-index:2;
+  width:91%;
+  overflow:hidden;
+  background:#f6f9fe;
+  border:7px solid #31536e;
+  border-radius:16px;
+  box-shadow:0 23px 40px #2c536039;
+  transform:rotate(-3deg);
+}
+.winbar{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  padding:9px 11px;
+  background:#e1eafa;
+  color:#3b6084;
+  font-weight:850;
+  font-size:.79rem;
+}
+.winmenu{
+  padding:8px 11px;
+  background:#fbfcff;
+  border-bottom:1px solid #dee8f3;
+  color:#627a90;
+  font-size:.78rem;
+}
+.win-tools{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  padding:9px;
+  background:#f0f5fc;
+  border-bottom:1px solid #dbe6f0;
+}
+.win-tools span{
+  display:grid;
+  place-items:center;
+  padding:4px 7px;
+  border:1px solid #cad9e9;
+  border-radius:6px;
+  min-width:31px;
+  background:white;
+  color:#4b6f90;
+  font-size:.88rem;
+}
+.hero-canvas{
+  padding:14px;
+  background:#dce7f3;
+}
+.hero-canvas svg{
+  display:block;
+  width:100%;
+  height:auto;
+  background:white;
+  border:1px solid #c7d4e4;
+}
+.hero-sticker{
+  position:absolute;
+  right:0;
+  bottom:0;
+  z-index:3;
+  width:81px;
+  height:81px;
+  display:grid;
+  place-items:center;
+  background:#ffddab;
+  border:5px solid white;
+  border-radius:22px;
+  font-size:2.8rem;
+  box-shadow:var(--shadow);
+}
+
+/* Диаграммы */
+
+.artframe{
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+.artframe svg{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:10px;
+  background:#fafcff;
+}
+.artframe figcaption{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:.87rem;
+}
+.artframe figcaption strong{display:block}
+.svggrid{
+  background-color:#fff;
+  background-image:
+    linear-gradient(#e6edf5 1px,transparent 1px),
+    linear-gradient(90deg,#e6edf5 1px,transparent 1px);
+  background-size:18px 18px;
+}
+.cmp-label{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:.87rem;
+}
+.pretty-code{
+  color:#386fb6;
+  font:800 1.06rem Consolas,monospace;
+}
+.rules{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+}
+.rules .card{padding:18px}
+.rules .card svg{
+  display:block;
+  width:100%;
+  max-height:120px;
+  margin-bottom:10px;
+}
+.formula{
+  padding:18px 20px;
+  background:#183958;
+  color:#eaf4ff;
+  border-radius:15px;
+  text-align:center;
+}
+.formula strong{
+  display:block;
+  color:#bcece3;
+  font-size:.84rem;
+  letter-spacing:.05em;
+}
+.formula .equation{
+  font:850 clamp(1.25rem,2.6vw,2rem)/1.5 Consolas,monospace;
+}
+.formula p{
+  margin:6px 0 0;
+  color:#cfe0ed;
+  font-size:.89rem;
+}
+.statrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.statrow span{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:9px;
+  background:var(--bsoft);
+  color:#386bb0;
+  font-size:.86rem;
+  font-weight:900;
+}
+.figurepair{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.figurepair .artframe{box-shadow:none}
+.paintshot{
+  margin:0;
+  background:#fff;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+.paintshot img{
+  display:block;
+  width:100%;
+  height:260px;
+  object-fit:contain;
+  background:#eef2f9;
+  border:1px solid #e0e6ee;
+  border-radius:9px;
+}
+.paintshot figcaption{
+  font-size:.88rem;
+  color:var(--muted);
+  margin-top:10px;
+}
+.paintshot figcaption small{
+  display:block;
+  font-size:.76rem;
+  color:#778aa0;
+  margin-top:6px;
+}
+.pixelzoom{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:2px;
+  padding:7px;
+  background:#dbe8f1;
+  border:1px solid #b9cede;
+  border-radius:10px;
+  max-width:430px;
+}
+.px{
+  aspect-ratio:1;
+  background:white;
+  border-radius:1px;
+}
+.px.f{background:#448ed3}
+.px.g{background:#2c9f95}
+.px.y{background:#e4ae65}
+.comp-card{
+  background:#fff;
+  border:1px solid var(--line);
+  padding:19px;
+  border-radius:16px;
+}
+.comp-card .artframe{box-shadow:none}
+.tasklist{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+.tasklist article{
+  background:#fff;
+  padding:19px;
+  border-radius:15px;
+  border:1px solid var(--line);
+}
+.tasklist b{
+  display:block;
+  color:var(--blue);
+  margin-bottom:8px;
+}
+.tasklist p{
+  font-size:.9rem;
+  margin:0;
+}
+.questions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+.question{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:17px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:13px;
+}
+.question b{
+  flex:0 0 37px;
+  height:37px;
+  display:grid;
+  place-items:center;
+  background:var(--psoft);
+  color:var(--purple);
+  border-radius:9px;
+}
+.question p{
+  margin:4px 0 0;
+  color:var(--ink);
+  font-size:.94rem;
+}
+.final{
+  padding:33px;
+  border:1px solid #cfe1e8;
+  border-radius:19px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      #d7f3e9,
+      transparent 45%
+    ),
+    #fff;
+}
+.final-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+  margin:19px 0;
+}
+.final-point{
+  padding:18px;
+  border-radius:12px;
+  background:#edf5ff;
+}
+.final-point strong{
+  display:block;
+  color:#315e9b;
+}
+.final-point p{
+  font-size:.89rem;
+  margin:7px 0 0;
+}
+.sources{
+  font-size:.81rem;
+  margin-top:26px;
+  color:#71849a;
+}
+.sources p{font-size:.81rem}
+footer{
+  padding:28px 15px 39px;
+  background:#e5edf7;
+  color:#6b819a;
+  text-align:center;
+  font-size:.86rem;
+  margin-top:29px;
+}
+
+/* Адаптивность */
+
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-art{
+    width:min(100%,560px);
+    margin:auto;
+  }
+  .rules{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .tasklist{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:710px){
+  .container{width:calc(100% - 24px)}
+  .section{padding:34px 0}
+  .hero{padding:49px 0}
+  .two,.three,.figurepair,
+  .questions,.final-grid{
+    grid-template-columns:1fr;
+  }
+  .rules{grid-template-columns:1fr}
+  .tasklist{grid-template-columns:1fr}
+  .card,.final{padding:19px}
+  .paintshot img{height:225px}
+}
+
+@media(max-width:430px){
+  .hero-art{min-height:285px}
+  .hero-paper{height:235px}
+  .hero-window{border-width:5px}
+  .hero-sticker{
+    width:60px;
+    height:60px;
+    font-size:1.95rem;
+  }
+  .win-tools{
+    padding:6px;
+    gap:4px;
+  }
+  .win-tools span{
+    min-width:25px;
+    padding:2px 4px;
+  }
+  .artframe{padding:12px}
+  .statrow span{
+    font-size:.78rem;
+    padding:6px 9px;
+  }
+  .paintshot img{height:190px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Главный экран -->
+
+<header class="hero">
+  <div class="container hero-grid">
+
+    <div>
+      <span class="hero-label">
+        ИНФОРМАТИКА · 7 КЛАСС · PAINT
+      </span>
+
+      <h1>
+        Рисуем
+        <span>точно!</span>
+      </h1>
+
+      <p>
+        Как получить <strong>ровную линию,
+        идеальный квадрат и окружность</strong>?
+        Как разместить фигуры в нужных
+        местах рисунка, измерить расстояния
+        и не перепутать размер с масштабом?
+      </p>
+
+      <p>
+        На уроке узнаем, как превращать
+        простые инструменты Paint в средства
+        <strong>
+          точных геометрических построений
+        </strong>.
+      </p>
+
+      <div class="chips">
+        <span>📏 Линии</span>
+        <span>⬜ Фигуры</span>
+        <span>⌨️ Shift</span>
+        <span>📍 Координаты</span>
+        <span>🔎 Сетка</span>
+      </div>
+    </div>
+
+    <div class="hero-art"
+         role="img"
+         aria-label="Учебный макет Paint с сеткой, геометрическими фигурами и линейкой">
+
+      <div class="hero-paper"></div>
+
+      <div class="hero-window">
+        <div class="winbar">
+          <span>🎨 Точные построения — Paint</span>
+          <span>— □ ×</span>
+        </div>
+
+        <div class="winmenu">
+          Файл &nbsp; Главная &nbsp; Вид
+        </div>
+
+        <div class="win-tools">
+          <span>✏️</span>
+          <span>╱</span>
+          <span>▭</span>
+          <span>◯</span>
+          <span>▱</span>
+          <span>🎨</span>
+          <span>📏</span>
+        </div>
+
+        <div class="hero-canvas">
+          <svg viewBox="0 0 400 220"
+               xmlns="http://www.w3.org/2000/svg"
+               aria-hidden="true">
+
+            <defs>
+              <pattern id="hg"
+                       width="20"
+                       height="20"
+                       patternUnits="userSpaceOnUse">
+                <path d="M20 0H0V20"
+                      fill="none"
+                      stroke="#e2ebf7"
+                      stroke-width="1"/>
+              </pattern>
+            </defs>
+
+            <rect width="400"
+                  height="220"
+                  fill="white"/>
+
+            <rect width="400"
+                  height="220"
+                  fill="url(#hg)"/>
+
+            <path d="M31 172H366"
+                  stroke="#4c90c8"
+                  stroke-width="4"
+                  stroke-linecap="round"/>
+
+            <rect x="45" y="46"
+                  width="120" height="120"
+                  rx="2"
+                  fill="#89b7ee33"
+                  stroke="#3776c7"
+                  stroke-width="5"/>
+
+            <circle cx="268" cy="106" r="60"
+                    fill="#72cdb455"
+                    stroke="#198d84"
+                    stroke-width="5"/>
+
+            <path d="M195 181H343"
+                  stroke="#be8744"
+                  stroke-width="4"/>
+
+            <path d="M195 175V187M343 175V187"
+                  stroke="#be8744"
+                  stroke-width="3"/>
+
+            <text x="266" y="201"
+                  text-anchor="middle"
+                  fill="#946a34"
+                  font-size="12"
+                  font-weight="bold">
+              120 пикселей
+            </text>
+
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-sticker">📐</div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- 01. Введение -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      01 · От свободного рисования к точному
+    </span>
+
+    <h2>
+      Красиво нарисовано — ещё не значит точно
+    </h2>
+
+    <p class="lead">
+      На предыдущих уроках мы рисовали в Paint,
+      выделяли фрагменты и собирали из них изображения.
+
+      Теперь важно научиться соблюдать
+      <strong>форму, размеры и расположение</strong>
+      объектов.
+
+      Это пригодится для схем, значков,
+      планов и геометрических рисунков.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <span class="tag">
+          Свободное рисование
+        </span>
+
+        <svg viewBox="0 0 440 205"
+             aria-label="Неровный прямоугольник и волнистые линии">
+
+          <path d="M50 160 L60 43 L326 50 L339 167 L50 160"
+                fill="#fff0e066"
+                stroke="#da9068"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+
+          <path d="M75 112Q135 99 173 110T302 108"
+                stroke="#d29b53"
+                stroke-width="4"
+                fill="none"
+                stroke-linecap="round"/>
+
+          <text x="215" y="195"
+                text-anchor="middle"
+                fill="#916b54"
+                font-size="13">
+            Стороны и углы приблизительные
+          </text>
+        </svg>
+
+        <figcaption>
+          Рисунок от руки может быть выразительным,
+          но линии часто немного отклоняются.
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag green">
+          Точное построение
+        </span>
+
+        <svg viewBox="0 0 440 205"
+             aria-label="Правильный прямоугольник с горизонтальными и вертикальными сторонами">
+
+          <rect x="65" y="40"
+                width="270" height="125"
+                rx="1"
+                fill="#e8f4ff"
+                stroke="#3d83c9"
+                stroke-width="5"/>
+
+          <path d="M80 112H320"
+                stroke="#208e8a"
+                stroke-width="4"/>
+
+          <path d="M65 176H335M65 171V181M335 171V181"
+                stroke="#a4844c"
+                stroke-width="2"/>
+
+          <text x="200" y="197"
+                text-anchor="middle"
+                fill="#93703c"
+                font-size="13">
+            Ровные линии, заданная ширина
+          </text>
+        </svg>
+
+        <figcaption>
+          Инструмент «Прямоугольник» помогает
+          получить прямые стороны и прямые углы.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="note green">
+      <strong>Три условия точности</strong>
+
+      <p>
+        <strong>Правильная форма</strong> —
+        например, четыре равные стороны у квадрата.
+
+        <strong>Нужный размер</strong> —
+        например, 80 × 80 пикселей.
+
+        <strong>Точное положение</strong> —
+        например, на 20 пикселей правее другого объекта.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02. Интерфейс Paint -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      02 · Настоящий Paint
+    </span>
+
+    <h2>Найдём нужные инструменты</h2>
+
+    <p class="lead">
+      В Paint уже есть знакомые инструменты
+      <strong>
+        «Линия», «Прямоугольник» и «Овал»
+      </strong>.
+
+      Обычно они находятся в группе «Фигуры».
+      Цвет и толщину контура можно выбирать отдельно.
+
+      Внешний вид панели зависит от версии Windows.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="paintshot">
+        <img
+          loading="lazy"
+          src="img-1.png"
+          alt="Реальный интерфейс Microsoft Paint с набором инструментов фигур и панелью цветов"
+        >
+
+        <figcaption>
+          <strong>Реальная панель Paint</strong>
+
+          На скриншоте показана версия
+          с ленточным меню: группа фигур,
+          цвета и настройка толщины линии.
+
+          Подписи интерфейса на немецком языке.
+
+          <small>
+            Источник: учебный материал
+            <a
+              href="https://lehre-virtuell.uni-frankfurt.de/knowhow/screenshots-erstellen-und-bearbeiten-mit-bordmitteln/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Университета Гёте, Франкфурт</a>.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>На что обращать внимание?</h3>
+
+        <div class="grid" style="gap:10px">
+          <div>
+            <span class="tag">╱ Линия</span>
+
+            <p>
+              Задаём начало и конец отрезка,
+              выбираем цвет и толщину.
+            </p>
+          </div>
+
+          <div>
+            <span class="tag green">
+              ▭ Прямоугольник
+            </span>
+
+            <p>
+              Создаём прямоугольник,
+              а при равных сторонах — квадрат.
+            </p>
+          </div>
+
+          <div>
+            <span class="tag purple">
+              ◯ Овал
+            </span>
+
+            <p>
+              Создаём овальную фигуру,
+              а при равной ширине и высоте —
+              окружность или круг.
+            </p>
+          </div>
+        </div>
+
+        <div class="note orange">
+          <strong>Обрати внимание</strong>
+
+          <p>
+            Сегодня работаем с
+            <strong>основными геометрическими инструментами</strong>.
+
+            Другие готовые фигуры и
+            преобразования рисунка
+            будут изучаться на следующих уроках.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 03. Линии -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      03 · Построение прямых линий
+    </span>
+
+    <h2>
+      Горизонталь, вертикаль и диагональ
+    </h2>
+
+    <p class="lead">
+      Линию задают две точки:
+      <strong>начало и конец</strong>.
+
+      Если обе точки имеют одинаковую высоту,
+      линия горизонтальная.
+
+      Если расположены на одной вертикали —
+      вертикальная.
+
+      Для наклонных линий важен угол направления.
+    </p>
+
+    <div class="rules">
+
+      <article class="card">
+        <span class="tag">
+          Горизонталь
+        </span>
+
+        <svg viewBox="0 0 250 118"
+             aria-hidden="true">
+
+          <path d="M24 64H225"
+                stroke="#427fd0"
+                stroke-width="6"
+                stroke-linecap="round"/>
+
+          <circle cx="24" cy="64"
+                  r="7" fill="#194e8d"/>
+
+          <circle cx="225" cy="64"
+                  r="7" fill="#194e8d"/>
+        </svg>
+
+        <h3>Одинаковая высота</h3>
+
+        <p>
+          Обе точки находятся на одном уровне:
+          координаты Y равны.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="tag green">
+          Вертикаль
+        </span>
+
+        <svg viewBox="0 0 250 118"
+             aria-hidden="true">
+
+          <path d="M125 13V105"
+                stroke="#24978c"
+                stroke-width="6"
+                stroke-linecap="round"/>
+
+          <circle cx="125" cy="13"
+                  r="7" fill="#147469"/>
+
+          <circle cx="125" cy="105"
+                  r="7" fill="#147469"/>
+        </svg>
+
+        <h3>Одинаковое X</h3>
+
+        <p>
+          Обе точки лежат на одной вертикальной линии:
+          координаты X равны.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="tag purple">
+          Диагональ 45°
+        </span>
+
+        <svg viewBox="0 0 250 118"
+             aria-hidden="true">
+
+          <path d="M66 99L160 5"
+                stroke="#9471d0"
+                stroke-width="6"
+                stroke-linecap="round"/>
+
+          <circle cx="66" cy="99"
+                  r="7" fill="#7956b7"/>
+
+          <circle cx="160" cy="5"
+                  r="7" fill="#7956b7"/>
+        </svg>
+
+        <h3>Наклонная линия</h3>
+
+        <p>
+          Поднимается вправо под углом
+          45° к горизонтали.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>
+        Клавиша Shift помогает
+      </strong>
+
+      <p>
+        В классическом Paint при рисовании
+        инструментом «Линия» удерживание
+        <kbd>Shift</kbd> ограничивает направление отрезка:
+        он получается горизонтальным,
+        вертикальным или под углом 45°
+        (и соответствующими направлениями).
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 04. Shift -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      04 · Shift — помощник точности
+    </span>
+
+    <h2>
+      Одна клавиша — правильные фигуры
+    </h2>
+
+    <p class="lead">
+      Когда мы перемещаем мышь,
+      трудно поддерживать равную ширину и высоту.
+
+      Клавиша <kbd>Shift</kbd>
+      помогает программе соблюдать
+      геометрическое условие.
+
+      В классических версиях Paint
+      она используется с линией,
+      прямоугольником и овалом.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <span class="tag">
+          Без Shift
+        </span>
+
+        <svg viewBox="0 0 400 180"
+             aria-label="Обычный прямоугольник и вытянутый овал">
+
+          <rect x="35" y="39"
+                width="146" height="91"
+                fill="#e8f1fe"
+                stroke="#527bc4"
+                stroke-width="4"/>
+
+          <ellipse cx="294" cy="84"
+                   rx="80" ry="45"
+                   fill="#ffe7cc"
+                   stroke="#d29242"
+                   stroke-width="4"/>
+        </svg>
+
+        <figcaption>
+          <strong>Ширина и высота различаются.</strong>
+
+          Получаются прямоугольник и овал.
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag green">
+          С Shift
+        </span>
+
+        <svg viewBox="0 0 400 180"
+             aria-label="Квадрат и окружность">
+
+          <rect x="48" y="30"
+                width="113" height="113"
+                fill="#e8f1fe"
+                stroke="#527bc4"
+                stroke-width="4"/>
+
+          <circle cx="289" cy="86" r="57"
+                  fill="#e2f6ef"
+                  stroke="#27998e"
+                  stroke-width="4"/>
+        </svg>
+
+        <figcaption>
+          <strong>Ширина и высота равны.</strong>
+
+          Получаются квадрат и окружность.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="card" style="margin-top:17px">
+      <h3>
+        Как строить с Shift
+      </h3>
+
+      <ol class="steps">
+        <li>
+          Выбери инструмент
+          <strong>«Прямоугольник»</strong>
+          или <strong>«Овал»</strong>.
+        </li>
+
+        <li>
+          Начни построение:
+          нажми кнопку мыши на холсте.
+        </li>
+
+        <li>
+          Удерживай <kbd>Shift</kbd>,
+          пока растягиваешь фигуру.
+        </li>
+
+        <li>
+          Отпусти кнопку мыши,
+          затем клавишу.
+        </li>
+      </ol>
+
+      <p>
+        Если используемая версия Paint
+        ведёт себя иначе,
+        ориентируйся на её подсказки
+        и настройки фигур.
+
+        Принцип остаётся прежним:
+        для квадрата и окружности нужны
+        <strong>равные ширина и высота</strong>.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 05. Размеры -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      05 · Размеры объектов
+    </span>
+
+    <h2>
+      Ширина × высота: что измеряем?
+    </h2>
+
+    <p class="lead">
+      Размеры растрового изображения
+      и его элементов удобно выражать
+      в <strong>пикселях (px)</strong>.
+
+      <strong>Ширина</strong> измеряется
+      по горизонтали,
+      <strong>высота</strong> — по вертикали.
+
+      Для сравнения фигур используют
+      запись «ширина × высота».
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <span class="tag">
+          120 × 60 px
+        </span>
+
+        <svg viewBox="0 0 410 230"
+             aria-label="Прямоугольник, у которого ширина вдвое больше высоты">
+
+          <rect x="75" y="53"
+                width="240" height="120"
+                fill="#e5f0ff"
+                stroke="#4380cc"
+                stroke-width="4"/>
+
+          <path d="M75 190H315"
+                stroke="#aa793c"
+                stroke-width="2"/>
+
+          <path d="M75 184V196M315 184V196"
+                stroke="#aa793c"
+                stroke-width="2"/>
+
+          <text x="195" y="212"
+                fill="#a16d32"
+                text-anchor="middle"
+                font-size="15">
+            Ширина: 120 px
+          </text>
+
+          <path d="M333 53V173M327 53H339M327 173H339"
+                stroke="#198e82"
+                stroke-width="2"/>
+
+          <text x="352" y="117"
+                fill="#168779"
+                font-size="13">
+            60
+          </text>
+        </svg>
+
+        <figcaption>
+          На учебной схеме показаны
+          <strong>пропорции</strong>
+          прямоугольника 120 × 60;
+          экранный чертёж увеличен
+          для удобства.
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag green">
+          80 × 80 px
+        </span>
+
+        <svg viewBox="0 0 410 230"
+             aria-label="Квадрат с одинаковой шириной и высотой">
+
+          <rect x="115" y="34"
+                width="158" height="158"
+                fill="#e5f6ee"
+                stroke="#279588"
+                stroke-width="4"/>
+
+          <path d="M115 206H273M115 200V212M273 200V212"
+                stroke="#ab7d3b"
+                stroke-width="2"/>
+
+          <text x="194" y="226"
+                text-anchor="middle"
+                fill="#a36d31"
+                font-size="14">
+            80 px
+          </text>
+
+          <text x="288" y="117"
+                fill="#178f7d"
+                font-size="14">
+            80 px
+          </text>
+        </svg>
+
+        <figcaption>
+          Квадрат имеет одинаковую
+          ширину и высоту:
+          <strong>80 × 80 пикселей</strong>.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="note green">
+      <strong>
+        Форма зависит от соотношения размеров
+      </strong>
+
+      <p>
+        <strong>120 × 60</strong> —
+        вытянутый прямоугольник.
+
+        <strong>80 × 80</strong> — квадрат.
+
+        Для овала и окружности действует та же идея:
+        если ширина и высота области построения равны,
+        получается окружность.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 06. Координаты -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      06 · Координаты на холсте
+    </span>
+
+    <h2>
+      Как сообщить компьютеру точное место?
+    </h2>
+
+    <p class="lead">
+      Каждой точке рисунка можно поставить
+      в соответствие пару координат
+      <strong>(X; Y)</strong>.
+
+      В растровой графике начало координат
+      обычно находится
+      <strong>сверху слева</strong>.
+
+      X увеличивается вправо,
+      Y — вниз.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <svg viewBox="0 0 460 300"
+             aria-label="Координатная плоскость экрана, ось X вправо, ось Y вниз, точки A B C">
+
+          <defs>
+            <pattern id="coordg"
+                     width="30" height="30"
+                     patternUnits="userSpaceOnUse">
+              <path d="M30 0H0V30"
+                    fill="none"
+                    stroke="#dfeaf5"/>
+            </pattern>
+          </defs>
+
+          <rect x="45" y="33"
+                width="375" height="225"
+                fill="url(#coordg)"/>
+
+          <path d="M45 33H436M45 33V281"
+                stroke="#416ab0"
+                stroke-width="3"/>
+
+          <path d="M427 26L436 33L427 40M38 272L45 281L52 272"
+                fill="none"
+                stroke="#416ab0"
+                stroke-width="3"/>
+
+          <text x="438" y="24"
+                fill="#3266ae"
+                font-size="16"
+                font-weight="bold">X</text>
+
+          <text x="22" y="290"
+                fill="#3266ae"
+                font-size="16"
+                font-weight="bold">Y</text>
+
+          <text x="22" y="23"
+                fill="#3266ae"
+                font-size="15">0</text>
+
+          <path d="M105 123H345V213"
+                fill="none"
+                stroke="#ba914b"
+                stroke-width="4"/>
+
+          <g fill="#237fbb"
+             stroke="white"
+             stroke-width="3">
+            <circle cx="105" cy="123" r="7"/>
+            <circle cx="345" cy="123" r="7"/>
+            <circle cx="345" cy="213" r="7"/>
+          </g>
+
+          <text x="113" y="112"
+                fill="#1a608e"
+                font-weight="bold"
+                font-size="15">
+            A (20; 30)
+          </text>
+
+          <text x="338" y="110"
+                fill="#1a608e"
+                font-weight="bold"
+                font-size="15"
+                text-anchor="end">
+            B (100; 30)
+          </text>
+
+          <text x="339" y="235"
+                fill="#1a608e"
+                font-weight="bold"
+                font-size="15"
+                text-anchor="end">
+            C (100; 60)
+          </text>
+
+          <text x="230" y="287"
+                text-anchor="middle"
+                fill="#73859d"
+                font-size="12">
+            Учебная сетка: условный масштаб
+          </text>
+        </svg>
+
+        <figcaption>
+          У A и B одинаковая координата Y:
+          соединяющий отрезок горизонтален.
+
+          У B и C одинаковая координата X:
+          отрезок вертикален.
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>Разбираем три точки</h3>
+
+        <p>
+          <strong>A (20; 30)</strong> —
+          20 пикселей вправо
+          и 30 вниз от начала координат.
+        </p>
+
+        <p>
+          <strong>B (100; 30)</strong> —
+          находится правее A на той же высоте.
+        </p>
+
+        <p>
+          <strong>C (100; 60)</strong> —
+          находится ниже B на той же вертикали.
+        </p>
+
+        <div class="statrow">
+          <span>AB: 100 − 20 = 80 px</span>
+          <span>BC: 60 − 30 = 30 px</span>
+        </div>
+
+        <div class="note orange">
+          <strong>
+            Особенность экранных координат
+          </strong>
+
+          <p>
+            В школьной математике ось Y
+            обычно направлена вверх.
+
+            В координатах изображения
+            <strong>Y растёт вниз</strong>.
+
+            На рисунке показана условная схема
+            с обозначенными координатами.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 07. Масштаб -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      07 · Масштаб и пиксели
+    </span>
+
+    <h2>
+      Увеличили изображение на экране —
+      изменился ли рисунок?
+    </h2>
+
+    <p class="lead">
+      <strong>Масштаб просмотра</strong>
+      помогает рассмотреть мелкие детали.
+
+      При 200% каждый пиксель изображения
+      отображается вдвое крупнее
+      по ширине и высоте, чем при 100%
+      (без учёта особенностей
+      масштабирования интерфейса).
+
+      Но <strong>количество пикселей
+      самого рисунка не меняется</strong>.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <span class="tag">
+          Масштаб 100%
+        </span>
+
+        <svg viewBox="0 0 420 210"
+             aria-label="Рисунок маленького цветного пиксельного символа">
+
+          <rect x="0" y="0"
+                width="420" height="210"
+                fill="#f1f6fc"/>
+
+          <g transform="translate(173 50)"
+             fill="#337bcc">
+            <rect x="0" y="0" width="12" height="12"/>
+            <rect x="12" y="0" width="12" height="12"/>
+            <rect x="24" y="0" width="12" height="12"/>
+            <rect x="0" y="12" width="12" height="12"/>
+            <rect x="24" y="12" width="12" height="12"/>
+            <rect x="0" y="24" width="12" height="12"/>
+            <rect x="12" y="24" width="12" height="12"/>
+            <rect x="24" y="24" width="12" height="12"/>
+          </g>
+
+          <text x="210" y="143"
+                fill="#66819b"
+                font-size="14"
+                text-anchor="middle">
+            Пиксели кажутся маленькими
+          </text>
+        </svg>
+
+        <figcaption>
+          При небольшом масштабе отдельные
+          пиксели изображения обычно
+          трудно рассмотреть.
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag green">
+          Масштаб 400%
+        </span>
+
+        <svg viewBox="0 0 420 210"
+             aria-label="Тот же цветной пиксельный символ в увеличенном масштабе с крупными квадратными пикселями">
+
+          <rect width="420"
+                height="210"
+                fill="#f1f6fc"/>
+
+          <g transform="translate(148 16)"
+             fill="#337bcc"
+             stroke="#f3f9ff"
+             stroke-width="2">
+
+            <rect x="0" y="0"
+                  width="40" height="40"/>
+            <rect x="40" y="0"
+                  width="40" height="40"/>
+            <rect x="80" y="0"
+                  width="40" height="40"/>
+
+            <rect x="0" y="40"
+                  width="40" height="40"/>
+            <rect x="80" y="40"
+                  width="40" height="40"/>
+
+            <rect x="0" y="80"
+                  width="40" height="40"/>
+            <rect x="40" y="80"
+                  width="40" height="40"/>
+            <rect x="80" y="80"
+                  width="40" height="40"/>
+          </g>
+
+          <text x="210" y="177"
+                fill="#66819b"
+                font-size="14"
+                text-anchor="middle">
+            Видна структура пикселей
+          </text>
+        </svg>
+
+        <figcaption>
+          Увеличенное изображение удобнее
+          проверять по отдельным точкам.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="note green">
+      <strong>
+        Масштаб просмотра ≠ изменение размеров
+      </strong>
+
+      <p>
+        Если рисунок имеет 100 × 100 пикселей,
+        то при масштабе 400%
+        он <strong>по-прежнему содержит
+        100 × 100 пикселей</strong>.
+
+        Мы просто рассматриваем их крупнее.
+
+        Изменение самого размера изображения —
+        отдельная операция, изучаемая позднее.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 08. Сетка и линейки -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      08 · Сетка и линейки
+    </span>
+
+    <h2>
+      Невидимые помощники точного рисунка
+    </h2>
+
+    <p class="lead">
+      <strong>Сетка</strong> помогает видеть
+      границы пикселей при увеличении.
+
+      <strong>Линейки</strong>
+      позволяют ориентироваться
+      по расстояниям на холсте.
+
+      Эти вспомогательные элементы
+      отображаются в редакторе,
+      но <strong>не являются частью
+      самого рисунка</strong>.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="paintshot">
+        <img
+          loading="lazy"
+          src="img-2.png"
+          alt="Реальный интерфейс Paint с линейками над холстом и слева, панелью инструментов и геометрическими фигурами"
+        >
+
+        <figcaption>
+          <strong>
+            Настоящий пример работы Paint с линейками
+          </strong>
+
+          Над холстом и слева видны деления линейки,
+          которые помогают ориентироваться
+          в размерах и положении объектов.
+
+          <small>
+            Источник:
+            <a
+              href="https://statistik.boku.ac.at/roberts_it-kurs-unterlagen/doku.php?id=grafik:grafik-grundlagen:aufgaben_pixel_paint"
+              target="_blank"
+              rel="noopener noreferrer"
+            >учебные материалы BOKU (Австрия)</a>.
+          </small>
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag">
+          Крупная учебная схема
+        </span>
+
+        <svg viewBox="0 0 450 280"
+             aria-label="Пример увеличенной пиксельной сетки с нарисованной фигурой">
+
+          <defs>
+            <pattern id="pixelg"
+                     width="22"
+                     height="22"
+                     patternUnits="userSpaceOnUse">
+              <path d="M22 0H0V22"
+                    fill="none"
+                    stroke="#d3e1ed"
+                    stroke-width="1.5"/>
+            </pattern>
+          </defs>
+
+          <rect x="24" y="26"
+                width="396" height="220"
+                fill="white"/>
+
+          <rect x="24" y="26"
+                width="396" height="220"
+                fill="url(#pixelg)"/>
+
+          <rect x="112" y="70"
+                width="176" height="132"
+                fill="#94c7f666"
+                stroke="#367ecb"
+                stroke-width="4"/>
+
+          <path d="M24 14H420M10 26V246"
+                stroke="#a0afc3"
+                stroke-width="2"/>
+
+          <g fill="#68809a" font-size="12">
+            <text x="21" y="13">0</text>
+            <text x="110" y="13">4</text>
+            <text x="198" y="13">8</text>
+            <text x="286" y="13">12</text>
+            <text x="3" y="75">2</text>
+            <text x="3" y="163">6</text>
+            <text x="3" y="248">10</text>
+          </g>
+        </svg>
+
+        <figcaption>
+          Сетка помогает видеть,
+          на какой линии начинается
+          и заканчивается фигура.
+
+          Цифры указаны условно.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="note orange">
+      <strong>Где включить?</strong>
+
+      <p>
+        В классической версии Paint
+        вспомогательные настройки обычно
+        расположены на вкладке
+        <strong>«Вид»</strong>:
+        «Линейки», «Линии сетки» и масштаб.
+
+        Пиксельная сетка особенно полезна
+        при сильном увеличении;
+        её доступность и поведение
+        зависят от версии программы.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 09. Выравнивание -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      09 · Выравнивание объектов
+    </span>
+
+    <h2>
+      Одинаковые фигуры можно расположить аккуратно
+    </h2>
+
+    <p class="lead">
+      Для точной композиции недостаточно просто
+      нарисовать правильные фигуры.
+
+      Важно соблюдать
+      <strong>
+        одинаковую высоту,
+        интервалы и положение
+        относительно центра
+      </strong>.
+
+      Можно заранее выбрать опорную линию
+      и сравнивать с ней
+      расположение всех объектов.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <span class="tag">
+          Неравномерно
+        </span>
+
+        <svg viewBox="0 0 430 198"
+             aria-label="Три квадрата расположены на разной высоте и с разными промежутками">
+
+          <path d="M20 157H405"
+                stroke="#c7d8e7"
+                stroke-width="2"
+                stroke-dasharray="6 5"/>
+
+          <rect x="28" y="71"
+                width="71" height="71"
+                fill="#97bbe9"
+                stroke="#447ac2"
+                stroke-width="3"/>
+
+          <rect x="153" y="52"
+                width="71" height="71"
+                fill="#86d6c1"
+                stroke="#228e7d"
+                stroke-width="3"/>
+
+          <rect x="271" y="87"
+                width="71" height="71"
+                fill="#f6d4a8"
+                stroke="#c78737"
+                stroke-width="3"/>
+        </svg>
+
+        <figcaption>
+          Квадраты одинакового размера,
+          но расположены на разной высоте
+          и с разными расстояниями.
+        </figcaption>
+      </figure>
+
+      <figure class="artframe">
+        <span class="tag green">
+          По одной линии
+        </span>
+
+        <svg viewBox="0 0 430 198"
+             aria-label="Три квадрата на одной горизонтали с одинаковыми промежутками">
+
+          <path d="M20 143H405"
+                stroke="#7aa6cc"
+                stroke-width="2"
+                stroke-dasharray="6 5"/>
+
+          <rect x="50" y="73"
+                width="70" height="70"
+                fill="#97bbe9"
+                stroke="#447ac2"
+                stroke-width="3"/>
+
+          <rect x="171" y="73"
+                width="70" height="70"
+                fill="#86d6c1"
+                stroke="#228e7d"
+                stroke-width="3"/>
+
+          <rect x="292" y="73"
+                width="70" height="70"
+                fill="#f6d4a8"
+                stroke="#c78737"
+                stroke-width="3"/>
+
+          <path d="M120 160H171M241 160H292"
+                stroke="#8a7aba"
+                stroke-width="2"/>
+
+          <text x="145" y="178"
+                text-anchor="middle"
+                fill="#7a66ab"
+                font-size="12">
+            51
+          </text>
+
+          <text x="266" y="178"
+                text-anchor="middle"
+                fill="#7a66ab"
+                font-size="12">
+            51
+          </text>
+        </svg>
+
+        <figcaption>
+          Фигуры стоят на одной линии,
+          расстояния между их границами
+          одинаковы.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="grid three" style="margin-top:17px">
+
+      <article class="card">
+        <div class="icon">↔️</div>
+
+        <h3>
+          Горизонтальное выравнивание
+        </h3>
+
+        <p>
+          Верхние или нижние стороны объектов
+          лежат на общей линии.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon"
+             style="background:var(--gsoft)">
+          ↕️
+        </div>
+
+        <h3>
+          Вертикальное выравнивание
+        </h3>
+
+        <p>
+          Центры или боковые границы объектов
+          располагаются по одной вертикали.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon"
+             style="background:var(--psoft)">
+          📏
+        </div>
+
+        <h3>
+          Равные интервалы
+        </h3>
+
+        <p>
+          Между соседними фигурами
+          оставляют одинаковое
+          свободное расстояние.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 10. Симметрия -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      10 · Симметрия и композиция
+    </span>
+
+    <h2>
+      Почему симметричный рисунок
+      выглядит упорядоченно?
+    </h2>
+
+    <p class="lead">
+      <strong>Ось симметрии</strong> —
+      прямая, по обе стороны которой
+      элементы расположены зеркально.
+
+      Сегодня мы будем
+      <strong>
+        анализировать симметричное расположение
+      </strong>,
+      а специальные команды отражения
+      рассмотрим на следующем уроке.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="artframe">
+        <svg viewBox="0 0 430 228"
+             aria-label="Симметричная композиция: два одинаковых квадрата, центральная окружность и вертикальная ось">
+
+          <rect width="430"
+                height="228"
+                fill="#fbfdff"/>
+
+          <path d="M215 18V210"
+                stroke="#b0a3d9"
+                stroke-width="3"
+                stroke-dasharray="7 6"/>
+
+          <rect x="67" y="83"
+                width="89" height="89"
+                fill="#c5dfff"
+                stroke="#477ac0"
+                stroke-width="4"/>
+
+          <rect x="274" y="83"
+                width="89" height="89"
+                fill="#c5dfff"
+                stroke="#477ac0"
+                stroke-width="4"/>
+
+          <circle cx="215" cy="127"
+                  r="46"
+                  fill="#ffe5b7"
+                  stroke="#c88c41"
+                  stroke-width="4"/>
+
+          <path d="M156 65H274"
+                stroke="#279486"
+                stroke-width="2"/>
+
+          <text x="215" y="47"
+                fill="#785ab6"
+                font-size="13"
+                text-anchor="middle">
+            ось симметрии
+          </text>
+        </svg>
+
+        <figcaption>
+          <strong>Симметричная композиция.</strong>
+
+          Слева и справа от оси —
+          одинаковые квадраты
+          на одинаковых расстояниях.
+
+          Окружность находится в центре.
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>
+          Как проверить точность?
+        </h3>
+
+        <ol class="steps">
+          <li>
+            Мысленно проведи ось симметрии.
+          </li>
+
+          <li>
+            Посмотри, совпадают ли размеры фигур
+            по разные стороны оси.
+          </li>
+
+          <li>
+            Сравни расстояния от оси
+            до левого и правого объекта.
+          </li>
+
+          <li>
+            Проверь, находится ли
+            центральная фигура на оси.
+          </li>
+        </ol>
+
+        <div class="note green">
+          <strong>Полезный приём</strong>
+
+          <p>
+            Планируй расположение фигур
+            перед построением:
+            определи размеры,
+            центры и промежутки.
+
+            Тогда потребуется
+            меньше исправлений.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 11. Ошибки -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      11 · Разбираем ошибки
+    </span>
+
+    <h2>
+      Почему построение получилось неточным?
+    </h2>
+
+    <div class="tasklist">
+
+      <article>
+        <b>01 · Косая горизонталь</b>
+
+        <p>
+          Не удалось удержать одинаковую
+          высоту концов.
+
+          Используй «Линию»
+          и <kbd>Shift</kbd>.
+        </p>
+      </article>
+
+      <article>
+        <b>
+          02 · Прямоугольник вместо квадрата
+        </b>
+
+        <p>
+          Ширина и высота оказались разными.
+
+          Проверь равенство сторон
+          или используй Shift.
+        </p>
+      </article>
+
+      <article>
+        <b>03 · Овал вместо окружности</b>
+
+        <p>
+          Область построения вытянута.
+
+          Нужна одинаковая ширина и высота.
+        </p>
+      </article>
+
+      <article>
+        <b>04 · Фигуры не выровнены</b>
+
+        <p>
+          Сравни координаты верхних
+          или нижних границ
+          и расстояния между ними.
+        </p>
+      </article>
+
+      <article>
+        <b>05 · Перепутаны X и Y</b>
+
+        <p>
+          Запомни: X — вправо, Y — вниз.
+
+          Начало координат —
+          верхний левый угол холста.
+        </p>
+      </article>
+
+      <article>
+        <b>
+          06 · Увеличился «размер» при просмотре
+        </b>
+
+        <p>
+          Скорее всего, был изменён
+          только масштаб.
+
+          Это не значит, что изменились
+          пиксельные размеры рисунка.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note orange">
+      <strong>
+        Порядок действий для точного рисунка
+      </strong>
+
+      <p>
+        <strong>
+          Спланировать → выбрать инструмент →
+          задать форму → проверить размеры →
+          выровнять объекты → рассмотреть детали
+          при увеличении.
+        </strong>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 12. Вопросы -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      12 · Закрепление
+    </span>
+
+    <h2>
+      12 вопросов по уроку
+    </h2>
+
+    <p class="lead">
+      Проверь, чем отличается точное построение
+      от свободного рисования
+      и как контролировать форму,
+      размеры и положение объектов.
+    </p>
+
+    <div class="questions">
+
+      <div class="question">
+        <b>01</b>
+        <p>
+          Что называют точным построением
+          графического объекта?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>02</b>
+        <p>
+          Чем точное построение отличается
+          от свободного рисования?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>03</b>
+        <p>
+          Как получить строго горизонтальную
+          или вертикальную линию в Paint?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>04</b>
+        <p>
+          Для чего используется клавиша Shift
+          при рисовании?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>05</b>
+        <p>
+          Чем квадрат отличается
+          от прямоугольника?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>06</b>
+        <p>
+          Как построить квадрат
+          инструментом «Прямоугольник»?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>07</b>
+        <p>
+          Чем окружность отличается
+          от вытянутого овала?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>08</b>
+        <p>
+          Как построить окружность
+          инструментом «Овал»?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>09</b>
+        <p>
+          Что обозначают ширина
+          и высота графического объекта?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>10</b>
+        <p>
+          Как определяются координаты точки
+          в растровом изображении?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>11</b>
+        <p>
+          Чем масштаб просмотра отличается
+          от изменения размеров рисунка?
+          Для чего нужны сетка и линейки?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>12</b>
+        <p>
+          Как расположить несколько фигур
+          на одинаковом расстоянии
+          и по одной линии?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 13. Итог -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        13 · Итог урока
+      </span>
+
+      <h2>
+        Точность — это не случайность,
+        а набор правил
+      </h2>
+
+      <p class="lead">
+        Мы научились отличать свободное рисование
+        от геометрического построения,
+        разобрали роль Shift, размеров,
+        координат, масштаба и сетки,
+        а также увидели, как создавать
+        аккуратные композиции.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+          <strong>📐 Форма</strong>
+
+          <p>
+            Линии прямые,
+            а ширина и высота квадрата
+            или окружности равны.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>📏 Размеры</strong>
+
+          <p>
+            Пиксели и размеры позволяют
+            сравнивать фигуры
+            и соблюдать пропорции.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>📍 Положение</strong>
+
+          <p>
+            Координаты, общие линии
+            и интервалы помогают правильно
+            разместить объекты.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+        <strong>Главный вывод</strong>
+
+        <p>
+          <strong>
+            Аккуратный рисунок получается,
+            когда мы контролируем форму,
+            размеры и положение его элементов.
+          </strong>
+
+          Специальные инструменты Paint
+          позволяют построить геометрические объекты
+          точнее, чем свободное рисование мышью.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="sources">
+      <p>
+        <strong>Об иллюстрациях.</strong>
+        Две реальные иллюстрации интерфейса Paint
+        взяты из университетских учебных материалов
+        и сопровождаются ссылками на их страницы.
+
+        Остальные рисунки —
+        специально разработанные статические
+        схемы HTML/SVG.
+
+        В разных версиях Paint
+        названия и расположение команд
+        могут отличаться.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 7 класс · Paint ·
+  Точные построения графических объектов
+</footer>
+
+</body>
+</html>
