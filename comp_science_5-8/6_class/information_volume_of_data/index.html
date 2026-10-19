@@ -1,0 +1,2487 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Информатика, 6 класс. Информационный объём данных, единицы измерения информации, переводы и задачи.">
+<title>Сколько места занимает информация? — Информатика, 6 класс</title>
+<style>
+:root{
+  --bg:#f5f8fc;
+  --paper:#fff;
+  --ink:#24364e;
+  --muted:#60748c;
+  --blue:#346dc6;
+  --teal:#16867f;
+  --violet:#755ac5;
+  --amber:#bd792e;
+  --line:#dfe8f2;
+  --softblue:#eaf2ff;
+  --softteal:#e4f5f0;
+  --softviolet:#f0ecff;
+  --softamber:#fff2dc;
+  --shadow:0 13px 36px #294a7511;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:var(--bg);
+  font:16px/1.72 "Segoe UI",Arial,sans-serif;
+}
+h1,h2,h3,p,figure{margin-top:0}
+h1{
+  font-size:clamp(2.65rem,5.6vw,5.05rem);
+  letter-spacing:-.055em;
+  line-height:1.08;
+}
+h2{
+  font-size:clamp(1.75rem,3.6vw,2.62rem);
+  line-height:1.19;
+  letter-spacing:-.035em;
+}
+h3{font-size:1.23rem;line-height:1.36}
+p{color:var(--muted);margin-bottom:13px}
+strong{color:var(--ink)}
+a{color:var(--blue);text-underline-offset:3px}
+.container{
+  width:min(1110px,calc(100% - 34px));
+  margin:auto;
+}
+.section{padding:46px 0}
+.section:nth-of-type(even){background:#eff4fa}
+.eyebrow{
+  display:block;
+  margin-bottom:11px;
+  color:var(--blue);
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.lead{max-width:850px;font-size:1.075rem}
+.grid{display:grid;gap:17px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{
+  min-width:0;
+  padding:23px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+.card p:last-child{margin-bottom:0}
+.symbol{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  background:var(--softblue);
+  border-radius:15px;
+  font-size:1.9rem;
+  margin-bottom:14px;
+}
+.note{
+  padding:19px 22px;
+  margin-top:21px;
+  border-left:5px solid var(--blue);
+  background:var(--softblue);
+  border-radius:0 13px 13px 0;
+}
+.note.green{
+  background:var(--softteal);
+  border-color:var(--teal);
+}
+.note.amber{
+  background:var(--softamber);
+  border-color:var(--amber);
+}
+.note strong{display:block;margin-bottom:5px}
+.note p:last-child{margin:0}
+.tag{
+  display:inline-block;
+  border-radius:99px;
+  padding:5px 11px;
+  background:var(--softblue);
+  color:var(--blue);
+  font-size:.8rem;
+  font-weight:850;
+}
+.tag.green{
+  background:var(--softteal);
+  color:var(--teal);
+}
+.tag.violet{
+  background:var(--softviolet);
+  color:var(--violet);
+}
+.caption{
+  color:#73869c;
+  font-size:.82rem;
+  margin:9px 0 0;
+}
+.math{
+  font:850 1.12rem/1.55 Consolas,"Courier New",monospace;
+  color:#235a9f;
+  overflow-wrap:anywhere;
+}
+.steps{padding-left:24px;color:var(--muted)}
+.steps li{padding-left:4px;margin:0 0 9px}
+.steps li::marker{font-weight:900;color:var(--blue)}
+
+/* Обложка */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:77px 0;
+  background:
+    radial-gradient(
+      circle at 82% 17%,
+      #cceaf1,
+      transparent 41%
+    ),
+    radial-gradient(
+      circle at 8% 100%,
+      #e4e0fa,
+      transparent 47%
+    ),
+    linear-gradient(130deg,#f1f7ff,#e8f6f3);
+  border-bottom:1px solid #dbe7f1;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.23;
+  background-image:
+    radial-gradient(#629bb6 1.2px,transparent 1.2px);
+  background-size:27px 27px;
+  pointer-events:none;
+}
+.hero-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.04fr .96fr;
+  align-items:center;
+  gap:34px;
+}
+.hero-pill{
+  display:inline-block;
+  padding:8px 13px;
+  margin-bottom:23px;
+  background:#fffd;
+  border:1px solid #d2e2eb;
+  border-radius:99px;
+  color:#3b7195;
+  font-size:.8rem;
+  font-weight:900;
+}
+.hero h1 span{display:block;color:var(--teal)}
+.hero p{font-size:1.1rem;max-width:545px}
+.hero-chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:19px;
+}
+.hero-chips span{
+  padding:7px 10px;
+  border:1px solid #d2e1ea;
+  background:#fff;
+  border-radius:8px;
+  font-size:.83rem;
+  font-weight:800;
+  color:#48677e;
+}
+.hero-illustration{
+  position:relative;
+  min-height:365px;
+  display:grid;
+  place-items:center;
+}
+.hero-sheet{
+  position:absolute;
+  width:87%;
+  height:285px;
+  right:0;
+  top:10px;
+  transform:rotate(7deg);
+  border:1px solid #dce6f2;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #fff 0px,
+      #fff 29px,
+      #e9f0f9 30px
+    );
+  border-radius:17px;
+  box-shadow:var(--shadow);
+}
+.hero-chip{
+  position:relative;
+  width:min(94%,410px);
+  padding:20px;
+  border:8px solid #2e536e;
+  border-radius:23px;
+  background:#173b56;
+  box-shadow:0 24px 44px #1d486348;
+  transform:rotate(-3deg);
+}
+.hero-chip strong{
+  display:block;
+  color:#e5f8ff;
+  font-size:1rem;
+  margin-bottom:12px;
+}
+.hero-bits{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:6px;
+}
+.hero-bits span{
+  display:grid;
+  place-items:center;
+  aspect-ratio:1;
+  background:#6fd2cb;
+  border-radius:8px;
+  color:#123d54;
+  font:bold clamp(1.15rem,2.4vw,1.7rem) Consolas,monospace;
+}
+.hero-chip small{
+  display:block;
+  color:#a6d6e1;
+  font-size:.81rem;
+  margin-top:13px;
+}
+.hero-medal{
+  position:absolute;
+  bottom:3px;
+  right:0;
+  z-index:3;
+  width:83px;
+  height:83px;
+  display:grid;
+  place-items:center;
+  font-size:2.7rem;
+  border-radius:22px;
+  border:5px solid white;
+  background:#f8dca9;
+  box-shadow:var(--shadow);
+}
+
+/* Байт и двоичное сообщение */
+
+.binary-row{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:7px;
+  max-width:700px;
+  margin:18px auto 7px;
+}
+.binary-row span{
+  display:grid;
+  place-items:center;
+  min-width:0;
+  aspect-ratio:1.15;
+  border:2px solid #a9c9ed;
+  border-radius:10px;
+  background:#e7f1ff;
+  color:#2c64af;
+  font:900 clamp(1.15rem,3vw,2rem)/1 Consolas,monospace;
+}
+.binary-row span:nth-child(2n){
+  background:#e7f8f1;
+  border-color:#9ad8c5;
+  color:#147d70;
+}
+.under-brace{
+  text-align:center;
+  font-weight:850;
+  color:#46709b;
+  font-size:.88rem;
+}
+.binary-sample{
+  padding:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+.binary-long{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  justify-content:center;
+  margin:15px 0;
+}
+.binary-byte{
+  padding:9px 12px;
+  border:1px solid #b7cfe8;
+  border-radius:8px;
+  background:#eff6ff;
+  color:#3566a1;
+  font:800 1.05rem Consolas,monospace;
+  letter-spacing:.08em;
+}
+.binary-byte:nth-child(even){
+  background:var(--softteal);
+  border-color:#a5d8c8;
+  color:#247869;
+}
+
+/* Лестница и таблица единиц */
+
+.ladder{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:7px;
+  align-items:stretch;
+  margin:20px 0 10px;
+}
+.ladder-item{
+  padding:14px 7px;
+  border:1px solid #d9e4f1;
+  border-radius:12px;
+  background:#fff;
+  text-align:center;
+  min-width:0;
+}
+.ladder-item b{
+  display:block;
+  font-size:1rem;
+  color:#285f9c;
+  overflow-wrap:anywhere;
+}
+.ladder-item .unit{
+  display:block;
+  font-size:.77rem;
+  color:#6c7e94;
+}
+.ladder-item small{
+  display:block;
+  font-size:.75rem;
+  color:var(--teal);
+  font-weight:800;
+  margin-top:7px;
+}
+.ladder-item:first-child{background:#f3edff}
+.ladder-item:nth-child(2){background:#eaf2ff}
+.ladder-item:nth-child(3){background:#e8f7f2}
+.ladder-item:nth-child(4){background:#eff6ff}
+.ladder-item:nth-child(5){background:#fff4e5}
+.ladder-item:nth-child(6){background:#f0edff}
+.unit-path{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-top:16px;
+}
+.path-step{
+  padding:11px 7px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:#fff;
+}
+.path-step strong{
+  display:block;
+  color:var(--blue);
+  font-size:.91rem;
+}
+.path-step span{
+  color:var(--muted);
+  font-size:.82rem;
+}
+.conversion-duo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.conversion-box{
+  padding:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+.conversion-box h3{margin-bottom:8px}
+.calc-line{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:13px;
+  flex-wrap:wrap;
+  padding:18px;
+  background:#edf4fd;
+  border-radius:12px;
+  font-size:1.06rem;
+  font-weight:900;
+  color:#3164a6;
+}
+.calc-line b{
+  font-size:1.5rem;
+  color:var(--teal);
+}
+
+/* Сравнение объёмов */
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:17px;
+}
+.compare-card{
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+}
+.bar-track{
+  height:33px;
+  background:#e9edf5;
+  border-radius:7px;
+  overflow:hidden;
+  margin-top:12px;
+}
+.bar{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding-left:12px;
+  color:#fff;
+  font-weight:850;
+  font-size:.82rem;
+  background:linear-gradient(90deg,#4b83d5,#3971c6);
+  white-space:nowrap;
+}
+.bar.green{
+  background:linear-gradient(90deg,#30a592,#17877e);
+}
+.bar.amber{
+  background:linear-gradient(90deg,#e3b369,#c78b3e);
+}
+.compare-card small{color:var(--muted)}
+.compare-result{
+  display:inline-block;
+  background:var(--softteal);
+  color:#146f64;
+  padding:9px 13px;
+  border-radius:9px;
+  margin-top:13px;
+  font-weight:850;
+}
+
+/* Текстовое кодирование */
+
+.text-code{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:15px;
+}
+.char-card{
+  padding:13px 7px;
+  border:1px solid #c9d9e8;
+  border-radius:13px;
+  background:#fff;
+  text-align:center;
+  min-width:0;
+}
+.char-card .char{
+  display:grid;
+  place-items:center;
+  width:53px;
+  height:53px;
+  border-radius:13px;
+  background:var(--softblue);
+  margin:0 auto 9px;
+  font:900 1.65rem Georgia,serif;
+  color:#2f67b0;
+}
+.char-card:nth-child(even) .char{
+  background:var(--softviolet);
+  color:var(--violet);
+}
+.char-card code{
+  display:block;
+  color:#35638f;
+  font-size:.86rem;
+}
+.char-card small{
+  display:block;
+  margin-top:7px;
+  color:var(--teal);
+  font-weight:850;
+}
+.formula{
+  padding:20px 23px;
+  background:#1c3654;
+  border-radius:16px;
+  color:#fff;
+  text-align:center;
+}
+.formula strong{
+  display:block;
+  color:#c5eced;
+  font-size:.83rem;
+}
+.formula .equation{
+  font:850 clamp(1.35rem,2.9vw,2.1rem)/1.5 Consolas,monospace;
+  color:#fff;
+}
+.formula p{
+  color:#d4e3f0;
+  margin:7px 0 0;
+  font-size:.9rem;
+}
+.work-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+.line-visual{
+  display:grid;
+  gap:5px;
+  max-width:410px;
+  padding:15px;
+  border-radius:13px;
+  background:#f1f6fd;
+  border:1px solid var(--line);
+}
+.line-visual span{
+  display:block;
+  width:100%;
+  height:10px;
+  border-radius:5px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #4594c0 0px,
+      #4594c0 6px,
+      #fff 6px,
+      #fff 8px
+    );
+}
+.line-visual span:nth-child(2n){
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #56b4a2 0px,
+      #56b4a2 6px,
+      #fff 6px,
+      #fff 8px
+    );
+}
+
+/* Сумма сообщений и объём памяти */
+
+.message-multiply{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:8px;
+  margin:17px 0;
+}
+.message-multiply span{
+  display:grid;
+  place-items:center;
+  min-height:48px;
+  background:#e8f3ff;
+  border:1px solid #b9d2ec;
+  border-radius:8px;
+  color:#3b69a3;
+  font-weight:850;
+  font-size:.8rem;
+}
+.memory-panel{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.memory-strip{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:5px;
+  margin:16px 0 10px;
+}
+.memory-strip span{
+  height:53px;
+  background:#dfe9f4;
+  border-radius:5px;
+}
+.memory-strip .occupied{background:#4885cf}
+.memory-strip .occupied:nth-child(2n){background:#54aab0}
+.memory-caption{
+  display:flex;
+  justify-content:space-between;
+  gap:7px;
+  font-size:.83rem;
+  font-weight:800;
+}
+.memory-caption span:first-child{color:#3269b0}
+.memory-caption span:last-child{color:var(--teal)}
+.storage-photo{
+  overflow:hidden;
+  padding:0;
+}
+.storage-photo img{
+  display:block;
+  width:100%;
+  height:245px;
+  object-fit:cover;
+  background:#e7edf4;
+}
+.storage-photo figcaption{
+  padding:15px 19px;
+  color:var(--muted);
+  font-size:.88rem;
+}
+.storage-photo strong{
+  display:block;
+  margin-bottom:4px;
+}
+.storage-photo small{
+  display:block;
+  font-size:.77rem;
+  margin-top:8px;
+}
+
+/* Решённые задачи */
+
+.task-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.task{
+  padding:20px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+.task h3{margin-top:11px}
+.task p{margin-bottom:8px}
+.task .solution{
+  padding:12px 14px;
+  border-radius:10px;
+  background:#f0f5fc;
+  color:#3c5c7c;
+  font-size:.92rem;
+}
+.task .solution b{
+  display:block;
+  color:var(--teal);
+  margin-top:6px;
+}
+.task .solution code{
+  font-size:1em;
+  overflow-wrap:anywhere;
+}
+
+/* Вопросы и итог */
+
+.questions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+.question{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:16px 17px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:13px;
+}
+.question b{
+  display:grid;
+  place-items:center;
+  flex:0 0 37px;
+  height:37px;
+  border-radius:9px;
+  background:var(--softviolet);
+  color:var(--violet);
+}
+.question p{
+  margin:4px 0 0;
+  color:var(--ink);
+  font-size:.94rem;
+}
+.final{
+  padding:32px;
+  border:1px solid #cfdfe9;
+  border-radius:20px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      #d8f2e8,
+      transparent 44%
+    ),
+    #fff;
+}
+.final-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+  margin:20px 0;
+}
+.final-point{
+  padding:19px;
+  background:#edf5ff;
+  border:1px solid #e0ebf7;
+  border-radius:12px;
+}
+.final-point strong{
+  display:block;
+  color:#2e639e;
+}
+.final-point p{
+  font-size:.9rem;
+  margin:6px 0 0;
+}
+footer{
+  margin-top:30px;
+  padding:29px 15px 40px;
+  text-align:center;
+  background:#e6edf7;
+  color:#71839b;
+  font-size:.86rem;
+}
+
+/* Адаптивная вёрстка */
+
+@media(max-width:980px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+  .hero-illustration{
+    max-width:570px;
+    width:100%;
+    margin:auto;
+  }
+  .four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .ladder{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:740px){
+  .container{width:calc(100% - 24px)}
+  .section{padding:33px 0}
+  .hero{padding:50px 0}
+  .two,
+  .three,
+  .four,
+  .conversion-duo,
+  .compare-grid,
+  .work-grid,
+  .memory-panel,
+  .task-grid,
+  .questions,
+  .final-grid{
+    grid-template-columns:1fr;
+  }
+  .card,.final{padding:19px}
+  .unit-path{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .hero-grid{gap:15px}
+}
+
+@media(max-width:460px){
+  .hero-illustration{min-height:285px}
+  .hero-sheet{height:236px}
+  .hero-chip{
+    padding:12px;
+    border-width:6px;
+  }
+  .hero-bits{gap:3px}
+  .hero-bits span{
+    border-radius:4px;
+    font-size:1rem;
+  }
+  .hero-medal{
+    width:63px;
+    height:63px;
+    font-size:1.9rem;
+  }
+  .ladder{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .text-code{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .message-multiply{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  .binary-row{gap:3px}
+  .binary-row span{
+    border-radius:5px;
+    border-width:1px;
+  }
+  .memory-strip{gap:3px}
+  .memory-strip span{height:37px}
+  .storage-photo img{height:194px}
+  .line-visual{padding:9px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Главный экран -->
+
+<header class="hero">
+  <div class="container hero-grid">
+
+    <div>
+      <span class="hero-pill">
+        ИНФОРМАТИКА · 6 КЛАСС · ПРОДОЛЖЕНИЕ ТЕМЫ
+      </span>
+
+      <h1>
+        Сколько места
+        <span>занимает информация?</span>
+      </h1>
+
+      <p>
+        Мы уже умеем измерять информацию
+        в битах и байтах. Теперь научимся
+        <strong>
+          вычислять объём сообщений,
+          переводить единицы и проверять,
+          хватит ли памяти
+        </strong>
+        для хранения данных.
+      </p>
+
+      <div class="hero-chips">
+        <span>🔢 Расчёты</span>
+        <span>📐 Перевод единиц</span>
+        <span>📊 Сравнение</span>
+        <span>💾 Объём памяти</span>
+      </div>
+    </div>
+
+    <div class="hero-illustration"
+         role="img"
+         aria-label="Учебная иллюстрация восьми битов, образующих один байт">
+
+      <div class="hero-sheet"></div>
+
+      <div class="hero-chip">
+        <strong>
+          Цифровое сообщение · 1 байт
+        </strong>
+
+        <div class="hero-bits">
+          <span>1</span>
+          <span>0</span>
+          <span>1</span>
+          <span>1</span>
+          <span>0</span>
+          <span>1</span>
+          <span>1</span>
+          <span>0</span>
+        </div>
+
+        <small>
+          8 двоичных разрядов = 8 бит = 1 байт
+        </small>
+      </div>
+
+      <div class="hero-medal">💾</div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- 01. Повторение -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      01 · Вспоминаем прошлый урок
+    </span>
+
+    <h2>Бит и байт нам уже знакомы</h2>
+
+    <p class="lead">
+      Компьютер представляет цифровые данные
+      двоичными последовательностями.
+
+      Каждый <strong>0</strong> или
+      <strong>1</strong> — один двоичный
+      разряд, или <strong>бит</strong>.
+
+      В одном байте — восемь битов.
+      Сегодня мы используем эти знания
+      для более сложных вычислений.
+    </p>
+
+    <div class="binary-sample">
+      <span class="tag">
+        Восемь двоичных разрядов
+      </span>
+
+      <div class="binary-row"
+           aria-label="Двоичный код 10110110">
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+
+      <div class="under-brace">
+        1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 бит
+        = 8 бит = 1 байт
+      </div>
+    </div>
+
+    <div class="grid three" style="margin-top:18px">
+
+      <article class="card">
+        <div class="symbol">0️⃣</div>
+        <h3>Бит</h3>
+        <p>
+          Один разряд двоичного представления:
+          <strong>0</strong> или
+          <strong>1</strong>.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softteal)">
+          8️⃣
+        </div>
+        <h3>Байт</h3>
+        <p>
+          Единица измерения,
+          равная <strong>8 битам</strong>.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="symbol"
+             style="background:var(--softviolet)">
+          🧮
+        </div>
+        <h3>Задача урока</h3>
+        <p>
+          Узнать, сколько данных представлено,
+          и выразить объём в удобной единице.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Проверь себя</strong>
+      <p>
+        Сколько битов в 2 байтах?
+        Сколько байтов в 32 битах?
+
+        Если ответил <strong>16 бит</strong>
+        и <strong>4 байта</strong>,
+        можно идти дальше.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02. Информационный объём -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      02 · Что измеряем
+    </span>
+
+    <h2>
+      Информационный объём —
+      это количество данных
+    </h2>
+
+    <p class="lead">
+      <strong>Информационный объём данных</strong>
+      — количество битов или байтов,
+      необходимое для их цифрового представления.
+
+      Он помогает определить,
+      сколько места потребуется
+      для хранения этих данных.
+    </p>
+
+    <div class="grid two">
+
+      <article class="card">
+        <span class="tag green">
+          Смысл сообщения
+        </span>
+
+        <h3 style="margin-top:12px">
+          «Осторожно!»
+        </h3>
+
+        <p>
+          Очень короткое предупреждение
+          может быть чрезвычайно важным.
+
+          Значение сообщения для человека
+          не определяется количеством его битов.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="tag violet">
+          Объём представления
+        </span>
+
+        <h3 style="margin-top:12px">
+          Двоичная последовательность
+        </h3>
+
+        <div class="binary-long">
+          <span class="binary-byte">
+            10110110
+          </span>
+
+          <span class="binary-byte">
+            01001001
+          </span>
+        </div>
+
+        <p>
+          Здесь записано
+          <strong>16 бит = 2 байта</strong>.
+
+          Объём вычисляется по количеству
+          двоичных разрядов, а не по важности
+          сообщения.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note green">
+      <strong>Главное различие</strong>
+      <p>
+        <strong>Смысл</strong>
+        отвечает на вопрос «Что сообщается?»,
+        а <strong>информационный объём</strong>
+        — «Сколько данных занимает
+        цифровое представление?».
+
+        Один смысл может кодироваться
+        разными способами.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03. Двоичные последовательности -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      03 · Двоичные последовательности
+    </span>
+
+    <h2>Считаем биты и переводим в байты</h2>
+
+    <p class="lead">
+      Если дана двоичная последовательность,
+      достаточно подсчитать её разряды.
+
+      Каждый символ 0 или 1 занимает один бит.
+    </p>
+
+    <div class="grid two">
+
+      <article class="card">
+        <span class="tag">Пример А</span>
+
+        <h3 style="margin-top:10px">
+          Сообщение из 8 бит
+        </h3>
+
+        <div class="binary-long">
+          <span class="binary-byte">
+            10110110
+          </span>
+        </div>
+
+        <p class="math">
+          8 бит : 8 = 1 байт
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="tag green">Пример Б</span>
+
+        <h3 style="margin-top:10px">
+          Сообщение из 16 бит
+        </h3>
+
+        <div class="binary-long">
+          <span class="binary-byte">
+            10110110
+          </span>
+
+          <span class="binary-byte">
+            01001001
+          </span>
+        </div>
+
+        <p class="math">
+          16 бит : 8 = 2 байта
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note amber">
+      <strong>Не перепутай действие</strong>
+      <p>
+        Чтобы перейти
+        <strong>от битов к байтам — делим на 8</strong>.
+
+        Чтобы перейти
+        <strong>от байтов к битам — умножаем на 8</strong>.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 04. Единицы измерения -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      04 · Единицы измерения информации
+    </span>
+
+    <h2>
+      Лестница единиц:
+      от бита до терабайта
+    </h2>
+
+    <p class="lead">
+      Для больших объёмов данных удобнее
+      использовать более крупные единицы.
+
+      В наших учебных задачах действуют
+      двоичные соотношения
+      с числом <strong>1024</strong>.
+    </p>
+
+    <div class="ladder"
+         role="img"
+         aria-label="Последовательность единиц: бит, байт, килобайт, мегабайт, гигабайт, терабайт">
+
+      <div class="ladder-item">
+        <b>бит</b>
+        <span class="unit">б</span>
+        <small>8 бит = 1 Б</small>
+      </div>
+
+      <div class="ladder-item">
+        <b>байт</b>
+        <span class="unit">Б</span>
+        <small>1024 Б = 1 Кбайт</small>
+      </div>
+
+      <div class="ladder-item">
+        <b>килобайт</b>
+        <span class="unit">Кбайт</span>
+        <small>1024 Кбайт = 1 Мбайт</small>
+      </div>
+
+      <div class="ladder-item">
+        <b>мегабайт</b>
+        <span class="unit">Мбайт</span>
+        <small>1024 Мбайт = 1 Гбайт</small>
+      </div>
+
+      <div class="ladder-item">
+        <b>гигабайт</b>
+        <span class="unit">Гбайт</span>
+        <small>1024 Гбайт = 1 Тбайт</small>
+      </div>
+
+      <div class="ladder-item">
+        <b>терабайт</b>
+        <span class="unit">Тбайт</span>
+        <small>Очень большой объём</small>
+      </div>
+
+    </div>
+
+    <div class="grid two">
+
+      <article class="card">
+        <h3>Почему именно 1024?</h3>
+
+        <p>
+          Компьютеры используют двоичную систему
+          счисления.
+
+          Число <strong>1024 = 2¹⁰</strong>,
+          поэтому оно удобно для двоичных расчётов.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Как запомнить?</h3>
+
+        <p>
+          В соседних единицах от байта
+          к килобайту и выше используем
+          <strong>× 1024</strong>
+          или <strong>÷ 1024</strong>.
+
+          Между байтом и битом —
+          <strong>× 8</strong>
+          или <strong>÷ 8</strong>.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Уточнение</strong>
+
+      <p>
+        В учебнике мы используем привычные
+        школьные обозначения Кбайт, Мбайт
+        и соотношение 1024.
+
+        В современной технике различают
+        десятичные и двоичные кратные единицы,
+        но для задач этого урока придерживаемся
+        указанных равенств.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 05. Перевод единиц -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      05 · Как переводить единицы
+    </span>
+
+    <h2>
+      Меньшая единица — число больше
+    </h2>
+
+    <p class="lead">
+      Одно и то же количество данных
+      можно выразить разными числами:
+      например,
+      <strong>2 Кбайта = 2048 байтов</strong>.
+
+      При переходе к меньшим единицам
+      число увеличивается,
+      а к большим — уменьшается.
+    </p>
+
+    <div class="conversion-duo">
+
+      <article class="conversion-box">
+        <span class="tag">
+          К меньшей единице
+        </span>
+
+        <h3 style="margin-top:12px">
+          Умножаем
+        </h3>
+
+        <div class="calc-line">
+          <span>3 Кбайта</span>
+          <b>× 1024 →</b>
+          <span>3072 Б</span>
+        </div>
+
+        <p style="margin-top:12px">
+          Единица стала меньше,
+          поэтому числовое значение выросло.
+        </p>
+      </article>
+
+      <article class="conversion-box">
+        <span class="tag green">
+          К большей единице
+        </span>
+
+        <h3 style="margin-top:12px">
+          Делим
+        </h3>
+
+        <div class="calc-line">
+          <span>8192 Б</span>
+          <b>÷ 1024 →</b>
+          <span>8 Кбайт</span>
+        </div>
+
+        <p style="margin-top:12px">
+          Единица стала больше,
+          поэтому числовое значение уменьшилось.
+        </p>
+      </article>
+
+    </div>
+
+    <h3 style="margin-top:25px">
+      Перевод через несколько ступеней
+    </h3>
+
+    <div class="card">
+      <p>
+        Нужно определить, сколько
+        <strong>битов в 2 Кбайтах</strong>.
+
+        Сначала получим байты,
+        затем биты.
+      </p>
+
+      <div class="calc-line">
+        <span>2 Кбайта</span>
+        <b>× 1024 →</b>
+        <span>2048 Б</span>
+        <b>× 8 →</b>
+        <span>16 384 бит</span>
+      </div>
+
+      <p class="caption">
+        Полный ответ:
+        2 × 1024 × 8 = 16 384 бита.
+      </p>
+    </div>
+
+    <div class="note green">
+      <strong>Проверка здравым смыслом</strong>
+
+      <p>
+        В 1 Кбайте больше одного байта,
+        поэтому количество
+        <strong>байтов</strong>
+        в 3 Кбайтах должно быть
+        <strong>больше трёх</strong>.
+
+        Если получилось меньше,
+        вероятно, перепутано умножение
+        и деление.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 06. Сравнение объёмов -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      06 · Сравнение информационных объёмов
+    </span>
+
+    <h2>
+      Сначала переводим,
+      затем сравниваем
+    </h2>
+
+    <p class="lead">
+      Нельзя сравнивать только числа
+      и игнорировать единицы измерения.
+
+      Например,
+      <strong>1 Кбайт больше 900 байтов</strong>,
+      хотя число 1 меньше числа 900.
+    </p>
+
+    <div class="compare-grid">
+
+      <article class="compare-card">
+        <h3>1 Кбайт или 900 байтов?</h3>
+
+        <p>
+          Переведём первую величину:
+          <strong>1 Кбайт = 1024 байта</strong>.
+        </p>
+
+        <small>1 Кбайт = 1024 Б</small>
+
+        <div class="bar-track">
+          <div class="bar" style="width:100%">
+            1024 Б
+          </div>
+        </div>
+
+        <small>Другое количество данных</small>
+
+        <div class="bar-track">
+          <div class="bar green" style="width:87.89%">
+            900 Б
+          </div>
+        </div>
+
+        <div class="compare-result">
+          1 Кбайт больше на 124 байта
+        </div>
+      </article>
+
+      <article class="compare-card">
+        <h3>2 Кбайта или 2049 байтов?</h3>
+
+        <p>
+          Переведём первую величину:
+          <strong>2 Кбайта = 2048 байтов</strong>.
+        </p>
+
+        <small>2 Кбайта = 2048 Б</small>
+
+        <div class="bar-track">
+          <div class="bar" style="width:99.95%">
+            2048 Б
+          </div>
+        </div>
+
+        <small>Другое количество данных</small>
+
+        <div class="bar-track">
+          <div class="bar amber" style="width:100%">
+            2049 Б
+          </div>
+        </div>
+
+        <div class="compare-result">
+          2049 байтов больше на 1 байт
+        </div>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Алгоритм сравнения</strong>
+      <p>
+        <strong>1.</strong>
+        Выбери общую единицу.
+
+        <strong>2.</strong>
+        Переведи в неё обе величины.
+
+        <strong>3.</strong>
+        Сравни числа.
+
+        <strong>4.</strong>
+        Если нужно, вычисли разницу.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07. Объём текстового сообщения -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      07 · Объём текстового сообщения
+    </span>
+
+    <h2>
+      Сколько данных занимает предложение?
+    </h2>
+
+    <p class="lead">
+      Мы уже знакомились
+      с двоичным кодированием текста.
+
+      Если <strong>каждый символ кодируется
+      одинаковым количеством битов</strong>,
+      объём сообщения можно найти умножением.
+    </p>
+
+    <div class="formula">
+      <strong>
+        ФОРМУЛА ИНФОРМАЦИОННОГО ОБЪЁМА
+      </strong>
+
+      <div class="equation">
+        V = N × i
+      </div>
+
+      <p>
+        <b>V</b> — объём в битах;
+        <b>N</b> — число символов;
+        <b>i</b> — число битов
+        на один символ.
+      </p>
+    </div>
+
+    <div class="grid two" style="margin-top:17px">
+
+      <div class="card">
+        <h3>
+          Возьмём сообщение «МИР!»
+        </h3>
+
+        <p>
+          В нём <strong>4 символа</strong>,
+          включая восклицательный знак.
+
+          По условию задачи
+          на каждый символ приходится
+          <strong>8 бит</strong>.
+        </p>
+
+        <div class="text-code">
+
+          <div class="char-card">
+            <span class="char">М</span>
+            <code>8 бит</code>
+            <small>1 символ</small>
+          </div>
+
+          <div class="char-card">
+            <span class="char">И</span>
+            <code>8 бит</code>
+            <small>1 символ</small>
+          </div>
+
+          <div class="char-card">
+            <span class="char">Р</span>
+            <code>8 бит</code>
+            <small>1 символ</small>
+          </div>
+
+          <div class="char-card">
+            <span class="char">!</span>
+            <code>8 бит</code>
+            <small>1 символ</small>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Решаем по шагам</h3>
+
+        <ol class="steps">
+          <li>
+            Считаем символы:
+            <strong>N = 4</strong>.
+          </li>
+
+          <li>
+            Учитываем условие:
+            <strong>i = 8 бит</strong>.
+          </li>
+
+          <li>
+            Вычисляем:
+            <strong>
+              V = 4 × 8 = 32 бита
+            </strong>.
+          </li>
+
+          <li>
+            Переводим:
+            <strong>
+              32 : 8 = 4 байта
+            </strong>.
+          </li>
+        </ol>
+
+        <div class="note green">
+          <strong>
+            Ответ: 32 бита, или 4 байта
+          </strong>
+
+          <p>
+            Знак «!» тоже учитывается
+            как символ.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note amber">
+      <strong>
+        Не забываем условие задачи
+      </strong>
+
+      <p>
+        В реальных системах символы
+        не обязаны занимать по одному байту.
+
+        Здесь мы <strong>специально предполагаем
+        фиксированную длину кода —
+        8 бит на символ</strong>.
+
+        Пробелы и знаки препинания
+        тоже считаются символами,
+        если условие не говорит обратного.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 08. Большие текстовые сообщения -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      08 · Большие текстовые сообщения
+    </span>
+
+    <h2>
+      Много строк — одна понятная формула
+    </h2>
+
+    <p class="lead">
+      Необязательно пересчитывать каждый
+      символ вручную.
+
+      Если известно число строк
+      и число символов в каждой строке,
+      можно вычислить их общее количество.
+    </p>
+
+    <div class="work-grid">
+
+      <div class="card">
+        <h3>Сообщение из 20 строк</h3>
+
+        <p>
+          В каждой строке
+          <strong>40 символов</strong>.
+
+          По условию каждый символ
+          представлен <strong>1 байтом</strong>;
+          символы перевода строки
+          не учитываем.
+        </p>
+
+        <div class="line-visual"
+             role="img"
+             aria-label="Условная схема двадцати строк одинаковой длины">
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </div>
+
+        <p class="caption">
+          Каждая полоска — одна строка;
+          число штрихов условное,
+          не точное изображение 40 символов.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Пошаговое решение</h3>
+
+        <ol class="steps">
+          <li>
+            Всего символов:
+            <strong>
+              20 × 40 = 800
+            </strong>.
+          </li>
+
+          <li>
+            Каждый символ — 1 байт.
+            Следовательно, объём
+            <strong>800 байтов</strong>.
+          </li>
+
+          <li>
+            В килобайтах:
+            <strong>
+              800 : 1024 = 0,78125 Кбайта
+            </strong>.
+          </li>
+        </ol>
+
+        <div class="formula">
+          <strong>
+            ДВЕ СВЯЗАННЫЕ ФОРМУЛЫ
+          </strong>
+
+          <div class="equation">
+            N = a × b
+          </div>
+
+          <div class="equation">
+            V = N × i
+          </div>
+
+          <p>
+            a — число строк;
+            b — число символов в строке.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>Важное уточнение</strong>
+
+      <p>
+        Пример рассчитан
+        по условиям школьной задачи.
+
+        Мы не учитываем дополнительные
+        служебные данные и считаем,
+        что в каждой строке ровно
+        40 символов.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 09. Несколько сообщений -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      09 · Несколько сообщений
+    </span>
+
+    <h2>
+      Как найти общий информационный объём?
+    </h2>
+
+    <p class="lead">
+      Когда сообщений несколько,
+      их объёмы складываются.
+
+      Если все сообщения одинаковые,
+      проще умножить объём одного
+      на их количество.
+    </p>
+
+    <div class="card">
+      <h3>
+        Восемь сообщений по 128 байтов
+      </h3>
+
+      <div class="message-multiply"
+           role="img"
+           aria-label="Восемь одинаковых блоков по 128 байтов">
+
+        <span>128 Б</span>
+        <span>128 Б</span>
+        <span>128 Б</span>
+        <span>128 Б</span>
+
+        <span>128 Б</span>
+        <span>128 Б</span>
+        <span>128 Б</span>
+        <span>128 Б</span>
+
+      </div>
+
+      <div class="calc-line">
+        <span>8 × 128 Б</span>
+        <b>=</b>
+        <span>1024 Б</span>
+        <b>=</b>
+        <span>1 Кбайт</span>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:17px">
+
+      <article class="card">
+        <h3>Если объёмы разные</h3>
+
+        <p>
+          Пусть одно сообщение занимает
+          <strong>256 байтов</strong>,
+          а другое —
+          <strong>1 Кбайт</strong>.
+        </p>
+
+        <p class="math">
+          256 Б + 1024 Б = 1280 Б
+        </p>
+
+        <p>
+          Сначала перевели величины
+          в одинаковые единицы,
+          затем сложили.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Если данные объединяют</h3>
+
+        <p>
+          При решении таких задач
+          мы складываем только указанные
+          объёмы сообщений.
+
+          Если условие дополнительно
+          не задаёт служебную информацию,
+          её не учитываем.
+        </p>
+
+        <p>
+          Общий принцип:
+          <strong>
+            сначала привести к единой единице,
+            затем выполнить действие
+          </strong>.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 10. Объём данных и память -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      10 · Объём данных и память
+    </span>
+
+    <h2>
+      Поместятся ли данные в свободной памяти?
+    </h2>
+
+    <p class="lead">
+      Память устройства имеет
+      определённую вместимость.
+
+      Чтобы узнать, хватит ли места
+      для данных, нужно сравнить
+      <strong>их объём</strong>
+      с <strong>доступной памятью</strong>.
+    </p>
+
+    <div class="memory-panel">
+
+      <article class="card">
+        <span class="tag green">
+          Задача
+        </span>
+
+        <h3 style="margin-top:11px">
+          Доступно 4 Кбайта
+        </h3>
+
+        <p>
+          Нужно сохранить данные объёмом
+          <strong>3072 байта</strong>.
+
+          Хватит ли места
+          и сколько останется?
+        </p>
+
+        <ol class="steps">
+          <li>
+            <strong>
+              4 × 1024 = 4096 байтов
+            </strong>
+            доступно.
+          </li>
+
+          <li>
+            <strong>
+              3072 &lt; 4096
+            </strong>
+            — данные поместятся.
+          </li>
+
+          <li>
+            <strong>
+              4096 − 3072 = 1024 байта
+            </strong>
+            останется.
+          </li>
+        </ol>
+
+        <div class="memory-strip"
+             aria-label="Условно занято 3 из 4 частей свободной памяти">
+
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+          <span class="occupied"></span>
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </div>
+
+        <div class="memory-caption">
+          <span>Занято: 3 Кбайта</span>
+          <span>Останется: 1 Кбайт</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag">
+          Другая задача
+        </span>
+
+        <h3 style="margin-top:11px">
+          Доступно 3 Кбайта
+        </h3>
+
+        <p>
+          Нужно разместить
+          <strong>
+            4 сообщения по 700 байтов
+          </strong>.
+        </p>
+
+        <ol class="steps">
+          <li>
+            Доступно:
+            <strong>
+              3 × 1024 = 3072 Б
+            </strong>.
+          </li>
+
+          <li>
+            Требуется:
+            <strong>
+              4 × 700 = 2800 Б
+            </strong>.
+          </li>
+
+          <li>
+            Остаток:
+            <strong>
+              3072 − 2800 = 272 Б
+            </strong>.
+          </li>
+        </ol>
+
+        <div class="note green">
+          <strong>Ответ</strong>
+          <p>
+            Все четыре сообщения помещаются.
+            Остаётся 272 байта.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+
+      <figure class="card storage-photo">
+        <img
+          loading="lazy"
+          src="img-1.png"
+          alt="Фотография разных физических устройств хранения данных: внешний жёсткий диск и USB-накопитель"
+        >
+
+        <figcaption>
+          <strong>
+            Реальные устройства хранения данных
+          </strong>
+
+          Их вместимость может измеряться
+          в гигабайтах или терабайтах.
+
+          <small>
+            Фото: Santeri Viinamäki,
+            <a
+              href="https://commons.wikimedia.org/wiki/File:DVD,_USB_flash_drive_and_external_hard_drive.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Wikimedia Commons</a>,
+            CC BY-SA 4.0;
+            изображение обрезано рамкой сайта.
+          </small>
+        </figcaption>
+      </figure>
+
+      <figure class="card storage-photo">
+        <img
+          loading="lazy"
+          src="img-2.png"
+          alt="Флеш-накопитель, подключённый к ноутбуку"
+        >
+
+        <figcaption>
+          <strong>
+            Подключение внешнего накопителя
+          </strong>
+
+          Даже небольшое устройство
+          может хранить значительные
+          объёмы данных.
+
+          <small>
+            Фото: Shixart1985,
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Usb_flash_drive_on_a_laptop_closeup.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Wikimedia Commons</a>,
+            CC BY 2.0;
+            изображение обрезано рамкой сайта.
+          </small>
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <div class="note amber">
+      <strong>Условие учебной задачи</strong>
+
+      <p>
+        В наших расчётах учитываем
+        только предоставленное свободное место
+        и заданный объём данных.
+
+        В реальной системе могут использоваться
+        дополнительные служебные данные,
+        но в этом уроке их вычисление
+        не требуется.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 11. Примеры решения задач -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      11 · Учимся решать задачи
+    </span>
+
+    <h2>
+      Пять разобранных примеров
+    </h2>
+
+    <p class="lead">
+      Посмотри, какую последовательность
+      действий выбирают в задачах разных видов.
+
+      Ответ обязательно записывай
+      с единицей измерения.
+    </p>
+
+    <div class="task-grid">
+
+      <article class="task">
+        <span class="tag">
+          № 1 · Перевод
+        </span>
+
+        <h3>
+          Сколько байтов в 5 Кбайтах?
+        </h3>
+
+        <div class="solution">
+          <code>5 × 1024 = 5120</code>
+          <b>Ответ: 5120 байтов.</b>
+        </div>
+      </article>
+
+      <article class="task">
+        <span class="tag green">
+          № 2 · Несколько шагов
+        </span>
+
+        <h3>
+          Сколько битов в 2 Кбайтах?
+        </h3>
+
+        <div class="solution">
+          <code>2 × 1024 = 2048 Б</code>
+          <br>
+          <code>2048 × 8 = 16 384 бит</code>
+
+          <b>Ответ: 16 384 бита.</b>
+        </div>
+      </article>
+
+      <article class="task">
+        <span class="tag violet">
+          № 3 · Сообщение
+        </span>
+
+        <h3>
+          48 символов, по 8 бит на символ
+        </h3>
+
+        <div class="solution">
+          <code>48 × 8 = 384 бита</code>
+          <br>
+          <code>384 : 8 = 48 Б</code>
+
+          <b>
+            Ответ: 384 бита, или 48 байтов.
+          </b>
+        </div>
+      </article>
+
+      <article class="task">
+        <span class="tag">
+          № 4 · Сравнение
+        </span>
+
+        <h3>
+          Что больше: 2 Кбайта или 2000 Б?
+        </h3>
+
+        <div class="solution">
+          <code>2 × 1024 = 2048 Б</code>
+          <br>
+          <code>2048 − 2000 = 48 Б</code>
+
+          <b>
+            Ответ: 2 Кбайта больше на 48 байтов.
+          </b>
+        </div>
+      </article>
+
+      <article class="task">
+        <span class="tag green">
+          № 5 · Проверка памяти
+        </span>
+
+        <h3>
+          Хватит ли 3 Кбайтов
+          для 4 сообщений по 700 Б?
+        </h3>
+
+        <div class="solution">
+          <code>3 × 1024 = 3072 Б</code>
+          <br>
+          <code>4 × 700 = 2800 Б</code>
+          <br>
+          <code>3072 − 2800 = 272 Б</code>
+
+          <b>
+            Ответ: хватит, останется 272 байта.
+          </b>
+        </div>
+      </article>
+
+      <article class="task">
+        <span class="tag violet">
+          Общий порядок
+        </span>
+
+        <h3>
+          Как не запутаться?
+        </h3>
+
+        <ol class="steps">
+          <li>Прочитай, что известно.</li>
+          <li>Выбери нужные единицы.</li>
+          <li>Выполни перевод и вычисление.</li>
+          <li>
+            Проверь результат
+            и запиши единицу.
+          </li>
+        </ol>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 12. Вопросы -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      12 · Закрепление
+    </span>
+
+    <h2>
+      12 вопросов по уроку
+    </h2>
+
+    <p class="lead">
+      Ответь на вопросы своими словами.
+
+      Для вычислительных вопросов
+      опирайся на схемы
+      и разобранные примеры.
+    </p>
+
+    <div class="questions">
+
+      <div class="question">
+        <b>01</b>
+        <p>
+          Что называют информационным
+          объёмом данных?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>02</b>
+        <p>
+          Чем информационный объём сообщения
+          отличается от его смысла и полезности?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>03</b>
+        <p>
+          Как определить информационный
+          объём двоичной последовательности?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>04</b>
+        <p>
+          Сколько битов содержится
+          в одном байте?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>05</b>
+        <p>
+          Какие единицы используют
+          для измерения больших объёмов данных?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>06</b>
+        <p>
+          Почему число 1024 используется
+          в изученных переводах единиц?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>07</b>
+        <p>
+          Как перевести килобайты в байты?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>08</b>
+        <p>
+          Как перевести биты в байты?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>09</b>
+        <p>
+          Почему перед сравнением объёмов
+          их приводят к одной единице?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>10</b>
+        <p>
+          От чего зависит объём текста,
+          если все символы имеют коды
+          одинаковой длины?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>11</b>
+        <p>
+          Как вычислить суммарный объём
+          нескольких сообщений?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>12</b>
+        <p>
+          Как проверить, хватит ли свободной
+          памяти для размещения данных?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 13. Итог урока -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        13 · Итог урока
+      </span>
+
+      <h2>
+        Теперь мы умеем
+        не только измерять,
+        но и вычислять
+      </h2>
+
+      <p class="lead">
+        На прошлом уроке мы познакомились
+        с единицами измерения информации.
+
+        Сегодня использовали их,
+        чтобы находить объём цифровых сообщений,
+        сравнивать величины и определять,
+        сколько свободной памяти потребуется.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+          <strong>
+            🔢 Вычисление
+          </strong>
+
+          <p>
+            Считаем биты, байты
+            и объём сообщения
+            по длине кода.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>
+            📐 Перевод и сравнение
+          </strong>
+
+          <p>
+            Переходим между единицами
+            и сравниваем величины корректно.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>
+            💾 Хранение
+          </strong>
+
+          <p>
+            Определяем, поместятся ли данные
+            в доступной памяти.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+        <strong>Главный вывод</strong>
+
+        <p>
+          <strong>
+            Информационный объём —
+            измеряемая характеристика
+            цифровых данных.
+          </strong>
+
+          Чтобы решить задачу,
+          важно учитывать способ кодирования,
+          верно выбирать единицы измерения
+          и проверять расчёты.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 6 класс ·
+  Информационный объём данных.
+  Единицы измерения информации
+</footer>
+
+</body>
+</html>
