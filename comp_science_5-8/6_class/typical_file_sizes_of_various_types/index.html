@@ -1,0 +1,2542 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Информатика, 6 класс. Информационный объём данных и характерные размеры текстовых, графических, звуковых и видеофайлов.">
+<title>Информационный объём данных — 6 класс</title>
+
+<style>
+:root{
+  --bg:#f4f8fc;
+  --paper:#ffffff;
+  --ink:#20364e;
+  --muted:#62758b;
+  --blue:#3475c7;
+  --teal:#168e83;
+  --purple:#805eb9;
+  --orange:#c8873e;
+  --line:#dce7f1;
+  --blue-soft:#eaf2ff;
+  --teal-soft:#e5f5f1;
+  --purple-soft:#f1edfb;
+  --orange-soft:#fff2e4;
+  --shadow:0 13px 32px #29496b12;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16px/1.7 "Segoe UI",Arial,sans-serif;
+}
+
+h1,h2,h3,p,figure{
+  margin-top:0;
+}
+
+h1{
+  font-size:clamp(2.7rem,6vw,5rem);
+  line-height:1.06;
+  letter-spacing:-.05em;
+}
+
+h2{
+  font-size:clamp(1.8rem,3.8vw,2.65rem);
+  line-height:1.18;
+  letter-spacing:-.035em;
+  margin-bottom:16px;
+}
+
+h3{
+  font-size:1.18rem;
+  line-height:1.3;
+  margin-bottom:10px;
+}
+
+p{
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+strong{
+  color:var(--ink);
+}
+
+a{
+  color:var(--blue);
+  text-underline-offset:3px;
+}
+
+.container{
+  width:min(1100px,calc(100% - 34px));
+  margin:0 auto;
+}
+
+.section{
+  padding:46px 0;
+}
+
+.section:nth-of-type(even){
+  background:#edf3f9;
+}
+
+.eyebrow{
+  display:block;
+  margin-bottom:11px;
+  color:var(--blue);
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.lead{
+  max-width:850px;
+  font-size:1.08rem;
+}
+
+.grid{
+  display:grid;
+  gap:17px;
+}
+
+.two{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.three{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.card{
+  min-width:0;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:var(--paper);
+  box-shadow:var(--shadow);
+}
+
+.card p:last-child{
+  margin-bottom:0;
+}
+
+.note{
+  margin-top:19px;
+  padding:18px 21px;
+  border-left:5px solid var(--blue);
+  border-radius:0 13px 13px 0;
+  background:var(--blue-soft);
+}
+
+.note.green{
+  border-color:var(--teal);
+  background:var(--teal-soft);
+}
+
+.note.orange{
+  border-color:var(--orange);
+  background:var(--orange-soft);
+}
+
+.note.purple{
+  border-color:var(--purple);
+  background:var(--purple-soft);
+}
+
+.note strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.note p:last-child{
+  margin-bottom:0;
+}
+
+.tag{
+  display:inline-block;
+  padding:5px 11px;
+  border-radius:99px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:.78rem;
+  font-weight:900;
+}
+
+.tag.green{
+  background:var(--teal-soft);
+  color:var(--teal);
+}
+
+.tag.purple{
+  background:var(--purple-soft);
+  color:var(--purple);
+}
+
+.tag.orange{
+  background:var(--orange-soft);
+  color:#a76c2d;
+}
+
+.icon{
+  display:grid;
+  width:55px;
+  height:55px;
+  place-items:center;
+  margin-bottom:14px;
+  border-radius:15px;
+  background:var(--blue-soft);
+  font-size:1.8rem;
+}
+
+.caption{
+  margin-top:9px;
+  color:#7a8da2;
+  font-size:.82rem;
+}
+
+.steps{
+  padding-left:23px;
+  color:var(--muted);
+}
+
+.steps li{
+  margin-bottom:8px;
+  padding-left:4px;
+}
+
+.steps li::marker{
+  color:var(--blue);
+  font-weight:900;
+}
+
+/* Главный экран */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:75px 0 78px;
+  border-bottom:1px solid #dce7f1;
+  background:
+    radial-gradient(circle at 88% 15%,#d0ece8,transparent 39%),
+    radial-gradient(circle at 8% 100%,#e2e7fb,transparent 42%),
+    linear-gradient(125deg,#f2f7ff,#edf7f7);
+}
+
+.hero::before{
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(#6e9bb4 1px,transparent 1px);
+  background-size:25px 25px;
+  opacity:.23;
+  content:"";
+  pointer-events:none;
+}
+
+.hero-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.04fr .96fr;
+  align-items:center;
+  gap:30px;
+}
+
+.hero-label{
+  display:inline-block;
+  margin-bottom:21px;
+  padding:8px 13px;
+  border:1px solid #d0e0eb;
+  border-radius:99px;
+  background:#ffffffdf;
+  color:#426d8c;
+  font-size:.8rem;
+  font-weight:900;
+}
+
+.hero h1 span{
+  display:block;
+  color:var(--teal);
+}
+
+.hero p{
+  max-width:540px;
+  font-size:1.1rem;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+
+.chips span{
+  padding:6px 11px;
+  border:1px solid #d7e4ed;
+  border-radius:9px;
+  background:white;
+  color:#496782;
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.hero-art{
+  position:relative;
+  display:grid;
+  min-height:350px;
+  place-items:center;
+}
+
+.hero-back{
+  position:absolute;
+  top:19px;
+  right:5px;
+  width:83%;
+  height:285px;
+  transform:rotate(6deg);
+  border:1px solid #d7e2ec;
+  border-radius:17px;
+  background:#ffffff;
+  box-shadow:var(--shadow);
+}
+
+.hero-window{
+  position:relative;
+  z-index:2;
+  width:93%;
+  overflow:hidden;
+  transform:rotate(-3deg);
+  border:7px solid #31536e;
+  border-radius:16px;
+  background:#f5f8fc;
+  box-shadow:0 22px 40px #2c53603b;
+}
+
+.window-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 12px;
+  background:#e2ecf8;
+  color:#3c6283;
+  font-size:.8rem;
+  font-weight:900;
+}
+
+.window-menu{
+  padding:8px 12px;
+  border-bottom:1px solid #dce6f0;
+  background:#fff;
+  color:#6b7f95;
+  font-size:.78rem;
+}
+
+.window-content{
+  display:grid;
+  gap:9px;
+  padding:13px;
+}
+
+.file-row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:10px;
+  border:1px solid #dce7f0;
+  border-radius:10px;
+  background:#fff;
+}
+
+.file-icon{
+  display:grid;
+  flex:0 0 42px;
+  width:42px;
+  height:42px;
+  place-items:center;
+  border-radius:10px;
+  background:var(--blue-soft);
+  font-size:1.4rem;
+}
+
+.file-info{
+  min-width:0;
+  flex:1;
+}
+
+.file-info strong{
+  display:block;
+  font-size:.82rem;
+}
+
+.file-info small{
+  color:#788ba0;
+  font-size:.72rem;
+}
+
+.file-size{
+  color:#326cae;
+  font-size:.8rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.hero-sticker{
+  position:absolute;
+  right:0;
+  bottom:0;
+  z-index:3;
+  display:grid;
+  width:76px;
+  height:76px;
+  place-items:center;
+  transform:rotate(7deg);
+  border:5px solid white;
+  border-radius:21px;
+  background:#ffe0b4;
+  box-shadow:var(--shadow);
+  font-size:2.5rem;
+}
+
+/* Иллюстрации и изображения */
+
+.artframe{
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.artframe svg{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:10px;
+}
+
+.artframe figcaption{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:.87rem;
+}
+
+.artframe figcaption strong{
+  display:block;
+}
+
+.photo-card{
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.photo-card img{
+  display:block;
+  width:100%;
+  height:255px;
+  object-fit:cover;
+  background:#edf2f7;
+}
+
+.photo-card figcaption{
+  padding:14px 17px 16px;
+  color:var(--muted);
+  font-size:.87rem;
+}
+
+.photo-card figcaption strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.photo-card figcaption small{
+  display:block;
+  margin-top:7px;
+  color:#8191a3;
+  font-size:.75rem;
+}
+
+.photo-card figcaption a{
+  color:#3975b6;
+}
+
+.document-mockup{
+  padding:18px;
+  border:1px solid #d7e3ef;
+  border-radius:14px;
+  background:#f3f7fc;
+}
+
+.document-page{
+  width:78%;
+  min-height:235px;
+  margin:auto;
+  padding:23px 19px;
+  border:1px solid #e0e5eb;
+  background:#fff;
+  box-shadow:0 7px 17px #29496b12;
+}
+
+.doc-title{
+  width:68%;
+  height:9px;
+  margin:0 auto 17px;
+  border-radius:5px;
+  background:#6688ad;
+}
+
+.doc-line{
+  height:5px;
+  margin-bottom:9px;
+  border-radius:5px;
+  background:#d9e3ed;
+}
+
+.doc-line.short{width:65%}
+.doc-line.mid{width:82%}
+.doc-line.long{width:100%}
+
+.doc-page-number{
+  margin-top:18px;
+  color:#9baaba;
+  text-align:center;
+  font-size:.7rem;
+}
+
+.pixel-demo{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:3px;
+  width:min(100%,330px);
+  margin:14px auto 5px;
+  padding:8px;
+  border:1px solid #cbd9e7;
+  border-radius:10px;
+  background:#e8f0f7;
+}
+
+.pixel{
+  aspect-ratio:1;
+  border-radius:2px;
+  background:#fff;
+}
+
+.pixel.blue{background:#4389cf}
+.pixel.teal{background:#36a69a}
+.pixel.gold{background:#e5b16c}
+.pixel.dark{background:#375c80}
+
+.wave{
+  padding:18px 12px;
+  border:1px solid #d9e7ef;
+  border-radius:13px;
+  background:#f6fbfc;
+}
+
+.wave svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.factor-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.factor-card{
+  min-width:0;
+  padding:19px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#fff;
+}
+
+.factor-card .icon{
+  width:48px;
+  height:48px;
+  font-size:1.55rem;
+}
+
+.factor-card p{
+  margin-bottom:0;
+  font-size:.91rem;
+}
+
+.filmstrip{
+  overflow:hidden;
+  padding:14px 0;
+  border-radius:13px;
+  background:#20344c;
+}
+
+.filmstrip-track{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  padding:0 14px;
+}
+
+.film-frame{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  border:4px solid #f2e3c7;
+  background:#d8e7f1;
+}
+
+.film-frame:nth-child(1){
+  background:linear-gradient(145deg,#9cc5e3,#e7d7a8);
+}
+
+.film-frame:nth-child(2){
+  background:linear-gradient(145deg,#b5d5bd,#6b9c9b);
+}
+
+.film-frame:nth-child(3){
+  background:linear-gradient(145deg,#f0d4a7,#d58b71);
+}
+
+.film-frame:nth-child(4){
+  background:linear-gradient(145deg,#aab8d7,#6c7d9e);
+}
+
+.film-frame::before{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 68%,#ffffffaa 0 8%,transparent 9%),
+    linear-gradient(0deg,transparent 58%,#ffffff55 59% 61%,transparent 62%);
+  content:"";
+}
+
+.film-holes{
+  display:flex;
+  justify-content:space-around;
+  padding:0 10px;
+}
+
+.film-holes span{
+  width:12px;
+  height:7px;
+  border-radius:3px;
+  background:#e6d6bb;
+}
+
+.film-caption{
+  padding:9px 15px 0;
+  color:#d8e5f1;
+  text-align:center;
+  font-size:.78rem;
+}
+
+/* Сравнение размеров */
+
+.size-list{
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+
+.size-item{
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#fff;
+}
+
+.size-symbol{
+  display:grid;
+  width:44px;
+  height:44px;
+  place-items:center;
+  border-radius:12px;
+  background:var(--blue-soft);
+  font-size:1.45rem;
+}
+
+.size-item:nth-child(2) .size-symbol{background:var(--purple-soft)}
+.size-item:nth-child(3) .size-symbol{background:var(--teal-soft)}
+.size-item:nth-child(4) .size-symbol{background:var(--orange-soft)}
+.size-item:nth-child(5) .size-symbol{background:#e8eff8}
+.size-item:nth-child(6) .size-symbol{background:#f5e9e7}
+
+.size-name{
+  min-width:0;
+}
+
+.size-name strong{
+  display:block;
+  font-size:.96rem;
+}
+
+.size-name small{
+  color:#7b8da1;
+  font-size:.8rem;
+}
+
+.size-value{
+  color:#326fb4;
+  font-size:1rem;
+  font-weight:900;
+  text-align:right;
+  white-space:nowrap;
+}
+
+.unit-ladder{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+  margin-top:17px;
+}
+
+.unit{
+  padding:15px 10px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  text-align:center;
+}
+
+.unit strong{
+  display:block;
+  font-size:1.4rem;
+  color:var(--blue);
+}
+
+.unit span{
+  color:var(--muted);
+  font-size:.82rem;
+}
+
+.unit-arrow{
+  margin-top:8px;
+  color:#91a3b6;
+  font-size:1.1rem;
+}
+
+.questions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+
+.question{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#fff;
+}
+
+.question b{
+  display:grid;
+  flex:0 0 37px;
+  width:37px;
+  height:37px;
+  place-items:center;
+  border-radius:9px;
+  background:var(--purple-soft);
+  color:var(--purple);
+}
+
+.question p{
+  margin:4px 0 0;
+  color:var(--ink);
+  font-size:.94rem;
+}
+
+.final{
+  padding:32px;
+  border:1px solid #cfe2e6;
+  border-radius:19px;
+  background:
+    radial-gradient(circle at 100% 0,#d7f1e9,transparent 43%),
+    #fff;
+}
+
+.final-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+  margin:20px 0;
+}
+
+.final-point{
+  padding:18px;
+  border-radius:13px;
+  background:#edf5ff;
+}
+
+.final-point strong{
+  display:block;
+  color:#315e9b;
+}
+
+.final-point p{
+  margin:7px 0 0;
+  font-size:.9rem;
+}
+
+.credits{
+  margin-top:24px;
+  color:#8191a3;
+  font-size:.78rem;
+}
+
+.credits p{
+  margin-bottom:7px;
+  font-size:.78rem;
+}
+
+footer{
+  margin-top:28px;
+  padding:28px 15px 38px;
+  background:#e5edf6;
+  color:#6b8196;
+  text-align:center;
+  font-size:.85rem;
+}
+
+/* Адаптация под экран */
+
+@media(max-width:950px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-art{
+    width:min(100%,570px);
+    margin:auto;
+  }
+
+  .factor-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:700px){
+  .container{
+    width:calc(100% - 24px);
+  }
+
+  .section{
+    padding:35px 0;
+  }
+
+  .hero{
+    padding:49px 0;
+  }
+
+  .two,.three,
+  .questions,.final-grid{
+    grid-template-columns:1fr;
+  }
+
+  .card,.final{
+    padding:19px;
+  }
+
+  .photo-card img{
+    height:225px;
+  }
+
+  .document-page{
+    width:90%;
+  }
+}
+
+@media(max-width:440px){
+  .hero-art{
+    min-height:290px;
+  }
+
+  .hero-back{
+    height:230px;
+  }
+
+  .hero-window{
+    border-width:5px;
+  }
+
+  .hero-sticker{
+    width:60px;
+    height:60px;
+    font-size:2rem;
+  }
+
+  .file-row{
+    gap:7px;
+    padding:8px;
+  }
+
+  .file-icon{
+    flex-basis:35px;
+    width:35px;
+    height:35px;
+    font-size:1.2rem;
+  }
+
+  .file-info strong{
+    font-size:.74rem;
+  }
+
+  .file-size{
+    font-size:.72rem;
+  }
+
+  .factor-grid{
+    grid-template-columns:1fr;
+  }
+
+  .unit-ladder{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .size-item{
+    grid-template-columns:40px minmax(0,1fr);
+    gap:9px;
+    padding:12px;
+  }
+
+  .size-symbol{
+    width:38px;
+    height:38px;
+  }
+
+  .size-value{
+    grid-column:2;
+    text-align:left;
+  }
+
+  .artframe{
+    padding:12px;
+  }
+
+  .photo-card img{
+    height:190px;
+  }
+
+  .filmstrip-track{
+    gap:5px;
+    padding:0 8px;
+  }
+
+  .film-frame{
+    border-width:2px;
+  }
+
+  .film-holes span{
+    width:8px;
+    height:5px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Главный экран -->
+
+<header class="hero">
+  <div class="container hero-grid">
+
+    <div>
+      <span class="hero-label">
+        ИНФОРМАТИКА · 6 КЛАСС
+      </span>
+
+      <h1>
+        Сколько места
+        <span>занимает информация?</span>
+      </h1>
+
+      <p>
+        Текст, фотографии, музыка и видео —
+        всё это хранится в виде файлов.
+        Но почему одна страница текста
+        занимает совсем немного места,
+        а фильм может потребовать десятки
+        гигабайт?
+      </p>
+
+      <p>
+        Разберёмся, что такое
+        <strong>размер файла</strong>,
+        сравним характерные объёмы данных
+        и узнаем, от чего они зависят.
+      </p>
+
+      <div class="chips">
+        <span>📄 Текст</span>
+        <span>📷 Изображения</span>
+        <span>🎵 Звук</span>
+        <span>🎬 Видео</span>
+        <span>💾 Размер файла</span>
+      </div>
+    </div>
+
+    <div class="hero-art"
+         role="img"
+         aria-label="Схематичное окно компьютера с файлами разных типов и их размерами">
+
+      <div class="hero-back"></div>
+
+      <div class="hero-window">
+        <div class="window-top">
+          <span>💻 Мои файлы</span>
+          <span>— □ ×</span>
+        </div>
+
+        <div class="window-menu">
+          Файл &nbsp; Главная &nbsp; Вид
+        </div>
+
+        <div class="window-content">
+
+          <div class="file-row">
+            <div class="file-icon">📄</div>
+            <div class="file-info">
+              <strong>Страница текста</strong>
+              <small>Текстовые данные</small>
+            </div>
+            <span class="file-size">1,5 Кбайт</span>
+          </div>
+
+          <div class="file-row">
+            <div class="file-icon">📷</div>
+            <div class="file-info">
+              <strong>Фотография</strong>
+              <small>Графические данные</small>
+            </div>
+            <span class="file-size">2 Мбайт</span>
+          </div>
+
+          <div class="file-row">
+            <div class="file-icon">🎵</div>
+            <div class="file-info">
+              <strong>Музыкальная запись</strong>
+              <small>Звуковые данные</small>
+            </div>
+            <span class="file-size">10 Мбайт</span>
+          </div>
+
+          <div class="file-row">
+            <div class="file-icon">🎬</div>
+            <div class="file-info">
+              <strong>Видеофильм</strong>
+              <small>Видео и звук</small>
+            </div>
+            <span class="file-size">35 Гбайт</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="hero-sticker">💾</div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<!-- 01. Размер файла -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      01 · Основное понятие
+    </span>
+
+    <h2>
+      Что такое размер файла?
+    </h2>
+
+    <p class="lead">
+      Любая информация, которую мы сохраняем
+      на компьютере, занимает определённое
+      место в памяти устройства.
+
+      <strong>Размер файла</strong> —
+      это объём памяти, необходимый
+      для хранения данных, содержащихся
+      в этом файле.
+    </p>
+
+    <div class="grid two">
+
+      <div class="card">
+        <div class="icon">📦</div>
+
+        <h3>
+          Файл — это набор данных
+        </h3>
+
+        <p>
+          В одном файле может храниться
+          текст, изображение, звук,
+          видеозапись или другие данные.
+
+          Компьютеру необходимо сохранить
+          все эти данные, поэтому каждый файл
+          занимает определённый объём памяти.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon"
+             style="background:var(--teal-soft)">
+          💾
+        </div>
+
+        <h3>
+          Размер показывает объём
+        </h3>
+
+        <p>
+          Чем больше данных необходимо
+          сохранить, тем больше места
+          может потребоваться для файла.
+
+          Размер выражается в тех же единицах,
+          которые мы изучали на прошлом уроке:
+          байтах, килобайтах, мегабайтах
+          и гигабайтах.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="note green">
+      <strong>
+        Важно различать
+      </strong>
+
+      <p>
+        Размер файла — это не его название
+        и не размеры изображения на экране.
+
+        Он показывает, сколько памяти
+        занимают сохранённые данные.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 02. Единицы измерения -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      02 · Вспоминаем прошлый урок
+    </span>
+
+    <h2>
+      В каких единицах измеряется размер?
+    </h2>
+
+    <p class="lead">
+      Размер файла может быть очень маленьким
+      или очень большим.
+
+      Поэтому для его записи используют
+      разные единицы измерения информации.
+    </p>
+
+    <div class="unit-ladder">
+
+      <div class="unit">
+        <strong>Б</strong>
+        <span>Байт</span>
+        <div class="unit-arrow">↓</div>
+      </div>
+
+      <div class="unit">
+        <strong>Кбайт</strong>
+        <span>Килобайт</span>
+        <div class="unit-arrow">↓</div>
+      </div>
+
+      <div class="unit">
+        <strong>Мбайт</strong>
+        <span>Мегабайт</span>
+        <div class="unit-arrow">↓</div>
+      </div>
+
+      <div class="unit">
+        <strong>Гбайт</strong>
+        <span>Гигабайт</span>
+        <div class="unit-arrow">↓</div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>
+        Какую единицу выбрать?
+      </strong>
+
+      <p>
+        Для небольших объёмов данных
+        удобно использовать байты и килобайты.
+
+        Для фотографий, музыки и многих
+        видеозаписей — мегабайты.
+
+        Для больших коллекций данных
+        и полнометражных фильмов
+        могут потребоваться гигабайты.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03. Текст -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      03 · Текстовые данные
+    </span>
+
+    <h2>
+      Сколько места занимает текст?
+    </h2>
+
+    <p class="lead">
+      Текст состоит из символов:
+      букв, цифр, знаков препинания
+      и пробелов.
+
+      Чем больше текста необходимо
+      сохранить, тем больше данных
+      обычно содержит файл.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="photo-card">
+        <img
+          loading="lazy"
+          src="img-1.png"
+          alt="Открытая книга на столе"
+        >
+
+        <figcaption>
+          <strong>
+            Текст может занимать совсем немного места
+          </strong>
+
+          Даже целая книга в электронной форме
+          может иметь сравнительно небольшой
+          информационный объём.
+
+          <small>
+            Фото: Alina Daniker,
+            <a href="https://commons.wikimedia.org/wiki/File:Open_book_1_(Unsplash).jpg"
+               target="_blank"
+               rel="noopener noreferrer">
+              Wikimedia Commons
+            </a>,
+            CC0.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>
+          Примерные размеры
+        </h3>
+
+        <div class="note">
+          <strong>
+            Одна страница текста
+          </strong>
+
+          <p>
+            Примерно <strong>1–1,5 Кбайта</strong>.
+          </p>
+        </div>
+
+        <div class="note green">
+          <strong>
+            Электронная книга
+          </strong>
+
+          <p>
+            Примерно <strong>300–600 Кбайт</strong>.
+          </p>
+        </div>
+
+        <p style="margin-top:16px">
+          Электронная книга может содержать
+          сотни страниц, но при этом занимать
+          меньше места, чем одна фотография.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="grid two" style="margin-top:17px">
+
+      <div class="card">
+        <h3>
+          Как выглядит текстовый документ?
+        </h3>
+
+        <p>
+          Представим страницу, состоящую
+          из заголовка и нескольких абзацев.
+          Каждый символ добавляет данные,
+          которые необходимо сохранить.
+        </p>
+
+        <div class="document-mockup"
+             role="img"
+             aria-label="Схематичное изображение страницы текстового документа">
+
+          <div class="document-page">
+            <div class="doc-title"></div>
+            <div class="doc-line long"></div>
+            <div class="doc-line mid"></div>
+            <div class="doc-line long"></div>
+            <div class="doc-line short"></div>
+            <div class="doc-line long"></div>
+            <div class="doc-line mid"></div>
+            <div class="doc-line long"></div>
+            <div class="doc-line short"></div>
+            <div class="doc-page-number">1</div>
+          </div>
+
+        </div>
+
+        <p class="caption">
+          Учебная схема страницы документа.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>
+          От чего зависит размер текста?
+        </h3>
+
+        <ul class="steps">
+          <li>
+            От количества символов.
+          </li>
+
+          <li>
+            От объёма всего текста.
+          </li>
+
+          <li>
+            От наличия дополнительных элементов.
+          </li>
+        </ul>
+
+        <div class="note orange">
+          <strong>
+            Главное наблюдение
+          </strong>
+
+          <p>
+            Обычный текст обычно занимает
+            сравнительно мало места.
+            Даже большой текстовый материал
+            может иметь размер всего
+            в несколько сотен килобайт.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 04. Графика -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      04 · Графические данные
+    </span>
+
+    <h2>
+      Почему фотография занимает больше места?
+    </h2>
+
+    <p class="lead">
+      Цифровое изображение состоит
+      из множества маленьких элементов —
+      <strong>пикселей</strong>.
+
+      Каждый пиксель хранит информацию
+      о цвете и яркости определённой точки.
+      Поэтому для сохранения изображения
+      требуется больше данных,
+      чем для обычной текстовой страницы.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="photo-card">
+        <img
+          loading="lazy"
+          src="img-2.png"
+          alt="Цифровая фотокамера с объективом"
+        >
+
+        <figcaption>
+          <strong>
+            Фотография — это множество пикселей
+          </strong>
+
+          Чем больше деталей содержит изображение,
+          тем больше информации может потребоваться
+          для его хранения.
+
+          <small>
+            Фото: Shalini Krishnan,
+            <a href="https://commons.wikimedia.org/wiki/File:Camera_photography.jpg"
+               target="_blank"
+               rel="noopener noreferrer">
+              Wikimedia Commons
+            </a>,
+            CC0.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>
+          Характерный размер фотографии
+        </h3>
+
+        <div class="note green">
+          <strong>
+            Примерный объём
+          </strong>
+
+          <p>
+            <span style="font-size:1.65rem;color:var(--teal);font-weight:900">
+              1–2 Мбайта
+            </span>
+          </p>
+        </div>
+
+        <p>
+          Это заметно больше, чем размер
+          одной страницы обычного текста.
+        </p>
+
+        <p>
+          Однако размер фотографий
+          может сильно различаться:
+          всё зависит от разрешения,
+          детализации и качества изображения.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="grid two" style="margin-top:17px">
+
+      <div class="card">
+        <h3>
+          Из чего состоит изображение?
+        </h3>
+
+        <p>
+          При увеличении изображения
+          можно рассмотреть отдельные пиксели.
+          Вместе они образуют целостную картину.
+        </p>
+
+        <div class="pixel-demo"
+             role="img"
+             aria-label="Схематичная пиксельная мозаика из цветных квадратов">
+
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+          <span class="pixel"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+          <span class="pixel blue"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel gold"></span>
+          <span class="pixel gold"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+          <span class="pixel"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel gold"></span>
+          <span class="pixel gold"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel teal"></span>
+          <span class="pixel blue"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+          <span class="pixel"></span>
+
+        </div>
+
+        <p class="caption">
+          Условная схема пиксельного изображения.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>
+          Что влияет на размер фотографии?
+        </h3>
+
+        <ul class="steps">
+          <li>
+            <strong>Количество пикселей.</strong>
+            Чем выше разрешение, тем больше
+            точек содержит изображение.
+          </li>
+
+          <li>
+            <strong>Детализация.</strong>
+            Сложные изображения могут
+            содержать больше информации.
+          </li>
+
+          <li>
+            <strong>Сжатие.</strong>
+            Способ хранения данных
+            может уменьшать занимаемый объём.
+          </li>
+        </ul>
+
+        <div class="note orange">
+          <strong>
+            Запомни
+          </strong>
+
+          <p>
+            Две фотографии могут выглядеть
+            примерно одинаково, но иметь
+            разный размер файла.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 05. Звук -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      05 · Звуковые данные
+    </span>
+
+    <h2>
+      Сколько места занимает музыка?
+    </h2>
+
+    <p class="lead">
+      Звук можно записать и сохранить
+      в цифровом виде.
+
+      Компьютер получает данные,
+      описывающие звуковой сигнал,
+      и сохраняет их в файле.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="photo-card">
+        <img
+          loading="lazy"
+          src="img-3.png"
+          alt="Студийный микрофон для записи звука"
+        >
+
+        <figcaption>
+          <strong>
+            Звук можно записать с помощью микрофона
+          </strong>
+
+          Голос, музыкальные инструменты
+          и другие звуки могут быть сохранены
+          в виде цифровых данных.
+
+          <small>
+            Фото: Zzubnik,
+            <a href="https://commons.wikimedia.org/wiki/File:Microphone_studio.jpg"
+               target="_blank"
+               rel="noopener noreferrer">
+              Wikimedia Commons
+            </a>,
+            общественное достояние.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>
+          Характерный размер музыкальной записи
+        </h3>
+
+        <div class="note green">
+          <strong>
+            Примерный объём одной песни
+          </strong>
+
+          <p>
+            <span style="font-size:1.75rem;color:var(--teal);font-weight:900">
+              10 Мбайт
+            </span>
+          </p>
+        </div>
+
+        <p>
+          Одна музыкальная запись может
+          занимать больше места, чем
+          сотни страниц обычного текста.
+        </p>
+
+        <p>
+          Размер зависит от продолжительности
+          записи и качества цифрового звука.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="grid two" style="margin-top:17px">
+
+      <div class="card">
+        <h3>
+          Как выглядит звуковой сигнал?
+        </h3>
+
+        <p>
+          Звуковую волну можно представить
+          в виде графика, который показывает,
+          как меняется сигнал со временем.
+        </p>
+
+        <div class="wave">
+          <svg viewBox="0 0 440 155"
+               role="img"
+               aria-label="Схематичное изображение звуковой волны">
+
+            <path d="M10 77H430"
+                  stroke="#c9d9e5"
+                  stroke-width="2"
+                  stroke-dasharray="5 5"/>
+
+            <path d="
+              M10 77
+              C25 77 25 27 42 27
+              S59 127 76 127
+              S93 48 110 48
+              S127 102 144 102
+              S161 17 178 17
+              S195 137 212 137
+              S229 57 246 57
+              S263 97 280 97
+              S297 30 314 30
+              S331 123 348 123
+              S365 64 382 64
+              S399 77 430 77"
+              fill="none"
+              stroke="#218f87"
+              stroke-width="4"
+              stroke-linecap="round"/>
+
+            <text x="220" y="151"
+                  text-anchor="middle"
+                  fill="#71879a"
+                  font-size="12">
+              Время →
+            </text>
+          </svg>
+        </div>
+
+        <p class="caption">
+          Условная схема звукового сигнала.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>
+          Что влияет на размер записи?
+        </h3>
+
+        <ul class="steps">
+          <li>
+            <strong>Продолжительность.</strong>
+            Чем дольше звучит запись,
+            тем больше данных обычно
+            необходимо сохранить.
+          </li>
+
+          <li>
+            <strong>Качество.</strong>
+            Более качественная цифровая запись
+            может занимать больше места.
+          </li>
+        </ul>
+
+        <div class="note orange">
+          <strong>
+            Сравни
+          </strong>
+
+          <p>
+            Короткая запись голоса
+            обычно занимает меньше места,
+            чем длинная музыкальная запись.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 06. Видео -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      06 · Видеоданные
+    </span>
+
+    <h2>
+      Почему видео занимает так много места?
+    </h2>
+
+    <p class="lead">
+      Видео представляет собой
+      последовательность изображений,
+      которые быстро сменяют друг друга.
+
+      Кроме изображения, видеозапись
+      часто содержит и звуковое сопровождение.
+
+      Поэтому для сохранения видео
+      требуется значительно больше данных,
+      чем для обычного текста или фотографии.
+    </p>
+
+    <div class="grid two">
+
+      <figure class="photo-card">
+        <img
+          loading="lazy"
+          src="img-4.png"
+          alt="Кинопроектор с большой катушкой киноплёнки"
+        >
+
+        <figcaption>
+          <strong>
+            Видеозапись — это множество кадров
+          </strong>
+
+          Каждый кадр содержит изображение,
+          а вся запись может включать
+          тысячи и десятки тысяч кадров.
+
+          <small>
+            Фото: DiscoA340,
+            <a href="https://commons.wikimedia.org/wiki/File:Film_Reel_on_an_IMAX_15_70_mm_Film_Projector.jpg"
+               target="_blank"
+               rel="noopener noreferrer">
+              Wikimedia Commons
+            </a>,
+            CC0.
+          </small>
+        </figcaption>
+      </figure>
+
+      <div class="card">
+        <h3>
+          Характерные размеры видео
+        </h3>
+
+        <div class="note">
+          <strong>
+            Видеоклип
+          </strong>
+
+          <p>
+            Примерно
+            <strong>180 Мбайт</strong>.
+          </p>
+        </div>
+
+        <div class="note orange">
+          <strong>
+            Полнометражный фильм
+          </strong>
+
+          <p>
+            Примерно
+            <strong>20–50 Гбайт</strong>.
+          </p>
+        </div>
+
+        <p>
+          Продолжительный фильм может
+          занимать в тысячи раз больше места,
+          чем обычная страница текста.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:17px">
+      <h3>
+        Видео — это последовательность кадров
+      </h3>
+
+      <p>
+        Рассмотрим условную киноленту:
+        отдельные изображения располагаются
+        друг за другом и создают впечатление
+        непрерывного движения.
+      </p>
+
+      <div class="filmstrip"
+           role="img"
+           aria-label="Схематичная кинолента из четырёх последовательных кадров">
+
+        <div class="film-holes">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="filmstrip-track">
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+        </div>
+
+        <div class="film-holes">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="film-caption">
+          Кадр 1 → Кадр 2 → Кадр 3 → Кадр 4
+        </div>
+      </div>
+
+      <p class="caption">
+        Учебная схема последовательности кадров.
+      </p>
+    </div>
+
+    <div class="note green">
+      <strong>
+        Что влияет на размер видео?
+      </strong>
+
+      <p>
+        <strong>Продолжительность.</strong>
+        Чем длиннее видеозапись,
+        тем больше данных она может содержать.
+
+        <strong>Разрешение.</strong>
+        Чем больше точек в каждом кадре,
+        тем больше информации необходимо сохранить.
+
+        <strong>Частота кадров.</strong>
+        Чем больше кадров отображается за секунду,
+        тем больше изображений содержит запись.
+
+        <strong>Звук.</strong>
+        Звуковое сопровождение также
+        увеличивает общий объём данных.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07. Сравнение -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      07 · Сравниваем объёмы
+    </span>
+
+    <h2>
+      От одной страницы до целого фильма
+    </h2>
+
+    <p class="lead">
+      Теперь соберём все примеры вместе
+      и расположим их по возрастанию
+      характерного размера.
+    </p>
+
+    <div class="size-list">
+
+      <div class="size-item">
+        <div class="size-symbol">📄</div>
+
+        <div class="size-name">
+          <strong>Одна страница текста</strong>
+          <small>Текстовые данные</small>
+        </div>
+
+        <div class="size-value">
+          1–1,5 Кбайта
+        </div>
+      </div>
+
+      <div class="size-item">
+        <div class="size-symbol">📚</div>
+
+        <div class="size-name">
+          <strong>Электронная книга</strong>
+          <small>Текстовые данные</small>
+        </div>
+
+        <div class="size-value">
+          300–600 Кбайт
+        </div>
+      </div>
+
+      <div class="size-item">
+        <div class="size-symbol">📷</div>
+
+        <div class="size-name">
+          <strong>Фотография</strong>
+          <small>Графические данные</small>
+        </div>
+
+        <div class="size-value">
+          1–2 Мбайта
+        </div>
+      </div>
+
+      <div class="size-item">
+        <div class="size-symbol">🎵</div>
+
+        <div class="size-name">
+          <strong>Запись одной песни</strong>
+          <small>Звуковые данные</small>
+        </div>
+
+        <div class="size-value">
+          Около 10 Мбайт
+        </div>
+      </div>
+
+      <div class="size-item">
+        <div class="size-symbol">🎞️</div>
+
+        <div class="size-name">
+          <strong>Видеоклип</strong>
+          <small>Видео и звук</small>
+        </div>
+
+        <div class="size-value">
+          Около 180 Мбайт
+        </div>
+      </div>
+
+      <div class="size-item">
+        <div class="size-symbol">🎬</div>
+
+        <div class="size-name">
+          <strong>Полнометражный фильм</strong>
+          <small>Видео и звук</small>
+        </div>
+
+        <div class="size-value">
+          20–50 Гбайт
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note purple">
+      <strong>
+        Обрати внимание на порядок величин
+      </strong>
+
+      <p>
+        Одна страница текста может занимать
+        всего около одного килобайта,
+        а полнометражный фильм —
+        десятки гигабайт.
+
+        Это показывает, насколько сильно
+        размер файла зависит от вида
+        и количества сохраняемых данных.
+      </p>
+    </div>
+
+    <p class="caption">
+      Размеры карточек не являются графической
+      шкалой: значения приведены для сравнения,
+      а не в масштабе.
+    </p>
+
+  </div>
+</section>
+
+<!-- 08. Причины различий -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      08 · От чего зависит объём?
+    </span>
+
+    <h2>
+      Один тип данных — разные размеры
+    </h2>
+
+    <p class="lead">
+      Приведённые числа — это ориентиры,
+      а не неизменные значения.
+
+      Два файла одного типа могут
+      заметно отличаться по размеру.
+      Всё зависит от содержания
+      и характеристик сохранённых данных.
+    </p>
+
+    <div class="factor-grid">
+
+      <article class="factor-card">
+        <div class="icon">📄</div>
+
+        <h3>Текст</h3>
+
+        <p>
+          Количество символов,
+          общий объём текста
+          и дополнительные элементы.
+        </p>
+      </article>
+
+      <article class="factor-card">
+        <div class="icon"
+             style="background:var(--teal-soft)">
+          🖼️
+        </div>
+
+        <h3>Изображение</h3>
+
+        <p>
+          Количество пикселей,
+          детализация и применяемое
+          сжатие.
+        </p>
+      </article>
+
+      <article class="factor-card">
+        <div class="icon"
+             style="background:var(--orange-soft)">
+          🎵
+        </div>
+
+        <h3>Звук</h3>
+
+        <p>
+          Продолжительность
+          и качество цифровой записи.
+        </p>
+      </article>
+
+      <article class="factor-card">
+        <div class="icon"
+             style="background:var(--purple-soft)">
+          🎬
+        </div>
+
+        <h3>Видео</h3>
+
+        <p>
+          Продолжительность,
+          разрешение, частота кадров
+          и качество звука.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+
+      <div class="card">
+        <h3>
+          Пример: две фотографии
+        </h3>
+
+        <p>
+          Одна фотография может содержать
+          меньше пикселей и деталей,
+          а другая — больше.
+        </p>
+
+        <p>
+          Поэтому их размеры могут различаться,
+          даже если обе фотографии сделаны
+          одной камерой.
+        </p>
+
+        <div class="statrow">
+          <span class="tag">Разное разрешение</span>
+          <span class="tag green">Разная детализация</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>
+          Пример: две музыкальные записи
+        </h3>
+
+        <p>
+          Короткая запись голоса
+          и продолжительная музыкальная композиция
+          содержат разное количество звуковых данных.
+        </p>
+
+        <p>
+          Поэтому их размеры могут
+          заметно отличаться.
+        </p>
+
+        <div class="statrow">
+          <span class="tag orange">Разная длительность</span>
+          <span class="tag purple">Разное качество</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note orange">
+      <strong>
+        Главное правило
+      </strong>
+
+      <p>
+        Нельзя определить точный размер файла
+        только по его категории.
+
+        Например, не каждая фотография
+        обязательно занимает 1–2 Мбайта,
+        а не каждый фильм — 20–50 Гбайт.
+
+        Это приблизительные характерные значения,
+        которые помогают оценивать объёмы данных.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 09. Значение на практике -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      09 · Где это пригодится?
+    </span>
+
+    <h2>
+      Зачем знать размер файла?
+    </h2>
+
+    <p class="lead">
+      Понимание размеров файлов помогает
+      разумно использовать память компьютера
+      и оценивать, сколько места потребуется
+      для хранения или передачи информации.
+    </p>
+
+    <div class="grid three">
+
+      <article class="card">
+        <div class="icon">💾</div>
+
+        <h3>
+          Хранение данных
+        </h3>
+
+        <p>
+          Можно заранее оценить,
+          сколько места займут фотографии,
+          музыкальные записи и видео
+          на устройстве.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon"
+             style="background:var(--teal-soft)">
+          📤
+        </div>
+
+        <h3>
+          Передача информации
+        </h3>
+
+        <p>
+          Размер файла помогает понять,
+          сколько данных предстоит
+          передать через сеть.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon"
+             style="background:var(--purple-soft)">
+          🗂️
+        </div>
+
+        <h3>
+          Организация файлов
+        </h3>
+
+        <p>
+          Можно сравнивать файлы,
+          находить особенно большие
+          объёмы данных и планировать
+          использование памяти.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 10. Закрепление -->
+
+<section class="section">
+  <div class="container">
+
+    <span class="eyebrow">
+      10 · Закрепление материала
+    </span>
+
+    <h2>
+      Вопросы для повторения
+    </h2>
+
+    <p class="lead">
+      Вспомни основные понятия урока
+      и попробуй объяснить,
+      почему разные виды данных
+      занимают неодинаковое количество памяти.
+    </p>
+
+    <div class="questions">
+
+      <div class="question">
+        <b>01</b>
+        <p>
+          Что называют размером файла?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>02</b>
+        <p>
+          В каких единицах измеряется
+          размер файла?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>03</b>
+        <p>
+          Каков примерный размер
+          одной страницы обычного текста?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>04</b>
+        <p>
+          Сколько примерно может занимать
+          электронная книга?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>05</b>
+        <p>
+          Почему фотография обычно занимает
+          больше места, чем одна страница текста?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>06</b>
+        <p>
+          Какие характеристики изображения
+          влияют на его размер?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>07</b>
+        <p>
+          Каков характерный размер
+          записи одной песни?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>08</b>
+        <p>
+          От чего зависит размер
+          звуковой записи?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>09</b>
+        <p>
+          Почему видеофайлы обычно
+          занимают больше места,
+          чем фотографии?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>10</b>
+        <p>
+          Какие характеристики видеозаписи
+          влияют на её размер?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>11</b>
+        <p>
+          Почему нельзя считать характерные
+          размеры файлов строго постоянными?
+        </p>
+      </div>
+
+      <div class="question">
+        <b>12</b>
+        <p>
+          Зачем пользователю компьютера
+          уметь оценивать размеры файлов?
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 11. Итог урока -->
+
+<section class="section">
+  <div class="container">
+
+    <div class="final">
+
+      <span class="eyebrow">
+        11 · Итог урока
+      </span>
+
+      <h2>
+        Размер файла зависит от информации,
+        которую он хранит
+      </h2>
+
+      <p class="lead">
+        Сегодня мы сравнили характерные размеры
+        текстовых, графических, звуковых
+        и видеофайлов и выяснили,
+        почему объём данных может
+        различаться в тысячи раз.
+      </p>
+
+      <div class="final-grid">
+
+        <div class="final-point">
+          <strong>📄 Текст</strong>
+
+          <p>
+            Обычно занимает сравнительно
+            небольшой объём памяти.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>📷 Изображения и звук</strong>
+
+          <p>
+            Часто измеряются мегабайтами,
+            а их размер зависит от содержания
+            и качества данных.
+          </p>
+        </div>
+
+        <div class="final-point">
+          <strong>🎬 Видео</strong>
+
+          <p>
+            Может занимать сотни мегабайт
+            и десятки гигабайт.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="note green">
+        <strong>
+          Главный вывод
+        </strong>
+
+        <p>
+          <strong>
+            Размер файла показывает,
+            сколько памяти требуется
+            для хранения данных.
+          </strong>
+
+          Он зависит от вида информации,
+          её количества и характеристик.
+          Поэтому при работе с компьютером
+          важно уметь оценивать объём
+          сохраняемых данных.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="credits">
+      <p>
+        <strong>Об иллюстрациях.</strong>
+        Фотографии книги, фотокамеры,
+        микрофона и кинопроектора взяты
+        из Wikimedia Commons.
+        Ссылки на авторов и условия использования
+        указаны непосредственно под изображениями.
+      </p>
+
+      <p>
+        Остальные иллюстрации —
+        самостоятельно составленные
+        статические схемы HTML и CSS.
+      </p>
+
+      <p>
+        Приведённые размеры файлов являются
+        приблизительными учебными ориентирами.
+        Фактический размер зависит
+        от характеристик и содержания данных.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Информатика · 6 класс ·
+  Информационный объём данных ·
+  Характерные размеры файлов различных типов
+</footer>
+
+</body>
+</html>

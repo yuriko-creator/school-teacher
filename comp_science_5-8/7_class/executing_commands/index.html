@@ -1,0 +1,1418 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наклон, отражение и поворот — 7 класс</title>
+
+<style>
+:root {
+    --bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #243247;
+    --muted: #66758a;
+    --blue: #3979d6;
+    --blue-light: #eaf2ff;
+    --purple: #7962c8;
+    --purple-light: #f0edff;
+    --green: #299b79;
+    --green-light: #e7f7f1;
+    --orange: #e69a42;
+    --orange-light: #fff3e3;
+    --border: #e3eaf2;
+    --shadow: 0 12px 32px rgba(37, 61, 92, .07);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.65;
+}
+
+.page {
+    width: min(1100px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 28px 0 55px;
+}
+
+/* Обложка */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: 25px;
+    align-items: center;
+    padding: 42px;
+    border-radius: 28px;
+    color: #fff;
+    background: linear-gradient(125deg, #2867b9, #568edc 65%, #7c9ee9);
+    box-shadow: var(--shadow);
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+}
+
+.hero::before {
+    width: 280px;
+    height: 280px;
+    right: -75px;
+    top: -130px;
+}
+
+.hero::after {
+    width: 180px;
+    height: 180px;
+    right: 180px;
+    bottom: -125px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.grade {
+    display: inline-block;
+    padding: 6px 13px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 30px;
+    background: rgba(255,255,255,.14);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+
+.hero h1 {
+    max-width: 650px;
+    margin: 0 0 15px;
+    font-size: clamp(29px, 5vw, 45px);
+    line-height: 1.13;
+}
+
+.hero p {
+    max-width: 620px;
+    margin: 0;
+    color: rgba(255,255,255,.91);
+    font-size: 17px;
+}
+
+.hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-preview {
+    width: 260px;
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 20px;
+    background: rgba(255,255,255,.16);
+    transform: rotate(-3deg);
+}
+
+.canvas-top {
+    display: flex;
+    gap: 5px;
+    padding: 0 0 12px;
+}
+
+.canvas-top i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.7);
+}
+
+.canvas-paper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 145px;
+    border-radius: 11px;
+    background: #fff;
+}
+
+.hero-shape {
+    width: 125px;
+    height: 100px;
+}
+
+.canvas-label {
+    margin-top: 11px;
+    color: rgba(255,255,255,.9);
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Общие блоки */
+
+.section {
+    margin-top: 25px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 23px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.number {
+    display: flex;
+    flex: 0 0 39px;
+    width: 39px;
+    height: 39px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.section h2 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.section-intro {
+    margin: 5px 0 0;
+    color: var(--muted);
+}
+
+.section h3 {
+    margin: 0 0 9px;
+    font-size: 18px;
+}
+
+.section p {
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+/* Карточки */
+
+.info-grid,
+.compare-grid,
+.step-grid,
+.question-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.info-card {
+    min-height: 160px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: #fbfdff;
+}
+
+.info-card .emoji {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.info-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.blue-card {
+    background: var(--blue-light);
+    border-color: #dce9fc;
+}
+
+.purple-card {
+    background: var(--purple-light);
+    border-color: #e5dffc;
+}
+
+.green-card {
+    background: var(--green-light);
+    border-color: #d8f0e6;
+}
+
+.orange-card {
+    background: var(--orange-light);
+    border-color: #f8e8d1;
+}
+
+.notice {
+    margin-top: 18px;
+    padding: 16px 19px;
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    background: var(--blue-light);
+}
+
+.notice p {
+    margin: 0;
+}
+
+.tip {
+    margin-top: 16px;
+    padding: 15px 18px;
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    background: var(--green-light);
+}
+
+.tip p {
+    margin: 0;
+}
+
+/* Схемы преобразований */
+
+.transform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.transform-card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: #fbfdff;
+}
+
+.transform-title {
+    padding: 15px 17px 0;
+}
+
+.transform-title h3 {
+    margin: 0;
+}
+
+.transform-title p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.transform-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 185px;
+    margin: 14px;
+    border-radius: 13px;
+    background:
+        linear-gradient(rgba(69,117,173,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(69,117,173,.08) 1px, transparent 1px),
+        #f4f8fd;
+    background-size: 20px 20px;
+}
+
+.transform-stage svg {
+    width: 150px;
+    height: 115px;
+    overflow: visible;
+}
+
+.flip-horizontal {
+    transform: scaleX(-1);
+}
+
+.flip-vertical {
+    transform: scaleY(-1);
+}
+
+.rotate-quarter {
+    transform: rotate(90deg);
+}
+
+.rotate-half {
+    transform: rotate(180deg);
+}
+
+.skew-horizontal {
+    transform: skewX(-18deg);
+}
+
+.skew-vertical {
+    transform: skewY(16deg);
+}
+
+.transform-caption {
+    padding: 0 17px 16px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.before-after {
+    display: grid;
+    grid-template-columns: 1fr 35px 1fr;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    padding: 0 12px 15px;
+    text-align: center;
+}
+
+.mini-example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.mini-example small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.mini-example svg {
+    width: 76px;
+    height: 65px;
+}
+
+.arrow {
+    color: var(--blue);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Сравнение */
+
+.compare-card {
+    padding: 19px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fbfdff;
+}
+
+.compare-card strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.compare-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Скриншоты Paint */
+
+.screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.screenshot {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #f8fafd;
+}
+
+.screenshot img {
+    display: block;
+    width: 100%;
+    object-fit: contain;
+    background: #edf2f8;
+}
+
+.screenshot figcaption {
+    padding: 12px 15px 15px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.screenshot a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+.screenshot a:hover {
+    text-decoration: underline;
+}
+
+/* Инструкция */
+
+.steps {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fbfdff;
+}
+
+.step-number {
+    display: flex;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.step p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.step strong {
+    color: var(--text);
+}
+
+/* Практическое задание */
+
+.route-card {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: #fbfdff;
+}
+
+.route-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 13px;
+}
+
+.route-heading span {
+    display: flex;
+    width: 43px;
+    height: 43px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: var(--blue-light);
+    font-size: 23px;
+}
+
+.route-heading h3 {
+    margin: 0;
+}
+
+.route-card ul {
+    padding-left: 20px;
+    margin: 10px 0 0;
+}
+
+.route-card li {
+    margin: 8px 0;
+    color: #4c5d73;
+    font-size: 14px;
+}
+
+.route-card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.route-card.no-pc .route-heading span {
+    background: var(--purple-light);
+}
+
+.task {
+    margin-top: 18px;
+    padding: 19px;
+    border: 1px dashed #a9bfdb;
+    border-radius: 15px;
+    background: #f6f9fd;
+}
+
+.task h3 {
+    margin: 0 0 10px;
+}
+
+.task p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Вопросы */
+
+.question-list {
+    counter-reset: question;
+}
+
+.question {
+    position: relative;
+    min-height: 76px;
+    padding: 15px 15px 15px 48px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fbfdff;
+    counter-increment: question;
+    font-size: 14px;
+}
+
+.question::before {
+    content: counter(question);
+    position: absolute;
+    left: 14px;
+    top: 15px;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Итог */
+
+.conclusion {
+    margin-top: 25px;
+    padding: 30px;
+    border-radius: 22px;
+    background: linear-gradient(120deg, #e7f2ff, #eef0ff);
+}
+
+.conclusion h2 {
+    margin: 0 0 10px;
+    color: #315eaa;
+    font-size: 24px;
+}
+
+.conclusion p {
+    margin: 0;
+}
+
+.footer {
+    padding: 25px 10px 0;
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Адаптация */
+
+@media (max-width: 760px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 30px 24px;
+    }
+
+    .canvas-preview {
+        width: min(280px, 100%);
+    }
+
+    .section {
+        padding: 23px 19px;
+    }
+
+    .screenshot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .screenshot img {
+        height: auto;
+        max-height: 260px;
+    }
+}
+
+@media (max-width: 520px) {
+    .page {
+        width: min(100% - 20px, 1100px);
+        padding-top: 10px;
+    }
+
+    .hero {
+        padding: 27px 20px;
+        border-radius: 21px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .section {
+        margin-top: 15px;
+        padding: 21px 16px;
+        border-radius: 18px;
+    }
+
+    .section h2 {
+        font-size: 21px;
+    }
+
+    .info-grid,
+    .compare-grid,
+    .transform-grid,
+    .step-grid,
+    .question-list {
+        grid-template-columns: 1fr;
+    }
+
+    .info-card {
+        min-height: auto;
+    }
+
+    .transform-stage {
+        min-height: 160px;
+    }
+
+    .conclusion {
+        padding: 24px 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+    <!-- ОБЛОЖКА -->
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="grade">ИНФОРМАТИКА · 7 КЛАСС</div>
+            <h1>Наклон, отражение и поворот</h1>
+            <p>
+                Учимся изменять положение и форму графических объектов
+                с помощью команд графического редактора Paint.
+            </p>
+        </div>
+
+        <div class="hero-visual">
+            <div>
+                <div class="canvas-preview">
+                    <div class="canvas-top">
+                        <i></i><i></i><i></i>
+                    </div>
+                    <div class="canvas-paper">
+                        <svg class="hero-shape" viewBox="0 0 150 115">
+                            <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                     fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                            <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                            <path d="M22 77 L75 98 L119 77"
+                                  fill="none" stroke="#275b9d" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="canvas-label">Графическое преобразование</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 01 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">01</div>
+            <div>
+                <h2>Преобразование графических изображений</h2>
+                <p class="section-intro">
+                    Изображение можно не только рисовать, но и изменять с помощью специальных команд.
+                </p>
+            </div>
+        </div>
+
+        <p>
+            В графическом редакторе Paint есть команды, которые позволяют
+            изменять положение изображения, создавать его зеркальную копию
+            или изменять наклон отдельных частей.
+        </p>
+
+        <div class="info-grid">
+            <div class="info-card blue-card">
+                <span class="emoji">↔️</span>
+                <h3>Отражение</h3>
+                <p>
+                    Изображение меняет расположение элементов так,
+                    словно его увидели в зеркале.
+                </p>
+            </div>
+
+            <div class="info-card purple-card">
+                <span class="emoji">🔄</span>
+                <h3>Поворот</h3>
+                <p>
+                    Изображение вращается вокруг центра на определённый угол.
+                </p>
+            </div>
+
+            <div class="info-card green-card">
+                <span class="emoji">📐</span>
+                <h3>Наклон</h3>
+                <p>
+                    Части изображения смещаются относительно друг друга,
+                    из-за чего меняется его форма.
+                </p>
+            </div>
+
+            <div class="info-card orange-card">
+                <span class="emoji">🖌️</span>
+                <h3>Область преобразования</h3>
+                <p>
+                    Команды можно применять ко всему изображению
+                    или только к предварительно выделенному фрагменту.
+                </p>
+            </div>
+        </div>
+
+        <div class="notice">
+            <p>
+                Перед выполнением преобразования важно определить,
+                что именно нужно изменить: всё изображение или только его часть.
+            </p>
+        </div>
+    </section>
+
+    <!-- 02 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">02</div>
+            <div>
+                <h2>Отражение изображения</h2>
+                <p class="section-intro">
+                    Отражение создаёт зеркальное расположение элементов.
+                </p>
+            </div>
+        </div>
+
+        <p>
+            При отражении изображение как бы переворачивается относительно
+            воображаемой оси. В Paint предусмотрены два варианта этой команды.
+        </p>
+
+        <div class="transform-grid">
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Отражение по горизонтали</h3>
+                    <p>Левая и правая стороны меняются местами.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="flip-horizontal" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#275b9d" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="before-after">
+                    <div class="mini-example">
+                        <svg viewBox="0 0 150 115">
+                            <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                     fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                            <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        </svg>
+                        <small>Исходное</small>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="mini-example">
+                        <svg viewBox="0 0 150 115">
+                            <g transform="translate(150 0) scale(-1 1)">
+                                <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                         fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                                <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                            </g>
+                        </svg>
+                        <small>Отражённое</small>
+                    </div>
+                </div>
+
+                <div class="transform-caption">
+                    Например, объект, находившийся слева, после отражения окажется справа.
+                </div>
+            </article>
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Отражение по вертикали</h3>
+                    <p>Верхняя и нижняя части меняются местами.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="flip-vertical" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#275b9d" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="before-after">
+                    <div class="mini-example">
+                        <svg viewBox="0 0 150 115">
+                            <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                     fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                            <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        </svg>
+                        <small>Исходное</small>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="mini-example">
+                        <svg viewBox="0 0 150 115">
+                            <g transform="translate(0 115) scale(1 -1)">
+                                <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                         fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                                <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                            </g>
+                        </svg>
+                        <small>Отражённое</small>
+                    </div>
+                </div>
+
+                <div class="transform-caption">
+                    Например, верхняя часть объекта после отражения окажется внизу.
+                </div>
+            </article>
+        </div>
+
+        <div class="notice">
+            <p>
+                <strong>Запомни:</strong> горизонтальное отражение меняет
+                расположение слева направо, а вертикальное — сверху вниз.
+            </p>
+        </div>
+    </section>
+
+    <!-- 03 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">03</div>
+            <div>
+                <h2>Поворот изображения</h2>
+                <p class="section-intro">
+                    Поворот изменяет направление изображения, не превращая его в зеркальную копию.
+                </p>
+            </div>
+        </div>
+
+        <p>
+            В Paint можно повернуть изображение на определённый угол.
+            Наиболее часто используются повороты на 90 и 180 градусов.
+        </p>
+
+        <div class="transform-grid">
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Поворот на 90°</h3>
+                    <p>Изображение поворачивается на четверть оборота.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="rotate-quarter" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#275b9d" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="transform-caption">
+                    Поворот на 90° по часовой стрелке или против неё меняет
+                    направление изображения на четверть оборота.
+                </div>
+            </article>
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Поворот на 180°</h3>
+                    <p>Изображение переворачивается вверх ногами.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="rotate-half" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#5795e8" stroke="#275b9d" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#275b9d" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="transform-caption">
+                    Поворот на 180° — это половина полного оборота.
+                    Объект оказывается перевёрнутым.
+                </div>
+            </article>
+        </div>
+
+        <div class="notice">
+            <p>
+                В меню поворота Paint обычно доступны команды: поворот
+                на 90° вправо, поворот на 90° влево и поворот на 180°.
+            </p>
+        </div>
+    </section>
+
+    <!-- 04 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">04</div>
+            <div>
+                <h2>Наклон изображения</h2>
+                <p class="section-intro">
+                    Наклон меняет форму изображения за счёт смещения его частей.
+                </p>
+            </div>
+        </div>
+
+        <p>
+            При наклоне верхняя или нижняя часть изображения смещается
+            относительно другой. В результате прямоугольные элементы
+            могут становиться похожими на параллелограммы.
+        </p>
+
+        <div class="transform-grid">
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Наклон по горизонтали</h3>
+                    <p>Изменяется взаимное расположение частей слева и справа.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="skew-horizontal" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#59b994" stroke="#218565" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#218565" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="transform-caption">
+                    При горизонтальном наклоне части изображения смещаются
+                    в сторону, и вертикальные границы могут стать наклонными.
+                </div>
+            </article>
+
+            <article class="transform-card">
+                <div class="transform-title">
+                    <h3>Наклон по вертикали</h3>
+                    <p>Изменяется взаимное расположение верхних и нижних частей.</p>
+                </div>
+
+                <div class="transform-stage">
+                    <svg class="skew-vertical" viewBox="0 0 150 115">
+                        <polygon points="22,20 119,20 119,77 75,98 22,77"
+                                 fill="#59b994" stroke="#218565" stroke-width="3"/>
+                        <circle cx="40" cy="37" r="8" fill="#ffb84d"/>
+                        <path d="M22 77 L75 98 L119 77"
+                              fill="none" stroke="#218565" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="transform-caption">
+                    При вертикальном наклоне верхняя и нижняя части
+                    смещаются относительно друг друга.
+                </div>
+            </article>
+        </div>
+
+        <div class="notice">
+            <p>
+                <strong>Важно:</strong> наклон не равен повороту.
+                При повороте изображение вращается целиком, а при наклоне
+                его части смещаются относительно друг друга.
+            </p>
+        </div>
+    </section>
+
+    <!-- 05 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">05</div>
+            <div>
+                <h2>Где находятся команды в Paint?</h2>
+                <p class="section-intro">
+                    Для преобразования изображения используются инструменты группы «Изображение».
+                </p>
+            </div>
+        </div>
+
+        <p>
+            В классическом интерфейсе Paint команды находятся на вкладке
+            <strong>«Главная»</strong>. Для поворота и отражения используется
+            меню <strong>«Повернуть»</strong>, а для наклона —
+            окно <strong>«Изменение размеров и наклона»</strong>.
+        </p>
+
+        <div class="screenshot-grid">
+            <figure class="screenshot">
+                <img
+                    src="img-1.png"
+                    alt="Панель Paint с командами поворота и отражения"
+                    loading="lazy">
+                <figcaption>
+                    Пример расположения команд поворота и отражения
+                    в классической версии Paint.
+                </figcaption>
+            </figure>
+
+            <figure class="screenshot">
+                <img
+                    src="img-2.png"
+                    alt="Окно изменения размеров и наклона изображения в Paint"
+                    loading="lazy">
+                <figcaption>
+                    Пример окна «Изменение размеров и наклона» с настройками
+                    горизонтального и вертикального наклона.
+                </figcaption>
+            </figure>
+        </div>
+
+        <div class="tip">
+            <p>
+                Интерфейс Paint может немного отличаться в разных версиях Windows.
+                Названия и расположение отдельных элементов могут изменяться,
+                но назначение команд остаётся тем же.
+            </p>
+        </div>
+    </section>
+
+    <!-- 06 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">06</div>
+            <div>
+                <h2>Как выполнить преобразование?</h2>
+                <p class="section-intro">
+                    Сначала выбери область изображения, затем используй нужную команду.
+                </p>
+            </div>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <p>
+                    <strong>Открой изображение.</strong>
+                    Запусти Paint и создай новый рисунок или открой готовый файл.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <p>
+                    <strong>Выбери область.</strong>
+                    Команду можно применить ко всему изображению
+                    или к отдельному выделенному фрагменту.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <p>
+                    <strong>Найди нужную команду.</strong>
+                    Для отражения и поворота открой меню «Повернуть»,
+                    для наклона — окно изменения размеров и наклона.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <p>
+                    <strong>Выполни преобразование.</strong>
+                    Выбери направление отражения или поворота
+                    либо укажи значение наклона в градусах.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <p>
+                    <strong>Проверь результат.</strong>
+                    Сравни новое изображение с исходным.
+                    При необходимости используй команду отмены действия.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">6</div>
+                <p>
+                    <strong>Сохрани работу.</strong>
+                    Выбери имя файла и сохрани полученное изображение
+                    в подходящем графическом формате.
+                </p>
+            </div>
+        </div>
+
+        <div class="notice">
+            <p>
+                Если преобразуешь только часть изображения, внимательно
+                проверь выделенную область. При перемещении или повороте
+                фрагмента на его прежнем месте может остаться пустая область.
+            </p>
+        </div>
+    </section>
+
+    <!-- 07 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">07</div>
+            <div>
+                <h2>Практическая работа</h2>
+                <p class="section-intro">
+                    «Преобразование графического изображения»
+                </p>
+            </div>
+        </div>
+
+        <p>
+            Цель практической работы — научиться применять команды наклона,
+            отражения и поворота, а также различать результаты их выполнения.
+        </p>
+
+        <div class="task">
+            <h3>Общее задание</h3>
+            <p>
+                Выполни преобразования одного или нескольких графических объектов.
+                Сравни исходное изображение с результатами и объясни,
+                какие команды были применены.
+            </p>
+        </div>
+
+        <div class="compare-grid" style="margin-top:18px;">
+
+            <article class="route-card">
+                <div class="route-heading">
+                    <span>💻</span>
+                    <h3>Работа в Paint</h3>
+                </div>
+
+                <p>
+                    Для выполнения задания используй компьютер
+                    с установленным графическим редактором Paint.
+                </p>
+
+                <ul>
+                    <li>Создай или открой изображение с несколькими графическими объектами.</li>
+                    <li>Выдели один объект или отдельный фрагмент.</li>
+                    <li>Выполни отражение по горизонтали.</li>
+                    <li>Выполни отражение по вертикали.</li>
+                    <li>Поверни изображение или выделенный объект на 90° и 180°.</li>
+                    <li>Примени наклон по горизонтали или вертикали.</li>
+                    <li>Сравни результаты и сохрани итоговое изображение.</li>
+                </ul>
+            </article>
+
+            <article class="route-card no-pc">
+                <div class="route-heading">
+                    <span>✏️</span>
+                    <h3>Работа с изображениями</h3>
+                </div>
+
+                <p>
+                    Для выполнения задания используй предложенные схемы
+                    и клетчатую сетку в тетради.
+                </p>
+
+                <ul>
+                    <li>Определи, какие преобразования применены к предложенным изображениям.</li>
+                    <li>Выполни отражение фигур по горизонтали и вертикали.</li>
+                    <li>Изобрази результат поворота объекта на 90° и 180°.</li>
+                    <li>Покажи на клетчатой сетке изменение формы фигуры при наклоне.</li>
+                    <li>Сравни исходные и преобразованные изображения.</li>
+                    <li>Подпиши, какая команда соответствует каждому результату.</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="notice">
+            <p>
+                В обоих вариантах необходимо не просто получить новое изображение,
+                но и правильно определить, какая команда была использована
+                и как она изменила объект.
+            </p>
+        </div>
+    </section>
+
+    <!-- 08 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">08</div>
+            <div>
+                <h2>Как оценить результат?</h2>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card blue-card">
+                <span class="emoji">✓</span>
+                <h3>Правильность</h3>
+                <p>
+                    Все требуемые преобразования выполнены
+                    в соответствии с заданием.
+                </p>
+            </div>
+
+            <div class="info-card purple-card">
+                <span class="emoji">📐</span>
+                <h3>Понимание команд</h3>
+                <p>
+                    Ученик различает наклон, отражение и поворот
+                    и может объяснить их действие.
+                </p>
+            </div>
+
+            <div class="info-card green-card">
+                <span class="emoji">🎨</span>
+                <h3>Аккуратность</h3>
+                <p>
+                    Графические объекты и выделенные области
+                    обработаны без случайных изменений.
+                </p>
+            </div>
+
+            <div class="info-card orange-card">
+                <span class="emoji">💾</span>
+                <h3>Сохранение</h3>
+                <p>
+                    Итоговая работа сохранена и доступна для просмотра.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 09 -->
+
+    <section class="section">
+        <div class="section-heading">
+            <div class="number">09</div>
+            <div>
+                <h2>Вопросы для повторения</h2>
+                <p class="section-intro">
+                    Проверь, насколько хорошо ты разобрался в командах Paint.
+                </p>
+            </div>
+        </div>
+
+        <div class="question-list">
+            <div class="question">
+                Для чего предназначены команды наклона, отражения и поворота?
+            </div>
+
+            <div class="question">
+                Чем горизонтальное отражение отличается от вертикального?
+            </div>
+
+            <div class="question">
+                Как изменится изображение при повороте на 90°?
+            </div>
+
+            <div class="question">
+                Что произойдёт с изображением при повороте на 180°?
+            </div>
+
+            <div class="question">
+                Какие варианты поворота доступны в Paint?
+            </div>
+
+            <div class="question">
+                Чем наклон изображения отличается от его поворота?
+            </div>
+
+            <div class="question">
+                Где в Paint находятся команды отражения и поворота?
+            </div>
+
+            <div class="question">
+                В каком окне можно задать значение наклона изображения?
+            </div>
+
+            <div class="question">
+                Можно ли применить преобразование только к выделенному фрагменту?
+            </div>
+
+            <div class="question">
+                Для чего используется команда отмены действия?
+            </div>
+
+            <div class="question">
+                Что необходимо проверить после выполнения преобразования?
+            </div>
+
+            <div class="question">
+                Зачем нужно сохранять исходную копию изображения перед редактированием?
+            </div>
+        </div>
+    </section>
+
+    <!-- ИТОГ -->
+
+    <section class="conclusion">
+        <h2>Итог урока</h2>
+        <p>
+            Команды наклона, отражения и поворота позволяют преобразовывать
+            графические изображения средствами Paint. Отражение изменяет
+            расположение элементов зеркальным образом, поворот меняет
+            направление изображения, а наклон изменяет его форму за счёт
+            смещения частей. Эти команды можно применять как ко всему
+            изображению, так и к отдельным выделенным фрагментам.
+        </p>
+    </section>
+
+    <footer class="footer">
+        Информатика · 7 класс
+    </footer>
+
+</main>
+</body>
+</html>
