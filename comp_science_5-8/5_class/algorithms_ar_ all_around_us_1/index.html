@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Информатика, 5 класс. Алгоритмы, исполнители, обработка информации с помощью рассуждений и модель «чёрный ящик». Часть 1 из 4.">
+  <title>Алгоритмы вокруг нас — информатика, 5 класс</title>
+  <style>
+    :root {
+      --ink: #20334d; --muted: #66798e; --navy: #183c70;
+      --blue: #3274dc; --blue-soft: #eaf2ff; --cream: #f6f8fc;
+      --mint: #e9f8f0; --green: #1b9471; --peach: #fff0df;
+      --violet: #f0ebff; --purple: #7753c6; --line: #e3eaf3;
+      --shadow: 0 15px 38px rgba(20, 48, 85, .065);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+    img, svg { max-width: 100%; }
+    img { display: block; }
+    h1,h2,h3,p { margin-top: 0; }
+    h1,h2,h3 { line-height: 1.22; letter-spacing: -.025em; }
+    p { margin-bottom: 15px; }
+    .page { max-width: 1080px; margin: auto; padding: 24px 20px 55px; }
+    .hero { background: linear-gradient(125deg, #153c73 1%, #2a62aa 73%, #368bb8); border-radius: 30px; color: #fff; overflow: hidden; box-shadow: 0 20px 48px rgba(31, 81, 140, .16); position: relative; }
+    .hero:before { content: ""; position: absolute; width: 350px; height: 350px; top: -200px; right: -70px; border: 65px solid rgba(255,255,255,.055); border-radius: 50%; }
+    .hero-inner { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(285px,.85fr); align-items: center; gap: 24px; padding: 46px 44px; position: relative; }
+    .eyebrow { display: inline-block; border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.13); padding: 5px 14px; border-radius: 30px; font-size: 12px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 17px; }
+    .hero h1 { font-size: clamp(32px, 4.5vw, 52px); max-width: 680px; margin-bottom: 16px; }
+    .hero h1 em { font-style: normal; color: #ffe2a5; }
+    .hero p { color: #e5f1ff; max-width: 555px; font-size: 17px; margin-bottom: 0; }
+    .hero-art { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 24px; padding: 19px; backdrop-filter: blur(3px); box-shadow: 0 18px 35px rgba(10,37,73,.10); }
+    .art-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #e9f4ff; font-size: 12px; font-weight: 750; margin-bottom: 16px; }
+    .art-tag { color: #244a80; background: #fff1bd; border-radius: 9px; padding: 3px 9px; white-space: nowrap; }
+    .art-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+    .art-step { background: #fff; color: #2c476b; border-radius: 15px; padding: 12px 5px 9px; text-align: center; min-width: 0; }
+    .art-step .em { font-size: 30px; display: block; line-height: 1.45; }
+    .art-step small { display: block; font-size: 11px; line-height: 1.35; font-weight: 750; }
+    .art-finish { margin-top: 12px; border-radius: 11px; background: rgba(255,255,255,.18); text-align: center; font-size: 13px; padding: 8px; color: #fff; }
+    .lesson-note { margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
+    .lesson-note span { background: white; border: 1px solid var(--line); border-radius: 40px; padding: 6px 13px; font-size: 12px; color: #506984; font-weight: 750; }
+    main { display: block; }
+    .section { background: #fff; border: 1px solid var(--line); border-radius: 26px; margin-top: 23px; padding: 35px 39px; box-shadow: var(--shadow); }
+    .section-head { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 22px; }
+    .num { flex: 0 0 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: var(--blue-soft); color: var(--blue); font-size: 15px; font-weight: 850; }
+    .section-head h2 { font-size: clamp(23px, 3vw, 30px); margin: 2px 0 5px; }
+    .section-head .sub { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .lead { font-size: 17px; }
+    .definition { border-left: 5px solid #4c80e2; background: #eef5ff; padding: 17px 20px; border-radius: 0 15px 15px 0; margin: 20px 0; }
+    .definition p { margin: 0; }
+    .definition strong { color: #225da7; }
+    .grid2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 13px; }
+    .muted { color: var(--muted); }
+    .mini-title { font-size: 18px; font-weight: 800; margin: 24px 0 13px; }
+    .everyday { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 11px; counter-reset: day; margin: 20px 0; }
+    .day { counter-increment: day; position: relative; border: 1px solid #dce9f7; background: #f7fbff; border-radius: 18px; text-align: center; padding: 22px 12px 16px; min-width: 0; }
+    .day:before { content: counter(day, decimal-leading-zero); position: absolute; top: 8px; left: 12px; color: #5688c4; font-size: 11px; font-weight: 850; }
+    .day .em { display: block; font-size: 32px; margin: 6px 0 9px; }
+    .day b { display: block; font-size: 13px; line-height: 1.4; }
+    .message { background: var(--peach); border-radius: 16px; padding: 17px 20px; border: 1px solid #f7dfbc; margin-top: 18px; }
+    .message p { margin: 0; }
+    .photo-card { overflow: hidden; border-radius: 20px; border: 1px solid var(--line); background: #fafcff; margin: 0; }
+    .photo-card img { width: 100%; height: 85%; object-fit: cover; background: #edf0f5; }
+    .photo-card figcaption { padding: 12px 15px; line-height: 1.5; color: var(--muted); font-size: 12px; }
+    .photo-card figcaption a { color: #3769a7; }
+    .performers { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; }
+    .performer { background: #f6f9fe; border: 1px solid var(--line); border-radius: 16px; padding: 15px; }
+    .performer .em { display: block; font-size: 26px; margin-bottom: 3px; }
+    .performer b { display: block; }
+    .performer p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .code-panel { border-radius: 20px; background: #192c47; color: #e8f2ff; padding: 19px 22px; margin-top: 22px; }
+    .code-panel h3 { margin-bottom: 12px; color: #fff; font-size: 17px; }
+    .commands { display: flex; flex-wrap: wrap; gap: 8px; }
+    .command { display: inline-block; border: 1px solid #547090; background: #2f4c6d; padding: 5px 12px; border-radius: 9px; font-weight: 700; font-size: 14px; }
+    .code-panel p { color: #cadbf0; font-size: 14px; margin: 12px 0 0; }
+    .pipeline { display: grid; grid-template-columns: minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1fr); align-items: center; gap: 6px; margin: 22px 0; }
+    .pipe { border: 1px solid #d9e5f3; text-align: center; padding: 21px 8px; border-radius: 17px; background: #f7fbff; }
+    .pipe:nth-of-type(3) { background: #edf7ff; }
+    .pipe .em { font-size: 29px; line-height: 1.3; }
+    .pipe b { display: block; margin: 6px 0 0; font-size: 14px; }
+    .pipe small { display: block; font-size: 12px; color: var(--muted); }
+    .arrow { text-align: center; font-size: 29px; color: var(--blue); font-weight: 900; }
+    .example-strip { background: var(--mint); border: 1px solid #d7efdf; border-radius: 18px; padding: 19px 22px; }
+    .example-strip b { color: #167b61; }
+    .example-strip p { margin: 0; }
+    .thought-box { background: linear-gradient(120deg,#f7f2ff,#eef7ff); border: 1px solid #e4ddff; border-radius: 22px; padding: 24px; }
+    .thought-box h3 { font-size: 20px; margin-bottom: 12px; }
+    .bars { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); align-items: end; gap: 20px; max-width: 540px; margin: 10px auto 0; min-height: 220px; border-bottom: 3px solid #b1bad2; padding: 5px 12px 0; }
+    .bar-person { display: flex; flex-direction: column; align-items: center; justify-content: end; gap: 7px; min-width: 0; }
+    .bar { width: min(100%,75px); border-radius: 12px 12px 4px 4px; display: grid; place-items: center; font-size: 30px; box-shadow: inset 0 0 0 2px rgba(255,255,255,.25); }
+    .bar.one { height: 157px; background: #78acfa; }
+    .bar.two { height: 117px; background: #ae9cf5; }
+    .bar.three { height: 79px; background: #f3ba79; }
+    .bar-person b { font-size: 14px; }
+    .reason-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 17px; }
+    .reason-step { padding: 12px; background: #fff; border-radius: 12px; border: 1px solid #e7e3fa; font-size: 14px; text-align: center; }
+    .reason-step strong { color: #6652bb; }
+    .blackbox-flow { display: grid; grid-template-columns: minmax(0,1fr) 28px minmax(0,1.2fr) 28px minmax(0,1fr); gap: 8px; align-items: center; margin: 24px 0 16px; }
+    .blackbox-side { border: 1px solid #dce6f1; border-radius: 16px; background: #f7faff; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 13px 7px; text-align: center; }
+    .blackbox-side small { color: #637b95; font-size: 12px; font-weight: 750; }
+    .blackbox-side strong { font-size: 40px; line-height: 1.4; color: #245cb4; }
+    .blackbox-core { position: relative; overflow: hidden; text-align: center; background: linear-gradient(145deg,#20354f,#142334); color: #fff; border-radius: 20px; min-height: 155px; padding: 23px 9px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 23px rgba(20,35,55,.15); }
+    .blackbox-core:after { content: ""; position: absolute; width: 110px; height: 110px; border: 2px solid rgba(255,255,255,.08); border-radius: 24px; transform: rotate(26deg); }
+    .blackbox-core span { font-size: 39px; line-height: 1.25; position: relative; z-index: 1; color: #ffdc8f; }
+    .blackbox-core b { font-size: 14px; position: relative; z-index: 1; }
+    .blackbox-core small { position: relative; z-index: 1; color: #c8d7ec; font-size: 11px; }
+    .blackbox-arrow { text-align: center; font-size: 26px; font-weight: 900; color: #4381d9; }
+    .box-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #dce6f1; border-radius: 15px; overflow: hidden; font-size: 15px; }
+    .box-table th, .box-table td { text-align: center; padding: 10px 12px; border-bottom: 1px solid #e5ebf2; }
+    .box-table tr:last-child td { border-bottom: 0; }
+    .box-table th { background: #edf4ff; color: #345e90; }
+    .box-table tbody tr:nth-child(even) td { background: #f8fbff; }
+    .guess { background: #e8f8ee; border-left: 5px solid #35a377; padding: 17px 20px; border-radius: 0 15px 15px 0; margin-top: 15px; }
+    .guess p { margin: 0; }
+    .guess strong { color: #138058; }
+    .questions { counter-reset: q; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; margin: 0; padding: 0; list-style: none; }
+    .questions li { counter-increment: q; position: relative; padding: 15px 16px 15px 52px; background: #f8fbff; border: 1px solid #e2ebf6; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+    .questions li:before { content: counter(q,decimal-leading-zero); position: absolute; top: 14px; left: 14px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; color: #2868c5; font-size: 12px; font-weight: 850; background: #e6f0ff; }
+    .finale { margin-top: 23px; border-radius: 26px; padding: 31px 35px; background: linear-gradient(110deg,#e7f4ef,#e9f0ff); border: 1px solid #d6e9e8; }
+    .finale h2 { margin-bottom: 10px; font-size: 25px; color: #245b83; }
+    .finale p { margin-bottom: 0; }
+    .footer { text-align: center; font-size: 12px; color: #7d8fa2; padding: 25px 0 5px; }
+    @media (max-width: 760px) {
+      .hero-inner { grid-template-columns: 1fr; padding: 31px 25px; }
+      .hero-art { max-width: 420px; width: 100%; }
+      .section { padding: 28px 24px; }
+      .everyday { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .grid2 { grid-template-columns: 1fr; }
+      .photo-card img { height: 240px; object-position: center 40%; }
+    }
+    @media (max-width: 540px) {
+      .page { padding: 10px 11px 35px; }
+      .hero { border-radius: 22px; }
+      .hero-inner { padding: 29px 20px; gap: 20px; }
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 15px; }
+      .section { margin-top: 14px; border-radius: 19px; padding: 22px 17px; }
+      .section-head { gap: 10px; }
+      .num { flex-basis: 35px; height: 35px; border-radius: 10px; font-size: 13px; }
+      .section-head h2 { font-size: 23px; }
+      .lead { font-size: 16px; }
+      .grid3, .questions, .reason-steps { grid-template-columns: 1fr; }
+      .pipeline { grid-template-columns: 1fr; gap: 4px; }
+      .arrow { font-size: 22px; line-height: 1; }
+      .arrow:after { content: "↓"; }
+      .arrow span { display: none; }
+      .blackbox-flow { grid-template-columns: 1fr; gap: 6px; max-width: 270px; margin: 20px auto; }
+      .blackbox-arrow:after { content: "↓"; }
+      .blackbox-arrow span { display: none; }
+      .blackbox-side { min-height: 95px; }
+      .blackbox-side strong { font-size: 30px; }
+      .blackbox-core { min-height: 122px; }
+      .bars { gap: 12px; }
+      .finale { padding: 24px 20px; border-radius: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow">Информатика · 5 класс · Часть 1 из 4</span>
+        <h1>Алгоритмы <em>вокруг нас</em></h1>
+        <p>Разберёмся, почему важен порядок действий, как человек и робот выполняют команды и как по результатам обнаружить неизвестное правило.</p>
+      </div>
+      <div class="hero-art" aria-label="Схема последовательных действий для сборки портфеля">
+        <div class="art-title"><span>Знакомая последовательность</span><span class="art-tag">АЛГОРИТМ</span></div>
+        <div class="art-steps">
+          <div class="art-step"><span class="em">📅</span><small>Расписание</small></div>
+          <div class="art-step"><span class="em">📚</span><small>Учебники</small></div>
+          <div class="art-step"><span class="em">✏️</span><small>Тетради</small></div>
+        </div>
+        <div class="art-finish">↓ &nbsp; Результат: собранный портфель 🎒</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="lesson-note"><span>🧠 Рассуждаем</span><span>🤖 Знакомимся с исполнителями</span><span>📦 Исследуем «чёрный ящик»</span></div>
+
+  <main>
+    <section class="section" aria-labelledby="algorithms">
+      <div class="section-head"><div class="num">01</div><div><h2 id="algorithms">Алгоритмы встречаются каждый день</h2><p class="sub">Многие обычные дела выполняются по определённому порядку.</p></div></div>
+      <p class="lead">С утра мы собираемся в школу, выполняем задания, готовим рабочее место. Часто эти действия происходят в знакомой последовательности: одно действие следует за другим.</p>
+      <div class="definition"><p><strong>Алгоритм</strong> — понятная исполнителю последовательность точных команд для решения определённой задачи.</p></div>
+      <h3 class="mini-title">Пример: собираем портфель перед школой</h3>
+      <div class="everyday">
+        <div class="day"><span class="em">📅</span><b>Посмотреть расписание уроков</b></div>
+        <div class="day"><span class="em">📚</span><b>Выбрать нужные учебники</b></div>
+        <div class="day"><span class="em">📓</span><b>Положить тетради и пенал</b></div>
+        <div class="day"><span class="em">🎒</span><b>Проверить содержимое портфеля</b></div>
+      </div>
+      <p>Здесь есть <strong>задача</strong> — подготовить портфель, <strong>команды</strong> — что нужно сделать, и <strong>результат</strong> — необходимые вещи собраны.</p>
+      <div class="message"><p>💡 <strong>Почему порядок важен:</strong> если сначала закрыть портфель, а потом вспомнить о расписании, придётся переделывать часть работы. Хорошо составленный алгоритм помогает действовать без путаницы.</p></div>
+    </section>
+
+    <section class="section" aria-labelledby="performers">
+      <div class="section-head"><div class="num">02</div><div><h2 id="performers">Исполнители алгоритмов</h2><p class="sub">Команды выполняет человек, устройство или программа.</p></div></div>
+      <div class="definition"><p><strong>Исполнитель алгоритма</strong> — человек или устройство, которое понимает и выполняет заданные команды. Компьютерная программа также может выступать исполнителем.</p></div>
+      <div class="grid2">
+        <div>
+          <p>Человек может понять словесную инструкцию. Робот действует по командам, которые предусмотрены его устройством и программой. Компьютер обрабатывает данные в соответствии с выполняемой программой.</p>
+          <div class="performers">
+            <div class="performer"><span class="em">🧑‍🎓</span><b>Человек</b><p>Выполняет указания и инструкции.</p></div>
+            <div class="performer"><span class="em">🤖</span><b>Робот</b><p>Двигается и действует по программе.</p></div>
+            <div class="performer"><span class="em">💻</span><b>Компьютер</b><p>Выполняет команды программы.</p></div>
+            <div class="performer"><span class="em">🚦</span><b>Автомат</b><p>Работает по заданным правилам.</p></div>
+          </div>
+        </div>
+        <figure class="photo-card">
+          <img src="img-1.png" alt="Образовательный робот LEGO Mindstorms EV3 с колёсами и программируемым блоком" loading="lazy" width="960" height="720">
+          <figcaption>Пример программируемого робота. Фото: Javier Leiva, <a href="https://commons.wikimedia.org/wiki/File:Lego_Mindstorms_EV3_Robot.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</figcaption>
+        </figure>
+      </div>
+      <div class="code-panel">
+        <h3>Система команд исполнителя</h3>
+        <div class="commands"><span class="command">↑ Вперёд</span><span class="command">↓ Назад</span><span class="command">← Влево</span><span class="command">→ Вправо</span></div>
+        <p>Если робот понимает только эти четыре команды, указание «нарисуй дом» для него непонятно. <strong>Система команд исполнителя</strong> — это набор команд, которые он способен выполнять.</p>
+      </div>
+      <div class="grid2" style="margin-top:18px;align-items:center">
+        <figure class="photo-card">
+          <img src="img-2.png" alt="Пешеходный светофор с зелёным сигналом на городской улице" loading="lazy" width="500" height="667" style="height:190px;object-position:center 45%">
+          <figcaption>Светофор переключает сигналы по правилам управления. Фото: Tahrirchiqiz, <a href="https://commons.wikimedia.org/wiki/File:Pedestrian_traffic_light.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</figcaption>
+        </figure>
+        <p>У автоматических устройств команды могут быть скрыты от наблюдателя. Мы видим действия устройства, но не обязательно знаем программу, по которой оно работает.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="processing">
+      <div class="section-head"><div class="num">03</div><div><h2 id="processing">Алгоритмы помогают обрабатывать информацию</h2><p class="sub">Из исходных данных можно получить новую информацию.</p></div></div>
+      <p>Когда мы считаем, сравниваем или выбираем нужные сведения, происходит <strong>обработка информации</strong>. Она может выполняться по определённому алгоритму.</p>
+      <div class="pipeline" aria-label="Схема обработки информации">
+        <div class="pipe"><div class="em">📥</div><b>Исходные данные</b><small>7 и 5</small></div>
+        <div class="arrow"><span>→</span></div>
+        <div class="pipe"><div class="em">⚙️</div><b>Обработка</b><small>Сложение</small></div>
+        <div class="arrow"><span>→</span></div>
+        <div class="pipe"><div class="em">📤</div><b>Результат</b><small>12</small></div>
+      </div>
+      <div class="example-strip"><p><b>Другой пример:</b> ученик читает расписание уроков (исходная информация), определяет нужные предметы (обработка) и выбирает учебники (результат).</p></div>
+      <p style="margin-top:19px">Но обработка информации — не всегда вычисление. Иногда достаточно <strong>правильно рассуждать</strong>, чтобы узнать то, что не было сказано напрямую.</p>
+    </section>
+
+    <section class="section" aria-labelledby="reasoning">
+      <div class="section-head"><div class="num">04</div><div><h2 id="reasoning">Преобразование информации путём рассуждений</h2><p class="sub">Новый вывод получается из уже известных фактов.</p></div></div>
+      <p>Логическое рассуждение позволяет установить новую информацию, опираясь на условия задачи. Для этого важно внимательно прочитать исходные сведения и последовательно сопоставить их.</p>
+      <div class="thought-box">
+        <h3>Пример: сравниваем рост</h3>
+        <p>Известно, что <strong>Ваня выше Пети</strong>, а <strong>Петя выше Саши</strong>. Из этих двух фактов следует: <strong>Ваня выше Саши</strong> и является самым высоким из троих.</p>
+        <div class="bars" role="img" aria-label="Сравнение роста: Ваня выше Пети, Петя выше Саши">
+          <div class="bar-person"><div class="bar one">🧑</div><b>Ваня</b></div>
+          <div class="bar-person"><div class="bar two">🧑</div><b>Петя</b></div>
+          <div class="bar-person"><div class="bar three">🧑</div><b>Саша</b></div>
+        </div>
+        <div class="reason-steps">
+          <div class="reason-step"><strong>Факт 1:</strong> Ваня выше Пети</div>
+          <div class="reason-step"><strong>Факт 2:</strong> Петя выше Саши</div>
+          <div class="reason-step"><strong>Вывод:</strong> Ваня выше Саши</div>
+        </div>
+      </div>
+      <div class="message"><p>🧠 <strong>Важно:</strong> логический вывод опирается на известные факты. Догадка без достаточных оснований ещё не является доказанным выводом.</p></div>
+    </section>
+
+    <section class="section" aria-labelledby="blackbox">
+      <div class="section-head"><div class="num">05</div><div><h2 id="blackbox">Загадочный «чёрный ящик»</h2><p class="sub">Мы знаем, что поступает на вход и что выходит, но не видим внутреннее правило.</p></div></div>
+      <div class="definition"><p><strong>«Чёрный ящик»</strong> — модель устройства или процесса, внутреннее устройство или правило работы которого неизвестно наблюдателю. Изучая входные и выходные данные, можно предположить, как он действует.</p></div>
+      <div class="blackbox-flow" aria-label="На вход подаём число 4, чёрный ящик выдаёт число 7">
+        <div class="blackbox-side"><small>ВХОД</small><strong>4</strong><small>Исходное число</small></div>
+        <div class="blackbox-arrow"><span>→</span></div>
+        <div class="blackbox-core"><span>?</span><b>Чёрный ящик</b><small>Правило пока скрыто</small></div>
+        <div class="blackbox-arrow"><span>→</span></div>
+        <div class="blackbox-side"><small>ВЫХОД</small><strong>7</strong><small>Полученное число</small></div>
+      </div>
+      <h3 class="mini-title">Известные результаты работы</h3>
+      <table class="box-table">
+        <thead><tr><th scope="col">Входное число</th><th scope="col">Выходное число</th></tr></thead>
+        <tbody><tr><td>2</td><td>5</td></tr><tr><td>4</td><td>7</td></tr><tr><td>6</td><td>9</td></tr></tbody>
+      </table>
+      <div class="guess"><p><strong>Предполагаемое правило: прибавить 3.</strong> Во всех трёх известных случаях выходное число на 3 больше входного: 2 + 3 = 5, 4 + 3 = 7, 6 + 3 = 9.</p></div>
+      <p style="margin-top:16px">Однако несколько примеров не всегда позволяют однозначно определить правило: похожие результаты иногда можно получить разными способами. Поэтому предположение важно <strong>проверять на новых входных данных</strong>.</p>
+    </section>
+
+    <section class="section" aria-labelledby="questions">
+      <div class="section-head"><div class="num">06</div><div><h2 id="questions">Вопросы для повторения</h2><p class="sub">12 вопросов по материалу первой части темы.</p></div></div>
+      <ol class="questions">
+        <li>Что называют алгоритмом?</li>
+        <li>Какие алгоритмы встречаются в повседневной жизни?</li>
+        <li>Почему порядок выполнения команд бывает важен?</li>
+        <li>Кто или что может быть исполнителем алгоритма?</li>
+        <li>Что называют командой и системой команд исполнителя?</li>
+        <li>Почему исполнитель не может выполнить любую произвольную команду?</li>
+        <li>Что такое исходные данные и результат обработки информации?</li>
+        <li>Как получить новую информацию с помощью вычислений?</li>
+        <li>Как получить новую информацию путём логических рассуждений?</li>
+        <li>Чем обоснованный логический вывод отличается от догадки?</li>
+        <li>Что означает модель «чёрный ящик» и что известно наблюдателю о её работе?</li>
+        <li>Как по нескольким входным и выходным значениям предположить правило работы «чёрного ящика» и зачем проверять это предположение?</li>
+      </ol>
+    </section>
+
+    <section class="finale" aria-labelledby="summary">
+      <h2 id="summary">✨ Итог урока</h2>
+      <p><strong>Алгоритмы</strong> помогают выполнять действия в определённом порядке. Их выполняют <strong>исполнители</strong>, у каждого из которых есть понятные ему команды. При обработке информации мы получаем результат из исходных данных, а <strong>логические рассуждения</strong> помогают делать новые выводы. Даже если правило скрыто в <strong>«чёрном ящике»</strong>, его можно исследовать, сравнивая входные и выходные значения.</p>
+    </section>
+  </main>
+  <footer class="footer">Информатика · 5 класс · Алгоритмы вокруг нас · Часть 1 из 4</footer>
+</div>
+</body>
+</html>

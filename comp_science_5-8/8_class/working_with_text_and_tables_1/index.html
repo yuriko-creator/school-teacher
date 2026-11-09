@@ -1,0 +1,2080 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Информатика, 8 класс. Текстовые редакторы и электронные таблицы. Часть 1 из 4.">
+
+<title>Текстовые редакторы и электронные таблицы — 8 класс</title>
+
+<style>
+:root {
+  --ink: #23344e;
+  --muted: #667990;
+  --navy: #16345d;
+  --blue: #3978d5;
+  --blue-soft: #eaf2ff;
+  --green: #25956f;
+  --green-soft: #e7f7ef;
+  --violet: #755aca;
+  --violet-soft: #f0edff;
+  --orange: #df9348;
+  --orange-soft: #fff2e3;
+  --line: #e0e8f2;
+  --bg: #f5f8fc;
+  --shadow: 0 14px 36px rgba(30,60,100,.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: system-ui, -apple-system,
+    "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+h1,h2,h3,h4,p {
+  margin-top: 0;
+}
+
+h1,h2,h3,h4 {
+  line-height: 1.25;
+}
+
+img,svg {
+  max-width: 100%;
+}
+
+.page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px 20px 55px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 29px;
+  color: white;
+  background: linear-gradient(
+    125deg,
+    #153761,
+    #245eaa 65%,
+    #4488c7
+  );
+  box-shadow: 0 20px 45px rgba(30,75,130,.16);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -170px;
+  right: -120px;
+  width: 350px;
+  height: 350px;
+  border: 65px solid rgba(255,255,255,.055);
+  border-radius: 50%;
+}
+
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 27px;
+  padding: 45px 40px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 30px;
+  background: rgba(255,255,255,.13);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .06em;
+}
+
+.hero h1 {
+  margin-bottom: 17px;
+  font-size: clamp(30px,4.2vw,48px);
+  letter-spacing: -.035em;
+}
+
+.hero h1 em {
+  color: #ffe4ab;
+  font-style: normal;
+}
+
+.hero p {
+  margin: 0;
+  color: #e6f0ff;
+  font-size: 17px;
+}
+
+.hero-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hero-app {
+  padding: 18px 12px;
+  border: 1px solid rgba(255,255,255,.23);
+  border-radius: 19px;
+  background: rgba(255,255,255,.14);
+  text-align: center;
+}
+
+.hero-app .emoji {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 43px;
+}
+
+.hero-app b {
+  display: block;
+  font-size: 14px;
+}
+
+.hero-app small {
+  color: #deebff;
+  font-size: 11px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 17px 0 0;
+}
+
+.tags span {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: white;
+  color: #55708e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.section {
+  margin-top: 24px;
+  padding: 34px 38px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.number {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 850;
+  font-size: 14px;
+}
+
+.section h2 {
+  margin: 3px 0 5px;
+  font-size: clamp(23px,3vw,29px);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.lead {
+  font-size: 17px;
+}
+
+.definition {
+  margin: 20px 0;
+  padding: 17px 20px;
+  border-left: 5px solid var(--blue);
+  border-radius: 0 14px 14px 0;
+  background: var(--blue-soft);
+}
+
+.definition p {
+  margin: 0;
+}
+
+.definition strong {
+  color: #245ea6;
+}
+
+.green-definition {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.green-definition strong {
+  color: #167b5c;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 15px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 13px;
+}
+
+.card {
+  padding: 19px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: #fafcff;
+}
+
+.card .emoji {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+.card h3 {
+  margin-bottom: 7px;
+  font-size: 17px;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.blue-card {
+  background: var(--blue-soft);
+  border-color: #dbe7f9;
+}
+
+.green-card {
+  background: var(--green-soft);
+  border-color: #d5eee1;
+}
+
+.violet-card {
+  background: var(--violet-soft);
+  border-color: #e6def9;
+}
+
+.orange-card {
+  background: var(--orange-soft);
+  border-color: #f5e4d0;
+}
+
+.notice {
+  margin-top: 19px;
+  padding: 17px 20px;
+  border: 1px solid #f4dfbc;
+  border-radius: 15px;
+  background: #fff2df;
+}
+
+.notice p {
+  margin: 0;
+}
+
+.mini-title {
+  margin: 25px 0 14px;
+  font-size: 19px;
+}
+
+/* ИЛЛЮСТРАЦИЯ ТЕКСТОВОГО РЕДАКТОРА */
+
+.word-window {
+  overflow: hidden;
+  margin: 22px 0;
+  border: 1px solid #cdd9e7;
+  border-radius: 18px;
+  background: #edf2f8;
+  box-shadow: 0 12px 28px rgba(30,57,89,.08);
+}
+
+.window-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 15px;
+  background: #264c82;
+  color: white;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.window-controls {
+  color: #cbdcf4;
+  letter-spacing: 5px;
+}
+
+.ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 13px;
+  border-bottom: 1px solid #d6e0ec;
+  background: white;
+}
+
+.ribbon span {
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #526681;
+  font-size: 11px;
+}
+
+.ribbon .selected {
+  background: #e4eeff;
+  color: #2864b6;
+  font-weight: 800;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #d5dfe9;
+  background: #f9fbff;
+  color: #3e5878;
+  font-size: 13px;
+}
+
+.tool {
+  padding: 3px 9px;
+  border: 1px solid #d6e0eb;
+  border-radius: 6px;
+  background: white;
+}
+
+.document-area {
+  padding: 22px;
+  background: #e8edf4;
+}
+
+.paper {
+  max-width: 480px;
+  min-height: 280px;
+  margin: auto;
+  padding: 34px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(30,50,80,.12);
+}
+
+.paper h3 {
+  margin-bottom: 14px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.paper p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.paper-line {
+  height: 8px;
+  margin: 11px 0;
+  border-radius: 5px;
+  background: #e8edf4;
+}
+
+.paper-line.short {
+  width: 64%;
+}
+
+.paper-line.medium {
+  width: 83%;
+}
+
+.paper .highlight {
+  color: #245eae;
+  font-weight: bold;
+}
+
+.window-footer {
+  padding: 8px 14px;
+  background: #f8fbff;
+  color: #697e96;
+  font-size: 11px;
+}
+
+/* ИНТЕРФЕЙС: ПОДПИСИ */
+
+.interface-parts {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 11px;
+  margin-top: 15px;
+}
+
+.interface-part {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafcff;
+}
+
+.interface-part .symbol {
+  display: grid;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.interface-part strong {
+  display: block;
+  font-size: 13px;
+}
+
+.interface-part small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* РЕДАКТИРОВАНИЕ И ФОРМАТИРОВАНИЕ */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.compare-card {
+  padding: 20px;
+  border-radius: 18px;
+  background: #edf4ff;
+  border: 1px solid #dbe7f9;
+}
+
+.compare-card:nth-child(2) {
+  background: #f0edff;
+  border-color: #e4def8;
+}
+
+.compare-card h3 {
+  margin-bottom: 8px;
+}
+
+.compare-card p {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.compare-example {
+  padding: 12px;
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+}
+
+.compare-example p {
+  margin: 0;
+}
+
+/* ЭЛЕКТРОННАЯ ТАБЛИЦА */
+
+.sheet-window {
+  overflow: hidden;
+  margin: 22px 0;
+  border: 1px solid #ccdcd3;
+  border-radius: 19px;
+  box-shadow: 0 12px 28px rgba(30,70,55,.07);
+}
+
+.sheet-title {
+  padding: 10px 15px;
+  background: #23865f;
+  color: white;
+  font-weight: 750;
+  font-size: 12px;
+}
+
+.sheet-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 10px 13px;
+  background: #f2faf5;
+  border-bottom: 1px solid #d6e8dc;
+  color: #496d5d;
+  font-size: 12px;
+}
+
+.formula-line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 13px;
+  background: white;
+  border-bottom: 1px solid #dfe9e2;
+  font-size: 12px;
+}
+
+.name-box {
+  min-width: 56px;
+  padding: 4px 9px;
+  border: 1px solid #cbded2;
+  border-radius: 5px;
+  background: #f8fcf9;
+  font-weight: bold;
+  color: #247c58;
+}
+
+.fx {
+  color: #24845d;
+  font-weight: 800;
+}
+
+.formula-content {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 10px;
+  border: 1px solid #dce7df;
+  border-radius: 5px;
+  color: #61786b;
+}
+
+.sheet-scroll {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+}
+
+.spreadsheet {
+  width: 100%;
+  min-width: 410px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+.spreadsheet th,
+.spreadsheet td {
+  height: 39px;
+  padding: 7px;
+  border: 1px solid #dce5df;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.spreadsheet th {
+  background: #eaf3ed;
+  color: #547263;
+  font-size: 12px;
+}
+
+.spreadsheet .row-label {
+  width: 38px;
+  background: #edf4ef;
+  color: #5b7665;
+  font-weight: bold;
+}
+
+.spreadsheet .head {
+  background: #e6f4eb;
+  color: #26714f;
+  font-weight: bold;
+}
+
+.spreadsheet .active {
+  position: relative;
+  background: #f0fff5;
+  box-shadow: inset 0 0 0 2px #23905e;
+  font-weight: 750;
+}
+
+.sheet-footer {
+  padding: 9px 15px;
+  background: #f3faf5;
+  font-size: 12px;
+  color: #357e5b;
+}
+
+/* СХЕМА АДРЕСА ЯЧЕЙКИ */
+
+.address-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-top: 22px;
+  padding: 23px;
+  border: 1px solid #dcece2;
+  border-radius: 19px;
+  background: var(--green-soft);
+}
+
+.address-big {
+  text-align: center;
+}
+
+.address-code {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.address-code span {
+  display: grid;
+  width: 70px;
+  height: 80px;
+  place-items: center;
+  border-radius: 13px;
+  background: white;
+  color: #237e5c;
+  font-size: 43px;
+  font-weight: 850;
+  box-shadow: 0 5px 15px rgba(30,90,60,.06);
+}
+
+.address-labels {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 9px;
+}
+
+.address-labels span {
+  width: 70px;
+  color: #567968;
+  text-align: center;
+  font-size: 12px;
+}
+
+.address-explain p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* ТАБЛИЦА СРАВНЕНИЯ */
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  font-size: 14px;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison-table th {
+  background: #edf4ff;
+  color: #315f98;
+}
+
+.comparison-table td:first-child {
+  font-weight: 750;
+}
+
+.example-uses {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.use {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fafcff;
+}
+
+.use .emoji {
+  font-size: 27px;
+}
+
+.use b {
+  display: block;
+  font-size: 14px;
+}
+
+.use small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* РЕАЛЬНЫЙ СНИМОК */
+
+.photo-card {
+  overflow: hidden;
+  margin: 20px 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #f8fbff;
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.photo-card figcaption {
+  padding: 12px 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.photo-card a {
+  color: #3468b0;
+}
+
+/* ВОПРОСЫ */
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: question;
+}
+
+.questions li {
+  position: relative;
+  counter-increment: question;
+  min-height: 72px;
+  padding: 15px 15px 15px 52px;
+  border: 1px solid #e0eaf6;
+  border-radius: 14px;
+  background: #f8fbff;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.questions li::before {
+  content: counter(question,decimal-leading-zero);
+  position: absolute;
+  left: 13px;
+  top: 14px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: #e5efff;
+  color: #2867c0;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.finale {
+  margin-top: 24px;
+  padding: 31px 35px;
+  border: 1px solid #d6e8e8;
+  border-radius: 25px;
+  background: linear-gradient(
+    115deg,
+    #e8f4f0,
+    #e8f0ff
+  );
+}
+
+.finale h2 {
+  margin-bottom: 12px;
+  color: #245b83;
+}
+
+.finale p {
+  margin: 0;
+}
+
+.footer {
+  padding: 25px 0 5px;
+  text-align: center;
+  color: #8493a6;
+  font-size: 12px;
+}
+
+/* АДАПТИВНОСТЬ */
+
+@media(max-width:780px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 32px 26px;
+  }
+
+  .hero-visual {
+    max-width: 440px;
+  }
+
+  .section {
+    padding: 27px 24px;
+  }
+
+  .grid3 {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:540px) {
+  .page {
+    padding: 10px 11px 35px;
+  }
+
+  .hero {
+    border-radius: 21px;
+  }
+
+  .hero-inner {
+    padding: 29px 21px;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .hero-app {
+    padding: 15px 7px;
+  }
+
+  .hero-app .emoji {
+    font-size: 34px;
+  }
+
+  .section {
+    margin-top: 15px;
+    padding: 23px 17px;
+    border-radius: 19px;
+  }
+
+  .section-head {
+    gap: 10px;
+  }
+
+  .section h2 {
+    font-size: 22px;
+  }
+
+  .number {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .grid2,
+  .grid3,
+  .compare,
+  .interface-parts,
+  .example-uses,
+  .questions,
+  .address-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .document-area {
+    padding: 12px;
+  }
+
+  .paper {
+    padding: 23px 17px;
+    min-height: 230px;
+  }
+
+  .paper h3 {
+    font-size: 17px;
+  }
+
+  .address-demo {
+    padding: 19px 14px;
+  }
+
+  .finale {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="hero">
+  <div class="hero-inner">
+
+    <div>
+      <span class="eyebrow">
+        Информатика · 8 класс · Часть 1 из 4
+      </span>
+
+      <h1>
+        Текстовые редакторы
+        <em>и электронные таблицы</em>
+      </h1>
+
+      <p>
+        Узнаем, какие программы помогают создавать документы,
+        работать с таблицами и обрабатывать данные.
+        Разберёмся, чем они отличаются и когда
+        какую программу лучше использовать.
+      </p>
+    </div>
+
+    <div class="hero-visual">
+
+      <div class="hero-app">
+        <span class="emoji">📄</span>
+        <b>Документы</b>
+        <small>Текстовые процессоры</small>
+      </div>
+
+      <div class="hero-app">
+        <span class="emoji">📊</span>
+        <b>Таблицы</b>
+        <small>Табличные процессоры</small>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<div class="tags">
+  <span>📝 Работа с текстом</span>
+  <span>📊 Организация данных</span>
+  <span>🧮 Автоматические вычисления</span>
+</div>
+
+<main>
+
+<!-- РАЗДЕЛ 1 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">01</div>
+    <div>
+      <h2>Программы для обработки информации</h2>
+      <p class="subtitle">
+        Для разных задач существуют разные приложения.
+      </p>
+    </div>
+  </div>
+
+  <p class="lead">
+    Компьютер помогает человеку не только искать
+    и хранить информацию, но и создавать новые
+    документы, изменять данные, выполнять расчёты
+    и представлять результаты работы.
+  </p>
+
+  <p>
+    Для этого используются
+    <strong>прикладные программы</strong> —
+    приложения, предназначенные для решения
+    конкретных задач пользователя.
+  </p>
+
+  <div class="grid2">
+
+    <div class="card blue-card">
+      <span class="emoji">📝</span>
+      <h3>Работа с текстом</h3>
+      <p>
+        Написание докладов, оформление рефератов,
+        составление заявлений, создание писем
+        и других документов.
+      </p>
+    </div>
+
+    <div class="card green-card">
+      <span class="emoji">📊</span>
+      <h3>Работа с данными</h3>
+      <p>
+        Составление таблиц, хранение чисел,
+        выполнение вычислений, анализ результатов
+        и построение диаграмм.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="notice">
+    <p>
+      💡 <strong>Главная идея:</strong>
+      программу следует выбирать в зависимости
+      от задачи. Для написания сочинения удобен
+      текстовый процессор, а для расчёта расходов —
+      электронная таблица.
+    </p>
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 2 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">02</div>
+    <div>
+      <h2>Текстовые редакторы и процессоры</h2>
+      <p class="subtitle">
+        Создание, изменение и оформление документов.
+      </p>
+    </div>
+  </div>
+
+  <div class="definition">
+    <p>
+      <strong>Текстовый редактор</strong> —
+      программа для создания и редактирования
+      текстовой информации.
+    </p>
+  </div>
+
+  <p>
+    Простейшие текстовые редакторы позволяют
+    вводить текст, исправлять ошибки,
+    удалять или перемещать его фрагменты.
+  </p>
+
+  <p>
+    Более широкими возможностями обладают
+    <strong>текстовые процессоры</strong>.
+    Они позволяют не только изменять текст,
+    но и оформлять документы, вставлять изображения,
+    таблицы и другие объекты.
+  </p>
+
+  <h3 class="mini-title">
+    Примеры программ
+  </h3>
+
+  <div class="grid3">
+
+    <div class="card">
+      <span class="emoji">📘</span>
+      <h3>Microsoft Word</h3>
+      <p>
+        Популярный текстовый процессор для
+        создания и оформления документов.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">📗</span>
+      <h3>LibreOffice Writer</h3>
+      <p>
+        Свободный текстовый процессор
+        с широкими возможностями редактирования.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">📃</span>
+      <h3>Блокнот</h3>
+      <p>
+        Простой редактор, предназначенный
+        преимущественно для работы с обычным текстом.
+      </p>
+    </div>
+
+  </div>
+
+  <h3 class="mini-title">
+    Что можно делать в текстовом процессоре?
+  </h3>
+
+  <div class="grid3">
+
+    <div class="card">
+      <span class="emoji">⌨️</span>
+      <h3>Вводить текст</h3>
+      <p>Создавать документы и записывать информацию.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">✏️</span>
+      <h3>Редактировать</h3>
+      <p>Исправлять, удалять, копировать и перемещать текст.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🎨</span>
+      <h3>Форматировать</h3>
+      <p>Изменять шрифт, размер, цвет и оформление абзацев.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🖼️</span>
+      <h3>Добавлять объекты</h3>
+      <p>Вставлять рисунки, таблицы и другие элементы.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🔎</span>
+      <h3>Проверять документ</h3>
+      <p>Находить ошибки и исправлять неточности.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">💾</span>
+      <h3>Сохранять</h3>
+      <p>Записывать результат в файл для дальнейшей работы.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 3 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">03</div>
+    <div>
+      <h2>Как устроен текстовый процессор?</h2>
+      <p class="subtitle">
+        Основные элементы рабочего окна программы.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    В разных текстовых процессорах оформление
+    интерфейса может отличаться, однако
+    основные элементы выполняют похожие функции.
+  </p>
+
+  <div class="word-window">
+
+    <div class="window-title">
+      <span>📄 Мой документ — текстовый процессор</span>
+      <span class="window-controls">− □ ×</span>
+    </div>
+
+    <div class="ribbon">
+      <span class="selected">Главная</span>
+      <span>Вставка</span>
+      <span>Макет</span>
+      <span>Вид</span>
+    </div>
+
+    <div class="toolbar">
+      <span class="tool">Arial</span>
+      <span class="tool">14</span>
+      <span><b>Ж</b></span>
+      <span><i>К</i></span>
+      <span><u>Ч</u></span>
+      <span>☰</span>
+      <span>≡</span>
+      <span>☷</span>
+    </div>
+
+    <div class="document-area">
+
+      <div class="paper">
+
+        <h3>Мой первый документ</h3>
+
+        <p>
+          Текстовые процессоры используются
+          для подготовки различных документов.
+        </p>
+
+        <p>
+          В них можно
+          <span class="highlight">
+            выделять важные слова
+          </span>,
+          изменять размер и цвет шрифта.
+        </p>
+
+        <div class="paper-line"></div>
+        <div class="paper-line medium"></div>
+        <div class="paper-line short"></div>
+
+      </div>
+
+    </div>
+
+    <div class="window-footer">
+      Страница 1 из 1 · Русский язык · Масштаб 100%
+    </div>
+
+  </div>
+
+  <p class="subtitle">
+    Упрощённая схема интерфейса текстового процессора.
+    Реальное расположение элементов зависит от программы и версии.
+  </p>
+
+  <div class="interface-parts">
+
+    <div class="interface-part">
+      <span class="symbol">1</span>
+      <div>
+        <strong>Заголовок окна</strong>
+        <small>Показывает название документа и программы.</small>
+      </div>
+    </div>
+
+    <div class="interface-part">
+      <span class="symbol">2</span>
+      <div>
+        <strong>Меню и вкладки</strong>
+        <small>Позволяют находить необходимые команды.</small>
+      </div>
+    </div>
+
+    <div class="interface-part">
+      <span class="symbol">3</span>
+      <div>
+        <strong>Панель инструментов</strong>
+        <small>Содержит средства работы с текстом.</small>
+      </div>
+    </div>
+
+    <div class="interface-part">
+      <span class="symbol">4</span>
+      <div>
+        <strong>Рабочая область</strong>
+        <small>Место, где создаётся и изменяется документ.</small>
+      </div>
+    </div>
+
+    <div class="interface-part">
+      <span class="symbol">5</span>
+      <div>
+        <strong>Текстовый курсор</strong>
+        <small>Указывает место ввода символов.</small>
+      </div>
+    </div>
+
+    <div class="interface-part">
+      <span class="symbol">6</span>
+      <div>
+        <strong>Строка состояния</strong>
+        <small>Отображает сведения о документе.</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 4 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">04</div>
+    <div>
+      <h2>Редактирование и форматирование текста</h2>
+      <p class="subtitle">
+        Два разных способа работы с документом.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    Создавая документ, пользователь не только
+    вводит текст, но и изменяет его содержание
+    и внешний вид.
+  </p>
+
+  <div class="compare">
+
+    <div class="compare-card">
+
+      <h3>✏️ Редактирование</h3>
+
+      <p>
+        Изменение содержания текста:
+        исправление ошибок, вставка, удаление,
+        копирование и перемещение фрагментов.
+      </p>
+
+      <div class="compare-example">
+        <p>
+          <strong>До:</strong> Компютер помогает учиться.
+        </p>
+        <p>
+          <strong>После:</strong> Компьютер помогает учиться.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="compare-card">
+
+      <h3>🎨 Форматирование</h3>
+
+      <p>
+        Изменение внешнего вида текста
+        без изменения его содержания.
+      </p>
+
+      <div class="compare-example">
+        <p>
+          Обычный текст
+        </p>
+        <p style="font-size:18px;color:#7257c5;font-weight:bold">
+          Оформленный текст
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="notice">
+    <p>
+      💡 <strong>Запомни:</strong>
+      редактирование изменяет содержание документа,
+      а форматирование — его оформление.
+    </p>
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 5 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">05</div>
+    <div>
+      <h2>Электронные таблицы</h2>
+      <p class="subtitle">
+        Программы для хранения и обработки данных.
+      </p>
+    </div>
+  </div>
+
+  <p class="lead">
+    Иногда информацию удобнее представить
+    не в виде обычного текста, а в виде
+    таблицы с чёткими строками и столбцами.
+  </p>
+
+  <div class="green-definition definition">
+    <p>
+      <strong>Электронная таблица</strong> —
+      таблица, предназначенная для хранения
+      и обработки данных с помощью компьютера.
+      Программы для работы с такими таблицами
+      называются <strong>табличными процессорами</strong>.
+    </p>
+  </div>
+
+  <h3 class="mini-title">
+    Примеры табличных процессоров
+  </h3>
+
+  <div class="grid2">
+
+    <div class="card green-card">
+      <span class="emoji">📊</span>
+      <h3>Microsoft Excel</h3>
+      <p>
+        Программа для работы с электронными таблицами,
+        вычислений, анализа данных и создания диаграмм.
+      </p>
+    </div>
+
+    <div class="card green-card">
+      <span class="emoji">📈</span>
+      <h3>LibreOffice Calc</h3>
+      <p>
+        Свободный табличный процессор
+        для хранения данных, выполнения расчётов
+        и представления результатов.
+      </p>
+    </div>
+
+  </div>
+
+  <h3 class="mini-title">
+    Основные возможности
+  </h3>
+
+  <div class="grid3">
+
+    <div class="card">
+      <span class="emoji">🔢</span>
+      <h3>Хранение данных</h3>
+      <p>Размещение текста и чисел в ячейках.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🧮</span>
+      <h3>Вычисления</h3>
+      <p>Автоматические расчёты по заданным формулам.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">📉</span>
+      <h3>Диаграммы</h3>
+      <p>Наглядное представление числовых данных.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">📋</span>
+      <h3>Организация</h3>
+      <p>Удобное представление больших наборов сведений.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🔍</span>
+      <h3>Анализ</h3>
+      <p>Сравнение показателей и выявление закономерностей.</p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🔄</span>
+      <h3>Пересчёт</h3>
+      <p>Обновление результатов при изменении исходных данных.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 6 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">06</div>
+    <div>
+      <h2>Устройство электронной таблицы</h2>
+      <p class="subtitle">
+        Строки, столбцы, ячейки и их адреса.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    В электронной таблице данные располагаются
+    в ячейках, образующих строки и столбцы.
+  </p>
+
+  <p>
+    <strong>Столбцы</strong> обычно обозначаются
+    латинскими буквами: A, B, C и далее.
+    <strong>Строки</strong> обозначаются числами:
+    1, 2, 3 и так далее.
+  </p>
+
+  <div class="sheet-window">
+
+    <div class="sheet-title">
+      📊 Результаты измерений — электронная таблица
+    </div>
+
+    <div class="sheet-tools">
+      <span>Файл</span>
+      <span>Правка</span>
+      <span>Вставка</span>
+      <span>Формат</span>
+      <span>Данные</span>
+    </div>
+
+    <div class="formula-line">
+      <div class="name-box">B4</div>
+      <span class="fx">fx</span>
+      <div class="formula-content">18</div>
+    </div>
+
+    <div class="sheet-scroll">
+      <table class="spreadsheet"
+             aria-label="Пример электронной таблицы">
+
+        <thead>
+          <tr>
+            <th class="row-label"></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row" class="row-label">1</th>
+            <td class="head">День</td>
+            <td class="head">Температура</td>
+            <td class="head">Осадки</td>
+            <td class="head">Ветер</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="row-label">2</th>
+            <td>Понедельник</td>
+            <td>16</td>
+            <td>Нет</td>
+            <td>Слабый</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="row-label">3</th>
+            <td>Вторник</td>
+            <td>17</td>
+            <td>Дождь</td>
+            <td>Умеренный</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="row-label">4</th>
+            <td>Среда</td>
+            <td class="active">18</td>
+            <td>Нет</td>
+            <td>Слабый</td>
+          </tr>
+
+          <tr>
+            <th scope="row" class="row-label">5</th>
+            <td>Четверг</td>
+            <td>19</td>
+            <td>Нет</td>
+            <td>Слабый</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+    <div class="sheet-footer">
+      Лист 1 · Активная ячейка: B4
+    </div>
+
+  </div>
+
+  <p class="subtitle">
+    Упрощённая схема электронной таблицы
+    с примером числовых и текстовых данных.
+  </p>
+
+  <div class="grid2">
+
+    <div class="card">
+      <span class="emoji">↔️</span>
+      <h3>Строка</h3>
+      <p>
+        Горизонтальная последовательность ячеек.
+        Номер строки обозначается числом.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">↕️</span>
+      <h3>Столбец</h3>
+      <p>
+        Вертикальная последовательность ячеек.
+        Столбцы обозначаются буквами.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">🔲</span>
+      <h3>Ячейка</h3>
+      <p>
+        Область на пересечении строки и столбца,
+        в которой размещаются данные.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="emoji">📑</span>
+      <h3>Лист</h3>
+      <p>
+        Отдельная электронная таблица.
+        Один файл может содержать несколько листов.
+      </p>
+    </div>
+
+  </div>
+
+  <h3 class="mini-title">
+    Как определяется адрес ячейки?
+  </h3>
+
+  <div class="address-demo">
+
+    <div class="address-big">
+
+      <div class="address-code">
+        <span>B</span>
+        <span>4</span>
+      </div>
+
+      <div class="address-labels">
+        <span>Столбец</span>
+        <span>Строка</span>
+      </div>
+
+    </div>
+
+    <div class="address-explain">
+
+      <p>
+        <strong>Адрес ячейки</strong> состоит
+        из обозначения столбца и номера строки.
+      </p>
+
+      <p>
+        Например, <strong>B4</strong> —
+        это ячейка, расположенная
+        на пересечении столбца B и строки 4.
+      </p>
+
+      <p>
+        Такая система позволяет точно указывать,
+        где находятся необходимые данные.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 7 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">07</div>
+    <div>
+      <h2>Какие данные хранятся в ячейках?</h2>
+      <p class="subtitle">
+        Текст, числа и формулы.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    Содержимое ячейки электронной таблицы
+    может относиться к разным типам данных.
+  </p>
+
+  <div class="grid3">
+
+    <div class="card blue-card">
+      <span class="emoji">🔤</span>
+      <h3>Текст</h3>
+      <p>
+        Названия товаров, имена людей,
+        дни недели и другие надписи.
+      </p>
+    </div>
+
+    <div class="card green-card">
+      <span class="emoji">🔢</span>
+      <h3>Числа</h3>
+      <p>
+        Оценки, цены, результаты измерений
+        и другие числовые значения.
+      </p>
+    </div>
+
+    <div class="card violet-card">
+      <span class="emoji">🧮</span>
+      <h3>Формулы</h3>
+      <p>
+        Записи, по которым программа
+        автоматически выполняет вычисления.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="notice">
+    <p>
+      💡 <strong>Особенность электронных таблиц:</strong>
+      они способны автоматически пересчитывать результаты
+      при изменении исходных чисел.
+      Подробно работать с формулами мы будем
+      на следующих уроках.
+    </p>
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 8 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">08</div>
+    <div>
+      <h2>Текстовый процессор или электронная таблица?</h2>
+      <p class="subtitle">
+        Выбор программы зависит от задачи.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    В текстовом процессоре тоже можно создать
+    таблицу, а в электронной таблице —
+    записать текст. Однако у этих программ
+    разное основное назначение.
+  </p>
+
+  <div class="table-wrap">
+
+    <table class="comparison-table">
+
+      <thead>
+        <tr>
+          <th>Признак</th>
+          <th>Текстовый процессор</th>
+          <th>Электронная таблица</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Основная задача</td>
+          <td>Создание и оформление документов</td>
+          <td>Организация и обработка данных</td>
+        </tr>
+
+        <tr>
+          <td>Рабочая область</td>
+          <td>Страницы документа</td>
+          <td>Ячейки, строки и столбцы</td>
+        </tr>
+
+        <tr>
+          <td>Основная информация</td>
+          <td>Текст и элементы документа</td>
+          <td>Числа, текст и формулы</td>
+        </tr>
+
+        <tr>
+          <td>Вычисления</td>
+          <td>Ограниченные возможности</td>
+          <td>Автоматические расчёты по формулам</td>
+        </tr>
+
+        <tr>
+          <td>Примеры программ</td>
+          <td>Word, Writer</td>
+          <td>Excel, Calc</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <h3 class="mini-title">
+    Примеры из школьной жизни
+  </h3>
+
+  <div class="example-uses">
+
+    <div class="use">
+      <span class="emoji">📖</span>
+      <div>
+        <b>Реферат по истории</b>
+        <small>Удобнее подготовить в текстовом процессоре.</small>
+      </div>
+    </div>
+
+    <div class="use">
+      <span class="emoji">📊</span>
+      <div>
+        <b>Результаты соревнований</b>
+        <small>Удобно представить в электронной таблице.</small>
+      </div>
+    </div>
+
+    <div class="use">
+      <span class="emoji">✉️</span>
+      <div>
+        <b>Официальное заявление</b>
+        <small>Подойдёт текстовый процессор.</small>
+      </div>
+    </div>
+
+    <div class="use">
+      <span class="emoji">💰</span>
+      <div>
+        <b>Расчёт стоимости покупок</b>
+        <small>Подойдёт электронная таблица.</small>
+      </div>
+    </div>
+
+    <div class="use">
+      <span class="emoji">📝</span>
+      <div>
+        <b>Школьный доклад</b>
+        <small>Лучше использовать текстовый процессор.</small>
+      </div>
+    </div>
+
+    <div class="use">
+      <span class="emoji">🌡️</span>
+      <div>
+        <b>Температура за неделю</b>
+        <small>Удобно хранить и сравнивать в электронной таблице.</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- РАЗДЕЛ 9 -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">09</div>
+    <div>
+      <h2>Как выглядят реальные офисные программы?</h2>
+      <p class="subtitle">
+        Примеры интерфейсов LibreOffice.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    На изображении представлены несколько
+    приложений офисного пакета LibreOffice.
+    Среди них можно увидеть текстовый процессор
+    Writer и табличный процессор Calc.
+  </p>
+
+  <figure class="photo-card">
+    <img
+      src="img-1.png"
+      alt="Интерфейсы офисных приложений LibreOffice Writer, Calc, Impress и Draw"
+      loading="lazy"
+      width="1652"
+      height="940">
+
+    <figcaption>
+      Пример настоящих окон программ LibreOffice.
+      Изображение: The Document Foundation,
+      <a href="https://commons.wikimedia.org/wiki/File:LibreOffice_Writer,_Calc,_Impress_and_Draw.png">
+        Wikimedia Commons
+      </a>.
+      Внешний вид современных версий может отличаться.
+    </figcaption>
+  </figure>
+
+  <p>
+    Обрати внимание: Writer предоставляет
+    рабочую область для создания документа,
+    а Calc — сетку ячеек, образованную
+    строками и столбцами.
+  </p>
+
+  <div class="notice">
+    <p>
+      💡 Несмотря на различия в интерфейсе,
+      большинство текстовых и табличных процессоров
+      построены на похожих принципах.
+      Поэтому знания, полученные при работе
+      с одной программой, часто помогают
+      освоить другую.
+    </p>
+  </div>
+
+</section>
+
+<!-- ВОПРОСЫ -->
+
+<section class="section">
+
+  <div class="section-head">
+    <div class="number">10</div>
+    <div>
+      <h2>Вопросы для повторения</h2>
+      <p class="subtitle">
+        12 вопросов по материалу первой части темы.
+      </p>
+    </div>
+  </div>
+
+  <ol class="questions">
+
+    <li>
+      Для чего предназначены текстовые редакторы?
+    </li>
+
+    <li>
+      Чем текстовый процессор отличается
+      от простого текстового редактора?
+    </li>
+
+    <li>
+      Какие программы можно использовать
+      для создания текстовых документов?
+    </li>
+
+    <li>
+      Что такое редактирование текста?
+    </li>
+
+    <li>
+      Чем форматирование отличается
+      от редактирования?
+    </li>
+
+    <li>
+      Какие основные элементы
+      имеет интерфейс текстового процессора?
+    </li>
+
+    <li>
+      Для чего предназначены электронные таблицы?
+    </li>
+
+    <li>
+      Какие программы называют
+      табличными процессорами?
+    </li>
+
+    <li>
+      Что называют строкой,
+      столбцом и ячейкой электронной таблицы?
+    </li>
+
+    <li>
+      Как определяется адрес ячейки?
+      Что означает адрес B4?
+    </li>
+
+    <li>
+      Какие данные можно хранить
+      в ячейках электронной таблицы?
+    </li>
+
+    <li>
+      В чём главное отличие электронной таблицы
+      от таблицы в текстовом документе?
+    </li>
+
+  </ol>
+
+</section>
+
+<!-- ИТОГ -->
+
+<section class="finale">
+
+  <h2>✨ Итог урока</h2>
+
+  <p>
+    <strong>Текстовые процессоры</strong> предназначены
+    для создания, редактирования и оформления документов.
+    <strong>Табличные процессоры</strong> помогают
+    организовывать, хранить и обрабатывать данные,
+    выполнять расчёты и представлять результаты.
+    Основным элементом электронной таблицы является
+    <strong>ячейка</strong>, имеющая собственный адрес.
+    Выбор программы зависит от задачи,
+    которую необходимо решить.
+  </p>
+
+</section>
+
+</main>
+
+<footer class="footer">
+  Информатика · 8 класс ·
+  Текстовые редакторы и электронные таблицы ·
+  Часть 1 из 4
+</footer>
+
+</div>
+
+</body>
+</html>
