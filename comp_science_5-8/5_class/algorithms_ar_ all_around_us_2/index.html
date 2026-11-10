@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Информатика, 5 класс. Алгоритмы вокруг нас, исполнители, среда, система команд, рассуждения и чёрные ящики. Часть 2 из 4.">
+        <title>Алгоритмы: от команд к открытиям — 5 класс, часть 2</title>
+        <style>
+/* ========== Цветовая палитра ========== */
+:root {
+    --bg: #f5f8fc;
+    --ink: #24364e;
+    --sub: #60758c;
+    --navy: #152f56;
+    --blue: #3877d8;
+    --bluewash: #eaf3ff;
+    --green: #188b70;
+    --mint: #e8f7f0;
+    --orange: #b97920;
+    --peach: #fff2e1;
+    --purple: #7155c3;
+    --lav: #f1edff;
+    --line: #dfe8f2;
+    --shadow: 0 15px 38px rgba(25,52,85,.065);
+}
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.72 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+h1,h2,h3,h4 {
+    margin: 0 0 12px;
+    line-height: 1.23;
+    letter-spacing: -.02em;
+}
+p {
+    margin: 0 0 14px;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+b,strong {
+    font-weight: 750;
+}
+img,svg {
+    max-width: 100%;
+    display: block;
+}
+a {
+    color: #2467b1;
+}
+/* ========== Основная компоновка ========== */
+.page {
+    max-width: 1090px;
+    margin: auto;
+    padding: 22px 18px 52px;
+}
+/* ========== Первый экран ========== */
+.hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+    background: linear-gradient(119deg,#12335f,#245da8 67%,#328db5);
+    color: white;
+    box-shadow: 0 18px 45px rgba(30,70,127,.16);
+}
+.hero:before {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    right: -185px;
+    top: -220px;
+    border: 60px solid rgba(255,255,255,.055);
+    border-radius: 50%;
+}
+.hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0,1.18fr) minmax(290px,.82fr);
+    align-items: center;
+    gap: 28px;
+    padding: 47px 43px;
+    position: relative;
+}
+.eyebrow {
+    display: inline-block;
+    padding: 6px 13px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,.32);
+    background: rgba(255,255,255,.12);
+    border-radius: 40px;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: .055em;
+}
+.hero h1 {
+    font-size: clamp(32px,4.6vw,51px);
+    margin-bottom: 17px;
+}
+.hero h1 em {
+    font-style: normal;
+    color: #ffe1a4;
+}
+.hero p {
+    color: #e6f1ff;
+    max-width: 560px;
+    font-size: 17px;
+}
+.hero-diagram {
+    padding: 21px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 23px;
+    background: rgba(255,255,255,.13);
+    backdrop-filter: blur(3px);
+}
+.hero-diagram .small-label {
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: .03em;
+    color: #e8f1fd;
+    margin-bottom: 13px;
+}
+.hero-icons {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr;
+    gap: 5px;
+    align-items: center;
+}
+.hero-tile {
+    background: #fff;
+    color: #21446f;
+    min-height: 95px;
+    padding: 11px 4px;
+    border-radius: 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.hero-tile .em {
+    font-size: 29px;
+    line-height: 1.3;
+}
+.hero-tile span:last-child {
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+.hero-arr {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 900;
+    color: #fff;
+}
+.hero-diagram .heronote {
+    margin-top: 13px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.15);
+    padding: 8px 12px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+}
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 17px 0 0;
+}
+.tags span {
+    display: inline-block;
+    padding: 6px 13px;
+    border: 1px solid var(--line);
+    background: white;
+    color: #506a85;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 750;
+}
+/* ========== Разделы урока ========== */
+.section {
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background: #fff;
+    margin-top: 22px;
+    padding: 34px 39px;
+    box-shadow: var(--shadow);
+}
+.section-head {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+}
+.num {
+    flex: 0 0 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    color: var(--blue);
+    background: var(--bluewash);
+    font-weight: 850;
+    font-size: 15px;
+}
+.section h2 {
+    font-size: clamp(23px,3vw,30px);
+    margin: 1px 0 6px;
+}
+.sub {
+    color: var(--sub);
+    font-size: 14px;
+    margin: 0;
+}
+.lead {
+    font-size: 17px;
+}
+.def {
+    margin: 19px 0;
+    border-left: 5px solid var(--blue);
+    border-radius: 0 14px 14px 0;
+    background: var(--bluewash);
+    padding: 16px 20px;
+}
+.def strong {
+    color: #245fae;
+}
+.cols {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 17px;
+}
+.cards3 {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 13px;
+}
+.compare {
+    padding: 20px 21px;
+    border: 1px solid var(--line);
+    background: #f9fbfe;
+    border-radius: 19px;
+}
+.compare h3 {
+    font-size: 18px;
+    margin-bottom: 9px;
+}
+.compare .em {
+    font-size: 31px;
+    margin-bottom: 9px;
+}
+.compare p {
+    color: var(--sub);
+    font-size: 14px;
+}
+.compare.blue {
+    background: #eef5ff;
+    border-color: #dce9fc;
+}
+.compare.mint {
+    background: #ecf9f4;
+    border-color: #d9eee5;
+}
+.compare.purple {
+    background: #f4f0ff;
+    border-color: #e8e0fc;
+}
+.mini-title {
+    margin: 24px 0 13px;
+    font-size: 19px;
+}
+.tip {
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: var(--peach);
+    border: 1px solid #f2debf;
+    margin: 18px 0;
+}
+.tip p {
+    margin: 0;
+}
+.photo-wrap {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: #e8f0f8;
+}
+.photo-wrap img {
+    width: 100%;
+    height: 265px;
+    object-fit: cover;
+}
+.photo-wrap figcaption {
+    background: #fafcff;
+    padding: 11px 15px;
+    color: var(--sub);
+    font-size: 12px;
+    line-height: 1.5;
+}
+.codecard {
+    background: #1b304d;
+    color: #edf5ff;
+    border-radius: 19px;
+    padding: 20px 23px;
+}
+.codecard h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.commands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 12px;
+}
+.commands span {
+    background: #304e72;
+    border: 1px solid #587799;
+    color: #fff;
+    padding: 5px 11px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 800;
+}
+.codecard p {
+    font-size: 14px;
+    color: #cbdeef;
+}
+.diagram-bg {
+    background: linear-gradient(118deg,#f1f6ff,#f5f2ff);
+    padding: 22px;
+    border-radius: 21px;
+    border: 1px solid #e2e6fa;
+}
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0 0;
+}
+.legend span {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 30px;
+    background: #fff;
+    border: 1px solid #dbe6f3;
+    color: #54708b;
+}
+/* ========== Поле учебного исполнителя ========== */
+.field-frame {
+    display: grid;
+    grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+    gap: 23px;
+    align-items: center;
+}
+.field {
+    display: grid;
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    gap: 5px;
+    max-width: 470px;
+    aspect-ratio: 1/1;
+    width: 100%;
+    margin: auto;
+}
+.cell {
+    background: #fff;
+    border: 1px solid #dce5f2;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    aspect-ratio: 1;
+    min-width: 0;
+    color: #3674bc;
+    font-size: 21px;
+    font-weight: 800;
+}
+.cell.route {
+    background: #d7ebff;
+    border-color: #b8d7f4;
+}
+.cell.start {
+    background: #c9f1e2;
+    border-color: #80d6b8;
+}
+.cell.finish {
+    background: #ffebc1;
+    border-color: #edc778;
+}
+.cell.wall {
+    background: repeating-linear-gradient(135deg,#8a9bac,#8a9bac 6px,#9aabba 6px,#9aabba 12px);
+    color: #fff;
+}
+.cell small {
+    position: absolute;
+    left: 3px;
+    top: 1px;
+    font-size: 9px;
+    opacity: .7;
+}
+.cell b {
+    font-size: clamp(13px,2vw,23px);
+    line-height: 1;
+}
+.step-list {
+    list-style: none;
+    counter-reset: s;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+}
+.step-list li {
+    counter-increment: s;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    background: #fff;
+    border: 1px solid #e3e9f3;
+    border-radius: 12px;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+.step-list li:before {
+    content: counter(s);
+    display: grid;
+    place-items: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: #e6effc;
+    color: #2d6bc3;
+    font-weight: 800;
+}
+.step-list li b {
+    color: #205ea6;
+}
+.callout-green {
+    background: #e9f8f1;
+    border-left: 5px solid #27a57d;
+    border-radius: 0 14px 14px 0;
+    padding: 16px 19px;
+    margin: 18px 0;
+}
+.callout-green strong {
+    color: #117f5f;
+}
+/* ========== Схемы обработки чисел ========== */
+.two-pipelines {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 15px;
+    margin: 19px 0;
+}
+.operation {
+    border: 1px solid #dfe7f2;
+    border-radius: 18px;
+    background: #f9fbff;
+    padding: 18px;
+}
+.operation h3 {
+    font-size: 16px;
+}
+.mathflow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding: 14px 0 5px;
+}
+.mathchip {
+    padding: 8px 11px;
+    border-radius: 11px;
+    background: #eaf3ff;
+    color: #235fa9;
+    font-size: 19px;
+    font-weight: 850;
+    white-space: nowrap;
+}
+.mathchip.end {
+    background: #dff5ea;
+    color: #137e5c;
+}
+.matharr {
+    color: #7b91a8;
+    font-weight: 800;
+}
+.mathlabel {
+    text-align: center;
+    color: #667b93;
+    font-size: 12px;
+    margin-top: 8px;
+}
+/* ========== Логическая задача ========== */
+.clue-grid {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 11px;
+    margin: 18px 0;
+}
+.clue {
+    padding: 16px;
+    border: 1px solid #e5e2f7;
+    background: #f6f2ff;
+    border-radius: 16px;
+}
+.clue span {
+    display: block;
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+.clue b {
+    display: block;
+    font-size: 14px;
+}
+.clue p {
+    font-size: 13px;
+    color: #706385;
+    margin: 4px 0 0;
+}
+.logic-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #e0e6f0;
+    overflow: hidden;
+    margin: 16px 0;
+    font-size: 14px;
+}
+.logic-table th,.logic-table td {
+    border-right: 1px solid #e1e8f0;
+    border-bottom: 1px solid #e1e8f0;
+    padding: 11px 9px;
+    text-align: center;
+}
+.logic-table th:last-child,.logic-table td:last-child {
+    border-right: 0;
+}
+.logic-table tr:last-child td {
+    border-bottom: 0;
+}
+.logic-table th {
+    background: #edf3fc;
+    color: #345b88;
+}
+.logic-table td:first-child {
+    text-align: left;
+    font-weight: 800;
+}
+.yes {
+    color: #16855f;
+    font-weight: 900;
+}
+.no {
+    color: #b2bdc8;
+}
+.logic-result {
+    border: 1px solid #d3ebdf;
+    background: #eaf8f0;
+    border-radius: 15px;
+    padding: 15px 19px;
+    color: #205941;
+}
+/* ========== Модель чёрного ящика ========== */
+.blackbox {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) 30px minmax(0,1.2fr) 30px minmax(0,1fr);
+    gap: 5px;
+    align-items: center;
+    margin: 20px 0;
+}
+.box-in,.box-out {
+    border-radius: 17px;
+    background: #f2f7ff;
+    border: 1px solid #dce9f5;
+    min-height: 139px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 4px;
+}
+.box-out {
+    background: #eff9f4;
+    border-color: #d6eade;
+}
+.box-in small,.box-out small {
+    font-size: 12px;
+    color: #647e96;
+    font-weight: 800;
+}
+.box-in b,.box-out b {
+    font-size: 38px;
+    color: #2367b2;
+    line-height: 1.4;
+}
+.box-out b {
+    color: #168563;
+}
+.blackbox .arr {
+    font-size: 27px;
+    text-align: center;
+    color: #347bd0;
+    font-weight: 900;
+}
+.blackbox .mystery {
+    background: linear-gradient(145deg,#223952,#142334);
+    border-radius: 20px;
+    color: #fff;
+    text-align: center;
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(19,34,53,.15);
+    padding: 14px;
+}
+.mystery .em {
+    font-size: 36px;
+    line-height: 1.2;
+    color: #ffdb87;
+}
+.mystery b {
+    font-size: 14px;
+}
+.mystery small {
+    color: #c5d4e6;
+    font-size: 12px;
+}
+.pairs {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #dce6f1;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+.pairs th,.pairs td {
+    text-align: center;
+    padding: 11px 9px;
+    border-bottom: 1px solid #e4ebf4;
+}
+.pairs tr:last-child td {
+    border-bottom: 0;
+}
+.pairs th {
+    background: #ecf3ff;
+    color: #37628f;
+}
+.pairs tbody tr:nth-child(even) {
+    background: #f8fbff;
+}
+.rule-steps {
+    display: grid;
+    grid-template-columns: 1fr 25px 1fr 25px 1fr;
+    gap: 7px;
+    align-items: center;
+    margin-top: 18px;
+}
+.rule-tile {
+    background: #fff;
+    border: 1px solid #d8e6f3;
+    border-radius: 15px;
+    padding: 16px 7px;
+    text-align: center;
+}
+.rule-tile b {
+    display: block;
+    font-size: 22px;
+    color: #2369b9;
+}
+.rule-tile small {
+    display: block;
+    color: #627a93;
+}
+.rule-arr {
+    text-align: center;
+    font-size: 25px;
+    color: #4f83c9;
+}
+/* ========== Вопросы и завершение урока ========== */
+.questions {
+    list-style: none;
+    counter-reset: q;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 11px;
+}
+.questions li {
+    counter-increment: q;
+    position: relative;
+    padding: 15px 16px 15px 50px;
+    border: 1px solid #e0e9f4;
+    border-radius: 14px;
+    background: #f9fbff;
+    font-size: 14px;
+    line-height: 1.55;
+}
+.questions li:before {
+    content: counter(q,decimal-leading-zero);
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: #e6efff;
+    color: #286dcb;
+    font-size: 12px;
+    font-weight: 850;
+}
+.finale {
+    background: linear-gradient(115deg,#e7f5ef,#e9f1ff);
+    border-radius: 25px;
+    border: 1px solid #d5e8e4;
+    margin-top: 23px;
+    padding: 29px 35px;
+}
+.finale h2 {
+    font-size: 25px;
+    color: #285f8f;
+    margin-bottom: 9px;
+}
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #8494a5;
+    padding: 25px 0 3px;
+}
+
+/* ========== Адаптивная вёрстка ========== */
+@media(max-width:790px) {
+    .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 34px 28px;
+    }
+    .hero-diagram {
+        max-width: 470px;
+    }
+    .section {
+        padding: 28px 26px;
+    }
+    .field-frame {
+        grid-template-columns: 1fr;
+    }
+    .field {
+        max-width: 375px;
+    }
+    .step-list {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+    .photo-wrap img {
+        height: 245px;
+    }
+}
+
+@media(max-width:580px) {
+    .page {
+        padding: 10px 11px 35px;
+    }
+    .hero {
+        border-radius: 22px;
+    }
+    .hero-inner {
+        padding: 28px 20px;
+        gap: 20px;
+    }
+    .hero h1 {
+        font-size: 33px;
+    }
+    .hero p {
+        font-size: 15px;
+    }
+    .section {
+        border-radius: 20px;
+        margin-top: 14px;
+        padding: 22px 17px;
+    }
+    .section-head {
+        gap: 10px;
+    }
+    .num {
+        flex-basis: 35px;
+        height: 35px;
+        border-radius: 10px;
+        font-size: 13px;
+    }
+    .section h2 {
+        font-size: 23px;
+    }
+    .lead {
+        font-size: 16px;
+    }
+    .cols,.cards3,.two-pipelines,.clue-grid,.questions,.step-list {
+        grid-template-columns: 1fr;
+    }
+    .blackbox {
+        grid-template-columns: 1fr;
+        max-width: 250px;
+        margin: 18px auto;
+        gap: 3px;
+    }
+    .blackbox .arr {
+        font-size: 0;
+    }
+    .blackbox .arr:after {
+        content: "↓";
+        font-size: 25px;
+    }
+    .box-in,.box-out {
+        min-height: 88px;
+    }
+    .box-in b,.box-out b {
+        font-size: 28px;
+    }
+    .blackbox .mystery {
+        min-height: 118px;
+    }
+    .diagram-bg {
+        padding: 13px;
+    }
+    .field {
+        gap: 3px;
+    }
+    .cell {
+        border-radius: 6px;
+    }
+    .clue {
+        padding: 12px;
+    }
+    .logic-table {
+        table-layout: fixed;
+        font-size: 12px;
+    }
+    .logic-table th,.logic-table td {
+        padding: 9px 3px;
+        overflow-wrap: anywhere;
+    }
+    .rule-steps {
+        grid-template-columns: 1fr;
+        gap: 3px;
+        max-width: 230px;
+        margin: 14px auto;
+    }
+    .rule-arr {
+        font-size: 0;
+    }
+    .rule-arr:after {
+        content: "↓";
+        font-size: 24px;
+    }
+    .finale {
+        padding: 24px 19px;
+        border-radius: 20px;
+    }
+    .hero-icons {
+        grid-template-columns: 1fr 17px 1fr 17px 1fr;
+        gap: 3px;
+    }
+    .hero-tile .em {
+        font-size: 24px;
+    }
+    .hero-tile span:last-child {
+        font-size: 10px;
+    }
+    .hero-arr {
+        font-size: 17px;
+    }
+    .section-head .sub {
+        font-size: 13px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+</style>
+    </head>
+    <body>
+        <div class="page">
+            <header class="hero">
+                <div class="hero-inner">
+                    <div>
+                        <span class="eyebrow">ИНФОРМАТИКА · 5 КЛАСС · ЧАСТЬ 2 ИЗ 4</span>
+                        <h1>Алгоритмы: <em>от команд к открытиям</em>
+                        </h1>
+                        <p>Научимся следить за действиями исполнителя, рассуждать по условиям задачи и обнаруживать скрытые правила преобразования информации.</p>
+                    </div>
+                    <div class="hero-diagram" aria-label="Схема: команда, действие, результат">
+                        <div class="small-label">Одна из главных идей урока</div>
+                        <div class="hero-icons">
+                            <div class="hero-tile">
+                                <span class="em">📋</span>
+                                <span>Команды</span>
+                            </div>
+                            <div class="hero-arr">→</div>
+                            <div class="hero-tile">
+                                <span class="em">🤖</span>
+                                <span>Исполнитель</span>
+                            </div>
+                            <div class="hero-arr">→</div>
+                            <div class="hero-tile">
+                                <span class="em">🎯</span>
+                                <span>Результат</span>
+                            </div>
+                        </div>
+                        <div class="heronote">Точные команды помогают получить нужный результат</div>
+                    </div>
+                </div>
+            </header>
+            <div class="tags">
+                <span>🧭 Среда исполнителя</span>
+                <span>🔢 Порядок действий</span>
+                <span>🧠 Логические выводы</span>
+                <span>📦 Скрытые правила</span>
+            </div>
+            <main>
+                <!-- Раздел: Повторение основных понятий -->
+                <section class="section" aria-labelledby="recall">
+                    <div class="section-head">
+                        <div class="num">01</div>
+                        <div>
+                            <h2 id="recall">Что мы уже знаем об алгоритмах</h2>
+                            <p class="sub">Вспоминаем главное и двигаемся дальше.</p>
+                        </div>
+                    </div>
+                    <p class="lead">Алгоритм — это понятная исполнителю последовательность точных команд для решения задачи. У алгоритма есть <strong>исполнитель</strong>, а у исполнителя — команды, которые он способен выполнить.</p>
+                    <div class="cards3">
+                        <div class="compare blue">
+                            <div class="em">📋</div>
+                            <h3>Алгоритм</h3>
+                            <p>Показывает, <strong>какие действия</strong> и в каком порядке нужно выполнить.</p>
+                        </div>
+                        <div class="compare mint">
+                            <div class="em">🤖</div>
+                            <h3>Исполнитель</h3>
+                            <p>Выполняет команды алгоритма: это может быть человек или устройство.</p>
+                        </div>
+                        <div class="compare purple">
+                            <div class="em">🎯</div>
+                            <h3>Результат</h3>
+                            <p>То, что получилось после выполнения команд.</p>
+                        </div>
+                    </div>
+                    <p style="margin-top:18px">Сегодня мы подробнее разберём, <strong>почему разные исполнители действуют по-разному</strong>, как не ошибиться в порядке команд и как найти неизвестное правило, наблюдая только результаты.</p>
+                </section>
+                <!-- Раздел: Формальные и неформальные исполнители -->
+                <section class="section" aria-labelledby="types">
+                    <div class="section-head">
+                        <div class="num">02</div>
+                        <div>
+                            <h2 id="types">Формальные и неформальные исполнители</h2>
+                            <p class="sub">Не все исполнители одинаково понимают указания.</p>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <div>
+                            <div class="def">
+                                <p>
+                                    <strong>Формальный исполнитель</strong> выполняет заданные команды по строгим правилам. <strong>Неформальный исполнитель</strong> может осмысливать указания и выбирать способ их выполнения.</p>
+                            </div>
+                            <p>Например, ученик способен понять просьбу «оформи красивую открытку» и сам придумать рисунок. А простой учебный робот обычно понимает только определённый набор команд.</p>
+                            <p>Компьютерная программа — пример формального исполнителя: она действует согласно записанным инструкциям.</p>
+                        </div>
+                        <figure class="photo-wrap">
+                            <img src="img-1.png" width="960" height="720" loading="lazy" alt="Программируемый учебный робот LEGO Mindstorms EV3">
+                            <figcaption>Пример программируемого учебного робота. Фото: Javier Leiva, <a href="https://commons.wikimedia.org/wiki/File:Lego_Mindstorms_EV3_Robot.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</figcaption>
+                        </figure>
+                    </div>
+                    <div class="cols" style="margin-top:16px">
+                        <div class="compare blue">
+                            <h3>🧑 Неформальный исполнитель</h3>
+                            <p>Человек обычно способен уточнить смысл указания, учесть ситуацию и выбрать удобный способ действия.</p>
+                        </div>
+                        <div class="compare mint">
+                            <h3>⚙️ Формальный исполнитель</h3>
+                            <p>Устройство или программа выполняет только те команды, которые предусмотрены его системой.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <p>💡 <strong>Обрати внимание:</strong> один и тот же человек может действовать строго по инструкции, но это не превращает его в программу. Различие касается способности самостоятельно понимать и выбирать действия.</p>
+                    </div>
+                </section>
+                <!-- Раздел: Система команд и среда -->
+                <section class="section" aria-labelledby="commands">
+                    <div class="section-head">
+                        <div class="num">03</div>
+                        <div>
+                            <h2 id="commands">Система команд и среда исполнителя</h2>
+                            <p class="sub">Исполнитель действует не где угодно и не как угодно.</p>
+                        </div>
+                    </div>
+                    <div class="def">
+                        <p>
+                            <strong>Система команд исполнителя</strong> — набор команд, которые он способен понимать и выполнять. <strong>Среда исполнителя</strong> — пространство и условия, в которых он действует.</p>
+                    </div>
+                    <p>Представим учебного исполнителя <strong>«Клеточник»</strong>, который перемещается по клетчатому полю. В нашей модели одна команда перемещает его на <strong>одну клетку</strong> в указанную сторону. Направления обозначают движение по полю, а не поворот самого робота.</p>
+                    <div class="codecard">
+                        <h3>Команды «Клеточника»</h3>
+                        <div class="commands">
+                            <span>↑ Вверх</span>
+                            <span>↓ Вниз</span>
+                            <span>← Влево</span>
+                            <span>→ Вправо</span>
+                        </div>
+                        <p>Если впереди край поля или препятствие, движение в эту клетку выполнить нельзя. Команда «прыгни» исполнителю не знакома, поэтому выполнить её он тоже не сможет.</p>
+                    </div>
+                    <div class="diagram-bg" style="margin-top:18px">
+                        <div class="field-frame">
+                            <div>
+                                <div class="field" role="img" aria-label="Поле 5 на 5: старт в строке 4 столбце 1, маршрут вправо, вправо, вверх, вверх, вправо до финиша. Препятствия в строке 2 столбце 2 и строке 3 столбце 4.">
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell wall">▦</div>
+                                    <div class="cell route">
+                                        <small>4</small>
+                                        <b>→</b>
+                                    </div>
+                                    <div class="cell finish">
+                                        <small>5</small>
+                                        <b>🏁</b>
+                                    </div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell route">
+                                        <small>3</small>
+                                        <b>↑</b>
+                                    </div>
+                                    <div class="cell wall">▦</div>
+                                    <div class="cell"></div>
+                                    <div class="cell start">
+                                        <small>0</small>
+                                        <b>🤖</b>
+                                    </div>
+                                    <div class="cell route">
+                                        <small>1</small>
+                                        <b>→</b>
+                                    </div>
+                                    <div class="cell route">
+                                        <small>2</small>
+                                        <b>↑</b>
+                                    </div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                </div>
+                                <div class="legend">
+                                    <span>🟩 Старт</span>
+                                    <span>🟦 Маршрут</span>
+                                    <span>🟨 Финиш</span>
+                                    <span>▦ Препятствие</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Как прочитать маршрут?</h3>
+                                <p>Исполнитель начинает в зелёной клетке и выполняет <strong>пять команд по порядку</strong>:</p>
+                                <ol class="step-list">
+                                    <li>
+                                        <b>Вправо</b>
+                                    </li>
+                                    <li>
+                                        <b>Вправо</b>
+                                    </li>
+                                    <li>
+                                        <b>Вверх</b>
+                                    </li>
+                                    <li>
+                                        <b>Вверх</b>
+                                    </li>
+                                    <li>
+                                        <b>Вправо</b>
+                                    </li>
+                                </ol>
+                                <p style="margin-top:12px;font-size:14px;color:#60758c">Числа на клетках обозначают номер шага. Стрелка в клетке показывает направление следующего перемещения.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <p>🚧 <strong>Почему среда важна:</strong> чтобы добраться до финиша, нужно учитывать препятствия. Команда может быть знакомой исполнителю, но недоступной в определённой клетке.</p>
+                    </div>
+                </section>
+                <!-- Раздел: Порядок выполнения команд -->
+                <section class="section" aria-labelledby="order">
+                    <div class="section-head">
+                        <div class="num">04</div>
+                        <div>
+                            <h2 id="order">Порядок команд влияет на результат</h2>
+                            <p class="sub">Действия нужно выполнять в указанной последовательности.</p>
+                        </div>
+                    </div>
+                    <p>Исполнитель обрабатывает команды шаг за шагом. Если переставить некоторые из них местами, можно получить другой результат.</p>
+                    <div class="two-pipelines">
+                        <div class="operation">
+                            <h3>✅ Сначала умножаем, потом прибавляем</h3>
+                            <div class="mathflow">
+                                <span class="mathchip">5</span>
+                                <span class="matharr">× 2 →</span>
+                                <span class="mathchip">10</span>
+                                <span class="matharr">+ 3 →</span>
+                                <span class="mathchip end">13</span>
+                            </div>
+                            <p class="mathlabel">(5 × 2) + 3 = 13</p>
+                        </div>
+                        <div class="operation">
+                            <h3>🔄 Те же действия в другом порядке</h3>
+                            <div class="mathflow">
+                                <span class="mathchip">5</span>
+                                <span class="matharr">+ 3 →</span>
+                                <span class="mathchip">8</span>
+                                <span class="matharr">× 2 →</span>
+                                <span class="mathchip end">16</span>
+                            </div>
+                            <p class="mathlabel">(5 + 3) × 2 = 16</p>
+                        </div>
+                    </div>
+                    <div class="callout-green">
+                        <p>
+                            <strong>Вывод:</strong> используются одинаковые числа и операции, но результаты различаются: <strong>13</strong> и <strong>16</strong>. Поэтому порядок команд нужно сохранять.</p>
+                    </div>
+                    <p>Ошибки в алгоритмах могут появиться из-за пропущенной команды, её неправильного места, непонятного указания или препятствия в среде исполнителя.</p>
+                </section>
+                <!-- Раздел: Логические рассуждения -->
+                <section class="section" aria-labelledby="logic">
+                    <div class="section-head">
+                        <div class="num">05</div>
+                        <div>
+                            <h2 id="logic">Получаем новую информацию путём рассуждений</h2>
+                            <p class="sub">Не всякая задача решается вычислением.</p>
+                        </div>
+                    </div>
+                    <p>Иногда известны отдельные факты, а ответ необходимо <strong>вывести из них</strong>. Мы постепенно исключаем невозможные варианты и находим единственный подходящий.</p>
+                    <div class="diagram-bg">
+                        <h3 style="margin-bottom:12px">Кто какой кружок посещает?</h3>
+                        <p>Миша, Оля и Дима выбрали <strong>разные</strong> кружки: рисование, шахматы и робототехнику. Известно, что <strong>Миша не занимается шахматами и рисованием</strong>, а <strong>Оля не занимается рисованием</strong>.</p>
+                        <div class="clue-grid">
+                            <div class="clue">
+                                <span>🤖</span>
+                                <b>Шаг 1</b>
+                                <p>Миша не выбрал шахматы и рисование. Значит, ему подходит робототехника.</p>
+                            </div>
+                            <div class="clue">
+                                <span>♟️</span>
+                                <b>Шаг 2</b>
+                                <p>Робототехника уже занята, а рисование Оля не выбрала. Значит, Оля занимается шахматами.</p>
+                            </div>
+                            <div class="clue">
+                                <span>🎨</span>
+                                <b>Шаг 3</b>
+                                <p>Остался кружок рисования. Следовательно, его посещает Дима.</p>
+                            </div>
+                        </div>
+                        <table class="logic-table" aria-label="Таблица логической задачи о кружках">
+                            <thead>
+                                <tr>
+                                    <th>Ученик</th>
+                                    <th>Рисование</th>
+                                    <th>Шахматы</th>
+                                    <th>Робототехника</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Миша</td>
+                                    <td class="no">—</td>
+                                    <td class="no">—</td>
+                                    <td class="yes">✓</td>
+                                </tr>
+                                <tr>
+                                    <td>Оля</td>
+                                    <td class="no">—</td>
+                                    <td class="yes">✓</td>
+                                    <td class="no">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Дима</td>
+                                    <td class="yes">✓</td>
+                                    <td class="no">—</td>
+                                    <td class="no">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="logic-result">
+                            <strong>Полученный вывод:</strong> Миша — робототехника, Оля — шахматы, Дима — рисование.</div>
+                    </div>
+                    <p style="margin-top:18px">В условии не было готового распределения. Оно получилось благодаря <strong>последовательному рассуждению</strong>. Такой вывод основан на фактах, а не на случайной догадке.</p>
+                </section>
+                <!-- Раздел: Чёрный ящик -->
+                <section class="section" aria-labelledby="blackbox">
+                    <div class="section-head">
+                        <div class="num">06</div>
+                        <div>
+                            <h2 id="blackbox">Исследуем «чёрный ящик»</h2>
+                            <p class="sub">Теперь скрытое правило может состоять сразу из двух действий.</p>
+                        </div>
+                    </div>
+                    <p>В первой части темы мы знакомились с простыми «чёрными ящиками». Теперь попробуем понять более сложный случай. Мы видим <strong>входное и выходное числа</strong>, но не знаем, что происходит между ними.</p>
+                    <div class="blackbox" aria-label="На вход чёрного ящика подано число 3, выход равен 10">
+                        <div class="box-in">
+                            <small>ВХОД</small>
+                            <b>3</b>
+                            <small>Исходное число</small>
+                        </div>
+                        <div class="arr">→</div>
+                        <div class="mystery">
+                            <span class="em">?</span>
+                            <b>Чёрный ящик</b>
+                            <small>Правило неизвестно</small>
+                        </div>
+                        <div class="arr">→</div>
+                        <div class="box-out">
+                            <small>ВЫХОД</small>
+                            <b>10</b>
+                            <small>Полученный результат</small>
+                        </div>
+                    </div>
+                    <h3 class="mini-title">Что удалось наблюдать?</h3>
+                    <table class="pairs">
+                        <thead>
+                            <tr>
+                                <th>Число на входе</th>
+                                <th>Число на выходе</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2</td>
+                                <td>7</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>16</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Заметим: когда входное число увеличивается на 1, результат увеличивается на 3. Это подсказывает возможное правило: <strong>сначала умножить на 3, затем прибавить 1</strong>.</p>
+                    <div class="diagram-bg">
+                        <h3 style="text-align:center">Проверяем предположение на числе 4</h3>
+                        <div class="rule-steps">
+                            <div class="rule-tile">
+                                <small>Исходное число</small>
+                                <b>4</b>
+                            </div>
+                            <div class="rule-arr">→</div>
+                            <div class="rule-tile">
+                                <small>Умножаем на 3</small>
+                                <b>12</b>
+                            </div>
+                            <div class="rule-arr">→</div>
+                            <div class="rule-tile">
+                                <small>Прибавляем 1</small>
+                                <b>13</b>
+                            </div>
+                        </div>
+                        <p style="font-size:14px;text-align:center;color:#5c7590;margin-top:12px">По предполагаемому правилу для входа 4 ожидается выход <strong>13</strong>.</p>
+                    </div>
+                    <div class="callout-green">
+                        <p>
+                            <strong>Важно:</strong> правило «умножить на 3 и прибавить 1» согласуется со всеми известными примерами. Но несколько примеров не доказывают, что оно единственное. Надёжнее проверить предположение, подав в настоящий «чёрный ящик» новые числа.</p>
+                    </div>
+                    <p>Таким образом, исследование неизвестного правила напоминает работу исследователя: <strong>наблюдаем → предполагаем → проверяем → делаем вывод</strong>.</p>
+                </section>
+                <!-- Раздел: Вопросы для повторения -->
+                <section class="section" aria-labelledby="questions">
+                    <div class="section-head">
+                        <div class="num">07</div>
+                        <div>
+                            <h2 id="questions">Вопросы для повторения</h2>
+                            <p class="sub">12 вопросов по второй части темы — без тестов и дополнительных заданий.</p>
+                        </div>
+                    </div>
+                    <ol class="questions">
+                        <li>Чем формальный исполнитель отличается от неформального?</li>
+                        <li>Почему компьютерную программу называют формальным исполнителем?</li>
+                        <li>Что такое система команд исполнителя?</li>
+                        <li>Что называют средой исполнителя?</li>
+                        <li>Почему знакомая команда может оказаться невыполнимой в определённой ситуации?</li>
+                        <li>Как определить положение «Клеточника» после последовательности команд?</li>
+                        <li>Почему изменение порядка команд иногда изменяет результат?</li>
+                        <li>Какие ошибки могут возникнуть при составлении или выполнении алгоритма?</li>
+                        <li>Как исходные данные превращаются в результат при выполнении двух последовательных операций?</li>
+                        <li>Как исключение неподходящих вариантов помогает решить логическую задачу?</li>
+                        <li>Как по нескольким парам входных и выходных чисел предположить правило «чёрного ящика»?</li>
+                        <li>Зачем проверять предполагаемое правило «чёрного ящика» на новых данных?</li>
+                    </ol>
+                </section>
+                <section class="finale">
+                    <h2>✨ Итог урока</h2>
+                    <p>У каждого исполнителя есть <strong>система команд</strong> и <strong>среда</strong>, от которых зависит выполнение алгоритма. Команды нужно выполнять в правильном порядке: от этого может зависеть результат. <strong>Логические рассуждения</strong> помогают получать новую информацию из известных фактов. А исследуя входные и выходные данные <strong>«чёрного ящика»</strong>, можно предположить скрытое правило и проверить свою догадку.</p>
+                </section>
+            </main>
+            <footer class="footer">Информатика · 5 класс · Алгоритмы вокруг нас · Часть 2 из 4</footer>
+        </div>
+    </body>
+</html>
