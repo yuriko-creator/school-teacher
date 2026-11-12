@@ -1,0 +1,1637 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Информатика, 10–11 классы. GIMP: создание объектов на слоях, выделение, перемещение, масштабирование, вращение, отражение и копирование. Практическая работа в двух равнозначных вариантах.">
+    <title>Основы работы с объектами в GIMP — 10–11 классы</title>
+
+    <style>
+        /* ========================================================
+           01. ОСНОВНЫЕ НАСТРОЙКИ И ЦВЕТА
+           ======================================================== */
+        :root {
+            --page: #f4f7fb;
+            --paper: #ffffff;
+            --ink: #22334c;
+            --muted: #61738b;
+            --border: #dfe8f2;
+            --blue: #326ec1;
+            --light-blue: #eaf2ff;
+            --green: #187c64;
+            --light-green: #e7f6ef;
+            --purple: #7053b6;
+            --light-purple: #f1ecff;
+            --orange: #b47925;
+            --light-orange: #fff1dc;
+            --night: #162235;
+            --shadow: 0 16px 38px rgba(27, 59, 96, 0.065);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--page);
+            color: var(--ink);
+            font: 16px/1.73 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 0 0 12px;
+            line-height: 1.24;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        strong {
+            font-weight: 760;
+        }
+
+        a {
+            color: #266bb8;
+        }
+
+        img, svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        .page {
+            width: min(1100px, calc(100% - 34px));
+            margin: 0 auto;
+            padding: 22px 0 48px;
+        }
+
+        /* ========================================================
+           02. ОБЛОЖКА УРОКА
+           ======================================================== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 29px;
+            background: linear-gradient(122deg, #172944, #254c82 67%, #366d9f);
+            color: white;
+            box-shadow: 0 19px 44px rgba(18, 44, 77, 0.19);
+        }
+
+        .hero::after {
+            position: absolute;
+            top: -165px;
+            right: -175px;
+            width: 390px;
+            height: 390px;
+            border: 57px solid rgba(255, 255, 255, 0.055);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(295px, 0.9fr);
+            align-items: center;
+            gap: 25px;
+            padding: 47px 43px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 17px;
+            padding: 6px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.27);
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.12);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .hero h1 {
+            margin-bottom: 16px;
+            font-size: clamp(32px, 4.6vw, 49px);
+        }
+
+        .hero h1 em {
+            color: #ffdba3;
+            font-style: normal;
+        }
+
+        .hero p {
+            max-width: 565px;
+            color: #e3effe;
+            font-size: 16px;
+        }
+
+        .hero-art {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 21px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .hero-art-title {
+            margin-bottom: 12px;
+            color: #e5f1ff;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .hero-stage {
+            position: relative;
+            overflow: hidden;
+            height: 212px;
+            border-radius: 13px;
+            border: 9px solid #263850;
+            background-color: #fff;
+            background-image: linear-gradient(45deg, #e8edf3 25%, transparent 25%, transparent 75%, #e8edf3 75%), linear-gradient(45deg, #e8edf3 25%, transparent 25%, transparent 75%, #e8edf3 75%);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
+        .hero-square {
+            position: absolute;
+            top: 35px;
+            left: 16%;
+            width: 38%;
+            height: 96px;
+            border: 5px solid #326bc2;
+            border-radius: 15px;
+            background: #86bbff;
+            transform: rotate(-9deg);
+            box-shadow: 0 7px 0 rgba(42, 97, 157, 0.14);
+        }
+
+        .hero-square::after {
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #ffdd8a;
+            content: "";
+        }
+
+        .hero-circle {
+            position: absolute;
+            top: 70px;
+            right: 11%;
+            width: 94px;
+            height: 94px;
+            border: 5px solid #8c6fc8;
+            border-radius: 50%;
+            background: #ceb8ff;
+            box-shadow: 0 7px 0 rgba(72, 45, 125, 0.12);
+        }
+
+        .hero-ellipse {
+            position: absolute;
+            right: 30%;
+            bottom: 20px;
+            width: 115px;
+            height: 48px;
+            border: 5px solid #289578;
+            border-radius: 50%;
+            background: #94e0c1;
+            transform: rotate(22deg);
+        }
+
+        .hero-chip {
+            position: absolute;
+            left: 12px;
+            bottom: 9px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #20324a;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .hero-art-note {
+            margin-top: 10px;
+            color: #e8f1ff;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tags span {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: white;
+            color: #536c86;
+            font-size: 12px;
+            font-weight: 740;
+        }
+
+        /* ========================================================
+           03. ОБЩИЕ УЧЕБНЫЕ КОМПОНЕНТЫ
+           ======================================================== */
+        .section {
+            margin-top: 22px;
+            padding: 35px 39px;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            background: var(--paper);
+            box-shadow: var(--shadow);
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 21px;
+        }
+
+        .number {
+            display: grid;
+            flex: 0 0 41px;
+            width: 41px;
+            height: 41px;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--light-blue);
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 850;
+        }
+
+        .section-head h2 {
+            margin: 1px 0 5px;
+            font-size: clamp(23px, 3vw, 29px);
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lead {
+            font-size: 17px;
+        }
+
+        .definition {
+            margin: 18px 0;
+            padding: 16px 19px;
+            border-left: 5px solid var(--blue);
+            border-radius: 0 14px 14px 0;
+            background: var(--light-blue);
+        }
+
+        .definition strong {
+            color: #245fa6;
+        }
+
+        .note {
+            margin: 18px 0;
+            padding: 16px 19px;
+            border: 1px solid #efdcbf;
+            border-radius: 15px;
+            background: var(--light-orange);
+        }
+
+        .note.green {
+            border-color: #d4eadd;
+            background: var(--light-green);
+        }
+
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+            display: grid;
+            gap: 14px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .card {
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: #f9fbfe;
+        }
+
+        .card.blue {
+            border-color: #dae7f9;
+            background: #eef5ff;
+        }
+
+        .card.green {
+            border-color: #d8ede2;
+            background: #eaf8f1;
+        }
+
+        .card.purple {
+            border-color: #e4ddf7;
+            background: #f3efff;
+        }
+
+        .card.orange {
+            border-color: #f2e0c7;
+            background: #fff3e5;
+        }
+
+        .card h3 {
+            margin-bottom: 7px;
+            font-size: 17px;
+        }
+
+        .card p {
+            color: #586c83;
+            font-size: 14px;
+        }
+
+        .emoji {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 28px;
+            line-height: 1.3;
+        }
+
+        .mini-title {
+            margin: 25px 0 13px;
+            font-size: 19px;
+        }
+
+        /* ========================================================
+           04. РЕАЛЬНЫЙ ИНТЕРФЕЙС И СХЕМА СЛОЁВ
+           ======================================================== */
+        .screenshot {
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #e6edf5;
+        }
+
+        .screenshot img {
+            width: 100%;
+            max-height: 440px;
+            object-fit: contain;
+            background: #e8edf2;
+        }
+
+        .screenshot figcaption {
+            padding: 12px 15px;
+            background: #fafcff;
+            color: #66788e;
+            font-size: 12px;
+        }
+
+        .layer-demo {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr);
+            gap: 18px;
+            align-items: center;
+            margin: 19px 0;
+            padding: 19px;
+            border: 1px solid #dae5f4;
+            border-radius: 21px;
+            background: linear-gradient(130deg, #f2f7ff, #f6f2ff);
+        }
+
+        .layer-scene {
+            position: relative;
+            min-height: 238px;
+            border: 9px solid #fff;
+            border-radius: 14px;
+            background: #fcfcff;
+            box-shadow: 0 6px 17px rgba(45, 65, 95, 0.09);
+        }
+
+        .layer-scene .rect {
+            position: absolute;
+            top: 65px;
+            left: 14%;
+            width: 48%;
+            height: 94px;
+            border: 5px solid #4478c5;
+            border-radius: 9px;
+            background: #9cc7fc;
+        }
+
+        .layer-scene .circle {
+            position: absolute;
+            top: 91px;
+            right: 12%;
+            width: 96px;
+            height: 96px;
+            border: 5px solid #845fc1;
+            border-radius: 50%;
+            background: #d0bbf5;
+        }
+
+        .layer-scene .ellipse {
+            position: absolute;
+            top: 16px;
+            left: 27%;
+            width: 115px;
+            height: 42px;
+            border: 4px solid #2d9c79;
+            border-radius: 50%;
+            background: #9addc3;
+            transform: rotate(-19deg);
+        }
+
+        .layers-panel {
+            overflow: hidden;
+            border: 1px solid #435269;
+            border-radius: 13px;
+            background: #263346;
+            color: #f1f5ff;
+            box-shadow: 0 9px 16px rgba(30, 49, 69, 0.12);
+        }
+
+        .layers-panel-title {
+            padding: 11px 12px;
+            border-bottom: 1px solid #4e6078;
+            color: #b9cce3;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .layer-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 11px;
+            border-bottom: 1px solid #405168;
+            font-size: 13px;
+        }
+
+        .layer-row:last-child {
+            border-bottom: 0;
+        }
+
+        .layer-row.selected {
+            background: #395b83;
+        }
+
+        .layer-row .eye {
+            color: #c2d6ec;
+        }
+
+        .layer-row .thumbnail {
+            display: grid;
+            flex: 0 0 29px;
+            width: 29px;
+            height: 25px;
+            place-items: center;
+            border: 1px solid #738198;
+            border-radius: 4px;
+            background: #e9edf4;
+            color: #254873;
+            font-size: 15px;
+        }
+
+        .layer-explanation {
+            margin-top: 9px;
+            color: #66788f;
+            font-size: 13px;
+        }
+
+        /* ========================================================
+           05. СХЕМЫ ВЫДЕЛЕНИЯ И ПРЕОБРАЗОВАНИЙ
+           ======================================================== */
+        .selection-diagram {
+            display: grid;
+            grid-template-columns: 1fr 35px 1fr;
+            align-items: center;
+            gap: 9px;
+            margin: 18px 0;
+        }
+
+        .selection-sample {
+            position: relative;
+            display: grid;
+            min-height: 177px;
+            place-items: center;
+            border: 1px solid #dee8f4;
+            border-radius: 16px;
+            background: #f7faff;
+        }
+
+        .selection-shape {
+            position: relative;
+            width: 105px;
+            height: 85px;
+            border: 5px solid #467bce;
+            border-radius: 11px;
+            background: #94c1ff;
+        }
+
+        .selection-sample.dashed .selection-shape::before {
+            position: absolute;
+            inset: -15px;
+            border: 2px dashed #293e5c;
+            border-radius: 4px;
+            content: "";
+        }
+
+        .selection-sample figcaption {
+            position: absolute;
+            bottom: 9px;
+            left: 8px;
+            right: 8px;
+            color: #5e738b;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .selection-arrow {
+            color: var(--blue);
+            text-align: center;
+            font-size: 28px;
+            font-weight: 850;
+        }
+
+        .transform-board {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 11px;
+            margin: 19px 0;
+        }
+
+        .transform-tile {
+            min-width: 0;
+            padding: 15px 11px;
+            border: 1px solid #dce6f1;
+            border-radius: 16px;
+            background: #f8fbff;
+            text-align: center;
+        }
+
+        .transform-tile svg {
+            width: 100%;
+            height: 125px;
+            margin: 0 auto 9px;
+        }
+
+        .transform-tile strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .transform-tile small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .shortcuts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin: 16px 0 0;
+        }
+
+        .shortcuts span {
+            padding: 7px 11px;
+            border: 1px solid #d8e4f1;
+            border-radius: 11px;
+            background: #f6f9fd;
+            color: #47627f;
+            font-size: 12px;
+        }
+
+        kbd {
+            padding: 2px 6px;
+            border: 1px solid #cad6e3;
+            border-bottom-width: 2px;
+            border-radius: 5px;
+            background: white;
+            color: #273d5a;
+            font: 750 12px system-ui, Arial, sans-serif;
+            white-space: nowrap;
+        }
+
+        /* ========================================================
+           06. КОМПОЗИЦИЯ И ПОСЛЕДОВАТЕЛЬНОСТЬ ДЕЙСТВИЙ
+           ======================================================== */
+        .poster-figure {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 19px;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .poster-art {
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
+            border: 1px solid #e0dfe9;
+            border-radius: 20px;
+            background: linear-gradient(142deg, #fcfaff 8%, #e8f1ff 100%);
+        }
+
+        .poster-art::before {
+            position: absolute;
+            top: -96px;
+            right: -80px;
+            width: 260px;
+            height: 260px;
+            border: 42px solid rgba(133, 104, 209, 0.095);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .poster-art-title {
+            position: relative;
+            z-index: 1;
+            padding: 22px 22px 0;
+            color: #43618c;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.085em;
+            text-transform: uppercase;
+        }
+
+        .poster-art svg {
+            width: 100%;
+            height: 273px;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 11px;
+        }
+
+        .feature {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 12px 13px;
+            border: 1px solid #e0e8f1;
+            border-radius: 13px;
+            background: #fbfdff;
+        }
+
+        .feature b {
+            display: grid;
+            flex: 0 0 27px;
+            width: 27px;
+            height: 27px;
+            place-items: center;
+            border-radius: 8px;
+            background: #e8f0ff;
+            color: #326fbe;
+            font-size: 12px;
+        }
+
+        .feature p {
+            font-size: 14px;
+        }
+
+        .step-strip {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin: 17px 0;
+            counter-reset: work;
+        }
+
+        .step-strip > div {
+            position: relative;
+            min-height: 125px;
+            padding: 39px 13px 14px;
+            border: 1px solid #e0e8f2;
+            border-radius: 14px;
+            background: #f8fbff;
+            font-size: 13px;
+            counter-increment: work;
+        }
+
+        .step-strip > div::before {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            padding: 2px 8px;
+            border-radius: 7px;
+            background: #e4efff;
+            color: #2d6ec4;
+            content: counter(work, decimal-leading-zero);
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        /* ========================================================
+           07. ПРАКТИЧЕСКАЯ РАБОТА
+           ======================================================== */
+        .task-banner {
+            padding: 21px 23px;
+            border-radius: 18px;
+            background: #203d64;
+            color: white;
+        }
+
+        .task-banner h3 {
+            font-size: 20px;
+        }
+
+        .task-banner p {
+            color: #e5f0ff;
+        }
+
+        .routes {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 19px 0;
+        }
+
+        .route {
+            min-width: 0;
+            padding: 21px;
+            border: 1px solid #d4e3f7;
+            border-radius: 19px;
+            background: #edf5ff;
+        }
+
+        .route.paper {
+            border-color: #d2e9df;
+            background: #ebf8f1;
+        }
+
+        .route-label {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 5px 11px;
+            border-radius: 22px;
+            background: #dceafe;
+            color: #2b67ae;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .route.paper .route-label {
+            background: #d1f0e0;
+            color: #197857;
+        }
+
+        .route h3 {
+            font-size: 20px;
+        }
+
+        .route p {
+            color: #516a83;
+            font-size: 14px;
+        }
+
+        .route ol {
+            margin: 13px 0 0;
+            padding-left: 22px;
+        }
+
+        .route li {
+            margin-bottom: 10px;
+            padding-left: 3px;
+            font-size: 14px;
+            line-height: 1.62;
+        }
+
+        .route li::marker {
+            color: #316cb9;
+            font-weight: 850;
+        }
+
+        .route.paper li::marker {
+            color: #178563;
+        }
+
+        .criteria {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+            margin: 16px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .criteria li {
+            padding: 11px 13px;
+            border: 1px solid #e1eaf4;
+            border-radius: 12px;
+            background: #f9fbfe;
+            font-size: 14px;
+        }
+
+        .criteria li::before {
+            padding-right: 8px;
+            color: #198b66;
+            content: "✓";
+            font-weight: 850;
+        }
+
+        .save-panel {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 17px 0;
+        }
+
+        .save-card {
+            padding: 19px;
+            border: 1px solid #d9e5f2;
+            border-radius: 17px;
+            background: #f9fbff;
+        }
+
+        .file-tag {
+            display: inline-block;
+            margin-bottom: 9px;
+            padding: 5px 9px;
+            border-radius: 8px;
+            background: #e5eeff;
+            color: #2c67ad;
+            font-size: 15px;
+            font-weight: 850;
+        }
+
+        .save-card:nth-child(2) .file-tag {
+            background: #e4f6eb;
+            color: #18805e;
+        }
+
+        .save-card h3 {
+            font-size: 17px;
+        }
+
+        .save-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ========================================================
+           08. ВОПРОСЫ, ИТОГ И ПОДВАЛ
+           ======================================================== */
+        .questions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: question;
+        }
+
+        .questions li {
+            position: relative;
+            min-height: 72px;
+            padding: 15px 13px 15px 50px;
+            border: 1px solid #e0e9f3;
+            border-radius: 13px;
+            background: #f9fbff;
+            font-size: 14px;
+            line-height: 1.55;
+            counter-increment: question;
+        }
+
+        .questions li::before {
+            position: absolute;
+            top: 14px;
+            left: 13px;
+            display: grid;
+            width: 26px;
+            height: 26px;
+            place-items: center;
+            border-radius: 8px;
+            background: #e6efff;
+            color: #2b6dc1;
+            content: counter(question, decimal-leading-zero);
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .finale {
+            margin-top: 23px;
+            padding: 30px 35px;
+            border: 1px solid #d5e7e0;
+            border-radius: 24px;
+            background: linear-gradient(115deg, #e7f6ee, #eaf1ff);
+        }
+
+        .finale h2 {
+            color: #285b83;
+            font-size: 25px;
+        }
+
+        footer {
+            padding: 23px 0 5px;
+            color: #8393a7;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* ========================================================
+           09. АДАПТИВНАЯ ВЁРСТКА
+           ======================================================== */
+        @media (max-width: 820px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding: 35px 29px;
+            }
+
+            .hero-art {
+                max-width: 470px;
+            }
+
+            .section {
+                padding: 29px 26px;
+            }
+
+            .grid-4,
+            .transform-board,
+            .step-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .poster-figure {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-art {
+                max-width: 540px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .page {
+                width: calc(100% - 22px);
+                padding: 10px 0 36px;
+            }
+
+            .hero {
+                border-radius: 21px;
+            }
+
+            .hero-inner {
+                gap: 20px;
+                padding: 28px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .section {
+                margin-top: 14px;
+                padding: 22px 17px;
+                border-radius: 19px;
+            }
+
+            .section-head {
+                gap: 10px;
+            }
+
+            .number {
+                flex-basis: 35px;
+                width: 35px;
+                height: 35px;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+
+            .section-head h2 {
+                font-size: 22px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .routes,
+            .save-panel,
+            .criteria,
+            .questions,
+            .transform-board,
+            .step-strip,
+            .layer-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .selection-diagram {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .selection-arrow {
+                font-size: 0;
+            }
+
+            .selection-arrow::after {
+                content: "↓";
+                font-size: 25px;
+            }
+
+            .transform-board {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .transform-tile {
+                padding: 12px 8px;
+            }
+
+            .transform-tile svg {
+                height: 96px;
+            }
+
+            .layer-scene {
+                min-height: 210px;
+            }
+
+            .poster-art {
+                min-height: 315px;
+            }
+
+            .poster-art svg {
+                height: 245px;
+            }
+
+            .task-banner {
+                padding: 19px 17px;
+            }
+
+            .route {
+                padding: 19px 18px;
+            }
+
+            .finale {
+                padding: 24px 19px;
+                border-radius: 19px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="page">
+
+    <!-- ==========================================================
+         ПЕРВЫЙ ЭКРАН
+         ========================================================== -->
+    <header class="hero">
+        <div class="hero-inner">
+            <div>
+                <span class="eyebrow">ИНФОРМАТИКА · 10–11 КЛАССЫ · ПРАКТИЧЕСКАЯ РАБОТА</span>
+                <h1>Основы работы <em>с объектами</em> в GIMP</h1>
+                <p>
+                    Создаём отдельные графические элементы, управляем слоями,
+                    изменяем размер и положение объектов и собираем собственную композицию.
+                </p>
+            </div>
+
+            <div class="hero-art" aria-label="Иллюстрация композиции из объектов">
+                <div class="hero-art-title">Несколько объектов — одно изображение</div>
+                <div class="hero-stage">
+                    <div class="hero-square"></div>
+                    <div class="hero-circle"></div>
+                    <div class="hero-ellipse"></div>
+                    <span class="hero-chip">СЛОИ · ПЕРЕМЕЩЕНИЕ · ПРЕОБРАЗОВАНИЕ</span>
+                </div>
+                <div class="hero-art-note">Все три фигуры можно редактировать независимо</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="tags" aria-label="Основные понятия урока">
+        <span>🗂️ Слои</span>
+        <span>🔲 Выделение</span>
+        <span>↔️ Перемещение</span>
+        <span>🔄 Преобразования</span>
+        <span>💻 или 📒 — два маршрута</span>
+    </div>
+
+    <main>
+        <!-- ======================================================
+             01. ГРАФИЧЕСКИЕ ОБЪЕКТЫ
+             ====================================================== -->
+        <section class="section" aria-labelledby="objects">
+            <div class="section-head">
+                <div class="number">01</div>
+                <div>
+                    <h2 id="objects">Что называют объектом в GIMP?</h2>
+                    <p class="subtitle">Вспоминаем отличие растрового редактора от векторного.</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                Изображение может состоять из множества отдельных элементов:
+                геометрических фигур, фотографий, декоративных деталей и надписей.
+                Для удобства будем называть такие элементы <strong>графическими объектами</strong>.
+            </p>
+
+            <div class="definition">
+                <p>
+                    В <strong>GIMP</strong> объект — это не обязательно самостоятельная векторная фигура.
+                    Чаще всего это <strong>содержимое слоя</strong> или выделенный фрагмент растрового изображения.
+                    Чтобы изменять разные элементы независимо, их удобно размещать на <strong>отдельных слоях</strong>.
+                </p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card blue">
+                    <span class="emoji">▭</span>
+                    <h3>Геометрические фигуры</h3>
+                    <p>Прямоугольники, круги и эллипсы, созданные с помощью выделения и заливки.</p>
+                </div>
+                <div class="card purple">
+                    <span class="emoji">🖼️</span>
+                    <h3>Фрагменты фотографий</h3>
+                    <p>Отдельные предметы и детали, которые можно выделить и перенести на другой слой.</p>
+                </div>
+                <div class="card green">
+                    <span class="emoji">✦</span>
+                    <h3>Декоративные элементы</h3>
+                    <p>Цветные формы и детали, из которых можно составить целостную композицию.</p>
+                </div>
+            </div>
+
+            <div class="note">
+                <p>
+                    💡 <strong>Не путай:</strong> в векторном редакторе фигуры обычно остаются самостоятельными объектами.
+                    В GIMP при рисовании на одном растровом слое пиксели могут объединяться,
+                    поэтому разделение по слоям особенно важно.
+                </p>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             02. СЛОИ И РЕАЛЬНЫЙ ИНТЕРФЕЙС
+             ====================================================== -->
+        <section class="section" aria-labelledby="layers">
+            <div class="section-head">
+                <div class="number">02</div>
+                <div>
+                    <h2 id="layers">Слои: независимое редактирование</h2>
+                    <p class="subtitle">Представь несколько прозрачных плёнок, наложенных друг на друга.</p>
+                </div>
+            </div>
+
+            <p>
+                <strong>Слой</strong> — отдельная часть изображения, которую можно редактировать независимо
+                от других. В диалоге «Слои» видно, какие слои есть в проекте, какой слой выбран
+                и в каком порядке они расположены.
+            </p>
+
+            <div class="layer-demo">
+                <div class="layer-scene" role="img" aria-label="Композиция: эллипс, круг и прямоугольник перекрывают друг друга">
+                    <div class="rect"></div>
+                    <div class="circle"></div>
+                    <div class="ellipse"></div>
+                </div>
+
+                <div>
+                    <div class="layers-panel" aria-label="Условная панель слоёв GIMP">
+                        <div class="layers-panel-title">СЛОИ · учебная схема</div>
+                        <div class="layer-row"><span class="eye">◉</span><span class="thumbnail">◒</span>Эллипс</div>
+                        <div class="layer-row selected"><span class="eye">◉</span><span class="thumbnail">●</span>Круг · выбран</div>
+                        <div class="layer-row"><span class="eye">◉</span><span class="thumbnail">▰</span>Прямоугольник</div>
+                        <div class="layer-row"><span class="eye">◉</span><span class="thumbnail">□</span>Фон</div>
+                    </div>
+                    <p class="layer-explanation">
+                        Верхний слой перекрывает нижние там, где его пиксели непрозрачны.
+                        Изменяя порядок слоёв, мы изменяем видимость объектов.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                Для нового объекта выбери <strong>«Слой → Создать слой…»</strong>
+                и укажи <strong>прозрачную заливку</strong>. Для копирования уже готового объекта
+                можно использовать команду <strong>«Слой → Создать копию слоя»</strong>.
+            </p>
+
+            <figure class="screenshot">
+                <img
+                    src="img-1.png"
+                    alt="Пример настоящего интерфейса графического редактора GIMP 3"
+                    loading="lazy"
+                    width="960"
+                    height="599"
+                >
+                <figcaption>
+                    Реальный интерфейс GIMP 3.0. Скриншот размещён на
+                    <a href="https://commons.wikimedia.org/wiki/File:GIMP-3.png">Wikimedia Commons</a>.
+                    Названия и расположение панелей могут немного отличаться в GIMP 2.10 и GIMP 3.
+                </figcaption>
+            </figure>
+        </section>
+
+        <!-- ======================================================
+             03. ВЫДЕЛЕНИЕ И СОЗДАНИЕ ФИГУР
+             ====================================================== -->
+        <section class="section" aria-labelledby="selection">
+            <div class="section-head">
+                <div class="number">03</div>
+                <div>
+                    <h2 id="selection">Создание объекта и выделение фрагмента</h2>
+                    <p class="subtitle">Граница выделения показывает, с какими пикселями мы собираемся работать.</p>
+                </div>
+            </div>
+
+            <p>
+                Для создания простых фигур удобно использовать <strong>прямоугольное</strong>
+                и <strong>эллиптическое выделение</strong>. Сначала выделяем область на прозрачном
+                слое, затем заполняем её цветом — так появляется новый графический элемент.
+            </p>
+
+            <div class="selection-diagram">
+                <figure class="selection-sample dashed">
+                    <div class="selection-shape"></div>
+                    <figcaption>Область выделена пунктирной рамкой</figcaption>
+                </figure>
+                <div class="selection-arrow">→</div>
+                <figure class="selection-sample">
+                    <div class="selection-shape"></div>
+                    <figcaption>Выделение снято — фигура остаётся</figcaption>
+                </figure>
+            </div>
+
+            <div class="grid-2">
+                <div class="card blue">
+                    <h3>Основные способы выделения</h3>
+                    <p><strong>Прямоугольное</strong> — для прямоугольных областей; <strong>эллиптическое</strong> — для кругов и овалов; <strong>свободное</strong> — для областей произвольной формы; <strong>выделение смежных областей</strong> — для похожих соседних пикселей.</p>
+                </div>
+                <div class="card purple">
+                    <h3>Из выделения в самостоятельный объект</h3>
+                    <p>Выделенный фрагмент готовой картинки можно скопировать и вставить как новый слой. Тогда он становится отдельным редактируемым элементом композиции.</p>
+                </div>
+            </div>
+
+            <div class="note green">
+                <p>
+                    ✅ <strong>Практический совет:</strong> после заливки нового объекта воспользуйся
+                    <strong>«Выделение → Снять выделение»</strong>, чтобы рамка больше не ограничивала
+                    последующие действия. Не путай перемещение <em>рамки выделения</em> и перемещение
+                    <em>самого объекта</em>.
+                </p>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             04. ОСНОВНЫЕ ПРЕОБРАЗОВАНИЯ
+             ====================================================== -->
+        <section class="section" aria-labelledby="transforms">
+            <div class="section-head">
+                <div class="number">04</div>
+                <div>
+                    <h2 id="transforms">Перемещение, масштаб, вращение и отражение</h2>
+                    <p class="subtitle">Четыре основных способа изменить графический элемент.</p>
+                </div>
+            </div>
+
+            <p>
+                Преобразования помогают менять положение и внешний вид элементов композиции.
+                Если объект находится на отдельном слое, к нему можно применить инструмент,
+                не затрагивая остальные части изображения.
+            </p>
+
+            <div class="transform-board">
+                <div class="transform-tile">
+                    <svg viewBox="0 0 160 125" role="img" aria-label="Перемещение синего квадрата вправо">
+                        <rect x="14" y="35" width="45" height="45" rx="6" fill="none" stroke="#9bb5d6" stroke-dasharray="5 4" stroke-width="3"/>
+                        <path d="M65 58H101" stroke="#2e74cb" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M94 50L103 58L94 66" fill="none" stroke="#2e74cb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="108" y="35" width="45" height="45" rx="6" fill="#95c6ff" stroke="#3879c8" stroke-width="4"/>
+                    </svg>
+                    <strong>Перемещение</strong>
+                    <small>Меняется положение</small>
+                </div>
+                <div class="transform-tile">
+                    <svg viewBox="0 0 160 125" role="img" aria-label="Маленький круг превращается в большой">
+                        <circle cx="39" cy="70" r="20" fill="#d0baff" stroke="#8061c2" stroke-width="4"/>
+                        <path d="M66 69H89M83 63L90 69L83 76" fill="none" stroke="#8264c4" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="120" cy="70" r="35" fill="#d0baff" stroke="#8061c2" stroke-width="4"/>
+                    </svg>
+                    <strong>Масштаб</strong>
+                    <small>Меняется размер</small>
+                </div>
+                <div class="transform-tile">
+                    <svg viewBox="0 0 160 125" role="img" aria-label="Эллипс до и после вращения">
+                        <ellipse cx="45" cy="67" rx="34" ry="14" fill="#9cdfc3" stroke="#2b9779" stroke-width="4"/>
+                        <path d="M86 49A24 24 0 0 1 90 81M88 74L92 84L99 78" fill="none" stroke="#2b9779" stroke-width="3" stroke-linecap="round"/>
+                        <ellipse cx="124" cy="67" rx="34" ry="14" fill="#9cdfc3" stroke="#2b9779" stroke-width="4" transform="rotate(-46 124 67)"/>
+                    </svg>
+                    <strong>Вращение</strong>
+                    <small>Меняется угол</small>
+                </div>
+                <div class="transform-tile">
+                    <svg viewBox="0 0 160 125" role="img" aria-label="Стрелка направо и отражённая стрелка налево">
+                        <path d="M15 50H43V37L68 63L43 89V76H15Z" fill="#ffdba0" stroke="#d19442" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M80 39V90" stroke="#b0bdd0" stroke-dasharray="5 4" stroke-width="2"/>
+                        <path d="M145 50H117V37L92 63L117 89V76H145Z" fill="#ffdba0" stroke="#d19442" stroke-width="3" stroke-linejoin="round"/>
+                    </svg>
+                    <strong>Отражение</strong>
+                    <small>Меняется направление</small>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card blue">
+                    <h3>Как преобразовать именно слой?</h3>
+                    <p>Выбери нужный слой в диалоге «Слои». В параметрах инструмента преобразования проверь, что выбран режим <strong>«Слой»</strong>, а не «Выделение», «Контур» или «Изображение».</p>
+                </div>
+                <div class="card green">
+                    <h3>Как сохранить пропорции?</h3>
+                    <p>При использовании инструмента «Масштаб» следи за связью ширины и высоты: значок <strong>цепочки</strong> позволяет сохранять их соотношение. Сильное увеличение растровой фигуры может ухудшить чёткость её краёв.</p>
+                </div>
+            </div>
+
+            <div class="shortcuts" aria-label="Полезные клавиши GIMP">
+                <span>Перемещение <kbd>M</kbd></span>
+                <span>Масштаб <kbd>Shift</kbd> + <kbd>S</kbd></span>
+                <span>Вращение <kbd>Shift</kbd> + <kbd>R</kbd></span>
+                <span>Отражение <kbd>Shift</kbd> + <kbd>F</kbd></span>
+            </div>
+
+            <div class="note">
+                <p>
+                    ⚠️ <strong>Типичная ошибка:</strong> инструмент преобразовал не ту часть изображения.
+                    Перед действием проверь <strong>активный слой</strong>, <strong>режим инструмента</strong>
+                    и наличие выделения. Если результат неверный, воспользуйся отменой действия.
+                </p>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             05. КОПИРОВАНИЕ И КОМПОЗИЦИЯ
+             ====================================================== -->
+        <section class="section" aria-labelledby="composition">
+            <div class="section-head">
+                <div class="number">05</div>
+                <div>
+                    <h2 id="composition">Копирование и порядок расположения объектов</h2>
+                    <p class="subtitle">Повторение элементов и наложение слоёв помогают построить композицию.</p>
+                </div>
+            </div>
+
+            <p>
+                Если требуется несколько похожих объектов, не обязательно рисовать каждый заново.
+                Можно <strong>создать копию слоя</strong>, переместить её и применить отдельное преобразование.
+                Например, для симметричной композиции удобно использовать отражение.
+            </p>
+
+            <div class="poster-figure">
+                <figure class="poster-art" aria-label="Учебный пример композиции из геометрических фигур">
+                    <div class="poster-art-title">Пример геометрической композиции</div>
+                    <svg viewBox="0 0 430 270" role="img" aria-label="Синяя карточка с жёлтой отметкой, большой сиреневый круг, зелёный эллипс под углом и зеркальная копия карточки">
+                        <rect x="28" y="37" width="176" height="105" rx="17" fill="#9cc8ff" stroke="#457cc7" stroke-width="6"/>
+                        <circle cx="176" cy="62" r="14" fill="#ffe2a0" stroke="#dc9e43" stroke-width="3"/>
+                        <circle cx="253" cy="139" r="80" fill="#d1bcfa" stroke="#8b6dc5" stroke-width="6"/>
+                        <ellipse cx="175" cy="199" rx="94" ry="26" fill="#a1e3c4" stroke="#319e79" stroke-width="6" transform="rotate(-23 175 199)"/>
+                        <rect x="303" y="189" width="102" height="64" rx="13" fill="#9cc8ff" stroke="#457cc7" stroke-width="5"/>
+                        <circle cx="321" cy="207" r="10" fill="#ffe2a0" stroke="#dc9e43" stroke-width="3"/>
+                    </svg>
+                </figure>
+
+                <div class="feature-list">
+                    <div class="feature"><b>1</b><p><strong>Прямоугольник</strong> перемещён и оформлен небольшой асимметричной меткой.</p></div>
+                    <div class="feature"><b>2</b><p><strong>Круг</strong> масштабирован, чтобы он выделялся среди остальных элементов.</p></div>
+                    <div class="feature"><b>3</b><p><strong>Эллипс</strong> повёрнут под углом для изменения композиции.</p></div>
+                    <div class="feature"><b>4</b><p><strong>Копия прямоугольника</strong> отражена: жёлтая метка оказалась с другой стороны.</p></div>
+                </div>
+            </div>
+
+            <div class="note green">
+                <p>
+                    ✅ <strong>Почему метка важна:</strong> обычный прямоугольник, круг или эллипс
+                    могут выглядеть одинаково после зеркального отражения. Если добавить
+                    <strong>несимметричную деталь</strong>, результат отражения станет заметным.
+                </p>
+            </div>
+
+            <div class="step-strip">
+                <div><strong>Создай</strong> объект на отдельном прозрачном слое.</div>
+                <div><strong>Выбери</strong> нужный слой и инструмент преобразования.</div>
+                <div><strong>Преобразуй</strong> объект и при необходимости создай копию.</div>
+                <div><strong>Расположи</strong> слои в нужном порядке.</div>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             06. ПРАКТИЧЕСКАЯ РАБОТА
+             ====================================================== -->
+        <section class="section" aria-labelledby="practice">
+            <div class="section-head">
+                <div class="number">06</div>
+                <div>
+                    <h2 id="practice">Практическая работа</h2>
+                    <p class="subtitle">Общая цель и два равноценных способа выполнения.</p>
+                </div>
+            </div>
+
+            <div class="task-banner">
+                <h3>«Геометрическая композиция»</h3>
+                <p>
+                    Создай композицию из <strong>прямоугольника, круга и эллипса</strong>.
+                    Выполни перемещение, масштабирование, вращение,
+                    создай <strong>копию объекта и отрази её</strong>, затем покажи
+                    частичное перекрытие элементов. Чтобы отражение было заметно,
+                    добавь к прямоугольнику <strong>маленькую несимметричную метку</strong>.
+                </p>
+            </div>
+
+            <div class="routes">
+                <!-- МАРШРУТ 1: РАБОТА В GIMP -->
+                <div class="route">
+                    <span class="route-label">МАРШРУТ 1 · ЗА КОМПЬЮТЕРОМ</span>
+                    <h3>💻 Создание в GIMP</h3>
+                    <p>Создай редактируемый проект размером 900 × 600 пикселей.</p>
+                    <ol>
+                        <li>Запусти GIMP и создай новое изображение <strong>900 × 600 px</strong> с фоном.</li>
+                        <li>Создай прозрачный слой «Прямоугольник». Прямоугольным выделением и заливкой нарисуй фигуру; добавь цветную метку в одном её углу.</li>
+                        <li>На отдельных прозрачных слоях нарисуй <strong>круг</strong> и <strong>эллипс</strong> с помощью эллиптического выделения и заливки. После каждой фигуры снимай выделение.</li>
+                        <li>Выбери нужный слой и инструмент <strong>«Перемещение»</strong>. Измени положение прямоугольника.</li>
+                        <li>Выбери слой с кругом и с помощью <strong>«Масштаба»</strong> увеличь или уменьши его, сохранив пропорции.</li>
+                        <li>Выбери слой с эллипсом и инструментом <strong>«Вращение»</strong> поверни его на заметный угол.</li>
+                        <li>Создай копию слоя с прямоугольником и меткой. Примени к копии <strong>горизонтальное отражение</strong>, затем перемести её в другую часть изображения.</li>
+                        <li>Измени порядок слоёв, чтобы часть фигур перекрывала другие. Проверь, что преобразования применялись к нужным слоям.</li>
+                        <li>Сохрани редактируемый проект в <strong>XCF</strong> и экспортируй итоговое изображение в <strong>PNG</strong>.</li>
+                    </ol>
+                </div>
+
+                <!-- МАРШРУТ 2: БЕЗ КОМПЬЮТЕРА -->
+                <div class="route paper">
+                    <span class="route-label">МАРШРУТ 2 · БЕЗ КОМПЬЮТЕРА</span>
+                    <h3>📒 Моделирование на бумаге</h3>
+                    <p>Выполни те же преобразования на листе бумаги или в тетради.</p>
+                    <ol>
+                        <li>Нарисуй рамку будущей композиции. Условно считай её холстом <strong>900 × 600 px</strong>.</li>
+                        <li>Нарисуй <strong>прямоугольник</strong>, <strong>круг</strong> и <strong>эллипс</strong>, выбрав для каждого разный цвет. Добавь к прямоугольнику небольшую метку в одном углу.</li>
+                        <li>Подпиши фигуры как отдельные <strong>слои</strong>: «Прямоугольник», «Круг», «Эллипс».</li>
+                        <li>Покажи <strong>перемещение</strong> прямоугольника: отметь его прежнее положение пунктиром и нарисуй стрелку к новому.</li>
+                        <li>Покажи <strong>масштабирование</strong> круга: рядом изобрази его увеличенный или уменьшенный вариант с сохранением формы.</li>
+                        <li>Покажи <strong>вращение</strong> эллипса, нарисовав его под заметным углом по сравнению с исходным положением.</li>
+                        <li>Нарисуй <strong>копию прямоугольника с меткой</strong> в зеркальном виде: метка должна оказаться с противоположной стороны.</li>
+                        <li>Собери в рамке окончательную композицию из преобразованных фигур с частичным перекрытием и подпиши <strong>порядок слоёв</strong> (сверху вниз).</li>
+                        <li>Оформи работу аккуратно; возле фигур сделай короткие подписи: «перемещение», «масштаб», «вращение», «отражение».</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3 class="mini-title">Общие критерии оценивания</h3>
+            <ul class="criteria">
+                <li>Есть законченная композиция из нескольких фигур.</li>
+                <li>Показаны прямоугольник, круг и эллипс.</li>
+                <li>Продемонстрировано перемещение.</li>
+                <li>Продемонстрировано масштабирование.</li>
+                <li>Продемонстрировано вращение.</li>
+                <li>Создана зеркальная копия фигуры.</li>
+                <li>Показано частичное перекрытие объектов и порядок слоёв.</li>
+                <li>Работа оформлена аккуратно, преобразования понятны.</li>
+            </ul>
+
+            <div class="note green">
+                <p>
+                    ✅ <strong>Оба маршрута равнозначны по учебной цели.</strong>
+                    Важнее правильно показать создание и преобразование объектов,
+                    чем сложность рисунка или наличие установленной программы.
+                </p>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             07. СОХРАНЕНИЕ ПРОЕКТА И ЭКСПОРТ
+             ====================================================== -->
+        <section class="section" aria-labelledby="saving">
+            <div class="section-head">
+                <div class="number">07</div>
+                <div>
+                    <h2 id="saving">Сохранение проекта и готового изображения</h2>
+                    <p class="subtitle">Две разные задачи — два разных формата.</p>
+                </div>
+            </div>
+
+            <p>
+                В GIMP важно различать сохранение проекта для дальнейшего редактирования
+                и экспорт готового изображения для просмотра или отправки.
+            </p>
+
+            <div class="save-panel">
+                <div class="save-card">
+                    <span class="file-tag">.XCF</span>
+                    <h3>Редактируемый проект</h3>
+                    <p>
+                        Сохраняет слои и другие сведения, необходимые для продолжения работы.
+                        Используй <strong>«Файл → Сохранить»</strong>.
+                    </p>
+                </div>
+                <div class="save-card">
+                    <span class="file-tag">.PNG</span>
+                    <h3>Готовая картинка</h3>
+                    <p>
+                        Удобна для просмотра и отправки, но не сохраняет редактируемую структуру
+                        слоёв GIMP. Используй <strong>«Файл → Экспортировать как…»</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                <p>
+                    💾 <strong>Не заменяй одно другим:</strong> PNG сохраняет видимую композицию,
+                    а XCF нужен, если позднее потребуется изменить положение отдельных объектов.
+                </p>
+            </div>
+        </section>
+
+        <!-- ======================================================
+             08. ВОПРОСЫ ДЛЯ ПОВТОРЕНИЯ
+             ====================================================== -->
+        <section class="section" aria-labelledby="questions">
+            <div class="section-head">
+                <div class="number">08</div>
+                <div>
+                    <h2 id="questions">Вопросы для повторения</h2>
+                    <p class="subtitle">12 вопросов по теории и практической работе.</p>
+                </div>
+            </div>
+
+            <ol class="questions">
+                <li>Что можно считать графическим объектом при работе в GIMP?</li>
+                <li>Почему объекты удобно размещать на отдельных слоях?</li>
+                <li>Чем граница выделения отличается от содержимого слоя?</li>
+                <li>Как создать простую фигуру с помощью выделения и заливки?</li>
+                <li>Как изменить положение отдельного объекта в GIMP?</li>
+                <li>Что изменяет инструмент «Масштаб» и зачем сохранять пропорции?</li>
+                <li>Для чего используется инструмент «Вращение»?</li>
+                <li>Чем горизонтальное отражение отличается от вертикального?</li>
+                <li>Как создать копию объекта и независимо изменить её?</li>
+                <li>Почему порядок слоёв влияет на видимость объектов в композиции?</li>
+                <li>Что нужно проверить, если преобразование применяется не к тому элементу?</li>
+                <li>Чем сохранение проекта в XCF отличается от экспорта изображения в PNG?</li>
+            </ol>
+        </section>
+
+        <!-- ======================================================
+             ИТОГ УРОКА
+             ====================================================== -->
+        <section class="finale" aria-labelledby="summary">
+            <h2 id="summary">✨ Итог урока</h2>
+            <p>
+                В GIMP можно создавать графические элементы и редактировать их независимо,
+                если размещать их на <strong>отдельных слоях</strong>. Для работы с объектами
+                используются <strong>выделение, перемещение, масштабирование, вращение,
+                отражение и копирование</strong>. Изменяя порядок слоёв, можно управлять
+                перекрытием фигур и строить композицию. Проект сохраняют в <strong>XCF</strong>,
+                а готовое изображение экспортируют в <strong>PNG</strong>.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        Информатика · 10–11 классы · GIMP · Основы работы с объектами · ПЗ
+    </footer>
+</div>
+</body>
+</html>

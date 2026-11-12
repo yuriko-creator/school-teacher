@@ -1,0 +1,1758 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Информатика, 7 класс. Paint: растяжение и сжатие изображений, создание надписей. Практическая работа в двух равноценных вариантах.">
+    <title>Растяжение, сжатие и надписи в Paint — 7 класс</title>
+
+    <style>
+        /* ==========================================================
+           01. ПАЛИТРА И ОБЩИЕ НАСТРОЙКИ
+           ========================================================== */
+        :root {
+            --page: #f4f7fc;
+            --paper: #ffffff;
+            --text: #25354c;
+            --muted: #61748d;
+            --blue: #3878d3;
+            --blue-light: #eaf3ff;
+            --green: #198c6d;
+            --green-light: #e7f7ef;
+            --purple: #7256c0;
+            --purple-light: #f0ecff;
+            --orange: #b97924;
+            --orange-light: #fff1df;
+            --line: #dfe8f3;
+            --shadow: 0 16px 36px rgba(28, 58, 100, 0.065);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--page);
+            color: var(--text);
+            font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 0 0 12px;
+            line-height: 1.25;
+            letter-spacing: -0.022em;
+        }
+
+        p {
+            margin: 0 0 15px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        img, svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: #2969b4;
+        }
+
+        strong {
+            font-weight: 750;
+        }
+
+        .page {
+            width: min(1080px, calc(100% - 36px));
+            margin: 0 auto;
+            padding: 22px 0 50px;
+        }
+
+        /* ==========================================================
+           02. ВВОДНЫЙ ЭКРАН
+           ========================================================== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            color: white;
+            background: linear-gradient(120deg, #173763 0%, #2b64ad 66%, #388eae 100%);
+            box-shadow: 0 20px 44px rgba(25, 66, 121, 0.18);
+        }
+
+        .hero::before {
+            position: absolute;
+            top: -200px;
+            right: -170px;
+            width: 410px;
+            height: 410px;
+            content: "";
+            border: 65px solid rgba(255, 255, 255, 0.055);
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: 28px;
+            align-items: center;
+            padding: 45px 44px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 6px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.13);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin-bottom: 17px;
+            font-size: clamp(31px, 4.6vw, 51px);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: #ffdfa1;
+        }
+
+        .hero p {
+            max-width: 570px;
+            color: #e6f1ff;
+            font-size: 17px;
+        }
+
+        .hero-demo {
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 23px;
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(4px);
+        }
+
+        .demo-caption {
+            margin-bottom: 12px;
+            color: #eaf4ff;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .hero-poster {
+            min-height: 215px;
+            padding: 17px 16px;
+            border-radius: 13px;
+            background: #fff8e9;
+            color: #21456c;
+            box-shadow: 0 10px 20px rgba(10, 35, 70, 0.15);
+        }
+
+        .hero-poster small {
+            color: #7b5b9c;
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: 0.14em;
+        }
+
+        .hero-poster h3 {
+            margin: 7px 0 11px;
+            font-size: clamp(20px, 2.5vw, 28px);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-drawings {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 6px 0;
+        }
+
+        .shape-large,
+        .shape-small {
+            border: 4px solid #5486d0;
+            background: #9fd4ff;
+        }
+
+        .shape-large {
+            width: 84px;
+            height: 72px;
+            border-radius: 50%;
+        }
+
+        .shape-small {
+            width: 34px;
+            height: 31px;
+            border-radius: 50%;
+            background: #ffd789;
+            border-color: #e7a943;
+        }
+
+        .hero-star {
+            color: #a177dc;
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .hero-bottom {
+            margin-top: 9px;
+            padding: 8px;
+            border-radius: 8px;
+            background: #e6f0ff;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin: 17px 0 0;
+        }
+
+        .tags span {
+            padding: 6px 13px;
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            background: white;
+            color: #526b85;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        /* ==========================================================
+           03. ОБЩИЕ КОМПОНЕНТЫ УРОКА
+           ========================================================== */
+        .section {
+            margin-top: 23px;
+            padding: 35px 39px;
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            background: var(--paper);
+            box-shadow: var(--shadow);
+        }
+
+        .section-heading {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            margin-bottom: 22px;
+        }
+
+        .section-number {
+            display: grid;
+            flex: 0 0 43px;
+            width: 43px;
+            height: 43px;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-size: 15px;
+            font-weight: 850;
+        }
+
+        .section-heading h2 {
+            margin: 1px 0 5px;
+            font-size: clamp(23px, 3vw, 30px);
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lead {
+            font-size: 17px;
+        }
+
+        .definition {
+            margin: 19px 0;
+            padding: 17px 20px;
+            border-left: 5px solid var(--blue);
+            border-radius: 0 15px 15px 0;
+            background: var(--blue-light);
+        }
+
+        .definition strong {
+            color: #215faa;
+        }
+
+        .note {
+            margin: 18px 0;
+            padding: 16px 19px;
+            border: 1px solid #f1dcba;
+            border-radius: 16px;
+            background: var(--orange-light);
+        }
+
+        .note.green {
+            border-color: #d5ebdf;
+            background: var(--green-light);
+        }
+
+        .grid-2,
+        .grid-3 {
+            display: grid;
+            gap: 15px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .soft-card {
+            padding: 19px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #f9fbff;
+        }
+
+        .soft-card.blue {
+            background: #edf5ff;
+            border-color: #dbe8fa;
+        }
+
+        .soft-card.green {
+            background: #eaf8f1;
+            border-color: #d8eee3;
+        }
+
+        .soft-card.purple {
+            background: #f2efff;
+            border-color: #e7e0fc;
+        }
+
+        .soft-card h3 {
+            margin-bottom: 7px;
+            font-size: 18px;
+        }
+
+        .soft-card p {
+            color: #586d83;
+            font-size: 14px;
+        }
+
+        .emoji {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 28px;
+            line-height: 1.3;
+        }
+
+        .mini-title {
+            margin: 25px 0 13px;
+            font-size: 19px;
+        }
+
+        .illustration-panel {
+            padding: 21px;
+            border: 1px solid #e2e6f5;
+            border-radius: 21px;
+            background: linear-gradient(115deg, #f2f7ff, #f7f4ff);
+        }
+
+        /* ==========================================================
+           04. ВИЗУАЛЬНОЕ СРАВНЕНИЕ РАЗМЕРОВ
+           ========================================================== */
+        .size-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .size-item {
+            min-width: 0;
+            padding: 16px 11px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #f8fbff;
+            text-align: center;
+        }
+
+        .size-item b {
+            display: block;
+            margin-bottom: 2px;
+            color: #285d9a;
+            font-size: 23px;
+        }
+
+        .size-item small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .scale-art {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 143px;
+            margin: 7px auto 12px;
+        }
+
+        .scale-art .circle {
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 4px solid #447bc9;
+            background: #9ecbfa;
+            box-shadow: inset -9px -10px 0 rgba(46, 112, 191, 0.1);
+        }
+
+        .scale-art .original {
+            width: 78px;
+            height: 78px;
+        }
+
+        .scale-art .enlarged {
+            width: 117px;
+            height: 117px;
+        }
+
+        .scale-art .reduced {
+            width: 39px;
+            height: 39px;
+        }
+
+        .compare-label {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 8px;
+            background: #eaf3ff;
+            color: #2a6bba;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .ratio-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 13px;
+            margin: 20px 0;
+        }
+
+        .ratio-card {
+            padding: 17px 12px;
+            border: 1px solid #dfe6f4;
+            border-radius: 17px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .ratio-card svg {
+            width: 100%;
+            height: 125px;
+            margin: auto;
+        }
+
+        .ratio-card strong {
+            display: block;
+            margin: 7px 0 4px;
+            font-size: 15px;
+        }
+
+        .ratio-card small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================
+           05. МАКЕТ ОКНА PAINT И ПОШАГОВЫЕ ИНСТРУКЦИИ
+           ========================================================== */
+        .app-mock {
+            overflow: hidden;
+            border: 1px solid #ceddec;
+            border-radius: 17px;
+            background: #fff;
+            box-shadow: 0 10px 22px rgba(30, 61, 100, 0.08);
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #e9f1fc;
+            color: #415f82;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-dots i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9aafc7;
+        }
+
+        .fake-ribbon {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 11px 12px;
+            border-bottom: 1px solid #dce7f2;
+            background: #f8fbff;
+        }
+
+        .fake-ribbon span {
+            padding: 5px 9px;
+            border: 1px solid #e0e8f2;
+            border-radius: 8px;
+            background: #fff;
+            color: #496782;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .fake-ribbon span.focus {
+            border-color: #7ba6e2;
+            background: #e2efff;
+            color: #235fa9;
+        }
+
+        .fake-canvas {
+            display: grid;
+            min-height: 190px;
+            place-items: center;
+            padding: 24px;
+            background: #eef2f7;
+        }
+
+        .fake-selection {
+            position: relative;
+            display: grid;
+            width: 70%;
+            max-width: 230px;
+            min-height: 105px;
+            place-items: center;
+            border: 2px dashed #3878d3;
+            background: #fff;
+        }
+
+        .fake-selection::before,
+        .fake-selection::after {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid #3878d3;
+            background: white;
+            content: "";
+        }
+
+        .fake-selection::before {
+            top: -6px;
+            left: -6px;
+        }
+
+        .fake-selection::after {
+            right: -6px;
+            bottom: -6px;
+        }
+
+        .fake-selection .object {
+            width: 90px;
+            height: 61px;
+            border: 4px solid #4673c5;
+            border-radius: 50%;
+            background: #9accff;
+        }
+
+        .mock-caption {
+            padding: 11px 14px;
+            background: #fff;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .steps {
+            display: grid;
+            gap: 9px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: step;
+        }
+
+        .steps li {
+            position: relative;
+            min-height: 45px;
+            padding: 10px 13px 10px 47px;
+            border: 1px solid #e0e9f4;
+            border-radius: 13px;
+            background: #f8fbff;
+            font-size: 14px;
+            counter-increment: step;
+        }
+
+        .steps li::before {
+            display: grid;
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            width: 25px;
+            height: 25px;
+            place-items: center;
+            border-radius: 8px;
+            background: #e4efff;
+            color: #286ac0;
+            content: counter(step);
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .photo {
+            overflow: hidden;
+            margin: 0;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #f1f4f9;
+        }
+
+        .photo img {
+            width: 100%;
+            max-height: 285px;
+            object-fit: contain;
+            background: #f1f4f9;
+        }
+
+        .photo figcaption {
+            padding: 11px 14px;
+            background: #fcfdff;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* ==========================================================
+           06. ПАРАМЕТРЫ НАДПИСИ И ОБРАЗЕЦ АФИШИ
+           ========================================================== */
+        .text-demo {
+            padding: 22px;
+            border: 1px solid #e3ddfa;
+            border-radius: 20px;
+            background: linear-gradient(125deg, #f6f3ff, #edf6ff);
+        }
+
+        .text-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 15px;
+        }
+
+        .text-toolbar span {
+            padding: 5px 10px;
+            border: 1px solid #dce5f1;
+            border-radius: 8px;
+            background: white;
+            color: #44647f;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .text-toolbar span.selected {
+            border-color: #b7a3e8;
+            background: #e9e1ff;
+            color: #6846b3;
+        }
+
+        .text-sheet {
+            padding: 20px 18px;
+            border: 2px dashed #af9fe3;
+            border-radius: 11px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .text-sheet .sample-title {
+            color: #305b96;
+            font-size: clamp(18px, 3vw, 27px);
+            font-weight: 900;
+        }
+
+        .text-sheet .sample-subtitle {
+            margin-top: 4px;
+            color: #7858ae;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .poster-gallery {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 20px;
+            align-items: center;
+            margin: 21px 0;
+        }
+
+        .poster-example {
+            position: relative;
+            overflow: hidden;
+            min-height: 395px;
+            padding: 28px 25px;
+            border: 1px solid #e9d7b7;
+            border-radius: 19px;
+            background: linear-gradient(145deg, #fff7e6 0%, #fffdf8 61%, #f4edff 100%);
+            box-shadow: 0 13px 23px rgba(99, 75, 36, 0.09);
+        }
+
+        .poster-example::before {
+            position: absolute;
+            top: -70px;
+            right: -70px;
+            width: 205px;
+            height: 205px;
+            border: 36px solid rgba(162, 126, 214, 0.13);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .poster-kicker {
+            position: relative;
+            z-index: 1;
+            color: #926bb3;
+            font-size: 12px;
+            font-weight: 850;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .poster-example h3 {
+            position: relative;
+            z-index: 1;
+            margin: 10px 0 5px;
+            color: #225c9a;
+            font-size: clamp(24px, 3vw, 38px);
+            line-height: 1.15;
+        }
+
+        .poster-description {
+            position: relative;
+            z-index: 1;
+            color: #5c6e82;
+            font-size: 13px;
+        }
+
+        .poster-shapes {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 15px;
+            height: 157px;
+            margin: 8px 0 15px;
+        }
+
+        .poster-big {
+            width: 112px;
+            height: 112px;
+            border: 5px solid #4978c3;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #d2ebff, #87c2f3);
+        }
+
+        .poster-tall {
+            width: 54px;
+            height: 148px;
+            border: 5px solid #9a75d1;
+            border-radius: 50%;
+            background: #d4b8ff;
+        }
+
+        .poster-mini {
+            width: 42px;
+            height: 42px;
+            margin-bottom: 4px;
+            border: 4px solid #cf9a40;
+            border-radius: 50%;
+            background: #ffdb92;
+        }
+
+        .poster-footer {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            padding: 13px 9px;
+            border-radius: 12px;
+            background: #e7efff;
+            color: #275993;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 850;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            padding: 13px 14px;
+            border: 1px solid #e2e8f3;
+            border-radius: 14px;
+            background: #fbfcff;
+        }
+
+        .feature .marker {
+            flex: 0 0 29px;
+            display: grid;
+            width: 29px;
+            height: 29px;
+            place-items: center;
+            border-radius: 9px;
+            background: #eaf2ff;
+            color: #2e70c6;
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .feature p {
+            font-size: 14px;
+        }
+
+        /* ==========================================================
+           07. ДВА РАВНОЦЕННЫХ МАРШРУТА ПРАКТИКИ
+           ========================================================== */
+        .task-banner {
+            padding: 21px 23px;
+            border-radius: 19px;
+            background: #214d82;
+            color: white;
+        }
+
+        .task-banner h3 {
+            font-size: 21px;
+        }
+
+        .task-banner p {
+            color: #e7f2ff;
+        }
+
+        .routes {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+            margin: 20px 0;
+        }
+
+        .route {
+            padding: 23px;
+            border: 1px solid #d6e6f8;
+            border-radius: 20px;
+            background: #edf5ff;
+        }
+
+        .route.paper {
+            border-color: #d5ebdf;
+            background: #eaf8f0;
+        }
+
+        .route-label {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 5px 11px;
+            border-radius: 30px;
+            background: #dceaff;
+            color: #2766b3;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .route.paper .route-label {
+            background: #d3f0e1;
+            color: #197e5e;
+        }
+
+        .route h3 {
+            margin-bottom: 8px;
+            font-size: 21px;
+        }
+
+        .route p {
+            color: #536a82;
+            font-size: 14px;
+        }
+
+        .route ol {
+            margin: 13px 0 0;
+            padding-left: 23px;
+        }
+
+        .route li {
+            margin-bottom: 11px;
+            padding-left: 3px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .route li::marker {
+            color: #306fc4;
+            font-weight: 850;
+        }
+
+        .route.paper li::marker {
+            color: #168662;
+        }
+
+        .criteria {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+            padding: 0;
+            margin: 16px 0 0;
+            list-style: none;
+        }
+
+        .criteria li {
+            padding: 11px 13px;
+            border: 1px solid #e0eaf4;
+            border-radius: 12px;
+            background: #f8fbff;
+            font-size: 14px;
+        }
+
+        .criteria li::before {
+            padding-right: 8px;
+            color: var(--green);
+            content: "✓";
+            font-weight: 850;
+        }
+
+        /* ==========================================================
+           08. ВОПРОСЫ И ИТОГ
+           ========================================================== */
+        .questions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: question;
+        }
+
+        .questions li {
+            position: relative;
+            min-height: 77px;
+            padding: 15px 15px 15px 50px;
+            border: 1px solid #e1eaf4;
+            border-radius: 14px;
+            background: #f9fbff;
+            font-size: 14px;
+            line-height: 1.55;
+            counter-increment: question;
+        }
+
+        .questions li::before {
+            position: absolute;
+            top: 14px;
+            left: 13px;
+            display: grid;
+            width: 26px;
+            height: 26px;
+            place-items: center;
+            border-radius: 8px;
+            background: #e6f0ff;
+            color: #2a6dc4;
+            content: counter(question, decimal-leading-zero);
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .finale {
+            margin-top: 23px;
+            padding: 31px 35px;
+            border: 1px solid #d5e8e1;
+            border-radius: 25px;
+            background: linear-gradient(115deg, #e7f6ef, #e9f2ff);
+        }
+
+        .finale h2 {
+            margin-bottom: 10px;
+            color: #285f88;
+            font-size: 26px;
+        }
+
+        footer {
+            padding: 24px 0 4px;
+            color: #7c8fa3;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* ==========================================================
+           09. АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ И ТЕЛЕФОНОВ
+           ========================================================== */
+        @media (max-width: 820px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding: 34px 30px;
+            }
+
+            .hero-demo {
+                max-width: 460px;
+            }
+
+            .section {
+                padding: 29px 26px;
+            }
+
+            .poster-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-example {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .page {
+                width: calc(100% - 22px);
+                padding: 10px 0 36px;
+            }
+
+            .hero {
+                border-radius: 22px;
+            }
+
+            .hero-inner {
+                gap: 20px;
+                padding: 28px 20px;
+            }
+
+            .hero h1 {
+                font-size: 33px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .section {
+                margin-top: 14px;
+                padding: 23px 17px;
+                border-radius: 20px;
+            }
+
+            .section-heading {
+                gap: 10px;
+            }
+
+            .section-number {
+                flex-basis: 35px;
+                width: 35px;
+                height: 35px;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+
+            .section-heading h2 {
+                font-size: 23px;
+            }
+
+            .lead {
+                font-size: 16px;
+            }
+
+            .grid-2,
+            .grid-3,
+            .routes,
+            .criteria,
+            .questions,
+            .size-comparison,
+            .ratio-list {
+                grid-template-columns: 1fr;
+            }
+
+            .size-item {
+                padding: 12px;
+            }
+
+            .scale-art {
+                height: 129px;
+                margin: 5px 0 8px;
+            }
+
+            .ratio-card svg {
+                height: 100px;
+            }
+
+            .illustration-panel {
+                padding: 15px;
+            }
+
+            .fake-ribbon span {
+                font-size: 11px;
+            }
+
+            .fake-canvas {
+                min-height: 150px;
+            }
+
+            .text-demo {
+                padding: 15px;
+            }
+
+            .poster-example {
+                min-height: 350px;
+                padding: 23px 19px;
+            }
+
+            .poster-shapes {
+                gap: 10px;
+            }
+
+            .poster-big {
+                width: 95px;
+                height: 95px;
+            }
+
+            .poster-tall {
+                height: 130px;
+                width: 46px;
+            }
+
+            .route {
+                padding: 20px 18px;
+            }
+
+            .finale {
+                padding: 24px 19px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="page">
+
+    <!-- ===========================================================
+         ПЕРВЫЙ ЭКРАН
+         =========================================================== -->
+    <header class="hero">
+        <div class="hero-inner">
+            <div>
+                <span class="eyebrow">Информатика · 7 класс · Практическая работа</span>
+                <h1>Растяжение, сжатие и <em>надписи в Paint</em></h1>
+                <p>
+                    Научимся изменять размеры рисунков, сохранять или намеренно
+                    изменять их пропорции и добавлять красивые, читаемые надписи.
+                    Всё это пригодится для создания собственной афиши!
+                </p>
+            </div>
+
+            <div class="hero-demo" aria-label="Макет афиши, созданной при помощи разных размеров фигур и надписей">
+                <div class="demo-caption">Сочетаем рисунок и текст</div>
+                <div class="hero-poster">
+                    <small>ШКОЛЬНОЕ МЕРОПРИЯТИЕ</small>
+                    <h3>Выставка рисунков</h3>
+                    <div class="hero-drawings" aria-hidden="true">
+                        <div class="shape-small"></div>
+                        <div class="shape-large"></div>
+                        <span class="hero-star">✦</span>
+                    </div>
+                    <div class="hero-bottom">Разные размеры · Один замысел</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="tags">
+        <span>↔️ Растягиваем и сжимаем</span>
+        <span>⚪ Следим за пропорциями</span>
+        <span>🔠 Добавляем текст</span>
+        <span>💻 или 📒 — два маршрута</span>
+    </div>
+
+    <main>
+
+        <!-- =======================================================
+             01. ЗАЧЕМ МЕНЯТЬ РАЗМЕР
+             ======================================================= -->
+        <section class="section" aria-labelledby="purpose">
+            <div class="section-heading">
+                <div class="section-number">01</div>
+                <div>
+                    <h2 id="purpose">Зачем изменять размеры объектов?</h2>
+                    <p class="subtitle">Одна фигура может стать главным элементом рисунка или маленькой деталью.</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                Представь, что ты рисуешь афишу в Paint. На ней есть большой
+                воздушный шар, несколько маленьких звёзд и название мероприятия.
+                Чтобы элементы смотрелись гармонично, нужно уметь
+                <strong>увеличивать и уменьшать их размеры</strong>.
+            </p>
+
+            <div class="grid-3">
+                <div class="soft-card blue">
+                    <span class="emoji">🔍</span>
+                    <h3>Увеличение</h3>
+                    <p>Делаем рисунок или выделенный объект крупнее, чтобы он занимал больше места.</p>
+                </div>
+                <div class="soft-card purple">
+                    <span class="emoji">🧩</span>
+                    <h3>Уменьшение</h3>
+                    <p>Уменьшаем объект, когда он должен поместиться среди других элементов.</p>
+                </div>
+                <div class="soft-card green">
+                    <span class="emoji">🖼️</span>
+                    <h3>Композиция</h3>
+                    <p>Подбираем размеры объектов так, чтобы рисунок был понятным и аккуратным.</p>
+                </div>
+            </div>
+
+            <div class="definition">
+                <p>
+                    <strong>Растяжение</strong> — увеличение размера изображения или его части.
+                    <strong>Сжатие</strong> — уменьшение размера. Изменять можно ширину,
+                    высоту или обе величины одновременно.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             02. ПРОЦЕНТЫ И МАСШТАБИРОВАНИЕ
+             ======================================================= -->
+        <section class="section" aria-labelledby="percent">
+            <div class="section-heading">
+                <div class="section-number">02</div>
+                <div>
+                    <h2 id="percent">Что означают 50 %, 100 % и 150 %?</h2>
+                    <p class="subtitle">В Paint размеры удобно изменять в процентах.</p>
+                </div>
+            </div>
+
+            <p>
+                При изменении размеров за основу принимается исходное изображение.
+                Значение <strong>100 %</strong> означает исходный размер;
+                значение больше 100 % увеличивает размер, а меньше — уменьшает.
+            </p>
+
+            <div class="size-comparison" aria-label="Сравнение размеров кругов при 50, 100 и 150 процентах">
+                <div class="size-item">
+                    <b>50 %</b>
+                    <small>Уменьшение вдвое</small>
+                    <div class="scale-art"><div class="circle reduced"></div></div>
+                    <span class="compare-label">Сжатие</span>
+                </div>
+                <div class="size-item">
+                    <b>100 %</b>
+                    <small>Без изменения</small>
+                    <div class="scale-art"><div class="circle original"></div></div>
+                    <span class="compare-label">Исходный вид</span>
+                </div>
+                <div class="size-item">
+                    <b>150 %</b>
+                    <small>Увеличение в 1,5 раза</small>
+                    <div class="scale-art"><div class="circle enlarged"></div></div>
+                    <span class="compare-label">Растяжение</span>
+                </div>
+            </div>
+
+            <div class="note green">
+                <p>
+                    📏 <strong>Пример:</strong> ширина рисунка была 200 пикселей.
+                    При 150 % она станет 300 пикселей, а при 50 % — 100 пикселей.
+                    Если изменить и ширину, и высоту на одинаковый процент,
+                    пропорции изображения сохранятся.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             03. ПРОПОРЦИИ И ИСКАЖЕНИЕ ФОРМЫ
+             ======================================================= -->
+        <section class="section" aria-labelledby="proportion">
+            <div class="section-heading">
+                <div class="section-number">03</div>
+                <div>
+                    <h2 id="proportion">Почему круг иногда превращается в овал?</h2>
+                    <p class="subtitle">Размер можно изменить без искажения или с изменением формы.</p>
+                </div>
+            </div>
+
+            <p>
+                <strong>Пропорции</strong> — это соотношение ширины и высоты объекта.
+                При пропорциональном изменении размеров оно остаётся прежним.
+                При непропорциональном изменении ширина и высота меняются неодинаково,
+                поэтому фигура может выглядеть вытянутой или сплюснутой.
+            </p>
+
+            <div class="illustration-panel">
+                <div class="ratio-list">
+                    <div class="ratio-card">
+                        <svg viewBox="0 0 210 125" role="img" aria-label="Круг: ширина равна высоте">
+                            <circle cx="105" cy="62" r="47" fill="#acd2fa" stroke="#477dc6" stroke-width="5"/>
+                            <path d="M58 113H152" stroke="#7394bc" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <strong>Исходный круг</strong>
+                        <small>Ширина и высота равны.</small>
+                    </div>
+                    <div class="ratio-card">
+                        <svg viewBox="0 0 210 125" role="img" aria-label="Круг вытянут по горизонтали и стал широким овалом">
+                            <ellipse cx="105" cy="62" rx="84" ry="41" fill="#d1bafa" stroke="#8d6ac7" stroke-width="5"/>
+                            <path d="M21 114H189" stroke="#977dc7" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <strong>Растяжение в ширину</strong>
+                        <small>Фигура становится шире.</small>
+                    </div>
+                    <div class="ratio-card">
+                        <svg viewBox="0 0 210 125" role="img" aria-label="Круг сжат по вертикали и стал плоским овалом">
+                            <ellipse cx="105" cy="62" rx="48" ry="23" fill="#ffd79a" stroke="#d69942" stroke-width="5"/>
+                            <path d="M57 114H153" stroke="#cfa868" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <strong>Сжатие по высоте</strong>
+                        <small>Фигура становится ниже.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 17px;">
+                <div class="soft-card blue">
+                    <h3>🔒 Сохраняем пропорции</h3>
+                    <p>
+                        Одинаковое изменение ширины и высоты помогает сохранить форму.
+                        Например, круг остаётся кругом, только большего или меньшего размера.
+                    </p>
+                </div>
+                <div class="soft-card purple">
+                    <h3>↔️ Меняем пропорции</h3>
+                    <p>
+                        Если изменить только ширину или только высоту,
+                        объект может исказиться. Иногда это нужно специально для рисунка.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                <p>
+                    💡 <strong>Особенность растровой графики:</strong> изображения в Paint
+                    состоят из пикселей. При сильном увеличении детали могут выглядеть
+                    размытыми или «квадратными». Если затем уменьшить рисунок обратно,
+                    исходное качество не всегда восстановится.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             04. КОМАНДА «ИЗМЕНИТЬ РАЗМЕР» В PAINT
+             ======================================================= -->
+        <section class="section" aria-labelledby="resize-paint">
+            <div class="section-heading">
+                <div class="section-number">04</div>
+                <div>
+                    <h2 id="resize-paint">Как изменять размер в Paint?</h2>
+                    <p class="subtitle">Работаем со всем рисунком или только с выделенным фрагментом.</p>
+                </div>
+            </div>
+
+            <p>
+                Для точного изменения размеров в Paint используется команда
+                <strong>«Изменить размер»</strong> (в некоторых версиях —
+                «Изменить размер и наклон»). Она позволяет задать новые значения
+                в <strong>процентах</strong> или <strong>пикселях</strong>.
+            </p>
+
+            <div class="grid-2">
+                <div class="app-mock" aria-label="Упрощённая учебная схема окна Paint">
+                    <div class="window-title">
+                        <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                        Paint · условная схема
+                    </div>
+                    <div class="fake-ribbon" aria-hidden="true">
+                        <span>Выделить</span>
+                        <span class="focus">Изменить размер</span>
+                        <span>Кисти</span>
+                        <span>Фигуры</span>
+                        <span>Текст «А»</span>
+                    </div>
+                    <div class="fake-canvas">
+                        <div class="fake-selection"><div class="object"></div></div>
+                    </div>
+                    <div class="mock-caption">
+                        Пунктирная рамка означает выделенный фрагмент.
+                        Это учебный макет, не точная копия интерфейса Paint.
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="mini-title" style="margin-top: 0;">Последовательность действий</h3>
+                    <ol class="steps">
+                        <li>Открой или создай рисунок в Paint.</li>
+                        <li>Если нужен один объект, выдели его инструментом «Выделить».</li>
+                        <li>Выбери команду «Изменить размер».</li>
+                        <li>Укажи проценты или пиксели. Для сохранения формы используй параметр «Сохранить пропорции».</li>
+                        <li>Подтверди изменение и проверь результат.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="note green">
+                <p>
+                    ✅ <strong>Помни:</strong> если фрагмент выделен, можно менять размер
+                    только этого фрагмента; без выделения изменяется всё изображение.
+                    Не путай <strong>размер изображения</strong> и
+                    <strong>размер рабочей области</strong> (холста): это разные действия.
+                </p>
+            </div>
+
+            <figure class="photo">
+                <img
+                    src="https://remontcompa.ru/uploads/posts/2021-09/1633022698_skrin_1.jpg"
+                    alt="Реальный снимок русскоязычного интерфейса Paint в Windows 11"
+                    loading="lazy"
+                    width="960"
+                    height="648"
+                >
+                <figcaption>
+                    Пример настоящего окна Microsoft Paint в Windows 11.
+                    Вид панели и расположение команд зависят от версии программы.
+                    Источник иллюстрации: <a href="https://remontcompa.ru/windows/windows-11/2556-prilozhenie-paint-v-windows-11.html">RemontCompa</a>.
+                </figcaption>
+            </figure>
+        </section>
+
+        <!-- =======================================================
+             05. СОЗДАНИЕ И ОФОРМЛЕНИЕ НАДПИСЕЙ
+             ======================================================= -->
+        <section class="section" aria-labelledby="text-paint">
+            <div class="section-heading">
+                <div class="section-number">05</div>
+                <div>
+                    <h2 id="text-paint">Как сделать надпись в Paint?</h2>
+                    <p class="subtitle">Текст помогает превратить рисунок в объявление, открытку или афишу.</p>
+                </div>
+            </div>
+
+            <p>
+                В Paint для надписей предназначен инструмент <strong>«Текст»</strong>
+                со значком <strong>«А»</strong>. С его помощью можно указать область
+                для надписи, напечатать слова и выбрать оформление.
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 class="mini-title" style="margin-top: 0;">Порядок добавления текста</h3>
+                    <ol class="steps">
+                        <li>Выбери инструмент «Текст» (буква А).</li>
+                        <li>Укажи место и размер текстовой области на рисунке.</li>
+                        <li>Введи нужную надпись.</li>
+                        <li>Подбери шрифт, размер, цвет и начертание.</li>
+                        <li>Проверь написание и расположение текста до завершения ввода.</li>
+                    </ol>
+                </div>
+
+                <div class="text-demo" aria-label="Учебный пример оформления надписи">
+                    <div class="text-toolbar" aria-hidden="true">
+                        <span>Шрифт</span>
+                        <span>Размер 24</span>
+                        <span class="selected">Жирный</span>
+                        <span>Цвет</span>
+                        <span>Фон</span>
+                    </div>
+                    <div class="text-sheet">
+                        <div class="sample-title">ВЫСТАВКА РИСУНКОВ</div>
+                        <div class="sample-subtitle">Творчество начинается здесь!</div>
+                    </div>
+                    <p style="margin-top: 11px; color: #5b6983; font-size: 13px;">
+                        Это наглядный пример: заголовок крупный и заметный,
+                        а дополнительный текст меньше по размеру.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 18px;">
+                <div class="soft-card blue">
+                    <span class="emoji">🔠</span>
+                    <h3>Шрифт и размер</h3>
+                    <p>Шрифт задаёт вид букв, размер — их величину. Заголовок обычно делают крупнее.</p>
+                </div>
+                <div class="soft-card purple">
+                    <span class="emoji">🎨</span>
+                    <h3>Цвет и начертание</h3>
+                    <p>Цвет помогает выделить надпись; жирный шрифт усиливает внимание к заголовку.</p>
+                </div>
+                <div class="soft-card green">
+                    <span class="emoji">▧</span>
+                    <h3>Фон надписи</h3>
+                    <p>Прозрачный фон не закрывает рисунок; непрозрачный создаёт подложку для текста.</p>
+                </div>
+            </div>
+
+            <div class="note">
+                <p>
+                    ⚠️ <strong>Важно:</strong> в обычной работе с растровым Paint после
+                    завершения редактирования надпись становится частью рисунка.
+                    Вернуться к изменению её букв как обычного текста может быть нельзя.
+                    Поэтому сначала проверь орфографию, шрифт и расположение.
+                    В новых версиях приложения поведение текста может отличаться.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             06. НАГЛЯДНЫЙ ОБРАЗЕЦ АФИШИ
+             ======================================================= -->
+        <section class="section" aria-labelledby="poster">
+            <div class="section-heading">
+                <div class="section-number">06</div>
+                <div>
+                    <h2 id="poster">Соединяем изображения и надписи</h2>
+                    <p class="subtitle">Пример готовой афиши школьного мероприятия.</p>
+                </div>
+            </div>
+
+            <p>
+                На афише важно сразу показать <strong>название мероприятия</strong>,
+                оформить его понятными рисунками и добавить нужные сведения.
+                Размеры и цвета объектов помогают направить внимание зрителя.
+            </p>
+
+            <div class="poster-gallery">
+                <div class="poster-example" aria-label="Учебный образец афиши школьной выставки рисунков">
+                    <div class="poster-kicker">Школьная афиша</div>
+                    <h3>ВЫСТАВКА<br>РИСУНКОВ</h3>
+                    <p class="poster-description">Открой мир цвета и творчества</p>
+                    <div class="poster-shapes" aria-hidden="true">
+                        <div class="poster-mini"></div>
+                        <div class="poster-big"></div>
+                        <div class="poster-tall"></div>
+                    </div>
+                    <div class="poster-footer">Пятница · 15:00 · Актовый зал</div>
+                </div>
+
+                <div class="feature-list">
+                    <div class="feature">
+                        <span class="marker">1</span>
+                        <p><strong>Крупный заголовок.</strong> Название читается с первого взгляда.</p>
+                    </div>
+                    <div class="feature">
+                        <span class="marker">2</span>
+                        <p><strong>Большой и маленький круг.</strong> Видно, как изменяется размер графического объекта.</p>
+                    </div>
+                    <div class="feature">
+                        <span class="marker">3</span>
+                        <p><strong>Вытянутая фигура.</strong> Растяжение по вертикали изменило пропорции.</p>
+                    </div>
+                    <div class="feature">
+                        <span class="marker">4</span>
+                        <p><strong>Дополнительная надпись.</strong> Указаны время и место мероприятия.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note green">
+                <p>
+                    ✨ <strong>Принцип оформления:</strong> все элементы должны работать
+                    на одну идею. Чем яснее композиция и надписи,
+                    тем легче понять сообщение афиши.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             07. ПРАКТИЧЕСКАЯ РАБОТА — ДВА МАРШРУТА
+             ======================================================= -->
+        <section class="section" aria-labelledby="practice">
+            <div class="section-heading">
+                <div class="section-number">07</div>
+                <div>
+                    <h2 id="practice">Практическая работа</h2>
+                    <p class="subtitle">Одна задача и одинаковые требования — два способа выполнения.</p>
+                </div>
+            </div>
+
+            <div class="task-banner">
+                <h3>«Афиша школьного мероприятия»</h3>
+                <p>
+                    Создай афишу школьного события: выставки рисунков,
+                    концерта, спортивного праздника или другого мероприятия.
+                    Используй <strong>увеличение и уменьшение объектов</strong>,
+                    <strong>непропорциональное растяжение или сжатие</strong>
+                    и <strong>две текстовые надписи</strong>.
+                </p>
+            </div>
+
+            <p style="margin-top: 18px;">
+                Можно работать в Paint или на бумаге.
+                В любом случае нужно получить <strong>одну законченную афишу</strong>
+                с одинаковым набором элементов и продемонстрировать понимание
+                операций изменения размера.
+            </p>
+
+            <div class="routes">
+                <!-- МАРШРУТ 1: PAINT -->
+                <div class="route">
+                    <span class="route-label">МАРШРУТ 1 · ЗА КОМПЬЮТЕРОМ</span>
+                    <h3>💻 Создание в Paint</h3>
+                    <p>Нужны компьютер с Paint и возможность сохранить изображение.</p>
+                    <ol>
+                        <li>Открой Paint, создай новый рисунок и выбери тему афиши.</li>
+                        <li>Нарисуй не менее трёх простых объектов (например, круги, звёзды, фигуры).</li>
+                        <li>Выдели один объект и <strong>увеличь</strong> его размер.</li>
+                        <li>Выдели другой объект и <strong>уменьши</strong> его размер.</li>
+                        <li>К одному из объектов примени <strong>растяжение или сжатие по одной оси</strong>, чтобы изменить пропорции.</li>
+                        <li>Инструментом «Текст» создай крупный <strong>заголовок</strong> афиши.</li>
+                        <li>Добавь вторую надпись с <strong>датой, временем, местом</strong> или кратким описанием мероприятия.</li>
+                        <li>Проверь читаемость, расположение и цвета. Сохрани результат в PNG или другом доступном графическом формате.</li>
+                    </ol>
+                </div>
+
+                <!-- МАРШРУТ 2: БЕЗ КОМПЬЮТЕРА -->
+                <div class="route paper">
+                    <span class="route-label">МАРШРУТ 2 · БЕЗ КОМПЬЮТЕРА</span>
+                    <h3>📒 Создание на бумаге</h3>
+                    <p>Нужны лист бумаги или тетрадь, ручка и по возможности карандаши.</p>
+                    <ol>
+                        <li>На листе обозначь прямоугольную область будущей афиши и выбери тему.</li>
+                        <li>Нарисуй не менее трёх простых объектов и наметь их исходный вид.</li>
+                        <li>Покажи для одной фигуры <strong>увеличение</strong>: нарисуй рядом более крупный вариант, например 150 %.</li>
+                        <li>Для другой фигуры покажи <strong>уменьшение</strong>: рядом изобрази вариант 50 %.</li>
+                        <li>Для третьей фигуры покажи <strong>изменение только ширины или высоты</strong>: например, круг преврати в овал.</li>
+                        <li>Впиши в афишу крупный <strong>заголовок</strong>, подбери его начертание и цвет.</li>
+                        <li>Добавь вторую надпись с <strong>датой, временем, местом</strong> или кратким описанием мероприятия.</li>
+                        <li>Проверь читаемость, расположение и аккуратность. Обозначь на полях, где применены увеличение, уменьшение и изменение пропорций.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3 class="mini-title">Что будет оцениваться?</h3>
+            <ul class="criteria">
+                <li>Есть законченная афиша школьного события.</li>
+                <li>Использованы не менее трёх графических объектов.</li>
+                <li>Показано увеличение одного объекта.</li>
+                <li>Показано уменьшение другого объекта.</li>
+                <li>Продемонстрировано изменение пропорций.</li>
+                <li>Есть заголовок и дополнительная надпись.</li>
+                <li>Надписи разборчивы, композиция аккуратна.</li>
+                <li>Результат оформлен и сохранён или записан.</li>
+            </ul>
+
+            <div class="note green">
+                <p>
+                    ✅ <strong>Оба маршрута равноценны:</strong> оценивается понимание
+                    растяжения, сжатия и оформления текста, а не наличие компьютера
+                    или художественные способности.
+                </p>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             08. ПРОВЕРКА И СОХРАНЕНИЕ
+             ======================================================= -->
+        <section class="section" aria-labelledby="finish">
+            <div class="section-heading">
+                <div class="section-number">08</div>
+                <div>
+                    <h2 id="finish">Как проверить готовую работу?</h2>
+                    <p class="subtitle">Перед завершением стоит убедиться, что всё понятно зрителю.</p>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="soft-card blue">
+                    <span class="emoji">🔎</span>
+                    <h3>Изображения</h3>
+                    <p>Видно ли увеличение, уменьшение и изменение пропорций? Нет ли лишних искажений?</p>
+                </div>
+                <div class="soft-card purple">
+                    <span class="emoji">🔠</span>
+                    <h3>Надписи</h3>
+                    <p>Читается ли название? Правильно ли написаны слова? Не закрывает ли текст рисунки?</p>
+                </div>
+                <div class="soft-card green">
+                    <span class="emoji">💾</span>
+                    <h3>Результат</h3>
+                    <p>Работа закончена? При работе в Paint файл сохранён под понятным именем?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             09. ВОПРОСЫ ДЛЯ ПОВТОРЕНИЯ — РОВНО 12
+             ======================================================= -->
+        <section class="section" aria-labelledby="questions">
+            <div class="section-heading">
+                <div class="section-number">09</div>
+                <div>
+                    <h2 id="questions">Вопросы для повторения</h2>
+                    <p class="subtitle">12 вопросов по теории и практической работе.</p>
+                </div>
+            </div>
+
+            <ol class="questions">
+                <li>Для чего в Paint используют растяжение и сжатие изображений?</li>
+                <li>Как изменить размер отдельного фрагмента рисунка, не затрагивая остальные объекты?</li>
+                <li>Что означают значения 50 %, 100 % и 150 % при изменении размеров?</li>
+                <li>Чем пропорциональное изменение размеров отличается от непропорционального?</li>
+                <li>Что произойдёт с кругом, если увеличить только его ширину?</li>
+                <li>Почему сильное увеличение растрового изображения может ухудшить его качество?</li>
+                <li>Для чего нужна команда «Изменить размер» в Paint?</li>
+                <li>Чем изменение размера изображения отличается от изменения размера холста?</li>
+                <li>Какой инструмент Paint используется для создания текстовых надписей?</li>
+                <li>Какие параметры оформления текста можно изменить?</li>
+                <li>Чем прозрачный фон надписи отличается от непрозрачного?</li>
+                <li>Почему важно проверить текст до завершения редактирования надписи и сохранить результат?</li>
+            </ol>
+        </section>
+
+        <!-- =======================================================
+             ИТОГ УРОКА
+             ======================================================= -->
+        <section class="finale" aria-labelledby="summary">
+            <h2 id="summary">✨ Итог урока</h2>
+            <p>
+                Paint позволяет не только рисовать, но и <strong>изменять размеры</strong>
+                изображений и отдельных фрагментов. При пропорциональном изменении
+                форма сохраняется, а при изменении только ширины или высоты может
+                измениться. Инструмент <strong>«Текст»</strong> помогает добавлять
+                заголовки и другие надписи. Сочетая рисунки и слова, можно создать
+                выразительную и понятную <strong>афишу школьного мероприятия</strong>.
+            </p>
+        </section>
+    </main>
+
+    <footer>Информатика · 7 класс · Paint · Растяжение, сжатие и выполнение надписей · ПЗ</footer>
+</div>
+</body>
+</html>
