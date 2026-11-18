@@ -1,0 +1,2610 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Информатика, 5 класс. Алгоритмы, логические рассуждения и чёрные ящики. Часть 3 из 4. Практическая работа."
+  >
+
+  <title>Раскроем секрет чёрного ящика — 5 класс</title>
+
+  <style>
+    /* ========================================
+       1. ОСНОВНЫЕ НАСТРОЙКИ
+    ======================================== */
+
+    :root {
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --ink: #24364e;
+      --sub: #60758c;
+
+      --navy: #152f56;
+      --blue: #3776d6;
+      --bluewash: #eaf3ff;
+
+      --green: #167e64;
+      --mint: #e8f7f0;
+
+      --orange: #a76716;
+      --peach: #fff3e4;
+
+      --purple: #6650b4;
+      --lav: #f1edff;
+
+      --line: #dfe8f2;
+      --shadow: 0 15px 38px rgba(25, 52, 85, .065);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+
+      font-family: system-ui, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.72;
+
+      overflow-wrap: break-word;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0 0 12px;
+      line-height: 1.23;
+      letter-spacing: -.018em;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #2467b1;
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #ffbc54;
+      outline-offset: 4px;
+    }
+
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      max-width: 1090px;
+      margin: auto;
+      padding: 22px 18px 45px;
+    }
+
+    .skip {
+      position: absolute;
+      transform: translateY(-160%);
+      background: white;
+      padding: 10px;
+      z-index: 10;
+    }
+
+    .skip:focus {
+      transform: none;
+    }
+
+    /* ========================================
+       2. ШАПКА САЙТА
+    ======================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+
+      border-radius: 29px;
+      color: white;
+
+      background: linear-gradient(
+        120deg,
+        #12345f,
+        #245ba6 66%,
+        #317faa
+      );
+
+      box-shadow: 0 18px 45px rgba(30, 70, 127, .16);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+
+      width: 440px;
+      height: 440px;
+
+      right: -205px;
+      top: -225px;
+
+      border: 65px solid rgba(255, 255, 255, .06);
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      align-items: center;
+      gap: 25px;
+
+      padding: 46px 43px;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-block;
+
+      padding: 6px 13px;
+      margin-bottom: 16px;
+
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .12);
+
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .035em;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4.9vw, 52px);
+      margin-bottom: 15px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #ffdea2;
+    }
+
+    .hero p {
+      max-width: 575px;
+      color: #e7f1ff;
+      font-size: 17px;
+    }
+
+    .hero-visual {
+      padding: 15px;
+
+      background: rgba(255, 255, 255, .13);
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 22px;
+    }
+
+    .hero-visual .meta {
+      color: #eaf1fc;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 2px 5px 10px;
+    }
+
+    .hero-visual .bottom-meta {
+      margin-top: 8px;
+      color: #eaf1fc;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* ========================================
+       3. НАВИГАЦИЯ
+    ======================================== */
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+
+      margin: 17px 0 0;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 8px 13px;
+
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+
+      color: #506a85;
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      background: var(--bluewash);
+      color: #1d539b;
+    }
+
+    /* ========================================
+       4. РАЗДЕЛЫ УРОКА
+    ======================================== */
+
+    .section {
+      margin-top: 22px;
+      padding: 34px 39px;
+
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+
+      margin-bottom: 20px;
+    }
+
+    .num {
+      flex: 0 0 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 13px;
+      background: var(--bluewash);
+      color: var(--blue);
+
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .section h2 {
+      margin: 1px 0 6px;
+      font-size: clamp(23px, 3.3vw, 31px);
+    }
+
+    .section h3 {
+      margin: 25px 0 12px;
+      font-size: 20px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .def {
+      margin: 17px 0;
+      padding: 16px 20px;
+
+      background: var(--bluewash);
+      border-left: 5px solid var(--blue);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .def strong {
+      color: #245fae;
+    }
+
+    .note {
+      margin: 18px 0;
+      padding: 16px 20px;
+
+      background: var(--peach);
+      border: 1px solid #efddb6;
+      border-radius: 15px;
+    }
+
+    .note strong {
+      color: #925a17;
+    }
+
+    /* ========================================
+       5. КАРТОЧКИ
+    ======================================== */
+
+    .cols,
+    .cards3 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cards3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-card {
+      padding: 21px;
+
+      background: #f9fbfe;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .mini-card .em {
+      font-size: 34px;
+      line-height: 1.1;
+      margin-bottom: 9px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .mini-card p {
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .mini-card.blue {
+      background: #eef5ff;
+      border-color: #dbe8fa;
+    }
+
+    .mini-card.mint {
+      background: #edfaf4;
+      border-color: #d7eee3;
+    }
+
+    .mini-card.purple {
+      background: #f5f1ff;
+      border-color: #e4dcfc;
+    }
+
+    /* ========================================
+       6. СХЕМЫ АЛГОРИТМОВ
+    ======================================== */
+
+    .pathway {
+      display: grid;
+      grid-template-columns: 1fr 34px 1.25fr 34px 1fr;
+      gap: 9px;
+      align-items: stretch;
+
+      margin: 22px 0;
+    }
+
+    .path-node {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      min-width: 0;
+      padding: 20px 12px;
+
+      background: #eff5ff;
+      border: 1px solid #d8e6fa;
+      border-radius: 17px;
+
+      text-align: center;
+    }
+
+    .path-node.dark {
+      background: #1c3354;
+      border-color: #1c3354;
+      color: white;
+    }
+
+    .path-node.green {
+      background: #e7f8ee;
+      border-color: #cfebdf;
+    }
+
+    .path-node .big {
+      display: block;
+      font-weight: 850;
+      font-size: clamp(25px, 3vw, 33px);
+      line-height: 1.3;
+    }
+
+    .path-node small {
+      font-size: 12px;
+      color: var(--sub);
+    }
+
+    .path-node.dark small {
+      color: #cde0f7;
+    }
+
+    .path-arr {
+      display: grid;
+      place-items: center;
+
+      font-size: 28px;
+      font-weight: 800;
+      color: #7990b4;
+    }
+
+    .formula {
+      margin: 13px 0;
+      padding: 16px;
+
+      border-radius: 14px;
+      background: #172f4e;
+      color: white;
+
+      font-size: 21px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    /* ========================================
+       7. ТАБЛИЦЫ
+    ======================================== */
+
+    .table-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      margin: 17px 0;
+    }
+
+    table {
+      width: 100%;
+      min-width: 340px;
+
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+
+      border: 1px solid #dfe8f2;
+      text-align: center;
+    }
+
+    th {
+      background: #eaf3ff;
+      color: #254b81;
+      font-weight: 800;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fbff;
+    }
+
+    /* ========================================
+       8. ПОИСК ПРАВИЛА
+    ======================================== */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+
+      margin: 20px 0;
+    }
+
+    .step {
+      padding: 17px 14px;
+
+      background: #fbfcff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .step .count {
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 9px;
+
+      background: #e4efff;
+      border-radius: 10px;
+      color: #2861a7;
+
+      font-weight: 900;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .step p {
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .example-solution {
+      margin: 19px 0;
+      padding: 19px 22px;
+
+      border-radius: 19px;
+      background: #f0f8ff;
+      border: 1px solid #d9eafa;
+    }
+
+    .example-solution p {
+      margin-bottom: 7px;
+    }
+
+    /* ========================================
+       9. ПРЕОБРАЗОВАНИЕ СЛОВ
+    ======================================== */
+
+    .word-samples {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+
+      margin: 20px 0;
+    }
+
+    .word-card {
+      padding: 18px 12px;
+
+      border: 1px solid #e1dcf4;
+      border-radius: 18px;
+
+      background: #f7f3ff;
+      text-align: center;
+    }
+
+    .word-card .from,
+    .word-card .to {
+      display: block;
+
+      color: #4a397f;
+      font-size: 23px;
+      font-weight: 850;
+      letter-spacing: 3px;
+    }
+
+    .word-card .turn {
+      display: block;
+      color: #8066b8;
+      font-size: 25px;
+    }
+
+    .word-card small {
+      color: #71648d;
+      font-size: 12px;
+    }
+
+    /* ========================================
+       10. ЛОГИЧЕСКИЕ ЗАДАЧИ
+    ======================================== */
+
+    .puzzle {
+      margin: 16px 0;
+      padding: 15px 19px;
+
+      background: #f3f7fd;
+      border: 1px solid #dce7f4;
+      border-radius: 14px;
+    }
+
+    .logic-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      margin: 18px 0;
+    }
+
+    .fact {
+      padding: 11px 13px;
+
+      background: #f6f1ff;
+      border: 1px solid #e6dcfb;
+      border-radius: 12px;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       11. МАРШРУТЫ ОБУЧЕНИЯ
+    ======================================== */
+
+    .route {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+
+      margin: 20px 0;
+    }
+
+    .route-card {
+      padding: 22px;
+
+      background: #eff6ff;
+      border: 1px solid #dce7f4;
+      border-radius: 19px;
+    }
+
+    .route-card.secondary {
+      background: #f3f1ff;
+      border-color: #e4def6;
+    }
+
+    .route-card .head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 10px;
+
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .route-card p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* ========================================
+       12. МАКЕТ ТЕКСТОВОГО РЕДАКТОРА
+    ======================================== */
+
+    .editor {
+      margin: 22px 0;
+
+      overflow: hidden;
+      border: 1px solid #cbd8e6;
+      border-radius: 17px;
+
+      box-shadow: 0 9px 25px rgba(22, 57, 94, .07);
+    }
+
+    .editor-top {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 11px 15px;
+
+      background: #eaf0f8;
+      border-bottom: 1px solid #d2dce8;
+
+      color: #405b77;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .editor-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .editor-dots i {
+      width: 9px;
+      height: 9px;
+
+      background: #9bb1c9;
+      border-radius: 50%;
+    }
+
+    .editor-dots i:first-child {
+      background: #e99b99;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+
+      padding: 10px 13px;
+
+      background: #f9fbfd;
+      border-bottom: 1px solid #e4eaf1;
+    }
+
+    .editor-toolbar span {
+      padding: 2px 8px;
+
+      background: #e7eff8;
+      border-radius: 5px;
+
+      color: #54708c;
+      font-size: 12px;
+    }
+
+    .editor-page {
+      min-height: 190px;
+      padding: 24px 25px;
+
+      background: white;
+      color: #263b54;
+      font-size: 14px;
+    }
+
+    .editor-page h4 {
+      margin-bottom: 13px;
+      font-size: 17px;
+    }
+
+    .editor-page ol {
+      margin: 0;
+      padding-left: 21px;
+    }
+
+    .editor-page li {
+      margin: 5px 0;
+    }
+
+    .editor-name {
+      padding: 10px 15px;
+
+      background: #f2f7fb;
+      border-top: 1px solid #e1e8ef;
+
+      color: #61738a;
+      font-size: 12px;
+    }
+
+    .save-guide {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      margin: 20px 0;
+      padding: 16px 18px;
+
+      background: #e9f8ef;
+      border: 1px solid #c9eadb;
+      border-radius: 15px;
+    }
+
+    .save-guide .em {
+      font-size: 28px;
+    }
+
+    .save-guide p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* ========================================
+       13. ПРАКТИЧЕСКАЯ РАБОТА
+    ======================================== */
+
+    .practical {
+      background: linear-gradient(
+        155deg,
+        #fffdf8,
+        #fff9ef
+      );
+
+      border-color: #f0daae;
+    }
+
+    .practice-label {
+      display: inline-block;
+
+      margin-bottom: 10px;
+      padding: 5px 13px;
+
+      background: #ffe8aa;
+      border-radius: 20px;
+
+      color: #805007;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .exercise {
+      margin: 19px 0;
+      padding: 23px;
+
+      background: white;
+      border: 1px solid #eedec5;
+      border-radius: 20px;
+    }
+
+    .exercise-head {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      margin-bottom: 12px;
+    }
+
+    .exercise-number {
+      flex: 0 0 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      background: #ffe9bb;
+      border-radius: 14px;
+
+      color: #925d16;
+      font-weight: 900;
+    }
+
+    .exercise h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .exercise .intro-ex {
+      margin-bottom: 14px;
+
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .exercise ol {
+      margin: 12px 0 0;
+      padding-left: 23px;
+    }
+
+    .exercise li {
+      margin: 6px 0;
+    }
+
+    /* Подсказки к заданиям */
+
+    details {
+      margin-top: 15px;
+      padding: 11px 15px;
+
+      background: #f2f6fc;
+      border: 1px solid #dce7f3;
+      border-radius: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+
+      color: #285d9f;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    details p {
+      margin-top: 8px;
+      color: #576f8b;
+      font-size: 14px;
+    }
+
+    /* ========================================
+       14. ИТОГИ И ВОПРОСЫ
+    ======================================== */
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+
+      margin: 18px 0;
+    }
+
+    .summary-card {
+      padding: 18px;
+
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+    }
+
+    .summary-card .em {
+      font-size: 27px;
+    }
+
+    .summary-card b {
+      display: block;
+      margin: 5px 0;
+    }
+
+    .summary-card p {
+      color: var(--sub);
+      font-size: 13px;
+    }
+
+    .questions {
+      counter-reset: question;
+
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+    }
+
+    .questions li {
+      position: relative;
+      min-height: 85px;
+
+      padding: 17px 18px 17px 60px;
+
+      background: #f9fbfe;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+
+      font-size: 15px;
+      line-height: 1.53;
+    }
+
+    .questions li::before {
+      counter-increment: question;
+      content: counter(question);
+
+      position: absolute;
+      top: 16px;
+      left: 16px;
+
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--bluewash);
+      border-radius: 10px;
+
+      color: #285eab;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .last-note {
+      margin-top: 20px;
+      padding: 14px 18px;
+
+      background: #eaf7f0;
+      border: 1px solid #c8e8d6;
+      border-radius: 14px;
+
+      color: #23644f;
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 25px 8px 5px;
+
+      color: #71849a;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      color: #214e8d;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       15. АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ
+    ======================================== */
+
+    @media (max-width: 820px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 37px 30px;
+      }
+
+      .hero-visual {
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cards3,
+      .word-samples {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* ========================================
+       16. АДАПТАЦИЯ ДЛЯ СМАРТФОНОВ
+    ======================================== */
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 10px 10px 28px;
+      }
+
+      .hero {
+        border-radius: 22px;
+      }
+
+      .hero-inner {
+        padding: 27px 20px;
+        gap: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 9vw, 42px);
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .section {
+        padding: 23px 18px;
+        border-radius: 20px;
+        margin-top: 14px;
+      }
+
+      .section-head {
+        gap: 11px;
+        margin-bottom: 16px;
+      }
+
+      .num {
+        flex-basis: 37px;
+        height: 37px;
+        font-size: 13px;
+      }
+
+      .section h2 {
+        font-size: clamp(23px, 6vw, 28px);
+      }
+
+      .sub {
+        font-size: 13px;
+      }
+
+      .cols,
+      .route,
+      .summary-row,
+      .questions,
+      .word-samples,
+      .cards3 {
+        grid-template-columns: 1fr;
+      }
+
+      .pathway {
+        grid-template-columns: 1fr;
+        gap: 7px;
+
+        max-width: 330px;
+        margin: 18px auto;
+      }
+
+      .path-arr {
+        min-height: 20px;
+        font-size: 0;
+      }
+
+      .path-arr::after {
+        content: "↓";
+        font-size: 22px;
+      }
+
+      .path-node {
+        min-height: 95px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .step {
+        padding: 13px 11px;
+      }
+
+      .exercise {
+        padding: 17px 15px;
+      }
+
+      .exercise h3 {
+        font-size: 18px;
+      }
+
+      .editor-page {
+        padding: 18px 17px;
+      }
+
+      .word-card .from,
+      .word-card .to {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 20px 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        max-width: none;
+      }
+
+      .section,
+      .hero {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .toc {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip" href="#main">
+    Перейти к содержанию урока
+  </a>
+
+  <div class="page">
+
+    <!-- =====================================
+         ШАПКА САЙТА
+    ====================================== -->
+
+    <header class="hero" id="top">
+      <div class="hero-inner">
+
+        <div>
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 5 КЛАСС · ЧАСТЬ 3 ИЗ 4 · ПЗ
+          </span>
+
+          <h1>
+            Раскроем секрет
+            <em>чёрного ящика</em>
+          </h1>
+
+          <p>
+            Сегодня мы станем исследователями: узнаем,
+            как обнаружить неизвестный алгоритм,
+            преобразуем числа и слова и решим
+            логическую загадку.
+          </p>
+
+          <p>
+            Нам помогут внимательность, последовательные
+            рассуждения и проверка собственных
+            предположений.
+          </p>
+        </div>
+
+        <!-- Иллюстрация чёрного ящика -->
+
+        <div
+          class="hero-visual"
+          role="img"
+          aria-label="Чёрный ящик преобразует числа по неизвестному правилу"
+        >
+
+          <div class="meta">
+            🔎 Сможешь найти секретное правило?
+          </div>
+
+          <svg viewBox="0 0 400 248" aria-hidden="true">
+
+            <defs>
+              <linearGradient
+                id="cubeg"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+                <stop offset="0" stop-color="#233c62"/>
+                <stop offset="1" stop-color="#101c33"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Входные числа -->
+
+            <g font-family="Arial" font-weight="bold">
+
+              <rect
+                x="12" y="25"
+                width="65" height="44"
+                rx="11" fill="white"
+              />
+              <text
+                x="44" y="53"
+                fill="#23568b"
+                text-anchor="middle"
+              >2</text>
+
+              <rect
+                x="12" y="102"
+                width="65" height="44"
+                rx="11" fill="white"
+              />
+              <text
+                x="44" y="130"
+                fill="#23568b"
+                text-anchor="middle"
+              >3</text>
+
+              <rect
+                x="12" y="179"
+                width="65" height="44"
+                rx="11" fill="white"
+              />
+              <text
+                x="44" y="207"
+                fill="#23568b"
+                text-anchor="middle"
+              >4</text>
+
+              <!-- Выходные числа -->
+
+              <rect
+                x="323" y="25"
+                width="65" height="44"
+                rx="11" fill="#defae9"
+              />
+              <text
+                x="355" y="53"
+                fill="#19724b"
+                text-anchor="middle"
+              >7</text>
+
+              <rect
+                x="323" y="102"
+                width="65" height="44"
+                rx="11" fill="#defae9"
+              />
+              <text
+                x="355" y="130"
+                fill="#19724b"
+                text-anchor="middle"
+              >10</text>
+
+              <rect
+                x="323" y="179"
+                width="65" height="44"
+                rx="11" fill="#defae9"
+              />
+              <text
+                x="355" y="207"
+                fill="#19724b"
+                text-anchor="middle"
+              >?</text>
+            </g>
+
+            <!-- Линии преобразования -->
+
+            <g
+              stroke="#acc5e6"
+              stroke-width="3"
+              fill="none"
+            >
+              <path d="M77 47 L127 67"/>
+              <path d="M77 124 L127 124"/>
+              <path d="M77 201 L127 178"/>
+
+              <path d="M274 67 L323 47"/>
+              <path d="M274 124 L323 124"/>
+              <path d="M274 178 L323 201"/>
+            </g>
+
+            <!-- Сам чёрный ящик -->
+
+            <rect
+              x="125" y="41"
+              width="151" height="166"
+              rx="23"
+              fill="url(#cubeg)"
+              stroke="#9cb9da"
+              stroke-width="2"
+            />
+
+            <text
+              x="200" y="117"
+              text-anchor="middle"
+              font-size="61"
+              font-weight="900"
+              fill="#ffdc93"
+            >?</text>
+
+            <text
+              x="200" y="145"
+              text-anchor="middle"
+              font-size="13"
+              font-weight="700"
+              fill="#c9ddf5"
+            >НЕИЗВЕСТНЫЙ</text>
+
+            <text
+              x="200" y="164"
+              text-anchor="middle"
+              font-size="13"
+              font-weight="700"
+              fill="#c9ddf5"
+            >АЛГОРИТМ</text>
+
+          </svg>
+
+          <div class="bottom-meta">
+            Сравни вход и выход — и проверь свою догадку.
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- =====================================
+         НАВИГАЦИЯ ПО УРОКУ
+    ====================================== -->
+
+    <nav class="toc" aria-label="Разделы урока">
+
+      <a href="#repeat">🧠 Повторение</a>
+
+      <a href="#research">🔎 Исследование</a>
+
+      <a href="#numbers">🔢 Числа</a>
+
+      <a href="#words">🔤 Слова</a>
+
+      <a href="#logic">🧩 Логика</a>
+
+      <a href="#practice">💻 Практическая</a>
+
+      <a href="#questions">❓ 12 вопросов</a>
+
+    </nav>
+
+    <main id="main">
+
+      <!-- =====================================
+           РАЗДЕЛ 1. ПОВТОРЕНИЕ
+      ====================================== -->
+
+      <section class="section" id="repeat">
+
+        <div class="section-head">
+          <div class="num">01</div>
+
+          <div>
+            <h2>Вспомним: кто выполняет алгоритм?</h2>
+            <p class="sub">
+              Всё необходимое для практической работы
+              мы уже изучали.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          <strong>Алгоритм</strong> — понятная исполнителю
+          последовательность точных команд для решения задачи.
+          Его выполняет <strong>исполнитель</strong>:
+          человек, робот или компьютерная программа.
+        </p>
+
+        <div class="cards3">
+
+          <article class="mini-card blue">
+            <div class="em">📋</div>
+            <h3>Алгоритм</h3>
+            <p>
+              Какие команды нужно выполнить
+              и в каком порядке.
+            </p>
+          </article>
+
+          <article class="mini-card mint">
+            <div class="em">🤖</div>
+            <h3>Исполнитель</h3>
+            <p>
+              Кто или что выполняет
+              понятные ему команды.
+            </p>
+          </article>
+
+          <article class="mini-card purple">
+            <div class="em">🎯</div>
+            <h3>Результат</h3>
+            <p>
+              Какая информация получилась
+              после выполнения команд.
+            </p>
+          </article>
+
+        </div>
+
+        <p>
+          Когда исполнитель считает, изменяет текст
+          или сравнивает сведения, происходит
+          <strong>обработка информации</strong>.
+          Исходные данные преобразуются в результат
+          по определённым правилам.
+        </p>
+
+        <!-- Схема преобразования числа -->
+
+        <div class="pathway">
+
+          <div class="path-node">
+            <span class="big">5</span>
+            <small>Исходное число</small>
+          </div>
+
+          <div class="path-arr">→</div>
+
+          <div class="path-node dark">
+            <span class="big">× 2, затем + 3</span>
+            <small>Команды алгоритма</small>
+          </div>
+
+          <div class="path-arr">→</div>
+
+          <div class="path-node green">
+            <span class="big">13</span>
+            <small>Результат</small>
+          </div>
+
+        </div>
+
+        <div class="note">
+          <strong>Важно!</strong>
+          Порядок команд имеет значение.
+          Если сначала прибавить к 5 число 3,
+          а потом умножить на 2,
+          получится 16, а не 13.
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 2. ЧЁРНЫЙ ЯЩИК
+      ====================================== -->
+
+      <section class="section" id="research">
+
+        <div class="section-head">
+          <div class="num">02</div>
+
+          <div>
+            <h2>Как раскрыть секрет «чёрного ящика»?</h2>
+            <p class="sub">
+              Учимся не угадывать наугад,
+              а исследовать данные.
+            </p>
+          </div>
+        </div>
+
+        <div class="def">
+          <strong>«Чёрный ящик»</strong> — модель системы,
+          правило работы которой нам неизвестно.
+          Мы можем наблюдать, какие данные поступают
+          на вход и какие результаты появляются на выходе.
+        </div>
+
+        <p>
+          Представь: на вход поступает число 2,
+          а на выходе появляется 6.
+          Правило пока неясно.
+        </p>
+
+        <p>
+          Возможно, к числу прибавляют 4.
+          А может быть, умножают его на 3.
+          Чтобы разобраться, нужны дополнительные примеры.
+        </p>
+
+        <h3>Четыре шага исследователя</h3>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="count">1</div>
+            <strong>Наблюдай</strong>
+            <p>Запиши пары входных и выходных данных.</p>
+          </div>
+
+          <div class="step">
+            <div class="count">2</div>
+            <strong>Сравнивай</strong>
+            <p>Поищи общее в нескольких примерах.</p>
+          </div>
+
+          <div class="step">
+            <div class="count">3</div>
+            <strong>Предполагай</strong>
+            <p>Назови возможное правило преобразования.</p>
+          </div>
+
+          <div class="step">
+            <div class="count">4</div>
+            <strong>Проверяй</strong>
+            <p>
+              Убедись, что правило подходит
+              ко всем известным данным.
+            </p>
+          </div>
+
+        </div>
+
+        <h3>Разберём пример вместе</h3>
+
+        <div class="table-wrap">
+          <div class="table-scroll">
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Число на входе</th>
+                  <th>Число на выходе</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr><td>1</td><td>4</td></tr>
+                <tr><td>2</td><td>6</td></tr>
+                <tr><td>4</td><td>10</td></tr>
+                <tr><td>5</td><td>?</td></tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+        <div class="example-solution">
+
+          <p>
+            <strong>Наблюдаем:</strong>
+            при увеличении входного числа
+            на 1 выходное число увеличивается на 2.
+          </p>
+
+          <p>
+            <strong>Предполагаем:</strong>
+            умножить число на 2,
+            затем прибавить 2.
+          </p>
+
+          <p>
+            <strong>Проверяем:</strong><br>
+            1 × 2 + 2 = 4;<br>
+            2 × 2 + 2 = 6;<br>
+            4 × 2 + 2 = 10.
+          </p>
+
+          <p>
+            <strong>Получаем:</strong>
+            для числа 5 наше правило даёт 12.
+          </p>
+
+        </div>
+
+        <div class="note">
+          <strong>Запомни:</strong>
+          несколько примеров могут подходить
+          сразу к нескольким разным правилам.
+          Поэтому мы говорим о
+          <em>предполагаемом</em> правиле
+          и проверяем его на новых данных.
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 3. ЧИСЛОВЫЕ ПРЕОБРАЗОВАНИЯ
+      ====================================== -->
+
+      <section class="section" id="numbers">
+
+        <div class="section-head">
+          <div class="num">03</div>
+
+          <div>
+            <h2>Числа: два действия — одно правило</h2>
+            <p class="sub">
+              Иногда «чёрный ящик» скрывает
+              несколько последовательных команд.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Алгоритм может преобразовывать одно число
+          с помощью двух действий.
+          Например, сначала прибавляет 4,
+          а затем умножает результат на 2.
+        </p>
+
+        <div class="pathway">
+
+          <div class="path-node">
+            <span class="big">3</span>
+            <small>Вход</small>
+          </div>
+
+          <div class="path-arr">→</div>
+
+          <div class="path-node dark">
+            <span class="big">+ 4 → × 2</span>
+            <small>Сначала 7, потом 14</small>
+          </div>
+
+          <div class="path-arr">→</div>
+
+          <div class="path-node green">
+            <span class="big">14</span>
+            <small>Выход</small>
+          </div>
+
+        </div>
+
+        <p>
+          Если поменять команды местами,
+          результат изменится:
+          сначала 3 × 2 = 6,
+          затем 6 + 4 = 10.
+        </p>
+
+        <p>
+          При исследовании необходимо обнаружить
+          не только сами действия,
+          но и <strong>их порядок</strong>.
+        </p>
+
+        <div class="cols">
+
+          <div class="mini-card blue">
+            <h3>✅ Первый алгоритм</h3>
+
+            <div class="formula">
+              (3 + 4) × 2 = 14
+            </div>
+
+            <p>
+              Сначала прибавили,
+              затем умножили.
+            </p>
+          </div>
+
+          <div class="mini-card purple">
+            <h3>🔄 Второй алгоритм</h3>
+
+            <div class="formula">
+              3 × 2 + 4 = 10
+            </div>
+
+            <p>
+              Сначала умножили,
+              затем прибавили.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 4. ПРЕОБРАЗОВАНИЕ СЛОВ
+      ====================================== -->
+
+      <section class="section" id="words">
+
+        <div class="section-head">
+          <div class="num">04</div>
+
+          <div>
+            <h2>Слова тоже можно преобразовывать!</h2>
+            <p class="sub">
+              Алгоритмы работают не только с числами.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Компьютерная программа может обрабатывать
+          буквы и слова: менять их порядок,
+          удалять символы или заменять
+          одни буквы другими.
+        </p>
+
+        <p>
+          В таком случае исходными и выходными данными
+          является <strong>текстовая информация</strong>.
+        </p>
+
+        <p>
+          Посмотри на три пары слов.
+          Какое правило действует здесь?
+        </p>
+
+        <div class="word-samples">
+
+          <div class="word-card">
+            <span class="from">КОТ</span>
+            <span class="turn">↓</span>
+            <span class="to">ОТК</span>
+            <small>Пример 1</small>
+          </div>
+
+          <div class="word-card">
+            <span class="from">ЛЕС</span>
+            <span class="turn">↓</span>
+            <span class="to">ЕСЛ</span>
+            <small>Пример 2</small>
+          </div>
+
+          <div class="word-card">
+            <span class="from">МАК</span>
+            <span class="turn">↓</span>
+            <span class="to">АКМ</span>
+            <small>Пример 3</small>
+          </div>
+
+        </div>
+
+        <div class="def">
+          <strong>Возможное правило:</strong>
+          взять первую букву слова
+          и перенести её в конец.
+          Остальные буквы остаются
+          в прежнем порядке.
+        </div>
+
+        <p>
+          Алгоритм можно записать словами:
+          «Прочитать слово → отделить первую букву →
+          записать остальные буквы →
+          дописать первую букву в конце».
+        </p>
+
+        <div class="note">
+          <strong>Подсказка для практики:</strong>
+          прежде чем менять буквы,
+          выясни, что именно происходит
+          с каждой из них.
+          Проверь найденное правило
+          на всех примерах.
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 5. ЛОГИЧЕСКИЕ РАССУЖДЕНИЯ
+      ====================================== -->
+
+      <section class="section" id="logic">
+
+        <div class="section-head">
+          <div class="num">05</div>
+
+          <div>
+            <h2>
+              Рассуждаем: как найти ответ без вычислений?
+            </h2>
+
+            <p class="sub">
+              Иногда для решения достаточно
+              сопоставить известные факты.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Логическое рассуждение</strong> —
+          последовательный поиск вывода
+          на основе известных сведений.
+        </p>
+
+        <p>
+          Часто помогает способ
+          <strong>исключения неподходящих вариантов</strong>.
+        </p>
+
+        <div class="puzzle">
+
+          <p>
+            <strong>Задача.</strong>
+            Нина, Егор и Лёва выбрали
+            три разных фрукта:
+            яблоко, грушу и банан.
+            Каждый выбрал один фрукт.
+          </p>
+
+          <p>
+            Известно, что Егор выбрал банан,
+            а Нина не выбрала яблоко.
+            Кто какой фрукт выбрал?
+          </p>
+
+        </div>
+
+        <div class="logic-row">
+
+          <span class="fact">
+            🍌 Егор → банан
+          </span>
+
+          <span class="fact">
+            🚫 Нина → не яблоко
+          </span>
+
+          <span class="fact">
+            🧩 Все фрукты разные
+          </span>
+
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-scroll">
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Ребёнок</th>
+                  <th>Яблоко 🍎</th>
+                  <th>Груша 🍐</th>
+                  <th>Банан 🍌</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <th>Егор</th>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>✓</td>
+                </tr>
+
+                <tr>
+                  <th>Нина</th>
+                  <td>—</td>
+                  <td>✓</td>
+                  <td>—</td>
+                </tr>
+
+                <tr>
+                  <th>Лёва</th>
+                  <td>✓</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+        <p>
+          Сначала ставим банан Егору.
+          Значит, другим банан не достался.
+          Нина не брала яблоко,
+          следовательно, она выбрала грушу.
+          Лёве остаётся яблоко.
+        </p>
+
+        <p>
+          Все условия выполнены —
+          решение найдено.
+        </p>
+
+        <div class="def">
+
+          <strong>
+            Алгоритм решения логической задачи:
+          </strong>
+
+          прочитать условия →
+          выделить известные факты →
+          исключить невозможные варианты →
+          сделать вывод →
+          проверить все условия.
+
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 6. ПОДГОТОВКА К ПРАКТИКЕ
+      ====================================== -->
+
+      <section class="section" id="prepare">
+
+        <div class="section-head">
+          <div class="num">06</div>
+
+          <div>
+            <h2>Подготовимся к работе за компьютером</h2>
+            <p class="sub">
+              Результаты исследования будем
+              оформлять в одном документе.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          В компьютерном классе открой
+          текстовый редактор,
+          который установлен на твоём компьютере:
+          например, Microsoft Word,
+          LibreOffice Writer или другой редактор,
+          позволяющий создавать текст и таблицы.
+        </p>
+
+        <!-- Два равноправных маршрута -->
+
+        <div class="route">
+
+          <div class="route-card">
+
+            <div class="head">
+              💻 Есть компьютер
+            </div>
+
+            <p>
+              <strong>
+                Выполни три практических задания.
+              </strong>
+              Оформи решения в текстовом документе
+              и сохрани файл.
+            </p>
+
+          </div>
+
+          <div class="route-card secondary">
+
+            <div class="head">
+              📖 Нет компьютера
+            </div>
+
+            <p>
+              <strong>
+                Изучи объяснения на странице.
+              </strong>
+              Затем ответь на 12 вопросов
+              в конце урока.
+              Практическую работу выполнять
+              не требуется.
+            </p>
+
+          </div>
+
+        </div>
+
+        <h3>Как может выглядеть твой документ?</h3>
+
+        <!-- Условный макет текстового редактора -->
+
+        <div class="editor">
+
+          <div class="editor-top">
+
+            <span class="editor-dots">
+              <i></i><i></i><i></i>
+            </span>
+
+            <span>
+              Практическая работа — текстовый редактор
+            </span>
+
+          </div>
+
+          <div class="editor-toolbar">
+
+            <span>Файл</span>
+            <span>Правка</span>
+            <span>Вставка</span>
+            <span>Таблица</span>
+            <span>Сохранить 💾</span>
+
+          </div>
+
+          <div class="editor-page">
+
+            <h4>
+              Практическая работа «Чёрные ящики»
+            </h4>
+
+            <ol>
+              <li>
+                <strong>Задание 1.</strong>
+                Числовой «чёрный ящик».
+                Таблица, правило и проверка.
+              </li>
+
+              <li>
+                <strong>Задание 2.</strong>
+                Преобразование слов.
+                Таблица и описание алгоритма.
+              </li>
+
+              <li>
+                <strong>Задание 3.</strong>
+                Логическая задача.
+                Таблица соответствий и вывод.
+              </li>
+            </ol>
+
+          </div>
+
+          <div class="editor-name">
+            Пример оформления.
+            Названия меню могут отличаться
+            в разных программах.
+          </div>
+
+        </div>
+
+        <div class="save-guide">
+
+          <div class="em">💾</div>
+
+          <p>
+            <strong>Не забывай сохранять работу.</strong>
+            Для файла подойдёт понятное имя,
+            например
+            <code>5_класс_Черные_ящики</code>.
+            Сохрани документ в папку,
+            указанную учителем.
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 7. ПРАКТИЧЕСКАЯ РАБОТА
+      ====================================== -->
+
+      <section class="section practical" id="practice">
+
+        <div class="section-head">
+          <div class="num">07</div>
+
+          <div>
+            <span class="practice-label">
+              💻 ПРАКТИЧЕСКАЯ РАБОТА
+            </span>
+
+            <h2>Раскрой секреты трёх задач</h2>
+
+            <p class="sub">
+              Выполняй задания на компьютере.
+              Ответы записывай в текстовый документ.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          Тебе предстоит провести
+          три небольших исследования.
+          Не спеши: важен не только правильный ответ,
+          но и объяснение того,
+          <strong>как ты его получил</strong>.
+        </p>
+
+        <!-- ЗАДАНИЕ 1 -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">01</div>
+            <h3>Числовой «чёрный ящик»</h3>
+          </div>
+
+          <p class="intro-ex">
+            Цель — определить неизвестное правило
+            и продолжить таблицу.
+          </p>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Вход</th>
+                    <th>Выход</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr><td>1</td><td>5</td></tr>
+                  <tr><td>2</td><td>8</td></tr>
+                  <tr><td>3</td><td>11</td></tr>
+                  <tr><td>4</td><td>?</td></tr>
+                  <tr><td>6</td><td>?</td></tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+          <ol>
+            <li>
+              Создай в документе таблицу
+              из двух столбцов «Вход» и «Выход».
+            </li>
+
+            <li>
+              Определи возможное правило
+              преобразования чисел.
+            </li>
+
+            <li>
+              Вычисли два неизвестных результата
+              и заполни таблицу.
+            </li>
+
+            <li>
+              Проверь правило на первых
+              трёх строках с помощью калькулятора.
+            </li>
+
+            <li>
+              Под таблицей запиши правило словами
+              и приведи пример проверки.
+            </li>
+          </ol>
+
+          <details>
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Посмотри, на сколько увеличивается
+              выходное число, когда входное
+              увеличивается на один.
+              Подумай, какое действие можно
+              выполнить сначала, а какое — потом.
+            </p>
+          </details>
+
+        </article>
+
+        <!-- ЗАДАНИЕ 2 -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">02</div>
+            <h3>Текстовый «чёрный ящик»</h3>
+          </div>
+
+          <p class="intro-ex">
+            Цель — обнаружить алгоритм
+            преобразования слова и применить
+            его к новым словам.
+          </p>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Исходное слово</th>
+                    <th>Результат</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr><td>МИР</td><td>РИМ</td></tr>
+                  <tr><td>СОК</td><td>КОС</td></tr>
+                  <tr><td>НОС</td><td>СОН</td></tr>
+                  <tr><td>КОД</td><td>?</td></tr>
+                  <tr><td>ЛУК</td><td>?</td></tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+          <ol>
+            <li>
+              Добавь в документ новую таблицу
+              с примерами преобразования слов.
+            </li>
+
+            <li>
+              Сравни буквы каждого исходного слова
+              с результатом.
+            </li>
+
+            <li>
+              Определи неизвестное правило
+              и запиши результаты для слов
+              «КОД» и «ЛУК».
+            </li>
+
+            <li>
+              Опиши алгоритм словами так,
+              чтобы другой ученик смог повторить
+              его без подсказки.
+            </li>
+          </ol>
+
+          <details>
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Буквы не добавляются и не исчезают.
+              Меняется только их расположение.
+              Сравни, какая буква становится первой,
+              а какая — последней.
+            </p>
+          </details>
+
+        </article>
+
+        <!-- ЗАДАНИЕ 3 -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">03</div>
+
+            <h3>
+              Логическая задача
+              «Кто выбрал карандаш?»
+            </h3>
+          </div>
+
+          <p class="intro-ex">
+            Цель — найти соответствие
+            между учениками и цветами
+            с помощью логических рассуждений.
+          </p>
+
+          <div class="puzzle">
+
+            <p>
+              Аня, Борис и Вера выбрали
+              по одному карандашу
+              разных цветов:
+              <strong>
+                красному, зелёному и синему.
+              </strong>
+            </p>
+
+            <p>
+              Известно, что
+              <strong>Борис выбрал синий</strong>
+              карандаш, а
+              <strong>Аня не выбрала красный</strong>.
+              Каждый ребёнок взял только
+              один карандаш.
+              Цвета не повторяются.
+            </p>
+
+          </div>
+
+          <ol>
+            <li>
+              Создай в документе таблицу:
+              строки — имена детей,
+              столбцы — цвета карандашей.
+            </li>
+
+            <li>
+              Отметь известный выбор Бориса
+              и исключи неподходящие варианты.
+            </li>
+
+            <li>
+              Определи, какой карандаш
+              выбрали Аня и Вера.
+            </li>
+
+            <li>
+              Заполни таблицу знаками
+              «✓» (подходит)
+              и «—» (не подходит).
+            </li>
+
+            <li>
+              Под таблицей объясни
+              свои рассуждения
+              в двух-трёх предложениях
+              и проверь все условия.
+            </li>
+          </ol>
+
+          <details>
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Раз Борис выбрал синий,
+              остальные дети не могли
+              взять синий карандаш.
+              Аня также не выбрала красный.
+              Какой цвет у неё остаётся?
+            </p>
+          </details>
+
+        </article>
+
+        <!-- ЗАВЕРШЕНИЕ ПРАКТИЧЕСКОЙ РАБОТЫ -->
+
+        <div class="save-guide">
+
+          <div class="em">✅</div>
+
+          <p>
+            <strong>Завершение работы.</strong>
+            Проверь, что все три задания оформлены,
+            правила записаны,
+            а ответы объяснены.
+            Сохрани документ и покажи учителю
+            или отправь указанным способом.
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 8. ИТОГИ УРОКА
+      ====================================== -->
+
+      <section class="section" id="finale">
+
+        <div class="section-head">
+          <div class="num">08</div>
+
+          <div>
+            <h2>Что мы выяснили?</h2>
+            <p class="sub">
+              Подведём итоги,
+              прежде чем отвечать на вопросы.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Один и тот же подход помогает
+          решать разные задачи:
+          внимательно изучить данные,
+          сформулировать возможное правило
+          или вывод и проверить,
+          не противоречит ли он известным примерам.
+        </p>
+
+        <div class="summary-row">
+
+          <div class="summary-card">
+            <span class="em">🔢</span>
+            <b>Числа</b>
+
+            <p>
+              Правило может содержать
+              одно или несколько
+              арифметических действий.
+            </p>
+          </div>
+
+          <div class="summary-card">
+            <span class="em">🔤</span>
+            <b>Слова</b>
+
+            <p>
+              Алгоритм может изменять
+              расположение букв
+              и другие свойства текста.
+            </p>
+          </div>
+
+          <div class="summary-card">
+            <span class="em">🧩</span>
+            <b>Рассуждения</b>
+
+            <p>
+              Новая информация получается
+              из известных фактов
+              и их сопоставления.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="def">
+
+          <strong>Главный вывод:</strong>
+
+          исследователь не ограничивается догадкой.
+          Он объясняет найденное правило
+          и проверяет, согласуются ли
+          с ним данные.
+
+        </div>
+
+        <div class="note">
+
+          <strong>Домашнее задание:</strong>
+
+          придумай собственный «чёрный ящик»
+          для чисел или слов.
+          Запиши четыре пары входных
+          и выходных данных,
+          а секретное правило — отдельно.
+
+        </div>
+
+      </section>
+
+      <!-- =====================================
+           РАЗДЕЛ 9. 12 ВОПРОСОВ
+      ====================================== -->
+
+      <section class="section" id="questions">
+
+        <div class="section-head">
+          <div class="num">09</div>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+
+            <p class="sub">
+              Ответь своими словами,
+              используя объяснения из урока.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Если у тебя <strong>нет компьютера</strong>,
+          вместо практической работы
+          ответь на все 12 вопросов.
+          Если ты выполнил задания на компьютере,
+          используй вопросы для самопроверки.
+        </p>
+
+        <ol class="questions">
+
+          <li>
+            Что называют алгоритмом
+            и кто может быть его исполнителем?
+          </li>
+
+          <li>
+            Что такое исходные данные
+            и результат обработки информации?
+          </li>
+
+          <li>
+            Почему порядок выполнения
+            команд алгоритма может быть важен?
+          </li>
+
+          <li>
+            Что означает название «чёрный ящик»
+            и что о нём известно исследователю?
+          </li>
+
+          <li>
+            Какие четыре шага помогают определить
+            предполагаемое правило работы
+            «чёрного ящика»?
+          </li>
+
+          <li>
+            Почему нельзя надёжно определить
+            неизвестное правило
+            только по одному примеру?
+          </li>
+
+          <li>
+            Как проверить, подходит ли найденное
+            числовое правило ко всем
+            известным данным?
+          </li>
+
+          <li>
+            Как может быть устроен алгоритм,
+            состоящий из двух
+            арифметических операций?
+          </li>
+
+          <li>
+            Какую текстовую информацию
+            может преобразовывать
+            «чёрный ящик»?
+          </li>
+
+          <li>
+            Как объяснить другому человеку
+            правило преобразования слова,
+            чтобы он смог его выполнить?
+          </li>
+
+          <li>
+            Как исключение неподходящих вариантов
+            помогает решить логическую задачу?
+          </li>
+
+          <li>
+            Почему важно не только получить ответ,
+            но и объяснить и проверить
+            ход рассуждений?
+          </li>
+
+        </ol>
+
+        <div class="last-note">
+
+          🎓 Ты завершил третью часть темы.
+          Полученные навыки пригодятся
+          в дальнейшем изучении
+          алгоритмов и исполнителей.
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- =====================================
+         ПОДВАЛ САЙТА
+    ====================================== -->
+
+    <footer>
+      Информатика · 5 класс ·
+      Алгоритмы вокруг нас ·
+      Часть 3 из 4 · Практическое занятие
+    </footer>
+
+  </div>
+
+</body>
+</html>

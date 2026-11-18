@@ -1,0 +1,2639 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Информатика, 5 класс. Алгоритмы вокруг нас: исполнители, ошибки, логические рассуждения и чёрные ящики. Часть 4 из 4, практическое занятие."
+  >
+
+  <title>Алгоритмы под контролем — 5 класс, часть 4 из 4</title>
+
+  <style>
+    /* ==================================================
+       1. ПАЛИТРА И ОБЩИЕ НАСТРОЙКИ
+       Все стили находятся внутри HTML: сайт открывается
+       без Интернета и внешних библиотек.
+    ================================================== */
+
+    :root {
+      --bg: #f5f8fc;
+      --paper: #ffffff;
+      --ink: #24364e;
+      --muted: #60758c;
+      --navy: #152f56;
+      --blue: #3676d5;
+      --blue-soft: #eaf3ff;
+      --green: #177d63;
+      --green-soft: #eaf8f0;
+      --orange: #a66515;
+      --orange-soft: #fff3e0;
+      --purple: #6651b4;
+      --purple-soft: #f1edff;
+      --red: #b74c52;
+      --red-soft: #fff0f0;
+      --line: #dfe8f2;
+      --shadow: 0 15px 38px rgba(25, 52, 85, 0.065);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.72 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      overflow-wrap: break-word;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    figure {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.24;
+      letter-spacing: -0.018em;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #245fa8;
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #f6ba57;
+      outline-offset: 3px;
+    }
+
+    svg,
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    code {
+      color: #24508a;
+      font-family: Consolas, "Liberation Mono", monospace;
+      font-size: 0.93em;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+      padding: 22px 18px 48px;
+    }
+
+    .skip-link {
+      position: absolute;
+      z-index: 20;
+      top: -90px;
+      left: 20px;
+      padding: 10px 15px;
+      background: white;
+      border-radius: 9px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* ==================================================
+       2. ОБЛОЖКА И ПРОГРЕСС ТЕМЫ
+    ================================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 29px;
+      color: white;
+      background: linear-gradient(
+        119deg,
+        #12345f,
+        #235ba8 68%,
+        #337fa9
+      );
+      box-shadow: 0 18px 45px rgba(30, 70, 127, 0.17);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -205px;
+      right: -180px;
+      width: 420px;
+      height: 420px;
+      border: 62px solid rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.13fr) minmax(280px, 0.87fr);
+      align-items: center;
+      gap: 27px;
+      padding: 45px 43px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 6px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 {
+      margin-bottom: 16px;
+      font-size: clamp(32px, 4.8vw, 52px);
+    }
+
+    .hero h1 em {
+      color: #ffe09f;
+      font-style: normal;
+    }
+
+    .hero p {
+      max-width: 570px;
+      color: #e9f2ff;
+      font-size: 17px;
+    }
+
+    .hero-art {
+      padding: 17px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .art-caption {
+      color: #e9f2ff;
+      font-size: 12px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .hero-svg {
+      margin: 10px 0;
+    }
+
+    .course-progress {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 23px;
+    }
+
+    .course-progress span {
+      padding: 7px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #d8e8ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .course-progress .active {
+      border-color: white;
+      background: white;
+      color: #264a77;
+    }
+
+    /* ==================================================
+       3. НАВИГАЦИЯ И РАЗДЕЛЫ
+    ================================================== */
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 17px 0 0;
+    }
+
+    .toc a {
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: white;
+      color: #506a85;
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      background: var(--blue-soft);
+      color: #245fa8;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 34px 39px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .section-number {
+      flex: 0 0 43px;
+      display: grid;
+      place-items: center;
+      height: 43px;
+      border-radius: 13px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .section h2 {
+      margin: 1px 0 6px;
+      font-size: clamp(23px, 3.25vw, 31px);
+    }
+
+    .section h3 {
+      margin: 26px 0 12px;
+      font-size: 20px;
+    }
+
+    .section h4 {
+      margin-bottom: 9px;
+      font-size: 17px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .definition {
+      margin: 18px 0;
+      padding: 17px 20px;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 14px 14px 0;
+      background: var(--blue-soft);
+    }
+
+    .definition strong {
+      color: #245da6;
+    }
+
+    .note {
+      margin: 17px 0;
+      padding: 16px 19px;
+      border: 1px solid #eedbb5;
+      border-radius: 15px;
+      background: var(--orange-soft);
+    }
+
+    .note strong {
+      color: #8e5714;
+    }
+
+    .success-note {
+      margin: 18px 0;
+      padding: 16px 19px;
+      border: 1px solid #cde9d9;
+      border-radius: 15px;
+      background: var(--green-soft);
+    }
+
+    .success-note strong {
+      color: var(--green);
+    }
+
+    .cols-2,
+    .cols-3 {
+      display: grid;
+      gap: 15px;
+      margin: 19px 0;
+    }
+
+    .cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-card {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #f9fbfe;
+    }
+
+    .mini-card.blue {
+      border-color: #dbe9fc;
+      background: #eff6ff;
+    }
+
+    .mini-card.mint {
+      border-color: #d7ede1;
+      background: #effaf4;
+    }
+
+    .mini-card.purple {
+      border-color: #e7defb;
+      background: #f5f1ff;
+    }
+
+    .mini-card .emoji {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+    }
+
+    .mini-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ==================================================
+       4. КЛЕТЧАТОЕ ПОЛЕ ИСПОЛНИТЕЛЯ
+    ================================================== */
+
+    .board-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 410px) minmax(0, 1fr);
+      align-items: center;
+      gap: 26px;
+      margin: 21px 0;
+    }
+
+    .board-shell {
+      padding: 15px;
+      border: 1px solid #d4e4f4;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #f1f7ff, #f7fbff);
+    }
+
+    .board-title {
+      margin-bottom: 10px;
+      color: #4b6988;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .robot-board {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 5px;
+      table-layout: fixed;
+    }
+
+    .robot-board th,
+    .robot-board td {
+      width: 20%;
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .robot-board th {
+      color: #66809d;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .robot-board td {
+      height: 68px;
+      border: 2px solid #dbe6f3;
+      border-radius: 12px;
+      background: white;
+      font-size: 26px;
+    }
+
+    .robot-board td.start {
+      border-color: #82b5ec;
+      background: #dfefff;
+    }
+
+    .robot-board td.obstacle {
+      border-color: #e8b0b0;
+      background: #ffe6e6;
+    }
+
+    .robot-board td.finish {
+      border-color: #9bcfae;
+      background: #dbf6e6;
+    }
+
+    .board-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .board-legend span {
+      padding: 5px 9px;
+      border: 1px solid #dce8f4;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .command-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 13px 0;
+    }
+
+    .command-list span {
+      padding: 7px 11px;
+      border: 1px solid #d9e6f7;
+      border-radius: 9px;
+      background: var(--blue-soft);
+      color: #285b9d;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .command-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      margin: 14px 0;
+    }
+
+    .command-strip span {
+      padding: 8px 12px;
+      border: 1px solid #dce7f4;
+      border-radius: 9px;
+      background: #f2f7ff;
+      font-weight: 800;
+    }
+
+    .command-strip b {
+      color: #7990a9;
+    }
+
+    .command-strip .bad {
+      border-color: #efcecf;
+      background: var(--red-soft);
+      color: #a13f48;
+    }
+
+    .problem-note {
+      padding: 16px 19px;
+      border: 1px solid #f0d5d5;
+      border-radius: 15px;
+      background: #fff3f3;
+    }
+
+    .problem-note strong {
+      color: #a13f48;
+    }
+
+    /* ==================================================
+       5. ИССЛЕДОВАНИЕ «ЧЁРНОГО ЯЩИКА»
+    ================================================== */
+
+    .pipeline {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr) 32px minmax(0, 1.25fr) 32px minmax(0, 1fr);
+      align-items: stretch;
+      gap: 9px;
+      margin: 19px 0;
+    }
+
+    .pipeline-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+      border: 1px solid #d9e7f7;
+      border-radius: 17px;
+      background: #eef5ff;
+      text-align: center;
+    }
+
+    .pipeline-card.dark {
+      border-color: #193657;
+      background: #193657;
+      color: white;
+    }
+
+    .pipeline-card.green {
+      border-color: #ceeadb;
+      background: #e8f8f0;
+    }
+
+    .pipeline-card strong {
+      display: block;
+      font-size: clamp(22px, 3vw, 29px);
+    }
+
+    .pipeline-card small {
+      color: #617993;
+      font-size: 12px;
+    }
+
+    .pipeline-card.dark small {
+      color: #d0e1f6;
+    }
+
+    .pipeline-arrow {
+      display: grid;
+      place-items: center;
+      color: #829ab8;
+      font-size: 27px;
+      font-weight: 850;
+    }
+
+    .research-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 11px;
+      margin: 20px 0;
+    }
+
+    .research-step {
+      padding: 17px 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fafcff;
+    }
+
+    .research-step .count {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      background: var(--blue-soft);
+      color: #2462aa;
+      font-weight: 850;
+    }
+
+    .research-step strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .research-step p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* ==================================================
+       6. ТАБЛИЦЫ И ЛОГИЧЕСКИЕ ЗАДАЧИ
+    ================================================== */
+
+    .table-scroll {
+      overflow-x: auto;
+      max-width: 100%;
+      margin: 18px 0;
+    }
+
+    .table-scroll.narrow {
+      max-width: 620px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      min-width: 280px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 10px 12px;
+      border: 1px solid #dfe8f2;
+      text-align: center;
+    }
+
+    .data-table th {
+      background: var(--blue-soft);
+      color: #254c80;
+      font-weight: 850;
+    }
+
+    .data-table tbody tr:nth-child(even) {
+      background: #f8fbff;
+    }
+
+    .data-table td.unknown {
+      color: #8758ae;
+      font-weight: 850;
+      font-size: 20px;
+    }
+
+    .logic-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 17px 0;
+    }
+
+    .logic-facts span {
+      padding: 9px 12px;
+      border: 1px solid #e3dbf6;
+      border-radius: 10px;
+      background: #f6f1ff;
+      color: #59458c;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .example-box {
+      padding: 20px 22px;
+      border: 1px solid #dbe9f7;
+      border-radius: 18px;
+      background: #f3f8ff;
+    }
+
+    .example-box p {
+      margin-bottom: 10px;
+    }
+
+    /* ==================================================
+       7. ДВА МАРШРУТА И МАКЕТ ДОКУМЕНТА
+    ================================================== */
+
+    .routes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .route {
+      padding: 21px;
+      border: 1px solid #dce7f4;
+      border-radius: 18px;
+      background: #eff6ff;
+    }
+
+    .route.without-pc {
+      border-color: #e5ddfa;
+      background: #f5f1ff;
+    }
+
+    .route h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+    }
+
+    .route p {
+      font-size: 14px;
+    }
+
+    .editor {
+      overflow: hidden;
+      margin: 20px 0;
+      border: 1px solid #cedae8;
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 9px 25px rgba(22, 57, 94, 0.07);
+    }
+
+    .editor-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 15px;
+      border-bottom: 1px solid #d5e0eb;
+      background: #eaf0f8;
+      color: #4b6078;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .editor-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .editor-dots i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #a8bace;
+    }
+
+    .editor-dots i:first-child {
+      background: #e99e9e;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 11px 15px;
+      border-bottom: 1px solid #e1e7ed;
+      background: #f9fbfd;
+    }
+
+    .editor-toolbar span {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #e7eff8;
+      color: #53708d;
+      font-size: 12px;
+    }
+
+    .editor-sheet {
+      padding: 25px;
+    }
+
+    .editor-sheet h4 {
+      font-size: 18px;
+    }
+
+    .editor-sheet ol {
+      margin: 0;
+      padding-left: 21px;
+      color: #43566e;
+      font-size: 14px;
+    }
+
+    .editor-footer {
+      padding: 10px 15px;
+      border-top: 1px solid #e1e8ef;
+      background: #f3f7fb;
+      color: #667a93;
+      font-size: 12px;
+    }
+
+    /* ==================================================
+       8. ПРАКТИЧЕСКАЯ РАБОТА
+    ================================================== */
+
+    .practice-section {
+      border-color: #f0dcba;
+      background: linear-gradient(155deg, #fffdf9, #fff8ee);
+    }
+
+    .practice-label {
+      display: inline-block;
+      margin-bottom: 9px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: #ffebbd;
+      color: #80520a;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .exercise {
+      margin: 18px 0;
+      padding: 23px;
+      border: 1px solid #eedfc7;
+      border-radius: 20px;
+      background: white;
+    }
+
+    .exercise-head {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 12px;
+    }
+
+    .exercise-number {
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      height: 42px;
+      border-radius: 13px;
+      background: #ffedc5;
+      color: #925c14;
+      font-weight: 900;
+    }
+
+    .exercise h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .exercise ol {
+      margin: 12px 0 0;
+      padding-left: 23px;
+    }
+
+    .exercise li {
+      margin: 6px 0;
+    }
+
+    .exercise .context {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    details {
+      margin-top: 16px;
+      padding: 11px 15px;
+      border: 1px solid #dce7f4;
+      border-radius: 12px;
+      background: #f2f7fd;
+    }
+
+    summary {
+      cursor: pointer;
+      color: #285fa4;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    details p {
+      margin-top: 9px;
+      color: #536e8b;
+      font-size: 14px;
+    }
+
+    /* ==================================================
+       9. ЗАКРЕПЛЕНИЕ И ВОПРОСЫ
+    ================================================== */
+
+    .recap-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+      margin: 20px 0;
+    }
+
+    .recap-card {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #f8fbff;
+    }
+
+    .recap-card .emoji {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 27px;
+    }
+
+    .recap-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .recap-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0 0;
+      padding: 0;
+      counter-reset: q;
+      list-style: none;
+    }
+
+    .questions li {
+      position: relative;
+      min-height: 83px;
+      padding: 17px 17px 17px 60px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #f9fbfe;
+      font-size: 15px;
+      line-height: 1.54;
+    }
+
+    .questions li::before {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--blue-soft);
+      color: #285eab;
+      font-size: 14px;
+      font-weight: 900;
+      counter-increment: q;
+      content: counter(q);
+    }
+
+    .last-note {
+      margin-top: 19px;
+      padding: 14px 18px;
+      border: 1px solid #cce8d9;
+      border-radius: 14px;
+      background: var(--green-soft);
+      color: #255f4d;
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 23px 10px 5px;
+      color: #70849b;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* ==================================================
+       10. АДАПТАЦИЯ К НЕБОЛЬШИМ ЭКРАНАМ
+    ================================================== */
+
+    @media (max-width: 850px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        max-width: 500px;
+      }
+
+      .board-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .board-shell {
+        max-width: 440px;
+      }
+
+      .research-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 630px) {
+      .page {
+        padding: 10px 10px 28px;
+      }
+
+      .hero {
+        border-radius: 22px;
+      }
+
+      .hero-inner {
+        gap: 18px;
+        padding: 28px 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 9vw, 42px);
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .section {
+        margin-top: 14px;
+        padding: 23px 18px;
+        border-radius: 20px;
+      }
+
+      .section-head {
+        gap: 11px;
+      }
+
+      .section-number {
+        flex-basis: 37px;
+        height: 37px;
+        font-size: 13px;
+      }
+
+      .section h2 {
+        font-size: clamp(22px, 6vw, 28px);
+      }
+
+      .cols-2,
+      .cols-3,
+      .routes,
+      .recap-cards,
+      .questions {
+        grid-template-columns: 1fr;
+      }
+
+      .pipeline {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+        margin: 18px auto;
+        gap: 7px;
+      }
+
+      .pipeline-card {
+        min-height: 93px;
+      }
+
+      .pipeline-arrow {
+        min-height: 20px;
+        font-size: 0;
+      }
+
+      .pipeline-arrow::before {
+        content: "↓";
+        font-size: 23px;
+      }
+
+      .robot-board {
+        border-spacing: 4px;
+      }
+
+      .robot-board td {
+        height: 58px;
+        font-size: 23px;
+      }
+
+      .exercise {
+        padding: 18px 15px;
+      }
+
+      .exercise h3 {
+        font-size: 18px;
+      }
+
+      .editor-sheet {
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .section {
+        padding: 20px 15px;
+      }
+
+      .research-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .robot-board td {
+        height: 45px;
+        font-size: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        max-width: none;
+      }
+
+      .hero,
+      .section {
+        box-shadow: none;
+      }
+
+      .toc {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main">
+    Перейти к содержанию урока
+  </a>
+
+  <div class="page">
+
+    <!-- ==================================================
+         ОБЛОЖКА УРОКА
+    ================================================== -->
+
+    <header class="hero" id="top">
+
+      <div class="hero-inner">
+
+        <div class="hero-copy">
+
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 5 КЛАСС · ЧАСТЬ 4 ИЗ 4 · ПЗ
+          </span>
+
+          <h1>
+            Алгоритмы <em>под контролем!</em>
+          </h1>
+
+          <p>
+            Сегодня — заключительное занятие по теме
+            «Алгоритмы вокруг нас». Проверим команды
+            Робота, исправим ошибку, раскроем секрет
+            «чёрного ящика» и создадим собственный алгоритм.
+          </p>
+
+          <p>
+            Главное — не просто найти ответ,
+            а объяснить, почему он верный.
+          </p>
+
+          <div
+            class="course-progress"
+            aria-label="Четвёртый урок из четырёх"
+          >
+            <span>Часть 1 ✓</span>
+            <span>Часть 2 ✓</span>
+            <span>Часть 3 ✓</span>
+            <span class="active">Часть 4: финал</span>
+          </div>
+
+        </div>
+
+        <!-- Авторская SVG-иллюстрация.
+             Не требует загрузки картинок. -->
+
+        <div class="hero-art">
+
+          <div class="art-caption">
+            🧩 Исполнитель + команды + проверка
+          </div>
+
+          <svg
+            class="hero-svg"
+            viewBox="0 0 420 266"
+            role="img"
+            aria-label="Робот движется по клеткам к финишу, а исследователь проверяет алгоритм"
+          >
+
+            <defs>
+              <linearGradient
+                id="heroCard"
+                x1="0"
+                x2="1"
+                y1="0"
+                y2="1"
+              >
+                <stop offset="0" stop-color="#f4f9ff"/>
+                <stop offset="1" stop-color="#dbeaff"/>
+              </linearGradient>
+            </defs>
+
+            <rect
+              x="14" y="18"
+              width="255" height="230"
+              rx="20" fill="url(#heroCard)"
+            />
+
+            <!-- Поле 4 × 4 -->
+
+            <g
+              fill="white"
+              stroke="#c9d9ea"
+              stroke-width="1.7"
+            >
+              <rect x="31" y="35" width="49" height="43" rx="8"/>
+              <rect x="89" y="35" width="49" height="43" rx="8"/>
+              <rect x="147" y="35" width="49" height="43" rx="8"/>
+              <rect
+                x="205" y="35"
+                width="49" height="43"
+                rx="8" fill="#dbf5e5"
+              />
+
+              <rect x="31" y="87" width="49" height="43" rx="8"/>
+              <rect x="89" y="87" width="49" height="43" rx="8"/>
+              <rect
+                x="147" y="87"
+                width="49" height="43"
+                rx="8" fill="#ffe4e2"
+              />
+              <rect x="205" y="87" width="49" height="43" rx="8"/>
+
+              <rect x="31" y="139" width="49" height="43" rx="8"/>
+              <rect
+                x="89" y="139"
+                width="49" height="43"
+                rx="8" fill="#e2efff"
+              />
+              <rect x="147" y="139" width="49" height="43" rx="8"/>
+              <rect x="205" y="139" width="49" height="43" rx="8"/>
+
+              <rect x="31" y="191" width="49" height="43" rx="8"/>
+              <rect x="89" y="191" width="49" height="43" rx="8"/>
+              <rect x="147" y="191" width="49" height="43" rx="8"/>
+              <rect x="205" y="191" width="49" height="43" rx="8"/>
+            </g>
+
+            <!-- Безопасный маршрут -->
+
+            <path
+              d="M113 161 H229 V57"
+              fill="none"
+              stroke="#279870"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-dasharray="8 10"
+            />
+
+            <text
+              x="229" y="68"
+              font-size="25"
+              text-anchor="middle"
+            >🏁</text>
+
+            <text
+              x="171" y="117"
+              font-size="24"
+              text-anchor="middle"
+            >🧱</text>
+
+            <text
+              x="113" y="169"
+              font-size="27"
+              text-anchor="middle"
+            >🤖</text>
+
+            <!-- Карта алгоритма -->
+
+            <rect
+              x="280" y="46"
+              width="126" height="174"
+              rx="17"
+              fill="#1d3556"
+              stroke="#9bb7d7"
+              stroke-width="1.7"
+            />
+
+            <text
+              x="343" y="75"
+              fill="#d6e7fa"
+              text-anchor="middle"
+              font-size="12"
+              font-family="Arial"
+              font-weight="bold"
+            >АЛГОРИТМ</text>
+
+            <g
+              font-family="Arial"
+              font-size="19"
+              font-weight="bold"
+              fill="#ffffff"
+              text-anchor="middle"
+            >
+              <text x="343" y="109">→ →</text>
+              <text x="343" y="142">↑ ↑</text>
+              <text x="343" y="186" fill="#b9f1d7">✓</text>
+            </g>
+
+          </svg>
+
+          <div class="art-caption">
+            Выполняй команды по порядку — и проверяй результат!
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================================================
+         НАВИГАЦИЯ ПО УРОКУ
+    ================================================== -->
+
+    <nav class="toc" aria-label="Разделы урока">
+
+      <a href="#remember">🧠 Повторение</a>
+      <a href="#robot">🤖 Робот</a>
+      <a href="#blackbox">📦 Чёрный ящик</a>
+      <a href="#logic">🧩 Рассуждения</a>
+      <a href="#prepare">💻 Подготовка</a>
+      <a href="#practice">✍️ Практическая работа</a>
+      <a href="#questions">❓ 12 вопросов</a>
+
+    </nav>
+
+    <main id="main">
+
+      <!-- ==================================================
+           РАЗДЕЛ 1. ПОВТОРЕНИЕ ОСНОВНЫХ ПОНЯТИЙ
+      ================================================== -->
+
+      <section class="section" id="remember">
+
+        <div class="section-head">
+          <div class="section-number">01</div>
+
+          <div>
+            <h2>Что мы уже знаем об алгоритмах?</h2>
+
+            <p class="sub">
+              Соберём воедино знания из первых трёх частей темы.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          <strong>Алгоритм</strong> — понятная исполнителю
+          последовательность точных команд,
+          позволяющая решить задачу.
+
+          <strong>Исполнитель</strong> — человек,
+          робот или программа, которая выполняет эти команды.
+        </p>
+
+        <div class="cols-3">
+
+          <article class="mini-card blue">
+            <span class="emoji">📋</span>
+            <h3>Алгоритм</h3>
+
+            <p>
+              Определяет, какие действия
+              и в каком порядке необходимо выполнить.
+            </p>
+          </article>
+
+          <article class="mini-card mint">
+            <span class="emoji">🤖</span>
+            <h3>Исполнитель</h3>
+
+            <p>
+              Выполняет команды,
+              входящие в его систему команд.
+            </p>
+          </article>
+
+          <article class="mini-card purple">
+            <span class="emoji">🎯</span>
+            <h3>Результат</h3>
+
+            <p>
+              То, что получилось после выполнения
+              последовательности действий.
+            </p>
+          </article>
+
+        </div>
+
+        <p>
+          У любого исполнителя есть
+          <strong>система команд</strong> —
+          набор действий, которые он способен выполнить, и
+          <strong>среда</strong> — условия и объекты,
+          с которыми он работает.
+
+          Если команда непонятна исполнителю
+          или невыполнима в его среде,
+          алгоритм может остановиться.
+        </p>
+
+        <div class="definition">
+          <strong>Наша задача на сегодня:</strong>
+          научиться замечать ошибки,
+          проверять найденные правила
+          и самостоятельно составлять алгоритмы.
+          Это понадобится и при создании компьютерных программ.
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 2. РОБОТ И ОШИБКИ АЛГОРИТМА
+      ================================================== -->
+
+      <section class="section" id="robot">
+
+        <div class="section-head">
+          <div class="section-number">02</div>
+
+          <div>
+            <h2>Робот на клетчатом поле: как не ошибиться?</h2>
+
+            <p class="sub">
+              Вспоминаем команды, среду и проверку алгоритма.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Представь формального исполнителя
+          <strong>Робота</strong>.
+          Он умеет перемещаться на
+          <strong>одну соседнюю клетку</strong>
+          в указанном направлении.
+
+          В отличие от человека, Робот не может
+          сам догадаться, как обойти препятствие:
+          маршрут необходимо задать правильными командами.
+        </p>
+
+        <div
+          class="command-list"
+          aria-label="Система команд Робота"
+        >
+          <span>↑ Вверх</span>
+          <span>↓ Вниз</span>
+          <span>← Влево</span>
+          <span>→ Вправо</span>
+        </div>
+
+        <p>
+          Ряды клеток считаем <strong>сверху вниз</strong>,
+          а столбцы — <strong>слева направо</strong>.
+          В одной клетке может находиться препятствие,
+          через которое проходить нельзя.
+        </p>
+
+        <div class="board-layout">
+
+          <div class="board-shell">
+
+            <div class="board-title">
+              Поле Робота — 4 строки × 4 столбца
+            </div>
+
+            <table
+              class="robot-board"
+              aria-label="Поле 4 на 4: робот в строке 3 столбце 2, препятствие в строке 2 столбце 3, финиш в строке 1 столбце 4"
+            >
+
+              <thead>
+                <tr>
+                  <th scope="col">№</th>
+                  <th scope="col">1</th>
+                  <th scope="col">2</th>
+                  <th scope="col">3</th>
+                  <th scope="col">4</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <th scope="row">1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="finish" aria-label="Финиш">🏁</td>
+                </tr>
+
+                <tr>
+                  <th scope="row">2</th>
+                  <td></td>
+                  <td></td>
+                  <td class="obstacle" aria-label="Препятствие">🧱</td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th scope="row">3</th>
+                  <td></td>
+                  <td class="start" aria-label="Робот — старт">🤖</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th scope="row">4</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+              </tbody>
+            </table>
+
+            <div class="board-legend">
+              <span>🤖 Старт</span>
+              <span>🧱 Препятствие</span>
+              <span>🏁 Финиш</span>
+            </div>
+
+          </div>
+
+          <div>
+
+            <h3>Выполним команды мысленно</h3>
+
+            <p>
+              Сначала Робот стоит в третьей строке
+              второго столбца.
+
+              Требуется попасть в первую строку
+              четвёртого столбца.
+
+              Рассмотрим предложенный алгоритм:
+            </p>
+
+            <div
+              class="command-strip"
+              aria-label="Ошибочный алгоритм"
+            >
+              <span>↑</span><b>→</b>
+              <span class="bad">→</span><b>→</b>
+              <span>↑</span><b>→</b>
+              <span>→</span>
+            </div>
+
+            <div class="problem-note">
+              <strong>Где ошибка?</strong>
+
+              После первой команды Робот оказывается
+              в клетке (строка 2, столбец 2).
+
+              Следующая команда направляет его
+              прямо в препятствие — клетку (2, 3).
+            </div>
+
+            <p>
+              Алгоритм нужно исправить так,
+              чтобы каждая команда была допустимой
+              и Робот добрался до финиша.
+
+              Придумать безопасный маршрут
+              ты попробуешь в практической работе.
+            </p>
+
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Запомни:</strong>
+          при проверке алгоритма необходимо прослеживать
+          положение исполнителя
+          <em>после каждой команды</em>,
+          а не только смотреть на предполагаемую
+          конечную клетку.
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 3. ЧИСЛОВОЙ «ЧЁРНЫЙ ЯЩИК»
+      ================================================== -->
+
+      <section class="section" id="blackbox">
+
+        <div class="section-head">
+          <div class="section-number">03</div>
+
+          <div>
+            <h2>Найди скрытое правило преобразования</h2>
+
+            <p class="sub">
+              Как из известных результатов
+              восстановить возможный алгоритм?
+            </p>
+          </div>
+        </div>
+
+        <div class="definition">
+          <strong>«Чёрный ящик»</strong> — модель системы,
+          внутреннее устройство или правило работы
+          которой нам неизвестно.
+
+          Мы наблюдаем, какие данные поступают
+          на вход и что получается на выходе,
+          а затем пытаемся обнаружить закономерность.
+        </div>
+
+        <p>
+          Например, известно, что некоторое устройство
+          изменяет числа так:
+        </p>
+
+        <div class="table-scroll narrow">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>Вход</th>
+                <th>Выход</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr><td>1</td><td>5</td></tr>
+              <tr><td>2</td><td>9</td></tr>
+              <tr><td>3</td><td>13</td></tr>
+              <tr><td>4</td><td class="unknown">?</td></tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <p>
+          Выход увеличивается на 4,
+          когда вход увеличивается на 1.
+
+          Предположим, что сначала число
+          <strong>умножают на 4</strong>,
+          а потом <strong>прибавляют 1</strong>.
+
+          Проверка подтверждает все три известные пары.
+        </p>
+
+        <div
+          class="pipeline"
+          aria-label="Вход 4, правило умножить на 4 и прибавить 1, выход 17"
+        >
+
+          <div class="pipeline-card">
+            <strong>4</strong>
+            <small>Вход</small>
+          </div>
+
+          <div class="pipeline-arrow">→</div>
+
+          <div class="pipeline-card dark">
+            <strong>× 4, затем + 1</strong>
+            <small>Предполагаемый алгоритм</small>
+          </div>
+
+          <div class="pipeline-arrow">→</div>
+
+          <div class="pipeline-card green">
+            <strong>17</strong>
+            <small>Ожидаемый выход</small>
+          </div>
+
+        </div>
+
+        <h3>Четыре шага исследования</h3>
+
+        <div class="research-steps">
+
+          <div class="research-step">
+            <div class="count">1</div>
+            <strong>Наблюдай</strong>
+            <p>
+              Запиши пары исходных
+              и полученных значений.
+            </p>
+          </div>
+
+          <div class="research-step">
+            <div class="count">2</div>
+            <strong>Сравнивай</strong>
+            <p>
+              Найди общую закономерность
+              между примерами.
+            </p>
+          </div>
+
+          <div class="research-step">
+            <div class="count">3</div>
+            <strong>Предполагай</strong>
+            <p>
+              Сформулируй возможное правило словами.
+            </p>
+          </div>
+
+          <div class="research-step">
+            <div class="count">4</div>
+            <strong>Проверяй</strong>
+            <p>
+              Проверь правило
+              на известных и новых данных.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="note">
+          <strong>Важно:</strong>
+          правило, подходящее ко всем показанным значениям,
+          не обязательно единственное.
+
+          Если данных мало, возможны разные объяснения.
+          Поэтому полезно проводить дополнительные проверки.
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 4. ЛОГИЧЕСКИЕ РАССУЖДЕНИЯ
+      ================================================== -->
+
+      <section class="section" id="logic">
+
+        <div class="section-head">
+          <div class="section-number">04</div>
+
+          <div>
+            <h2>Логическая задача: исключай невозможное</h2>
+
+            <p class="sub">
+              Новую информацию можно получить без вычислений.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Логическое рассуждение</strong>
+          помогает получить новый вывод
+          из известных фактов.
+
+          Особенно удобен способ
+          <strong>исключения неподходящих вариантов</strong>.
+        </p>
+
+        <div class="example-box">
+
+          <p>
+            <strong>Пример.</strong>
+            Даша, Лена и Рома выбрали разные занятия:
+            шахматы, рисование и плавание.
+
+            Известно, что Рома выбрал шахматы,
+            а Даша — не рисование.
+
+            Чем занимается каждый?
+          </p>
+
+          <div class="logic-facts">
+            <span>♟️ Рома → шахматы</span>
+            <span>🚫 Даша → не рисование</span>
+            <span>✅ Все занятия разные</span>
+          </div>
+
+          <p>
+            Рома уже выбрал шахматы.
+            Значит, Даша и Лена не могли выбрать шахматы.
+
+            Даша не выбрала рисование,
+            поэтому ей остаётся плавание.
+
+            Лене остаётся рисование.
+          </p>
+
+        </div>
+
+        <div class="table-scroll">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>Участник</th>
+                <th>Шахматы ♟️</th>
+                <th>Рисование 🎨</th>
+                <th>Плавание 🏊</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th scope="row">Рома</th>
+                <td>✓</td><td>—</td><td>—</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Даша</th>
+                <td>—</td><td>—</td><td>✓</td>
+              </tr>
+
+              <tr>
+                <th scope="row">Лена</th>
+                <td>—</td><td>✓</td><td>—</td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <div class="definition">
+          <strong>Алгоритм решения:</strong>
+
+          прочитай условие →
+          выдели известные факты →
+          исключи неподходящие варианты →
+          сделай вывод →
+          проверь все условия.
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 5. ПОДГОТОВКА И ДВА МАРШРУТА
+      ================================================== -->
+
+      <section class="section" id="prepare">
+
+        <div class="section-head">
+          <div class="section-number">05</div>
+
+          <div>
+            <h2>Как выполнять сегодняшнюю работу?</h2>
+
+            <p class="sub">
+              Выбери подходящий способ
+              изучения и закрепления материала.
+            </p>
+          </div>
+        </div>
+
+        <div class="routes">
+
+          <div class="route">
+
+            <h3>💻 Если у тебя есть компьютер</h3>
+
+            <p>
+              Выполни <strong>четыре практических задания</strong>
+              в следующем разделе.
+
+              Оформляй ответы в текстовом редакторе,
+              используя таблицы и краткие пояснения,
+              затем сохрани документ.
+            </p>
+
+          </div>
+
+          <div class="route without-pc">
+
+            <h3>📖 Если компьютера нет</h3>
+
+            <p>
+              Изучи объяснения, схемы и примеры
+              на странице, а затем
+              <strong>ответь на 12 вопросов</strong>
+              в конце урока.
+
+              Компьютерную практическую работу
+              выполнять не требуется.
+            </p>
+
+          </div>
+
+        </div>
+
+        <p>
+          Для работы на компьютере подойдёт
+          Microsoft Word, LibreOffice Writer
+          или другой текстовый редактор с таблицами.
+
+          Особая программа для управления Роботом
+          не нужна: маршрут можно записывать стрелками,
+          ориентируясь на поле на этой странице.
+        </p>
+
+        <h3>Как будет выглядеть готовый документ?</h3>
+
+        <!-- Макет интерфейса текстового редактора -->
+
+        <div
+          class="editor"
+          aria-label="Пример оформления практической работы в текстовом редакторе"
+        >
+
+          <div class="editor-titlebar">
+
+            <span class="editor-dots">
+              <i></i><i></i><i></i>
+            </span>
+
+            Практическая работа — текстовый редактор
+
+          </div>
+
+          <div class="editor-toolbar">
+            <span>Файл</span>
+            <span>Главная</span>
+            <span>Вставка</span>
+            <span>Таблица</span>
+            <span>Сохранить 💾</span>
+          </div>
+
+          <div class="editor-sheet">
+
+            <h4>Алгоритмы вокруг нас — часть 4</h4>
+
+            <ol>
+              <li>
+                Робот: исправленный алгоритм и проверка.
+              </li>
+
+              <li>
+                Числовой «чёрный ящик»: таблица и правило.
+              </li>
+
+              <li>
+                Логическая задача: таблица соответствия.
+              </li>
+
+              <li>
+                Мой «чёрный ящик»: четыре пары чисел
+                и проверка.
+              </li>
+            </ol>
+
+          </div>
+
+          <div class="editor-footer">
+            Это учебный макет.
+            Названия меню могут отличаться.
+          </div>
+
+        </div>
+
+        <div class="success-note">
+
+          <strong>Перед началом работы:</strong>
+
+          создай новый документ,
+          запиши фамилию и имя, класс,
+          название практической работы.
+
+          Сохраняй изменения после каждого задания.
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 6. ПРАКТИЧЕСКАЯ РАБОТА НА КОМПЬЮТЕРЕ
+      ================================================== -->
+
+      <section
+        class="section practice-section"
+        id="practice"
+      >
+
+        <div class="section-head">
+
+          <div class="section-number">06</div>
+
+          <div>
+            <span class="practice-label">
+              💻 ПРАКТИЧЕСКАЯ РАБОТА
+            </span>
+
+            <h2>
+              Четыре задания — четыре проверки знаний
+            </h2>
+
+            <p class="sub">
+              Выполняй в текстовом редакторе.
+              Ответы поясняй своими словами.
+            </p>
+          </div>
+
+        </div>
+
+        <p class="lead">
+          Сегодня ты сам будешь и исполнителем,
+          и исследователем, и автором алгоритма.
+
+          Задания соответствуют всему,
+          что мы изучили за четыре урока.
+        </p>
+
+        <!-- ==================================
+             ЗАДАНИЕ 1. РОБОТ
+        =================================== -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">01</div>
+            <h3>Помоги Роботу добраться до финиша</h3>
+          </div>
+
+          <p class="context">
+            Цель: выполнить команды по порядку,
+            найти ошибку и составить исправленный алгоритм.
+          </p>
+
+          <p>
+            Используй клетчатое поле
+            из раздела «Робот на клетчатом поле».
+
+            Начало:
+            <strong>строка 3, столбец 2</strong>.
+
+            Финиш:
+            <strong>строка 1, столбец 4</strong>.
+
+            Препятствие:
+            <strong>строка 2, столбец 3</strong>.
+          </p>
+
+          <div
+            class="command-strip"
+            aria-label="Предложенный алгоритм Робота"
+          >
+            <span>↑</span><b>→</b>
+            <span>→</span><b>→</b>
+            <span>↑</span><b>→</b>
+            <span>→</span>
+          </div>
+
+          <ol>
+            <li>
+              Создай раздел документа
+              «Задание 1. Робот».
+            </li>
+
+            <li>
+              Последовательно проверь
+              исходный алгоритм и найди
+              ошибочную команду.
+            </li>
+
+            <li>
+              Запиши, в какой клетке
+              Робот столкнётся с препятствием.
+            </li>
+
+            <li>
+              Составь правильный алгоритм
+              из четырёх команд.
+            </li>
+
+            <li>
+              Проследи маршрут и объясни,
+              почему Робот достигнет финиша.
+            </li>
+          </ol>
+
+          <details>
+
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Вспомни, что Робот может двигаться
+              только в соседнюю клетку.
+
+              Проверь, можно ли сначала
+              обойти препятствие справа,
+              а затем подняться к финишу.
+            </p>
+
+          </details>
+
+        </article>
+
+        <!-- ==================================
+             ЗАДАНИЕ 2. ЧИСЛОВОЙ ЧЁРНЫЙ ЯЩИК
+        =================================== -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">02</div>
+            <h3>Исследуй числовой «чёрный ящик»</h3>
+          </div>
+
+          <p class="context">
+            Цель: обнаружить неизвестное правило
+            из двух действий и проверить его
+            на разных числах.
+          </p>
+
+          <div class="table-scroll narrow">
+
+            <table class="data-table">
+
+              <thead>
+                <tr>
+                  <th>Вход</th>
+                  <th>Выход</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr><td>1</td><td>7</td></tr>
+                <tr><td>2</td><td>10</td></tr>
+                <tr><td>4</td><td>16</td></tr>
+                <tr><td>6</td><td>22</td></tr>
+                <tr><td>7</td><td class="unknown">?</td></tr>
+                <tr><td>8</td><td class="unknown">?</td></tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <ol>
+            <li>
+              Создай такую же таблицу
+              в текстовом документе.
+            </li>
+
+            <li>
+              Сравни данные и предложи
+              правило преобразования.
+            </li>
+
+            <li>
+              Заполни две пустые клетки таблицы.
+            </li>
+
+            <li>
+              Проверь результаты для известных
+              входных значений с помощью калькулятора.
+            </li>
+
+            <li>
+              Запиши предполагаемый алгоритм словами
+              и приведи пример проверки.
+            </li>
+          </ol>
+
+          <details>
+
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Если вход увеличивается на 2,
+              выход здесь увеличивается на 6.
+
+              Подумай, на какое число умножают
+              входные данные, прежде чем
+              выполнить второе действие.
+            </p>
+
+          </details>
+
+        </article>
+
+        <!-- ==================================
+             ЗАДАНИЕ 3. ЛОГИЧЕСКАЯ ЗАДАЧА
+        =================================== -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">03</div>
+
+            <h3>
+              Расследуй, кто какой проект подготовил
+            </h3>
+          </div>
+
+          <p class="context">
+            Цель: составить таблицу соответствий
+            и применить логическое исключение.
+          </p>
+
+          <div class="example-box">
+
+            <p>
+              <strong>Условие.</strong>
+
+              Катя, Миша и Саша подготовили
+              разные проекты:
+
+              <strong>
+                модель робота, рисунок
+                и компьютерную презентацию
+              </strong>.
+            </p>
+
+            <div class="logic-facts">
+
+              <span>
+                🤖 Катя не делала рисунок и презентацию
+              </span>
+
+              <span>
+                🚫 Миша не делал презентацию
+              </span>
+
+              <span>
+                🧩 Проекты не повторяются
+              </span>
+
+            </div>
+
+          </div>
+
+          <ol>
+            <li>
+              Создай таблицу:
+              строки — имена детей,
+              столбцы — виды проектов.
+            </li>
+
+            <li>
+              Отметь неподходящие варианты знаком «—».
+            </li>
+
+            <li>
+              Найди единственный возможный
+              проект каждого ребёнка.
+            </li>
+
+            <li>
+              Отметь выбранные проекты знаком «✓».
+            </li>
+
+            <li>
+              Запиши два-три предложения
+              с объяснением и проверь все условия.
+            </li>
+          </ol>
+
+          <details>
+
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Сначала определи проект Кати:
+              ей не подходят сразу два варианта.
+
+              Затем используй сведения о Мише.
+            </p>
+
+          </details>
+
+        </article>
+
+        <!-- ==================================
+             ЗАДАНИЕ 4. СОБСТВЕННЫЙ ЧЁРНЫЙ ЯЩИК
+        =================================== -->
+
+        <article class="exercise">
+
+          <div class="exercise-head">
+            <div class="exercise-number">04</div>
+            <h3>Создай собственный «чёрный ящик»</h3>
+          </div>
+
+          <p class="context">
+            Цель: самостоятельно составить алгоритм,
+            подготовить данные и исследовать
+            правило другого ученика.
+          </p>
+
+          <ol>
+            <li>
+              Придумай правило из
+              <strong>
+                двух последовательных
+                арифметических действий
+              </strong>.
+            </li>
+
+            <li>
+              Выбери четыре входных числа
+              и вычисли четыре выходных значения.
+            </li>
+
+            <li>
+              Создай в документе таблицу из двух столбцов:
+              «Вход» и «Выход».
+            </li>
+
+            <li>
+              Обменяйся только таблицей с одноклассником,
+              не раскрывая правило.
+            </li>
+
+            <li>
+              Попытайся определить правило чужого
+              «чёрного ящика» и запиши гипотезу.
+            </li>
+
+            <li>
+              Проверь гипотезу на дополнительном значении,
+              выбранном автором.
+            </li>
+
+            <li>
+              Сравни найденное правило с исходным.
+              Объясни, совпали ли они.
+            </li>
+          </ol>
+
+          <div class="note">
+
+            <strong>
+              Если работаешь самостоятельно:
+            </strong>
+
+            создай таблицу,
+            отложи описание собственного правила,
+            а затем проверь правильность
+            всех вычислений новым входным числом.
+
+          </div>
+
+          <details>
+
+            <summary>Нужна подсказка?</summary>
+
+            <p>
+              Пример построения своего правила
+              (не готовый ответ к заданию):
+
+              сначала умножь число на 2,
+              затем вычти 1.
+
+              Для входа 3 получится 5.
+
+              Придумай другое правило
+              и подготовь свои четыре примера.
+            </p>
+
+          </details>
+
+        </article>
+
+        <!-- Завершение практической работы -->
+
+        <div class="success-note">
+
+          <strong>Работа завершена?</strong>
+
+          Убедись, что в документе есть все четыре задания,
+          таблицы, исправленный алгоритм и пояснения.
+
+          Сохрани файл под понятным именем, например
+          <code>5_klass_algoritmy_chast_4</code>,
+          и передай его учителю.
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 7. ИТОГИ И ДОМАШНЕЕ ЗАДАНИЕ
+      ================================================== -->
+
+      <section class="section" id="summary">
+
+        <div class="section-head">
+          <div class="section-number">07</div>
+
+          <div>
+            <h2>Чему мы научились за четыре урока?</h2>
+
+            <p class="sub">
+              Обобщаем главное и завершаем изучение темы.
+            </p>
+          </div>
+        </div>
+
+        <div class="recap-cards">
+
+          <div class="recap-card">
+
+            <span class="emoji">🤖</span>
+            <strong>Управлять исполнителем</strong>
+
+            <p>
+              Выполнять команды по порядку
+              и учитывать препятствия
+              и ограничения среды.
+            </p>
+
+          </div>
+
+          <div class="recap-card">
+
+            <span class="emoji">🔍</span>
+            <strong>Находить ошибки</strong>
+
+            <p>
+              Проверять каждый шаг алгоритма
+              и исправлять неверные команды.
+            </p>
+
+          </div>
+
+          <div class="recap-card">
+
+            <span class="emoji">📦</span>
+            <strong>Исследовать правила</strong>
+
+            <p>
+              Сопоставлять вход и выход,
+              рассуждать и проверять предположения.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="definition">
+
+          <strong>Главный вывод:</strong>
+
+          точные алгоритмы помогают
+          последовательно решать задачи,
+          а логические рассуждения —
+          получать новую информацию
+          из известных данных.
+
+          Хорошее решение обязательно нужно проверять.
+
+        </div>
+
+        <div class="note">
+
+          <strong>Домашнее задание.</strong>
+
+          Составь алгоритм из
+          <strong>5–7 команд</strong>
+          для повседневного действия:
+
+          например, подготовки школьного рюкзака
+          или ухода за комнатным растением.
+
+          Назови исполнителя и объясни,
+          почему команды должны выполняться
+          в выбранном порядке.
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           РАЗДЕЛ 8. РОВНО 12 ВОПРОСОВ
+           Для учеников без ПК заменяют практические задания.
+      ================================================== -->
+
+      <section class="section" id="questions">
+
+        <div class="section-head">
+          <div class="section-number">08</div>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+
+            <p class="sub">
+              Проверь, насколько уверенно ты освоил тему.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Если компьютера нет,</strong>
+          ответь на все 12 вопросов
+          вместо практической работы.
+
+          Если ты выполнил задания на компьютере,
+          используй этот раздел для самопроверки.
+
+          Объясняй ответы своими словами,
+          при необходимости возвращайся
+          к примерам выше.
+        </p>
+
+        <ol class="questions">
+
+          <li>
+            Что такое алгоритм?
+            Приведи один пример алгоритма
+            из повседневной жизни.
+          </li>
+
+          <li>
+            Кого называют исполнителем алгоритма?
+            Чем он отличается от самого алгоритма?
+          </li>
+
+          <li>
+            Что такое система команд и среда исполнителя?
+            Приведи пример для Робота.
+          </li>
+
+          <li>
+            Какие четыре команды умеет выполнять
+            Робот на клетчатом поле?
+          </li>
+
+          <li>
+            Почему Робот не может выполнить команду,
+            ведущую в клетку с препятствием?
+          </li>
+
+          <li>
+            Как обнаружить ошибку
+            в последовательности команд
+            и что нужно сделать после её исправления?
+          </li>
+
+          <li>
+            Что называют «чёрным ящиком»?
+            Какие сведения о нём доступны исследователю?
+          </li>
+
+          <li>
+            Определи возможное правило:
+            2 → 8, 3 → 11, 4 → 14.
+            Какой результат ожидается для числа 5?
+          </li>
+
+          <li>
+            Почему найденное правило «чёрного ящика»
+            нужно проверять на нескольких значениях?
+          </li>
+
+          <li>
+            Придумай правило из двух действий
+            для числа 4 и запиши полученный результат.
+          </li>
+
+          <li>
+            Как метод исключения неподходящих вариантов
+            помогает решать логические задачи?
+          </li>
+
+          <li>
+            Почему важно объяснять ход рассуждений
+            и проверять полученный ответ?
+          </li>
+
+        </ol>
+
+        <div class="last-note">
+          🎓 Поздравляем с завершением темы!
+          Теперь ты умеешь не только выполнять алгоритмы,
+          но и проверять, исправлять
+          и создавать их самостоятельно.
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ==================================================
+         ПОДВАЛ САЙТА
+    ================================================== -->
+
+    <footer>
+      Информатика · 5 класс · Алгоритмы вокруг нас ·
+      Часть 4 из 4 · Практическое занятие
+    </footer>
+
+  </div>
+
+</body>
+</html>
