@@ -1,0 +1,1961 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Информатика, 7 класс. Меню готовых форм в Paint: виды фигур, построение, контур, заливка и составные рисунки.">
+  <title>Меню готовых форм — Paint, 7 класс</title>
+
+  <style>
+    /* =====================================================
+       1. ПАЛИТРА И БАЗОВОЕ ОФОРМЛЕНИЕ
+       Весь сайт находится в одном HTML-файле.
+    ===================================================== */
+
+    :root {
+      --bg: #f4f8fc;
+      --paper: #ffffff;
+      --ink: #26354c;
+      --muted: #5e7088;
+      --blue: #346fd0;
+      --blue-light: #eaf2ff;
+      --mint: #168b79;
+      --mint-light: #e7f7f1;
+      --purple: #7156ba;
+      --purple-light: #f2edff;
+      --sun: #f5b85f;
+      --sun-light: #fff3df;
+      --line: #dce7f1;
+      --shadow: 0 13px 33px rgba(32, 62, 104, 0.07);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+
+      font: 16px/1.7 system-ui,
+        -apple-system,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      overflow-wrap: anywhere;
+    }
+
+    h1, h2, h3, h4, p, figure {
+      margin-top: 0;
+    }
+
+    h1, h2, h3, h4 {
+      line-height: 1.22;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: #2863ad;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--sun);
+      outline-offset: 3px;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 2px 7px;
+      border: 1px solid #c9d5e5;
+      border-bottom-width: 3px;
+      border-radius: 6px;
+      background: white;
+      font: 750 13px Consolas, monospace;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 32px));
+      margin: auto;
+      padding: 20px 0 42px;
+    }
+
+    /* =====================================================
+       2. ОБЛОЖКА И ВИТРИНА ФИГУР
+    ===================================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+
+      background: linear-gradient(
+        125deg,
+        #193965,
+        #315db0 67%,
+        #318e9d
+      );
+
+      color: white;
+      box-shadow: 0 20px 44px rgba(33, 73, 130, .18);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+
+      top: -170px;
+      right: -140px;
+
+      width: 390px;
+      height: 390px;
+
+      border: 65px solid rgba(255, 255, 255, .06);
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(280px, .95fr);
+
+      gap: 28px;
+      align-items: center;
+      padding: 46px 42px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+
+      margin-bottom: 16px;
+      padding: 6px 13px;
+
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .11);
+
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+
+    .hero h1 {
+      margin-bottom: 18px;
+      font-size: clamp(36px, 5.2vw, 56px);
+      letter-spacing: -.035em;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #ffe4a4;
+    }
+
+    .hero p {
+      max-width: 560px;
+      color: #e8f1ff;
+      font-size: 17px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .hero-tags span {
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, .12);
+
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    /* Макет окна с готовыми формами */
+
+    .palette-window {
+      overflow: hidden;
+      padding: 0;
+
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 19px;
+
+      background: #f9fbff;
+      color: var(--ink);
+
+      box-shadow: 0 18px 28px rgba(16, 33, 61, .18);
+      transform: rotate(1deg);
+    }
+
+    .palette-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+
+      padding: 11px 15px;
+
+      background: #edf3fc;
+      border-bottom: 1px solid #dce5f2;
+
+      color: #415c7b;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .palette-tools {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 9px;
+      padding: 16px;
+    }
+
+    .shape-cell {
+      display: grid;
+      place-items: center;
+
+      min-height: 68px;
+
+      background: white;
+      border: 1px solid #dce6f3;
+      border-radius: 13px;
+    }
+
+    .shape-cell.active {
+      background: #e7f3ff;
+      border: 2px solid #5a92e0;
+    }
+
+    .shape-cell svg {
+      width: 46px;
+      height: 42px;
+    }
+
+    .palette-bottom {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 10px 16px;
+
+      background: #f1f6fc;
+      border-top: 1px solid #e1e9f3;
+
+      color: #526b84;
+      font-size: 12px;
+    }
+
+    .swatch {
+      flex: 0 0 auto;
+
+      width: 21px;
+      height: 21px;
+
+      border: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #cbd7e7;
+    }
+
+    /* =====================================================
+       3. НАВИГАЦИЯ И УЧЕБНЫЕ РАЗДЕЛЫ
+    ===================================================== */
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .toc a {
+      padding: 8px 12px;
+
+      border: 1px solid var(--line);
+      border-radius: 22px;
+
+      background: white;
+      color: #506d87;
+
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 33px 37px;
+
+      border: 1px solid var(--line);
+      border-radius: 24px;
+
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .number {
+      flex: 0 0 42px;
+
+      display: grid;
+      place-items: center;
+
+      height: 42px;
+      border-radius: 12px;
+
+      background: var(--blue-light);
+      color: var(--blue);
+
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .section h2 {
+      margin: 2px 0 6px;
+      font-size: clamp(23px, 3.2vw, 31px);
+    }
+
+    .section h3 {
+      margin: 25px 0 12px;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .definition {
+      margin: 17px 0;
+      padding: 16px 19px;
+
+      border-left: 5px solid var(--blue);
+      border-radius: 0 13px 13px 0;
+
+      background: var(--blue-light);
+    }
+
+    .definition.mint {
+      background: var(--mint-light);
+      border-color: var(--mint);
+    }
+
+    .note {
+      margin: 18px 0;
+      padding: 16px 19px;
+
+      border: 1px solid #f1dfbc;
+      border-radius: 15px;
+
+      background: var(--sun-light);
+    }
+
+    .cards2,
+    .cards3,
+    .cards4 {
+      display: grid;
+      gap: 13px;
+      margin: 18px 0;
+    }
+
+    .cards2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cards3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .cards4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+      padding: 20px;
+
+      border: 1px solid var(--line);
+      border-radius: 17px;
+
+      background: #fafcff;
+    }
+
+    .card.blue {
+      background: var(--blue-light);
+      border-color: #d9e6fb;
+    }
+
+    .card.mint {
+      background: var(--mint-light);
+      border-color: #cfeadf;
+    }
+
+    .card.violet {
+      background: var(--purple-light);
+      border-color: #e3dcf9;
+    }
+
+    .card .emoji {
+      display: block;
+      margin-bottom: 8px;
+
+      font-size: 29px;
+      line-height: 1.2;
+    }
+
+    .card h3 {
+      margin: 0 0 7px;
+      font-size: 17px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =====================================================
+       4. ГАЛЕРЕЯ ГОТОВЫХ ФОРМ
+    ===================================================== */
+
+    .shape-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .gallery-item {
+      min-width: 0;
+      padding: 17px 11px 13px;
+
+      border: 1px solid #dfe8f4;
+      border-radius: 17px;
+
+      background: #f9fbff;
+      text-align: center;
+    }
+
+    .gallery-item svg {
+      width: 100%;
+      height: 83px;
+      margin: 0 auto 6px;
+    }
+
+    .gallery-item strong {
+      font-size: 13px;
+    }
+
+    .gallery-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       5. ШАГИ, СТИЛИ КОНТУРА, ПРИМЕРЫ
+    ===================================================== */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 11px;
+      margin: 21px 0;
+    }
+
+    .step {
+      padding: 17px 14px;
+
+      border: 1px solid var(--line);
+      border-radius: 15px;
+
+      background: #f8fbff;
+    }
+
+    .step .step-number {
+      display: grid;
+      place-items: center;
+
+      width: 31px;
+      height: 31px;
+      margin-bottom: 10px;
+
+      border-radius: 9px;
+      background: var(--blue-light);
+
+      color: var(--blue);
+      font-weight: 850;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .style-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      gap: 13px;
+      margin: 20px 0;
+    }
+
+    .style-item {
+      padding: 19px 10px;
+
+      border: 1px solid #dce7f3;
+      border-radius: 16px;
+
+      background: #f7faff;
+      text-align: center;
+    }
+
+    .style-item svg {
+      width: 100%;
+      height: 112px;
+      margin: 0 auto 7px;
+    }
+
+    .style-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .style-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .compare-box {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .compare-item {
+      padding: 20px;
+
+      border: 1px solid #dfe7f1;
+      border-radius: 16px;
+
+      background: #fafcff;
+      text-align: center;
+    }
+
+    .compare-item svg {
+      width: 100%;
+      height: 112px;
+      margin-bottom: 10px;
+    }
+
+    .compare-item b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .compare-item p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .house-wrap {
+      overflow: hidden;
+      margin: 21px 0;
+
+      border: 1px solid #d7e8e5;
+      border-radius: 21px;
+
+      background: linear-gradient(
+        180deg,
+        #eef7ff,
+        #f2fbf4
+      );
+    }
+
+    .house-wrap svg {
+      width: min(100%, 670px);
+      height: auto;
+      margin: auto;
+    }
+
+    .house-caption {
+      padding: 12px 18px;
+
+      border-top: 1px solid #d7e8e5;
+      background: rgba(255, 255, 255, .65);
+
+      color: #587489;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .small-list {
+      margin: 12px 0;
+      padding-left: 23px;
+    }
+
+    .small-list li {
+      margin: 6px 0;
+    }
+
+    /* =====================================================
+       6. ИТОГИ И 12 ВОПРОСОВ В КОНЦЕ
+    ===================================================== */
+
+    .summary {
+      padding: 21px;
+
+      border: 1px solid #d7e7e2;
+      border-radius: 17px;
+
+      background: linear-gradient(
+        115deg,
+        #eaf8f1,
+        #edf2ff
+      );
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 12px;
+      margin: 19px 0 0;
+      padding: 0;
+
+      list-style: none;
+      counter-reset: question;
+    }
+
+    .questions li {
+      position: relative;
+      min-height: 80px;
+
+      padding: 17px 16px 17px 59px;
+
+      border: 1px solid #dfe8f3;
+      border-radius: 14px;
+
+      background: #f9fbff;
+
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .questions li::before {
+      counter-increment: question;
+      content: counter(question, decimal-leading-zero);
+
+      position: absolute;
+      top: 15px;
+      left: 14px;
+
+      display: grid;
+      place-items: center;
+
+      width: 32px;
+      height: 32px;
+
+      border-radius: 10px;
+      background: #e6efff;
+
+      color: #2c64ad;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    footer {
+      padding: 25px 5px 5px;
+
+      color: #7a8a9e;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* =====================================================
+       7. АДАПТАЦИЯ ПОД ПЛАНШЕТЫ И СМАРТФОНЫ
+    ===================================================== */
+
+    @media (max-width: 850px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 35px 29px;
+      }
+
+      .palette-window {
+        max-width: 520px;
+        transform: none;
+      }
+
+      .cards4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section {
+        padding: 28px 26px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        width: calc(100% - 20px);
+        padding-top: 10px;
+      }
+
+      .hero {
+        border-radius: 21px;
+      }
+
+      .hero-inner {
+        padding: 28px 20px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .section {
+        margin-top: 15px;
+        padding: 22px 17px;
+        border-radius: 19px;
+      }
+
+      .section-head {
+        gap: 10px;
+      }
+
+      .number {
+        flex-basis: 36px;
+        height: 36px;
+      }
+
+      .section h2 {
+        font-size: 23px;
+      }
+
+      .cards2,
+      .cards3,
+      .cards4,
+      .style-gallery,
+      .compare-box,
+      .questions {
+        grid-template-columns: 1fr;
+      }
+
+      .shape-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 360px) {
+      .section {
+        padding: 20px 13px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ===================================================
+         ОБЛОЖКА УРОКА: ВИТРИНА ГОТОВЫХ ФОРМ
+    ==================================================== -->
+
+    <header class="hero" id="top">
+      <div class="hero-inner">
+
+        <div>
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 7 КЛАСС · PAINT
+          </span>
+
+          <h1>Меню <em>готовых форм</em></h1>
+
+          <p>
+            Рисовать ровные окна, круглые колёса и аккуратные звёзды
+            можно без свободного рисования. Узнаем, как устроена
+            группа «Фигуры» и как из простых форм собрать целый рисунок.
+          </p>
+
+          <div class="hero-tags">
+            <span>▢ Геометрические фигуры</span>
+            <span>◉ Контур и заливка</span>
+            <span>⌂ Составные рисунки</span>
+          </div>
+        </div>
+
+        <!-- Декоративный макет меню Paint, а не снимок интерфейса -->
+
+        <div
+          class="palette-window"
+          aria-label="Учебный макет меню фигур Paint"
+        >
+
+          <div class="palette-top">
+            <span>🎨 Paint · Фигуры</span>
+            <span>▢ ×</span>
+          </div>
+
+          <div class="palette-tools">
+
+            <!-- Линия -->
+
+            <div class="shape-cell" title="Линия">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M7 33 L42 8"
+                  stroke="#3575cf"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <!-- Прямоугольник -->
+
+            <div class="shape-cell active" title="Прямоугольник">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <rect
+                  x="7" y="9"
+                  width="36" height="24"
+                  rx="2"
+                  fill="#d9e9ff"
+                  stroke="#3575cf"
+                  stroke-width="3"
+                />
+              </svg>
+            </div>
+
+            <!-- Овал -->
+
+            <div class="shape-cell" title="Овал">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <ellipse
+                  cx="25" cy="21"
+                  rx="19" ry="13"
+                  fill="#d8f6eb"
+                  stroke="#168b79"
+                  stroke-width="3"
+                />
+              </svg>
+            </div>
+
+            <!-- Треугольник -->
+
+            <div class="shape-cell" title="Треугольник">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M25 5 L45 35 H5 Z"
+                  fill="#fff0cf"
+                  stroke="#e6a545"
+                  stroke-width="3"
+                />
+              </svg>
+            </div>
+
+            <!-- Ромб -->
+
+            <div class="shape-cell" title="Ромб">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M25 5 L44 21 L25 37 L6 21 Z"
+                  fill="#eee5ff"
+                  stroke="#7a5fc2"
+                  stroke-width="3"
+                />
+              </svg>
+            </div>
+
+            <!-- Стрелка -->
+
+            <div class="shape-cell" title="Стрелка">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M4 14 H26 V5 L46 21 L26 37 V28 H4 Z"
+                  fill="#d8f6eb"
+                  stroke="#168b79"
+                  stroke-width="2.5"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <!-- Звезда -->
+
+            <div class="shape-cell" title="Звезда">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M25 3 L31 15 L45 17 L35 27
+                     L38 40 L25 33 L12 40
+                     L15 27 L5 17 L19 15 Z"
+                  fill="#ffdf8b"
+                  stroke="#dc9940"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <!-- Выноска -->
+
+            <div class="shape-cell" title="Выноска">
+              <svg viewBox="0 0 50 42" aria-hidden="true">
+                <path
+                  d="M7 5 H43 V30 H25 L14 38 V30 H7 Z"
+                  fill="#e4efff"
+                  stroke="#3575cf"
+                  stroke-width="2.5"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="palette-bottom">
+            <span class="swatch" style="background:#3575cf"></span>
+            <span class="swatch" style="background:#ffce71"></span>
+            <span class="swatch" style="background:#30aa89"></span>
+            Учебная иллюстрация, не настоящий интерфейс
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ===================================================
+         НАВИГАЦИЯ ПО САЙТУ
+    ==================================================== -->
+
+    <nav class="toc" aria-label="Разделы урока">
+      <a href="#remember">🧠 Вспоминаем</a>
+      <a href="#menu">🔷 Виды фигур</a>
+      <a href="#draw">🖱️ Построение</a>
+      <a href="#style">🎨 Оформление</a>
+      <a href="#exact">📐 Точные формы</a>
+      <a href="#compose">🏠 Составной рисунок</a>
+      <a href="#summary">✅ Итоги</a>
+      <a href="#questions">❓ 12 вопросов</a>
+    </nav>
+
+    <main>
+
+      <!-- =================================================
+           РАЗДЕЛ 1. ПРЕДЫДУЩИЕ УРОКИ ПО PAINT
+      ================================================== -->
+
+      <section class="section" id="remember">
+
+        <div class="section-head">
+          <span class="number">01</span>
+
+          <div>
+            <h2>Вспомним инструменты Paint</h2>
+
+            <p class="subtitle">
+              Ранее мы учились рисовать и изменять
+              фрагменты изображений.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          В Paint уже знакомы «Карандаш», «Кисти», «Заливка цветом»,
+          выделение, копирование, поворот и изменение размера рисунка.
+          Сегодня используем ещё один важный способ рисования —
+          <strong>готовые геометрические формы</strong>.
+        </p>
+
+        <div class="cards3">
+
+          <article class="card blue">
+            <span class="emoji">✏️</span>
+            <h3>Свободное рисование</h3>
+            <p>
+              Карандашом или кистью удобно проводить
+              произвольные линии и контуры.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">🔷</span>
+            <h3>Готовые формы</h3>
+            <p>
+              Позволяют быстро построить
+              ровную фигуру нужных размеров.
+            </p>
+          </article>
+
+          <article class="card violet">
+            <span class="emoji">🧩</span>
+            <h3>Работа с фрагментами</h3>
+            <p>
+              Выделенные части изображения
+              можно копировать, перемещать и поворачивать.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="definition">
+          <strong>Графический примитив</strong> —
+          простой графический элемент:
+          линия, прямоугольник, овал и другие фигуры,
+          из которых можно составлять более сложные изображения.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 2. МЕНЮ ГОТОВЫХ ФОРМ
+      ================================================== -->
+
+      <section class="section" id="menu">
+
+        <div class="section-head">
+          <span class="number">02</span>
+
+          <div>
+            <h2>Какие фигуры есть в Paint?</h2>
+
+            <p class="subtitle">
+              Группа «Фигуры» содержит формы для разных задач.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Меню готовых форм, или группа <strong>«Фигуры»</strong>,
+          обычно расположено на основной панели Paint.
+          Набор значков и их расположение могут немного отличаться
+          в разных версиях программы.
+        </p>
+
+        <!-- Наглядная галерея геометрических примитивов -->
+
+        <div class="shape-gallery">
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M18 65 L102 20"
+                fill="none"
+                stroke="#3776d4"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <strong>Линия</strong>
+            <small>Границы, детали</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <rect
+                x="20" y="18"
+                width="80" height="48"
+                rx="2"
+                fill="#dbe9ff"
+                stroke="#3776d4"
+                stroke-width="4"
+              />
+            </svg>
+            <strong>Прямоугольник</strong>
+            <small>Дверь, окно</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <ellipse
+                cx="60" cy="42"
+                rx="40" ry="25"
+                fill="#d8f5e9"
+                stroke="#198d7a"
+                stroke-width="4"
+              />
+            </svg>
+            <strong>Овал</strong>
+            <small>Колесо, солнце</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M60 12 L104 70 H16 Z"
+                fill="#ffe9bd"
+                stroke="#d9963e"
+                stroke-width="4"
+              />
+            </svg>
+            <strong>Треугольник</strong>
+            <small>Крыша, знак</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M60 11 L104 42 L60 73 L16 42 Z"
+                fill="#efe6ff"
+                stroke="#795bc3"
+                stroke-width="4"
+              />
+            </svg>
+            <strong>Ромб</strong>
+            <small>Орнамент</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M16 30 H64 V13 L106 43 L64 72 V55 H16 Z"
+                fill="#d8f5e9"
+                stroke="#198d7a"
+                stroke-width="3.5"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <strong>Стрелка</strong>
+            <small>Направление</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M60 7 L73 31 L100 35 L80 53
+                   L85 79 L60 66 L35 79
+                   L40 53 L20 35 L47 31 Z"
+                fill="#ffe199"
+                stroke="#d9963e"
+                stroke-width="3"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <strong>Звезда</strong>
+            <small>Украшение</small>
+          </div>
+
+          <div class="gallery-item">
+            <svg viewBox="0 0 120 85" aria-hidden="true">
+              <path
+                d="M22 14 H98 V61 H60 L36 79 V61 H22 Z"
+                fill="#dceafd"
+                stroke="#3776d4"
+                stroke-width="3.5"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <strong>Выноска</strong>
+            <small>Реплика героя</small>
+          </div>
+
+        </div>
+
+        <div class="note">
+          💡 <strong>Как выбрать форму?</strong>
+          Для колеса удобен овал, для корпуса автобуса —
+          прямоугольник, для указателя — стрелка.
+          Одна фигура может применяться
+          для изображения совершенно разных предметов.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 3. ПРИНЦИП ПОСТРОЕНИЯ
+      ================================================== -->
+
+      <section class="section" id="draw">
+
+        <div class="section-head">
+          <span class="number">03</span>
+
+          <div>
+            <h2>Как строится готовая фигура?</h2>
+
+            <p class="subtitle">
+              Обычно достаточно выбрать фигуру
+              и задать её размеры мышью.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Для большинства готовых форм в Paint используется похожий
+          принцип: указатель перемещается по рабочей области
+          с зажатой кнопкой мыши.
+        </p>
+
+        <div class="steps">
+
+          <div class="step">
+            <span class="step-number">1</span>
+            <strong>Выбрать фигуру</strong>
+            <p>Найти нужный значок в группе «Фигуры».</p>
+          </div>
+
+          <div class="step">
+            <span class="step-number">2</span>
+            <strong>Настроить оформление</strong>
+            <p>Указать цвет, контур и заливку.</p>
+          </div>
+
+          <div class="step">
+            <span class="step-number">3</span>
+            <strong>Построить</strong>
+            <p>Нажать кнопку мыши и протянуть указатель.</p>
+          </div>
+
+          <div class="step">
+            <span class="step-number">4</span>
+            <strong>Завершить</strong>
+            <p>Отпустить кнопку мыши и проверить результат.</p>
+          </div>
+
+        </div>
+
+        <div class="cards2">
+
+          <div class="card blue">
+            <h3>▭ Прямоугольник и овал</h3>
+            <p>
+              Размер обычно определяется расстоянием,
+              на которое перемещён указатель мыши.
+            </p>
+          </div>
+
+          <div class="card mint">
+            <h3>⬡ Многоугольник и кривая</h3>
+            <p>
+              У некоторых фигур нужно дополнительно задавать
+              вершины или изгибы. Порядок действий зависит
+              от формы и версии Paint.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="definition mint">
+          <strong>Особенность Paint:</strong>
+          это растровый редактор.
+          После окончательного размещения фигуры на рисунке
+          её контур обычно становится частью изображения.
+          Поэтому заранее продумывать размеры
+          и расположение особенно полезно.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 4. КОНТУР, ТОЛЩИНА И ЗАЛИВКА
+      ================================================== -->
+
+      <section class="section" id="style">
+
+        <div class="section-head">
+          <span class="number">04</span>
+
+          <div>
+            <h2>У одной формы — разное оформление</h2>
+
+            <p class="subtitle">
+              Внешний вид зависит от контура,
+              толщины линий и заливки.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Контур</strong> — линия по границе фигуры.
+          <strong>Заливка</strong> — оформление её внутренней области.
+          Цвет контура и цвет заливки могут отличаться.
+        </p>
+
+        <div class="style-gallery">
+
+          <div class="style-item">
+            <svg viewBox="0 0 180 115" aria-hidden="true">
+              <rect
+                x="31" y="20"
+                width="118" height="75"
+                rx="7"
+                fill="none"
+                stroke="#3974d0"
+                stroke-width="5"
+              />
+            </svg>
+            <strong>Только контур</strong>
+            <small>Внутренняя область без заливки</small>
+          </div>
+
+          <div class="style-item">
+            <svg viewBox="0 0 180 115" aria-hidden="true">
+              <rect
+                x="31" y="20"
+                width="118" height="75"
+                rx="7"
+                fill="#f9ca7f"
+                stroke="#3974d0"
+                stroke-width="5"
+              />
+            </svg>
+            <strong>Контур и заливка</strong>
+            <small>Граница синяя, внутри жёлтый цвет</small>
+          </div>
+
+          <div class="style-item">
+            <svg viewBox="0 0 180 115" aria-hidden="true">
+              <rect
+                x="31" y="20"
+                width="118" height="75"
+                rx="7"
+                fill="#aee8d6"
+                stroke="#177f71"
+                stroke-width="10"
+              />
+            </svg>
+            <strong>Толстый контур</strong>
+            <small>Изменена толщина линии</small>
+          </div>
+
+        </div>
+
+        <div class="cards3">
+
+          <article class="card blue">
+            <span class="emoji">🎨</span>
+            <h3>Цвет</h3>
+            <p>
+              В палитре выбирают основные цвета
+              для линии и заполнения фигуры.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">〰️</span>
+            <h3>Контур</h3>
+            <p>
+              Можно настроить внешний вид
+              и толщину границы.
+            </p>
+          </article>
+
+          <article class="card violet">
+            <span class="emoji">🪣</span>
+            <h3>Заливка</h3>
+            <p>
+              Внутренняя часть может оставаться
+              без заливки или заполняться цветом.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="note">
+          💡 <strong>Важное различие:</strong>
+          заливка готовой формы выбирается при её построении,
+          а инструмент «Заливка цветом» используется
+          для заполнения замкнутых областей
+          уже нарисованного изображения.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 5. КВАДРАТ, КРУГ И SHIFT
+      ================================================== -->
+
+      <section class="section" id="exact">
+
+        <div class="section-head">
+          <span class="number">05</span>
+
+          <div>
+            <h2>Прямоугольник или квадрат? Овал или круг?</h2>
+
+            <p class="subtitle">
+              Правильные пропорции помогают рисовать аккуратно.
+            </p>
+          </div>
+        </div>
+
+        <div class="compare-box">
+
+          <div class="compare-item">
+            <svg viewBox="0 0 280 115" aria-hidden="true">
+
+              <rect
+                x="15" y="26"
+                width="140" height="65"
+                fill="#dceaff"
+                stroke="#3574cf"
+                stroke-width="4"
+              />
+
+              <rect
+                x="188" y="20"
+                width="75" height="75"
+                fill="#e5f6ed"
+                stroke="#168b79"
+                stroke-width="4"
+              />
+
+            </svg>
+            <b>Прямоугольник → квадрат</b>
+            <p>У квадрата все стороны равны.</p>
+          </div>
+
+          <div class="compare-item">
+            <svg viewBox="0 0 280 115" aria-hidden="true">
+
+              <ellipse
+                cx="86" cy="57"
+                rx="70" ry="33"
+                fill="#eee5ff"
+                stroke="#795dc0"
+                stroke-width="4"
+              />
+
+              <circle
+                cx="218" cy="57"
+                r="39"
+                fill="#ffe9bb"
+                stroke="#e1a047"
+                stroke-width="4"
+              />
+
+            </svg>
+            <b>Овал → круг</b>
+            <p>
+              У круга одинаковые радиусы
+              во всех направлениях.
+            </p>
+          </div>
+
+        </div>
+
+        <p>
+          Во многих версиях Paint удерживание клавиши
+          <kbd>Shift</kbd> во время построения прямоугольника
+          помогает получить квадрат, а при построении овала — круг.
+          Аналогичное ограничение может помогать
+          создавать линии под заданными углами.
+        </p>
+
+        <div class="note">
+          💡 <strong>Примечание:</strong>
+          расположение инструментов и работа клавиши
+          <kbd>Shift</kbd> могут немного отличаться
+          в зависимости от версии Paint.
+
+          Основной принцип остаётся тем же:
+          правильная фигура строится с сохранением пропорций.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 6. СОСТАВНОЙ РИСУНОК
+      ================================================== -->
+
+      <section class="section" id="compose">
+
+        <div class="section-head">
+          <span class="number">06</span>
+
+          <div>
+            <h2>Как из нескольких фигур получается рисунок?</h2>
+
+            <p class="subtitle">
+              Домик — простой пример составного изображения.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Сложный объект можно представить как сочетание
+          простых форм. Например, дом состоит из прямоугольной
+          стены, треугольной крыши, окон и двери.
+          Дополнительные детали создают законченный рисунок.
+        </p>
+
+        <!-- Авторская SVG-иллюстрация сборки домика из фигур -->
+
+        <figure class="house-wrap">
+
+          <svg
+            viewBox="0 0 660 360"
+            role="img"
+            aria-label="Домик, составленный из прямоугольников, треугольника, кругов и прямых линий"
+          >
+
+            <!-- Небо -->
+
+            <rect
+              x="0" y="0"
+              width="660" height="360"
+              fill="#edf7ff"
+            />
+
+            <!-- Солнце -->
+
+            <circle
+              cx="535" cy="67" r="37"
+              fill="#ffdc89"
+              stroke="#e9a845"
+              stroke-width="4"
+            />
+
+            <path
+              d="M535 10 V0
+                 M535 124 V139
+                 M477 67 H460
+                 M594 67 H611
+                 M494 26 L480 12
+                 M576 108 L590 122
+                 M576 26 L590 12
+                 M494 108 L480 122"
+              stroke="#edb155"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+
+            <!-- Земля -->
+
+            <path
+              d="M0 302
+                 Q130 288 245 305
+                 T490 301
+                 T660 302
+                 V360 H0 Z"
+              fill="#bfe5ce"
+            />
+
+            <!-- Корпус дома -->
+
+            <rect
+              x="185" y="150"
+              width="290" height="165"
+              fill="#ffdfb6"
+              stroke="#a96c44"
+              stroke-width="5"
+            />
+
+            <!-- Крыша -->
+
+            <path
+              d="M153 159 L330 36 L507 159 Z"
+              fill="#dc7774"
+              stroke="#9c4a4f"
+              stroke-width="6"
+              stroke-linejoin="round"
+            />
+
+            <!-- Первое окно -->
+
+            <rect
+              x="215" y="191"
+              width="69" height="64"
+              fill="#c3ecfb"
+              stroke="#6e92b2"
+              stroke-width="5"
+            />
+
+            <path
+              d="M249 191 V255 M215 223 H284"
+              stroke="#6e92b2"
+              stroke-width="4"
+            />
+
+            <!-- Второе окно -->
+
+            <rect
+              x="376" y="191"
+              width="69" height="64"
+              fill="#c3ecfb"
+              stroke="#6e92b2"
+              stroke-width="5"
+            />
+
+            <path
+              d="M410 191 V255 M376 223 H445"
+              stroke="#6e92b2"
+              stroke-width="4"
+            />
+
+            <!-- Дверь -->
+
+            <rect
+              x="307" y="239"
+              width="47" height="76"
+              rx="3"
+              fill="#ac7c66"
+              stroke="#7a544c"
+              stroke-width="4"
+            />
+
+            <circle
+              cx="344" cy="278"
+              r="4"
+              fill="#ffdf8d"
+            />
+
+            <!-- Дорожка -->
+
+            <path
+              d="M307 315 L282 360 H385 L354 315"
+              fill="#e0dad1"
+            />
+
+            <!-- Куст рядом с домом -->
+
+            <circle cx="100" cy="287" r="25" fill="#54aa83"/>
+            <circle cx="125" cy="290" r="24" fill="#449c76"/>
+            <circle cx="112" cy="271" r="23" fill="#61b58e"/>
+
+          </svg>
+
+          <figcaption class="house-caption">
+            Прямоугольники + треугольник + окружности + линии =
+            целая сцена
+          </figcaption>
+
+        </figure>
+
+        <div class="cards3">
+
+          <article class="card blue">
+            <span class="emoji">1️⃣</span>
+            <h3>Крупные элементы</h3>
+            <p>
+              Сначала располагают корпус здания и крышу.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">2️⃣</span>
+            <h3>Мелкие детали</h3>
+            <p>
+              Затем добавляют окна, дверь и их части.
+            </p>
+          </article>
+
+          <article class="card violet">
+            <span class="emoji">3️⃣</span>
+            <h3>Оформление</h3>
+            <p>
+              После этого дополняют рисунок
+              цветами и окружающими предметами.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="definition mint">
+          <strong>Почему важен порядок?</strong>
+          В растровом изображении фигуры,
+          нарисованные позднее, могут перекрывать более ранние.
+          Поэтому крупные элементы часто удобнее создавать первыми.
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 7. ДРУГИЕ ИНСТРУМЕНТЫ И ОШИБКИ
+      ================================================== -->
+
+      <section class="section" id="together">
+
+        <div class="section-head">
+          <span class="number">07</span>
+
+          <div>
+            <h2>Готовые формы и другие инструменты Paint</h2>
+
+            <p class="subtitle">
+              Хороший рисунок редко создаётся одним инструментом.
+            </p>
+          </div>
+        </div>
+
+        <div class="cards4">
+
+          <div class="card">
+            <span class="emoji">🖌️</span>
+            <h3>Кисти</h3>
+            <p>Добавляют произвольные детали.</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">🪣</span>
+            <h3>Заливка</h3>
+            <p>Закрашивает замкнутые области.</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">🎯</span>
+            <h3>Пипетка</h3>
+            <p>Берёт цвет из рисунка.</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">✂️</span>
+            <h3>Выделение</h3>
+            <p>
+              Позволяет копировать и переносить фрагменты.
+            </p>
+          </div>
+
+        </div>
+
+        <h3>На что стоит обращать внимание?</h3>
+
+        <ul class="small-list">
+
+          <li>
+            <strong>Неверная форма:</strong>
+            для круглого колеса выбран прямоугольник.
+          </li>
+
+          <li>
+            <strong>Неудачные размеры:</strong>
+            двери получились больше самого дома.
+          </li>
+
+          <li>
+            <strong>Неподходящая заливка:</strong>
+            фигура перекрывает нужные детали.
+          </li>
+
+          <li>
+            <strong>Неверный порядок:</strong>
+            новый объект скрывает ранее нарисованный.
+          </li>
+
+        </ul>
+
+        <p>
+          Для исправления действий полезна команда отмены
+          <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+
+          Ранее изученные выделение, копирование,
+          поворот и изменение размера помогают работать
+          с фрагментами готового изображения.
+        </p>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 8. ОБОБЩЕНИЕ
+      ================================================== -->
+
+      <section class="section" id="summary">
+
+        <div class="section-head">
+          <span class="number">08</span>
+
+          <div>
+            <h2>Главное за урок</h2>
+
+            <p class="subtitle">
+              Коротко повторим изученное перед вопросами.
+            </p>
+          </div>
+        </div>
+
+        <div class="summary">
+
+          <p>
+            <strong>Готовые формы</strong> позволяют строить
+            ровные геометрические элементы.
+
+            Перед построением выбирают форму,
+            размер, контур и заливку.
+
+            Правильные пропорции особенно важны
+            при создании квадратов и кругов.
+
+            Несколько простых фигур можно объединить
+            в одно составное изображение.
+          </p>
+
+          <p>
+            Эти знания пригодятся на следующем уроке —
+            <strong>«Конструирование из мозаики»</strong>,
+            где рисунок будет создаваться
+            из множества отдельных деталей.
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 9. РОВНО 12 ВОПРОСОВ
+           Это теоретический урок: заданий на ПК нет.
+      ================================================== -->
+
+      <section class="section" id="questions">
+
+        <div class="section-head">
+          <span class="number">09</span>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+
+            <p class="subtitle">
+              Ответь своими словами,
+              используя примеры из урока.
+            </p>
+          </div>
+        </div>
+
+        <ol class="questions">
+
+          <li>
+            Для чего в графическом редакторе Paint
+            нужно меню готовых форм?
+          </li>
+
+          <li>
+            Что называют графическим примитивом?
+          </li>
+
+          <li>
+            Какие геометрические фигуры
+            можно найти в группе «Фигуры»?
+          </li>
+
+          <li>
+            Чем готовая форма отличается от линии,
+            нарисованной карандашом?
+          </li>
+
+          <li>
+            Как обычно создают прямоугольник
+            или овал в Paint?
+          </li>
+
+          <li>
+            Какие параметры оформления фигуры
+            можно изменить?
+          </li>
+
+          <li>
+            Чем контур отличается от заливки фигуры?
+          </li>
+
+          <li>
+            Как получить квадрат из прямоугольника
+            или круг из овала?
+          </li>
+
+          <li>
+            Почему важно продумывать размеры
+            и расположение фигур?
+          </li>
+
+          <li>
+            Из каких готовых форм можно составить
+            изображение домика?
+          </li>
+
+          <li>
+            Зачем нужны выделение и копирование
+            повторяющихся деталей?
+          </li>
+
+          <li>
+            Какие другие инструменты Paint
+            полезно сочетать с готовыми формами?
+          </li>
+
+        </ol>
+
+      </section>
+
+    </main>
+
+    <!-- ПОДВАЛ САЙТА -->
+
+    <footer>
+      Информатика · 7 класс · Paint · «Меню готовых форм»
+    </footer>
+
+  </div>
+</body>
+</html>
