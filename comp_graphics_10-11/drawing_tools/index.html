@@ -1,0 +1,3148 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Информатика, 10–11 класс. Практическая работа в GIMP: карандаш, кисть, ластик, аэрограф, перо, размытие, резкость, осветление и затемнение."
+  >
+
+  <title>GIMP ART LAB — Инструменты рисования · 10–11 класс</title>
+
+  <style>
+    /* ========================================================
+       1. ДИЗАЙН-СИСТЕМА
+       Тёмная мастерская и яркие цветовые акценты.
+       Все ресурсы сайта встроены в один HTML-файл.
+    ======================================================== */
+
+    :root {
+      --night: #111429;
+      --night-2: #1d2241;
+      --night-3: #283054;
+
+      --paper: #fffdf8;
+      --page: #f0f2fb;
+      --ink: #232742;
+      --muted: #59627b;
+      --stroke: #dfe2ee;
+
+      --coral: #ff7367;
+      --mint: #7cf1c5;
+      --lilac: #c6a9ff;
+      --gold: #ffdc83;
+      --sky: #8fc7ff;
+
+      --radius: 26px;
+      --shadow: 0 16px 40px rgba(20, 26, 57, .09);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+
+      font: 16px/1.7 system-ui,
+        -apple-system,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      overflow-wrap: break-word;
+    }
+
+    h1, h2, h3, h4, p, figure {
+      margin-top: 0;
+    }
+
+    h1, h2, h3, h4 {
+      line-height: 1.22;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #3258b2;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--coral);
+      outline-offset: 3px;
+    }
+
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    code,
+    kbd {
+      font-family: Consolas, "Liberation Mono", monospace;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #edf0fb;
+      color: #404ca3;
+      font-weight: 700;
+      font-size: .93em;
+    }
+
+    kbd {
+      display: inline-block;
+      border: 1px solid #c9cfde;
+      border-bottom-width: 3px;
+      border-radius: 7px;
+      padding: 2px 7px;
+      background: white;
+      font-weight: 800;
+      font-size: .85em;
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -90px;
+      left: 15px;
+      z-index: 5;
+
+      background: white;
+      padding: 10px 16px;
+      border-radius: 9px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* ========================================================
+       2. ОБЛОЖКА И ИЛЛЮСТРАЦИЯ ПЕЙЗАЖА
+    ======================================================== */
+
+    .hero {
+      position: relative;
+      margin-top: 16px;
+      overflow: hidden;
+      color: white;
+
+      background:
+        radial-gradient(
+          circle at 83% 18%,
+          #6050a5 0,
+          transparent 31%
+        ),
+        linear-gradient(
+          130deg,
+          #141631,
+          #2d2c63 59%,
+          #264f70
+        );
+
+      border-radius: 32px;
+      box-shadow: 0 22px 65px rgba(24, 26, 65, .2);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+
+      width: 370px;
+      height: 370px;
+
+      border: 64px solid rgba(255, 255, 255, .035);
+      border-radius: 50%;
+
+      top: -190px;
+      right: -150px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1.03fr);
+
+      align-items: center;
+      gap: 28px;
+      padding: 48px 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 7px;
+
+      margin-bottom: 17px;
+
+      color: #e1d9ff;
+      font-size: 12px;
+      letter-spacing: .13em;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .eyebrow b {
+      color: #17233d;
+      background: var(--mint);
+
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: .04em;
+    }
+
+    .hero h1 {
+      max-width: 560px;
+      margin-bottom: 20px;
+
+      font-size: clamp(37px, 5.4vw, 66px);
+      letter-spacing: -.055em;
+      line-height: 1.04;
+    }
+
+    .hero h1 span {
+      color: var(--mint);
+    }
+
+    .hero p {
+      color: #dde2ff;
+      font-size: 17px;
+      max-width: 510px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .hero-tags span {
+      border: 1px solid rgba(255, 255, 255, .23);
+      background: rgba(255, 255, 255, .09);
+      border-radius: 99px;
+
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .art-frame {
+      min-width: 0;
+      overflow: hidden;
+
+      transform: rotate(1.7deg);
+
+      border: 7px solid #fcf6ef;
+      border-radius: 22px;
+      background: #c8b3ef;
+
+      box-shadow: 0 20px 36px rgba(4, 7, 25, .32);
+    }
+
+    .art-frame svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .art-caption {
+      padding: 10px 13px;
+
+      color: #55506e;
+      background: #fffaf4;
+
+      font-size: 12px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .tape {
+      position: absolute;
+      top: 22px;
+      right: 18%;
+      z-index: 1;
+
+      width: 84px;
+      height: 25px;
+
+      transform: rotate(-16deg);
+      background: rgba(255, 221, 132, .82);
+      box-shadow: 0 2px 4px rgba(12, 18, 42, .15);
+    }
+
+    /* ========================================================
+       3. НАВИГАЦИЯ И ОСНОВНЫЕ СЕКЦИИ
+    ======================================================== */
+
+    .nav {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin: 18px 0 0;
+    }
+
+    .nav a {
+      color: #474b71;
+      text-decoration: none;
+
+      padding: 9px 14px;
+      border-radius: 99px;
+      border: 1px solid #dadff0;
+      background: #fff;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      transition: transform .2s, background .2s;
+    }
+
+    .nav a:hover {
+      background: #e3e6fc;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: 37px 40px;
+
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 24px;
+    }
+
+    .section-number {
+      display: grid;
+      place-items: center;
+
+      flex: 0 0 45px;
+      height: 45px;
+
+      border-radius: 14px;
+      background: var(--night-2);
+      color: var(--mint);
+
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .section h2 {
+      margin: 2px 0 5px;
+      font-size: clamp(24px, 3.6vw, 33px);
+    }
+
+    .section h3 {
+      margin: 24px 0 12px;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .callout {
+      margin: 19px 0;
+      border-radius: 17px;
+      border: 1px solid #d3d7ec;
+      background: #f0f0ff;
+      padding: 17px 20px;
+    }
+
+    .callout strong {
+      color: #4a448c;
+    }
+
+    .callout.mint {
+      border-color: #bfe9dc;
+      background: #eafff4;
+    }
+
+    .callout.mint strong {
+      color: #14684f;
+    }
+
+    .callout.warn {
+      border-color: #f4d8b1;
+      background: #fff2de;
+    }
+
+    .callout.warn strong {
+      color: #865323;
+    }
+
+    .grid-two,
+    .grid-three {
+      display: grid;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .grid-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .tile {
+      min-width: 0;
+      padding: 19px;
+      border-radius: 18px;
+      border: 1px solid #dfe2ee;
+      background: white;
+    }
+
+    .tile h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+    }
+
+    .tile p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tile .emoji {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+
+    .tile.lilac {
+      background: #f0ebff;
+    }
+
+    .tile.mint {
+      background: #e8faef;
+    }
+
+    .tile.coral {
+      background: #fff0ec;
+    }
+
+    /* ========================================================
+       4. МАКЕТ GIMP И ОБРАЗЦЫ РИСУЮЩИХ ИНСТРУМЕНТОВ
+    ======================================================== */
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr) 165px;
+      gap: 0;
+
+      overflow: hidden;
+      margin: 23px 0;
+
+      border: 1px solid #333a60;
+      border-radius: 20px;
+
+      color: #e6eaff;
+      background: #20263f;
+    }
+
+    .workspace-aside {
+      padding: 16px 12px;
+      background: #171c32;
+    }
+
+    .workspace-aside h4 {
+      margin-bottom: 13px;
+      font-size: 12px;
+      color: #abb6da;
+    }
+
+    .workspace-icons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .workspace-icons span {
+      display: grid;
+      place-items: center;
+      height: 35px;
+
+      background: #29304e;
+      border-radius: 8px;
+      font-size: 17px;
+    }
+
+    .workspace-icons span.active {
+      outline: 2px solid var(--mint);
+      background: #39456e;
+    }
+
+    .workspace-main {
+      min-width: 0;
+      padding: 17px;
+    }
+
+    .workspace-top {
+      color: #bac6e6;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .workspace-image {
+      min-height: 212px;
+      border: 8px solid #eae7dc;
+
+      background: linear-gradient(
+        170deg,
+        #fad9d6,
+        #f6cb97 52%,
+        #79b3bc 53%,
+        #548d8f
+      );
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .workspace-image::before {
+      content: "";
+      position: absolute;
+
+      width: 115px;
+      height: 115px;
+      top: 18px;
+      right: 28px;
+
+      border-radius: 50%;
+      background: rgba(255, 239, 169, .68);
+      filter: blur(9px);
+    }
+
+    .workspace-image::after {
+      content: "";
+      position: absolute;
+
+      left: -30px;
+      right: -30px;
+      bottom: -48px;
+
+      height: 130px;
+      border-radius: 50% 50% 0 0;
+
+      background: #2b6579;
+      transform: rotate(-4deg);
+    }
+
+    .layer-row {
+      padding: 10px 7px;
+      border-bottom: 1px solid #343c5b;
+
+      font-size: 12px;
+      color: #c4ceec;
+    }
+
+    .layer-row.active {
+      border-radius: 7px;
+      background: #35416b;
+      color: white;
+    }
+
+    .layer-row small {
+      display: block;
+      color: #9aa8cf;
+    }
+
+    .workspace-caption {
+      color: #aeb6d7;
+      font-size: 12px;
+      margin: 9px 0 0;
+    }
+
+    .swatches {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 13px;
+    }
+
+    .swatches i {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      border: 2px solid white;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+      margin: 21px 0;
+    }
+
+    .tool-card {
+      min-width: 0;
+      overflow: hidden;
+
+      border: 1px solid #dce1f0;
+      border-radius: 21px;
+      background: #fff;
+    }
+
+    .tool-preview {
+      height: 150px;
+      display: grid;
+      place-items: center;
+
+      background: #202441;
+      border-bottom: 1px solid #dae1f0;
+    }
+
+    .tool-preview.alt {
+      background: #302c54;
+    }
+
+    .tool-preview svg {
+      width: 100%;
+      height: 150px;
+    }
+
+    .tool-info {
+      padding: 18px 20px 20px;
+    }
+
+    .tool-tag {
+      display: inline-block;
+      padding: 3px 9px;
+
+      border-radius: 7px;
+      color: #3c3d68;
+      background: #e9e8fb;
+
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .tool-info h3 {
+      margin: 10px 0 7px;
+      font-size: 21px;
+    }
+
+    .tool-info p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .tool-info .uses {
+      color: #3d4268;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* ========================================================
+       5. КОРРЕКЦИЯ: ПАРНЫЕ РЕЖИМЫ И СРАВНЕНИЯ
+    ======================================================== */
+
+    .effect-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 14px;
+      margin: 21px 0;
+    }
+
+    .effect-card {
+      padding: 20px;
+      border: 1px solid #dcdff0;
+      border-radius: 20px;
+      background: #f9f8ff;
+    }
+
+    .effect-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .effect-card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .effect-visual {
+      overflow: hidden;
+      border-radius: 13px;
+      background: #26324e;
+      margin: 14px 0 8px;
+    }
+
+    .effect-visual svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .compare-note {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .compare-note span {
+      padding: 3px 9px;
+      border-radius: 7px;
+
+      background: #e6e6f8;
+      color: #4e4e85;
+
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    /* ========================================================
+       6. ПРАКТИКА И ИНТЕРАКТИВНЫЙ ЧЕК-ЛИСТ
+    ======================================================== */
+
+    .practice {
+      background: #151a32;
+      color: #f8f8ff;
+      border-color: #292e51;
+    }
+
+    .practice .subtitle,
+    .practice p {
+      color: #c5cce5;
+    }
+
+    .practice .section-number {
+      color: #1b2440;
+      background: var(--mint);
+    }
+
+    .practice .callout {
+      background: #282e4a;
+      border-color: #414967;
+      color: #dce3fc;
+    }
+
+    .practice .callout strong {
+      color: var(--gold);
+    }
+
+    .practice .step-card {
+      position: relative;
+      margin: 15px 0;
+      padding: 23px 24px;
+
+      border: 1px solid #3e4567;
+      border-radius: 20px;
+      background: #222944;
+    }
+
+    .practice .step-card h3 {
+      color: white;
+      margin: 0 0 10px;
+    }
+
+    .practice .step-card p {
+      font-size: 14px;
+    }
+
+    .practice .step-card ol {
+      margin: 10px 0 0;
+      padding-left: 23px;
+    }
+
+    .practice .step-card li {
+      margin: 5px 0;
+    }
+
+    .practice .step-card li::marker {
+      color: var(--mint);
+      font-weight: 800;
+    }
+
+    .practice .step-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border-radius: 8px;
+
+      background: #3b426d;
+      color: var(--mint);
+
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .practice details {
+      margin-top: 15px;
+      padding: 11px 14px;
+
+      border: 1px solid #454d72;
+      border-radius: 12px;
+      background: #2b3352;
+    }
+
+    .practice summary {
+      cursor: pointer;
+      color: var(--mint);
+      font-weight: 850;
+      font-size: 14px;
+    }
+
+    .practice details p {
+      margin-top: 9px;
+      font-size: 14px;
+    }
+
+    .progress-box {
+      padding: 19px;
+      margin: 20px 0;
+
+      border: 1px solid #596589;
+      border-radius: 19px;
+      background: #292f50;
+    }
+
+    .progress-title {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 11px;
+    }
+
+    .progress-title strong {
+      font-size: 16px;
+    }
+
+    .progress-title span {
+      color: var(--mint);
+      font-weight: 850;
+    }
+
+    progress {
+      width: 100%;
+      height: 13px;
+      accent-color: var(--mint);
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .checkline {
+      display: flex;
+      gap: 11px;
+      align-items: start;
+
+      padding: 11px 12px;
+      border-radius: 10px;
+      background: #343b5c;
+
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .checkline input {
+      flex: 0 0 auto;
+      margin-top: 5px;
+
+      width: 17px;
+      height: 17px;
+      accent-color: var(--mint);
+    }
+
+    .checkline:has(input:checked) {
+      background: #274c51;
+      color: #dbfff1;
+    }
+
+    .reset-btn {
+      margin-top: 14px;
+      padding: 8px 13px;
+
+      border: 1px solid #677099;
+      border-radius: 10px;
+
+      background: transparent;
+      color: white;
+
+      font: 750 13px/1.4 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .reset-btn:hover {
+      background: #424a71;
+    }
+
+    /* ========================================================
+       7. ТАБЛИЦЫ И ФИНАЛЬНЫЕ ВОПРОСЫ
+    ======================================================== */
+
+    .table-scroll {
+      overflow-x: auto;
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .tools-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+      font-size: 14px;
+    }
+
+    .tools-table th,
+    .tools-table td {
+      text-align: left;
+      padding: 12px 14px;
+
+      border-bottom: 1px solid #dce2eb;
+      vertical-align: top;
+    }
+
+    .tools-table thead th {
+      background: #eceafa;
+      color: #40416f;
+    }
+
+    .tools-table tbody tr:nth-child(even) {
+      background: #f6f6fc;
+    }
+
+    .tools-table td:first-child {
+      font-weight: 800;
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+      margin: 19px 0 0;
+
+      counter-reset: question;
+    }
+
+    .questions li {
+      position: relative;
+      min-height: 85px;
+      padding: 17px 15px 17px 58px;
+
+      border: 1px solid #dce1ef;
+      border-radius: 16px;
+
+      background: #f9faff;
+      font-size: 14px;
+    }
+
+    .questions li::before {
+      counter-increment: question;
+      content: counter(question, decimal-leading-zero);
+
+      position: absolute;
+      top: 16px;
+      left: 14px;
+
+      display: grid;
+      place-items: center;
+
+      width: 32px;
+      height: 32px;
+
+      border-radius: 10px;
+      background: #e5e4ff;
+      color: #48438d;
+
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 8px 45px;
+
+      color: #727996;
+      font-size: 12px;
+    }
+
+    /* ========================================================
+       8. АДАПТАЦИЯ ПОД ПЛАНШЕТЫ И СМАРТФОНЫ
+    ======================================================== */
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 37px 33px;
+      }
+
+      .art-frame {
+        max-width: 610px;
+        transform: rotate(0);
+      }
+
+      .tape {
+        right: 70px;
+        top: auto;
+        bottom: 32px;
+      }
+
+      .workspace {
+        grid-template-columns: 95px minmax(0, 1fr);
+      }
+
+      .workspace-aside:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .workspace-aside:last-child .layer-row {
+        display: inline-block;
+        margin-right: 10px;
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .wrap {
+        width: calc(100% - 20px);
+      }
+
+      .hero {
+        margin-top: 10px;
+        border-radius: 24px;
+      }
+
+      .hero-inner {
+        padding: 30px 20px;
+        gap: 25px;
+      }
+
+      .hero h1 {
+        font-size: clamp(37px, 10vw, 47px);
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .tape {
+        display: none;
+      }
+
+      .section {
+        margin-top: 15px;
+        padding: 24px 18px;
+        border-radius: 20px;
+      }
+
+      .section-head {
+        gap: 11px;
+      }
+
+      .section-number {
+        flex-basis: 37px;
+        height: 37px;
+      }
+
+      .section h2 {
+        font-size: 24px;
+      }
+
+      .grid-two,
+      .grid-three,
+      .tool-grid,
+      .effect-grid,
+      .questions,
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-aside:first-child {
+        display: none;
+      }
+
+      .workspace-main {
+        padding: 12px;
+      }
+
+      .workspace-image {
+        min-height: 170px;
+      }
+
+      .workspace-aside:last-child {
+        grid-column: 1;
+      }
+
+      .tool-preview {
+        height: 130px;
+      }
+
+      .tool-preview svg {
+        height: 130px;
+      }
+
+      .practice .step-card {
+        padding: 19px 16px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .section {
+        padding: 21px 13px;
+      }
+
+      .hero-inner {
+        padding: 25px 17px;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .nav a {
+        transition: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .wrap {
+        width: 100%;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero,
+      .section {
+        box-shadow: none;
+      }
+
+      .section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip-link" href="#lesson">
+    К содержанию урока
+  </a>
+
+  <div class="wrap">
+
+    <!-- =====================================================
+         ОБЛОЖКА: ЦИФРОВАЯ ХУДОЖЕСТВЕННАЯ МАСТЕРСКАЯ
+    ====================================================== -->
+
+    <header class="hero" id="top">
+
+      <span class="tape" aria-hidden="true"></span>
+
+      <div class="hero-inner">
+
+        <div>
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 10–11 КЛАСС
+            <b>ПЗ</b>
+          </span>
+
+          <h1>
+            GIMP
+            <span>ART LAB</span>
+          </h1>
+
+          <p>
+            <strong>Девять инструментов — одно изображение.</strong>
+            Научимся рисовать разными штрихами, удалять лишнее,
+            управлять резкостью, светом и тенью.
+          </p>
+
+          <p>
+            В финале создадим цифровой пейзаж в GIMP
+            и сохраним проект в XCF,
+            а изображение — в PNG.
+          </p>
+
+          <div class="hero-tags">
+            <span>✏️ Рисование</span>
+            <span>🧽 Исправление</span>
+            <span>✨ Художественная коррекция</span>
+          </div>
+        </div>
+
+        <!-- Авторская иллюстрация цифрового пейзажа.
+             SVG встроен, поэтому работает без Интернета. -->
+
+        <figure class="art-frame">
+
+          <svg
+            viewBox="0 0 570 363"
+            role="img"
+            aria-label="Стилизованный пейзаж: розовое небо, солнце, горы, вода и деревья"
+          >
+            <defs>
+
+              <linearGradient id="skyGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5c4c9b"/>
+                <stop offset=".58" stop-color="#db7f98"/>
+                <stop offset="1" stop-color="#ffc491"/>
+              </linearGradient>
+
+              <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4d88ae"/>
+                <stop offset="1" stop-color="#182f68"/>
+              </linearGradient>
+
+              <radialGradient id="sunGlow">
+                <stop offset=".2" stop-color="#ffedac" stop-opacity=".9"/>
+                <stop offset="1" stop-color="#ffedac" stop-opacity="0"/>
+              </radialGradient>
+
+            </defs>
+
+            <!-- Небо и солнце -->
+
+            <rect
+              width="570"
+              height="363"
+              fill="url(#skyGradient)"
+            />
+
+            <circle
+              cx="399"
+              cy="132"
+              r="104"
+              fill="url(#sunGlow)"
+            />
+
+            <circle
+              cx="399"
+              cy="132"
+              r="49"
+              fill="#ffe7aa"
+            />
+
+            <!-- Дальние горы -->
+
+            <path
+              d="M0 199 L80 103 L133 161 L207 77
+                 L303 202 L372 132 L464 205
+                 L522 141 L570 198 V363 H0Z"
+              fill="#514c8f"
+            />
+
+            <!-- Ближние горы -->
+
+            <path
+              d="M0 240 L77 163 L161 223 L231 155
+                 L323 241 L406 182 L494 240
+                 L570 197 V363 H0Z"
+              fill="#343e7d"
+            />
+
+            <!-- Вода -->
+
+            <path
+              d="M0 245 Q150 237 290 246
+                 T570 245 V363 H0Z"
+              fill="url(#waterGradient)"
+            />
+
+            <!-- Отражение света -->
+
+            <g
+              stroke="#ffc9a0"
+              stroke-linecap="round"
+              opacity=".6"
+            >
+              <path
+                d="M344 267 h110
+                   M330 282 h137
+                   M360 301 h96
+                   M390 320 h80
+                   M312 340 h160"
+                stroke-width="4"
+              />
+            </g>
+
+            <!-- Передний план -->
+
+            <path
+              d="M0 302 Q67 275 140 319
+                 L140 363 H0Z"
+              fill="#1a3555"
+            />
+
+            <path
+              d="M485 324 Q527 292 570 305
+                 V363 H485Z"
+              fill="#172b4f"
+            />
+
+            <!-- Силуэты деревьев -->
+
+            <g
+              fill="#102d47"
+              stroke="#102d47"
+              stroke-linecap="round"
+            >
+              <path
+                d="M65 315 V213
+                   M105 330 V244
+                   M530 332 V227"
+                stroke-width="9"
+              />
+
+              <path
+                d="M65 207 l-35 55 h21 l-27 31 h82
+                   l-29-31 h22z
+
+                   M105 246 l-25 39 h17 l-21 31 h59
+                   l-21-31 h17z
+
+                   M530 224 l-32 51 h20 l-29 39 h83
+                   l-29-39 h19z"
+                stroke-width="2"
+              />
+            </g>
+
+            <!-- Птицы -->
+
+            <g
+              fill="none"
+              stroke="#fff1df"
+              stroke-width="3"
+              stroke-linecap="round"
+              opacity=".62"
+            >
+              <path
+                d="M85 79 q15-11 29 0
+                   M124 93 q13-10 26 0
+                   M460 66 q18-11 36 1"
+              />
+            </g>
+
+          </svg>
+
+          <figcaption class="art-caption">
+            Образец идеи: пейзаж со светом,
+            мягкими переходами и чёткими деталями
+          </figcaption>
+
+        </figure>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         НАВИГАЦИЯ ПО РАЗДЕЛАМ
+    ====================================================== -->
+
+    <nav class="nav" aria-label="Разделы сайта">
+
+      <a href="#intro">🧭 Подготовка</a>
+      <a href="#brushes">🖌️ Рисующие инструменты</a>
+      <a href="#eraser">🧽 Ластик</a>
+      <a href="#effects">✨ Коррекция</a>
+      <a href="#choice">🎯 Выбор инструмента</a>
+      <a href="#practice">💻 Практическая работа</a>
+      <a href="#finish">💾 Сохранение</a>
+      <a href="#questions">❓ 12 вопросов</a>
+
+    </nav>
+
+    <main id="lesson">
+
+      <!-- ===================================================
+           РАЗДЕЛ 1. РАБОЧЕЕ МЕСТО И СЛОИ
+      ==================================================== -->
+
+      <section class="section" id="intro">
+
+        <div class="section-head">
+          <span class="section-number">01</span>
+
+          <div>
+            <h2>Перед первым штрихом</h2>
+
+            <p class="subtitle">
+              Вспомним холст, слои и параметры GIMP.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          GIMP — растровый графический редактор.
+          Изображение состоит из пикселей;
+          инструменты рисования меняют цвет пикселей,
+          а корректирующие инструменты изменяют
+          уже существующие участки.
+        </p>
+
+        <!-- Учебная схема расположения областей GIMP -->
+
+        <div
+          class="workspace"
+          aria-label="Упрощённая схема рабочего окна GIMP"
+        >
+
+          <aside class="workspace-aside">
+
+            <h4>ИНСТРУМЕНТЫ</h4>
+
+            <div class="workspace-icons" aria-hidden="true">
+              <span class="active">🖌️</span>
+              <span>✏️</span>
+              <span>🧽</span>
+              <span>💨</span>
+              <span>✒️</span>
+              <span>☀️</span>
+            </div>
+
+            <div class="swatches" aria-hidden="true">
+              <i style="background:#f37d86"></i>
+              <i style="background:#81d1be"></i>
+            </div>
+
+          </aside>
+
+          <div class="workspace-main">
+
+            <div class="workspace-top">
+              Цифровой пейзаж.xcf · рабочая область
+            </div>
+
+            <div class="workspace-image" aria-hidden="true"></div>
+
+            <p class="workspace-caption">
+              Учебный макет: реальное расположение
+              элементов зависит от версии GIMP.
+            </p>
+
+          </div>
+
+          <aside class="workspace-aside">
+
+            <h4>СЛОИ</h4>
+
+            <div class="layer-row active">
+              👁 Детали
+              <small>Передний план</small>
+            </div>
+
+            <div class="layer-row">
+              👁 Свет
+              <small>Мягкие эффекты</small>
+            </div>
+
+            <div class="layer-row">
+              👁 Фон
+              <small>Небо и земля</small>
+            </div>
+
+          </aside>
+
+        </div>
+
+        <div class="grid-three">
+
+          <article class="tile lilac">
+            <span class="emoji">📚</span>
+            <h3>Слои</h3>
+
+            <p>
+              Разделяют фон, объекты и эффекты.
+              Так легче вносить изменения,
+              не повреждая весь рисунок.
+            </p>
+          </article>
+
+          <article class="tile mint">
+            <span class="emoji">🎛️</span>
+            <h3>Параметры</h3>
+
+            <p>
+              Размер, непрозрачность, форма кисти
+              и интенсивность воздействия
+              управляют результатом.
+            </p>
+          </article>
+
+          <article class="tile coral">
+            <span class="emoji">🎨</span>
+            <h3>Цвет</h3>
+
+            <p>
+              Основной цвет используется
+              рисующими инструментами.
+              Его можно менять перед каждым штрихом.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="callout mint">
+          <strong>Совет:</strong>
+          перед каждым действием проверяй,
+          какой слой активен. Некоторые инструменты
+          действуют только там, где на выбранном
+          слое уже есть пиксели.
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 2. ЧЕТЫРЕ РИСУЮЩИХ ИНСТРУМЕНТА
+      ==================================================== -->
+
+      <section class="section" id="brushes">
+
+        <div class="section-head">
+          <span class="section-number">02</span>
+
+          <div>
+            <h2>Четыре характера штриха</h2>
+
+            <p class="subtitle">
+              Карандаш, кисть, аэрограф и перо —
+              не одно и то же.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Рисующие инструменты добавляют цвет,
+          но оставляют разные следы.
+          Посмотри на условные образцы
+          и сравни характер линий.
+        </p>
+
+        <div class="tool-grid">
+
+          <!-- КАРТОЧКА 1. КАРАНДАШ -->
+
+          <article class="tool-card">
+
+            <div class="tool-preview">
+
+              <svg
+                viewBox="0 0 460 150"
+                role="img"
+                aria-label="Ступенчатый штрих с резкими краями"
+              >
+
+                <path
+                  d="M25 101 L65 101 L65 87
+                     L104 87 L104 72 L145 72
+                     L145 58 L187 58 L187 78
+                     L227 78 L227 93 L268 93
+                     L268 67 L311 67 L311 47
+                     L361 47 L361 64 L433 64"
+                  fill="none"
+                  stroke="#8cf4c8"
+                  stroke-width="11"
+                  stroke-linejoin="miter"
+                  stroke-linecap="square"
+                />
+
+                <g fill="#d5fff0">
+
+                  <rect
+                    x="65" y="87"
+                    width="11" height="11"
+                  />
+
+                  <rect
+                    x="187" y="78"
+                    width="11" height="11"
+                  />
+
+                  <rect
+                    x="311" y="47"
+                    width="11" height="11"
+                  />
+
+                </g>
+
+              </svg>
+
+            </div>
+
+            <div class="tool-info">
+
+              <span class="tool-tag">Чёткая граница</span>
+
+              <h3>✏️ Карандаш</h3>
+
+              <p>
+                Рисует без сглаживания краёв.
+                При увеличении изображения
+                отдельные пиксели заметнее.
+              </p>
+
+              <span class="uses">
+                Для чего: пиксель-арт,
+                небольшие детали, точные края.
+              </span>
+
+            </div>
+          </article>
+
+          <!-- КАРТОЧКА 2. КИСТЬ -->
+
+          <article class="tool-card">
+
+            <div class="tool-preview alt">
+
+              <svg
+                viewBox="0 0 460 150"
+                role="img"
+                aria-label="Плавный широкий мазок кисти"
+              >
+
+                <defs>
+                  <filter id="softStroke">
+                    <feGaussianBlur stdDeviation="5"/>
+                  </filter>
+                </defs>
+
+                <path
+                  d="M25 109 C93 30 165 38 229 87
+                     S365 118 435 33"
+                  fill="none"
+                  stroke="#ffc38e"
+                  stroke-width="36"
+                  opacity=".25"
+                  filter="url(#softStroke)"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M25 109 C93 30 165 38 229 87
+                     S365 118 435 33"
+                  fill="none"
+                  stroke="#ffa9aa"
+                  stroke-width="20"
+                  stroke-linecap="round"
+                />
+
+              </svg>
+
+            </div>
+
+            <div class="tool-info">
+
+              <span class="tool-tag">Мягкий переход</span>
+
+              <h3>🖌️ Кисть</h3>
+
+              <p>
+                Позволяет создавать сглаженные мазки.
+                Результат зависит от формы,
+                жёсткости и непрозрачности
+                выбранной кисти.
+              </p>
+
+              <span class="uses">
+                Для чего: фон, живописные линии,
+                закрашивание.
+              </span>
+
+            </div>
+          </article>
+
+          <!-- КАРТОЧКА 3. АЭРОГРАФ -->
+
+          <article class="tool-card">
+
+            <div class="tool-preview alt">
+
+              <svg
+                viewBox="0 0 460 150"
+                role="img"
+                aria-label="Распылённое пятно аэрографа"
+              >
+
+                <defs>
+                  <radialGradient id="spray">
+
+                    <stop
+                      offset="0"
+                      stop-color="#7df2c5"
+                      stop-opacity=".88"
+                    />
+
+                    <stop
+                      offset=".4"
+                      stop-color="#7df2c5"
+                      stop-opacity=".35"
+                    />
+
+                    <stop
+                      offset="1"
+                      stop-color="#7df2c5"
+                      stop-opacity="0"
+                    />
+
+                  </radialGradient>
+                </defs>
+
+                <ellipse
+                  cx="218" cy="75"
+                  rx="156" ry="64"
+                  fill="url(#spray)"
+                />
+
+                <g fill="#96ffd8" opacity=".6">
+
+                  <circle cx="127" cy="44" r="2"/>
+                  <circle cx="158" cy="98" r="2.3"/>
+                  <circle cx="205" cy="32" r="1.5"/>
+                  <circle cx="278" cy="99" r="2"/>
+                  <circle cx="322" cy="57" r="2.2"/>
+                  <circle cx="256" cy="45" r="1.5"/>
+
+                </g>
+
+              </svg>
+
+            </div>
+
+            <div class="tool-info">
+
+              <span class="tool-tag">
+                Постепенное нанесение
+              </span>
+
+              <h3>💨 Аэрограф</h3>
+
+              <p>
+                Создаёт эффект распыления:
+                интенсивность цвета нарастает
+                по мере воздействия.
+              </p>
+
+              <span class="uses">
+                Для чего: свечение, туман,
+                мягкие тени.
+              </span>
+
+            </div>
+          </article>
+
+          <!-- КАРТОЧКА 4. ПЕРО -->
+
+          <article class="tool-card">
+
+            <div class="tool-preview">
+
+              <svg
+                viewBox="0 0 460 150"
+                role="img"
+                aria-label="Чернильный штрих с меняющейся толщиной"
+              >
+
+                <path
+                  d="M32 115 C95 90 128 18 180 35
+                     S263 130 311 95 S381 46 428 38"
+                  fill="none"
+                  stroke="#ffe5a2"
+                  stroke-width="2"
+                />
+
+                <path
+                  d="M32 115 C95 90 128 18 180 35
+                     S263 130 311 95 S381 46 428 38"
+                  fill="none"
+                  stroke="#ffe5a2"
+                  stroke-width="9"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M115 62 Q146 17 183 37"
+                  fill="none"
+                  stroke="#fff4d3"
+                  stroke-width="15"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M288 106 Q318 111 355 66"
+                  fill="none"
+                  stroke="#fff4d3"
+                  stroke-width="13"
+                  stroke-linecap="round"
+                />
+
+              </svg>
+
+            </div>
+
+            <div class="tool-info">
+
+              <span class="tool-tag">Чернильная линия</span>
+
+              <h3>✒️ Перо</h3>
+
+              <p>
+                Имитирует рисование чернилами.
+                Толщина штриха может меняться
+                в зависимости от настроек и движения.
+              </p>
+
+              <span class="uses">
+                Для чего: выразительные контуры,
+                надписи, штриховка.
+              </span>
+
+            </div>
+          </article>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>Помни:</strong>
+          непрозрачность управляет тем, насколько сильно
+          штрих перекрывает изображение.
+
+          Размер и форма кисти влияют на ширину
+          и вид линии.
+
+          Не каждый параметр доступен
+          у каждого инструмента одинаково.
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 3. ЛАСТИК И АЛЬФА-КАНАЛ
+      ==================================================== -->
+
+      <section class="section" id="eraser">
+
+        <div class="section-head">
+          <span class="section-number">03</span>
+
+          <div>
+            <h2>Ластик: убрать, а не закрасить</h2>
+
+            <p class="subtitle">
+              Удаление пикселей и прозрачность —
+              важное различие.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Ластик</strong> удаляет пиксели
+          с активного слоя.
+
+          Если слой поддерживает прозрачность
+          (имеет альфа-канал),
+          на месте удалённого появляется
+          прозрачная область.
+
+          Иначе поведение зависит от настроек
+          слоя и версии GIMP.
+        </p>
+
+        <div class="grid-two">
+
+          <!-- ДО ИСПОЛЬЗОВАНИЯ ЛАСТИКА -->
+
+          <div class="tile">
+
+            <h3>До применения ластика</h3>
+
+            <svg
+              viewBox="0 0 410 168"
+              role="img"
+              aria-label="Красный круг на фоне из клеток"
+            >
+
+              <defs>
+
+                <pattern
+                  id="checkA"
+                  width="25"
+                  height="25"
+                  patternUnits="userSpaceOnUse"
+                >
+
+                  <rect
+                    width="25"
+                    height="25"
+                    fill="#e3e6ed"
+                  />
+
+                  <rect
+                    width="12.5"
+                    height="12.5"
+                    fill="#fff"
+                  />
+
+                  <rect
+                    x="12.5"
+                    y="12.5"
+                    width="12.5"
+                    height="12.5"
+                    fill="#fff"
+                  />
+
+                </pattern>
+
+              </defs>
+
+              <rect
+                width="410"
+                height="168"
+                rx="9"
+                fill="url(#checkA)"
+              />
+
+              <circle
+                cx="205"
+                cy="84"
+                r="62"
+                fill="#ff857b"
+              />
+
+            </svg>
+
+          </div>
+
+          <!-- ПОСЛЕ ИСПОЛЬЗОВАНИЯ ЛАСТИКА -->
+
+          <div class="tile">
+
+            <h3>После применения ластика</h3>
+
+            <svg
+              viewBox="0 0 410 168"
+              role="img"
+              aria-label="Красный круг с прозрачной полосой посередине"
+            >
+
+              <defs>
+
+                <pattern
+                  id="checkB"
+                  width="25"
+                  height="25"
+                  patternUnits="userSpaceOnUse"
+                >
+
+                  <rect
+                    width="25"
+                    height="25"
+                    fill="#e3e6ed"
+                  />
+
+                  <rect
+                    width="12.5"
+                    height="12.5"
+                    fill="#fff"
+                  />
+
+                  <rect
+                    x="12.5"
+                    y="12.5"
+                    width="12.5"
+                    height="12.5"
+                    fill="#fff"
+                  />
+
+                </pattern>
+
+                <mask id="wipe">
+
+                  <rect
+                    width="410"
+                    height="168"
+                    fill="white"
+                  />
+
+                  <path
+                    d="M149 113 C186 96 206 62 253 49"
+                    fill="none"
+                    stroke="black"
+                    stroke-width="27"
+                    stroke-linecap="round"
+                  />
+
+                </mask>
+
+              </defs>
+
+              <rect
+                width="410"
+                height="168"
+                rx="9"
+                fill="url(#checkB)"
+              />
+
+              <circle
+                cx="205"
+                cy="84"
+                r="62"
+                fill="#ff857b"
+                mask="url(#wipe)"
+              />
+
+            </svg>
+
+          </div>
+
+        </div>
+
+        <div class="callout mint">
+
+          <strong>Почему видны клетки?</strong>
+
+          Шахматный узор в GIMP обычно
+          обозначает прозрачность;
+          он не является частью рисунка.
+
+          Прозрачность можно сохранить,
+          например, при экспорте в PNG.
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 4. ИНСТРУМЕНТЫ КОРРЕКЦИИ
+      ==================================================== -->
+
+      <section class="section" id="effects">
+
+        <div class="section-head">
+          <span class="section-number">04</span>
+
+          <div>
+            <h2>Управляем деталями, светом и тенью</h2>
+
+            <p class="subtitle">
+              Четыре эффекта — две пары режимов GIMP.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          В GIMP <strong>«Размывание/резкость»</strong> —
+          один инструмент с двумя режимами.
+
+          Аналогично
+          <strong>«Осветление/затемнение»</strong> —
+          один инструмент с двумя режимами.
+
+          Их удобно применять локально,
+          отдельными мазками.
+        </p>
+
+        <div class="effect-grid">
+
+          <!-- ЭФФЕКТ 1. РАЗМЫВАНИЕ -->
+
+          <article class="effect-card">
+
+            <h3>🌫️ Размывание</h3>
+
+            <p>
+              Смягчает границы и уменьшает
+              заметность мелких деталей.
+
+              Подойдёт для тумана, облаков
+              и далёких объектов.
+            </p>
+
+            <div class="effect-visual">
+
+              <svg
+                viewBox="0 0 410 160"
+                role="img"
+                aria-label="Размытые цветовые границы"
+              >
+
+                <defs>
+                  <filter id="fog">
+                    <feGaussianBlur stdDeviation="8"/>
+                  </filter>
+                </defs>
+
+                <rect
+                  width="410"
+                  height="160"
+                  fill="#b6cce8"
+                />
+
+                <g filter="url(#fog)">
+
+                  <path
+                    d="M0 130 L80 43 L147 119
+                       L219 26 L334 121
+                       L410 63 V160 H0Z"
+                    fill="#5b7199"
+                  />
+
+                  <circle
+                    cx="303"
+                    cy="52"
+                    r="32"
+                    fill="#ffdf9f"
+                  />
+
+                </g>
+
+              </svg>
+
+            </div>
+
+            <div class="compare-note">
+              <span>Мягче</span>
+              <span>Меньше деталей</span>
+            </div>
+
+          </article>
+
+          <!-- ЭФФЕКТ 2. РЕЗКОСТЬ -->
+
+          <article class="effect-card">
+
+            <h3>🔎 Резкость</h3>
+
+            <p>
+              Усиливает контраст границ деталей.
+
+              Чрезмерное применение может вызвать
+              ореолы и другие артефакты.
+            </p>
+
+            <div class="effect-visual">
+
+              <svg
+                viewBox="0 0 410 160"
+                role="img"
+                aria-label="Чёткие границы гор и солнца"
+              >
+
+                <rect
+                  width="410"
+                  height="160"
+                  fill="#b6cce8"
+                />
+
+                <path
+                  d="M0 130 L80 43 L147 119
+                     L219 26 L334 121
+                     L410 63 V160 H0Z"
+                  fill="#5b7199"
+                  stroke="#324568"
+                  stroke-width="3"
+                  stroke-linejoin="round"
+                />
+
+                <circle
+                  cx="303"
+                  cy="52"
+                  r="32"
+                  fill="#ffdf9f"
+                  stroke="#dfa85c"
+                  stroke-width="3"
+                />
+
+              </svg>
+
+            </div>
+
+            <div class="compare-note">
+              <span>Чётче</span>
+              <span>Больше контраста на границах</span>
+            </div>
+
+          </article>
+
+          <!-- ЭФФЕКТ 3. ОСВЕТЛЕНИЕ -->
+
+          <article class="effect-card">
+
+            <h3>☀️ Осветление</h3>
+
+            <p>
+              Делает выбранные области светлее.
+
+              Помогает показать блики на воде,
+              свет на вершине или освещённую
+              сторону дерева.
+            </p>
+
+            <div class="effect-visual">
+
+              <svg
+                viewBox="0 0 410 160"
+                role="img"
+                aria-label="Светлая полоса на склоне горы"
+              >
+
+                <rect
+                  width="410"
+                  height="160"
+                  fill="#505679"
+                />
+
+                <path
+                  d="M0 150 L150 25 L330 160 H0Z"
+                  fill="#8b81aa"
+                />
+
+                <path
+                  d="M150 25 L210 160 H112Z"
+                  fill="#e4b7b2"
+                />
+
+                <path
+                  d="M150 25 L250 130"
+                  fill="none"
+                  stroke="#ffebbd"
+                  stroke-width="11"
+                  opacity=".62"
+                  stroke-linecap="round"
+                />
+
+              </svg>
+
+            </div>
+
+            <div class="compare-note">
+              <span>Блики</span>
+              <span>Светлая сторона</span>
+            </div>
+
+          </article>
+
+          <!-- ЭФФЕКТ 4. ЗАТЕМНЕНИЕ -->
+
+          <article class="effect-card">
+
+            <h3>🌙 Затемнение</h3>
+
+            <p>
+              Делает выбранные области темнее.
+
+              Помогает выделить тени
+              и усилить ощущение глубины предметов.
+            </p>
+
+            <div class="effect-visual">
+
+              <svg
+                viewBox="0 0 410 160"
+                role="img"
+                aria-label="Тёмная тень на склоне горы"
+              >
+
+                <rect
+                  width="410"
+                  height="160"
+                  fill="#505679"
+                />
+
+                <path
+                  d="M0 150 L150 25 L330 160 H0Z"
+                  fill="#8b81aa"
+                />
+
+                <path
+                  d="M150 25 L330 160 H210Z"
+                  fill="#383e68"
+                />
+
+                <path
+                  d="M150 25 L270 145"
+                  stroke="#242b53"
+                  stroke-width="10"
+                  opacity=".5"
+                  stroke-linecap="round"
+                />
+
+              </svg>
+
+            </div>
+
+            <div class="compare-note">
+              <span>Тени</span>
+              <span>Глубина</span>
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="callout warn">
+
+          <strong>Не переусердствуй:</strong>
+
+          размытие может уничтожить детали,
+          резкость — подчеркнуть шум,
+          а слишком сильное осветление
+          или затемнение — сделать изображение
+          неестественным.
+
+          Начинай с небольшого значения
+          силы инструмента.
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 5. ПАМЯТКА ПО ВЫБОРУ ИНСТРУМЕНТА
+      ==================================================== -->
+
+      <section class="section" id="choice">
+
+        <div class="section-head">
+          <span class="section-number">05</span>
+
+          <div>
+            <h2>Какой инструмент выбрать?</h2>
+
+            <p class="subtitle">
+              Краткая памятка перед самостоятельной работой.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+
+          <table class="tools-table">
+
+            <thead>
+              <tr>
+                <th scope="col">Инструмент / режим</th>
+                <th scope="col">Главное действие</th>
+                <th scope="col">Пример в пейзаже</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>Карандаш</td>
+                <td>Чёткие края</td>
+                <td>Мелкие ветки, пиксельные детали</td>
+              </tr>
+
+              <tr>
+                <td>Кисть</td>
+                <td>Свободный мазок</td>
+                <td>Небо, трава, горы</td>
+              </tr>
+
+              <tr>
+                <td>Аэрограф</td>
+                <td>Постепенное распыление</td>
+                <td>Световое пятно вокруг солнца</td>
+              </tr>
+
+              <tr>
+                <td>Перо</td>
+                <td>Чернильные линии</td>
+                <td>Контур дерева</td>
+              </tr>
+
+              <tr>
+                <td>Ластик</td>
+                <td>Удаление пикселей</td>
+                <td>Исправление лишнего штриха</td>
+              </tr>
+
+              <tr>
+                <td>Размывание</td>
+                <td>Смягчение</td>
+                <td>Далёкие облака</td>
+              </tr>
+
+              <tr>
+                <td>Резкость</td>
+                <td>Усиление деталей</td>
+                <td>Камни на переднем плане</td>
+              </tr>
+
+              <tr>
+                <td>Осветление</td>
+                <td>Добавление светлых участков</td>
+                <td>Блики на воде</td>
+              </tr>
+
+              <tr>
+                <td>Затемнение</td>
+                <td>Усиление теней</td>
+                <td>Теневая сторона горы</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <div class="callout">
+
+          <strong>Важно:</strong>
+
+          вид штриха зависит не только от названия
+          инструмента, но и от его параметров.
+
+          Пример в таблице — подсказка,
+          а не единственный допустимый способ рисования.
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 6. ПРАКТИЧЕСКАЯ РАБОТА НА КОМПЬЮТЕРЕ
+      ==================================================== -->
+
+      <section class="section practice" id="practice">
+
+        <div class="section-head">
+          <span class="section-number">06</span>
+
+          <div>
+            <h2>
+              Практическая работа: «Цифровой пейзаж»
+            </h2>
+
+            <p class="subtitle">
+              Четыре этапа в GIMP —
+              от пустого холста до готового файла.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Работа выполняется
+          <strong>на компьютере в GIMP</strong>.
+
+          Можно нарисовать горы, берег, лес
+          или другой пейзаж.
+
+          Главное — осознанно применить
+          все девять изучаемых действий
+          и сохранить результат.
+        </p>
+
+        <!-- ЗАДАНИЕ 1 -->
+
+        <div class="step-card">
+
+          <span class="step-label">
+            ЗАДАНИЕ 1 / ПОДГОТОВКА
+          </span>
+
+          <h3>Создай основу проекта</h3>
+
+          <ol>
+
+            <li>
+              Открой GIMP и создай изображение
+              размером <strong>1280 × 720 пикселей</strong>.
+            </li>
+
+            <li>
+              Подготовь слой «Фон» и добавь
+              прозрачный слой «Объекты».
+            </li>
+
+            <li>
+              Продумай цвета неба, земли,
+              гор и основных элементов.
+            </li>
+
+            <li>
+              Проверь активный слой перед рисованием.
+            </li>
+
+          </ol>
+
+          <details>
+
+            <summary>Подсказка к заданию 1</summary>
+
+            <p>
+              Новый слой можно создать через
+              панель «Слои» или меню «Слой».
+
+              Для прозрачного слоя выбирай
+              заполнение «Прозрачность».
+            </p>
+
+          </details>
+
+        </div>
+
+        <!-- ЗАДАНИЕ 2 -->
+
+        <div class="step-card">
+
+          <span class="step-label">
+            ЗАДАНИЕ 2 / РИСОВАНИЕ
+          </span>
+
+          <h3>Нарисуй основные элементы</h3>
+
+          <ol>
+
+            <li>
+              <strong>Кистью</strong> создай небо,
+              землю и крупные объекты.
+            </li>
+
+            <li>
+              <strong>Карандашом</strong> добавь
+              несколько чётких небольших деталей.
+            </li>
+
+            <li>
+              <strong>Пером</strong> проведи
+              выразительные контуры дерева,
+              гор или другого объекта.
+            </li>
+
+            <li>
+              <strong>Ластиком</strong> удали
+              лишние штрихи на слое с прозрачностью.
+            </li>
+
+          </ol>
+
+          <details>
+
+            <summary>Подсказка к заданию 2</summary>
+
+            <p>
+              Для удобства попробуй создать
+              отдельный слой с деревьями или камнями.
+
+              Так ошибки легче исправлять.
+            </p>
+
+          </details>
+
+        </div>
+
+        <!-- ЗАДАНИЕ 3 -->
+
+        <div class="step-card">
+
+          <span class="step-label">
+            ЗАДАНИЕ 3 / ЭФФЕКТЫ
+          </span>
+
+          <h3>Добавь мягкость, детали, свет и тень</h3>
+
+          <ol>
+
+            <li>
+              <strong>Аэрографом</strong> сделай
+              мягкое свечение на небе.
+            </li>
+
+            <li>
+              В режиме <strong>«Размывание»</strong>
+              слегка смягчи облако или удалённый объект.
+            </li>
+
+            <li>
+              В режиме <strong>«Резкость»</strong>
+              подчеркни небольшую деталь переднего плана.
+            </li>
+
+            <li>
+              <strong>«Осветлением»</strong> создай блик,
+              а <strong>«Затемнением»</strong> — тень.
+            </li>
+
+            <li>
+              При необходимости уменьши силу воздействия
+              и исправь чрезмерные эффекты.
+            </li>
+
+          </ol>
+
+          <details>
+
+            <summary>Подсказка к заданию 3</summary>
+
+            <p>
+              В GIMP размывание и резкость —
+              режимы одного инструмента;
+              осветление и затемнение —
+              тоже режимы одного инструмента.
+
+              Параметры доступны после выбора инструмента.
+            </p>
+
+          </details>
+
+        </div>
+
+        <!-- ЗАДАНИЕ 4 -->
+
+        <div class="step-card">
+
+          <span class="step-label">
+            ЗАДАНИЕ 4 / ЗАВЕРШЕНИЕ
+          </span>
+
+          <h3>Проверь и сохрани результат</h3>
+
+          <ol>
+
+            <li>
+              Убедись, что рисунок закончен,
+              а все девять действий использованы.
+            </li>
+
+            <li>
+              Проверь слои, композицию, свет и тени.
+            </li>
+
+            <li>
+              Сохрани редактируемый проект
+              в формате <strong>XCF</strong>.
+            </li>
+
+            <li>
+              Экспортируй итоговое изображение
+              в <strong>PNG</strong>.
+            </li>
+
+            <li>
+              Представь работу учителю.
+            </li>
+
+          </ol>
+
+          <details>
+
+            <summary>Подсказка к заданию 4</summary>
+
+            <p>
+              «Сохранить» и «Экспортировать как…» —
+              разные операции.
+
+              XCF сохраняет структуру проекта,
+              а PNG нужен для просмотра и передачи
+              итоговой картинки.
+            </p>
+
+          </details>
+
+        </div>
+
+        <!-- ============================================
+             ИНТЕРАКТИВНЫЙ ЧЕК-ЛИСТ ПРАКТИЧЕСКОЙ РАБОТЫ
+        ============================================= -->
+
+        <div class="progress-box" id="checklist">
+
+          <div class="progress-title">
+
+            <strong>✅ Чек-лист готовности</strong>
+
+            <span id="progress-label" aria-live="polite">
+              0 из 4
+            </span>
+
+          </div>
+
+          <progress
+            id="task-progress"
+            max="4"
+            value="0"
+          >
+            0 из 4
+          </progress>
+
+          <div class="checklist">
+
+            <label class="checkline">
+
+              <input
+                type="checkbox"
+                class="task-check"
+              >
+
+              <span>
+                Созданы холст 1280 × 720 и нужные слои
+              </span>
+
+            </label>
+
+            <label class="checkline">
+
+              <input
+                type="checkbox"
+                class="task-check"
+              >
+
+              <span>
+                Нарисованы основные объекты
+                четырьмя инструментами
+              </span>
+
+            </label>
+
+            <label class="checkline">
+
+              <input
+                type="checkbox"
+                class="task-check"
+              >
+
+              <span>
+                Добавлены свет, тени
+                и локальная коррекция
+              </span>
+
+            </label>
+
+            <label class="checkline">
+
+              <input
+                type="checkbox"
+                class="task-check"
+              >
+
+              <span>
+                Готовы файлы XCF и PNG
+              </span>
+
+            </label>
+
+          </div>
+
+          <button
+            type="button"
+            class="reset-btn"
+            id="reset-checklist"
+          >
+            Сбросить отметки
+          </button>
+
+        </div>
+
+        <p>
+          Отметки помогают контролировать ход работы.
+          Они не заменяют выполнение заданий в GIMP.
+        </p>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 7. СОХРАНЕНИЕ И ПРОВЕРКА РЕЗУЛЬТАТОВ
+      ==================================================== -->
+
+      <section class="section" id="finish">
+
+        <div class="section-head">
+          <span class="section-number">07</span>
+
+          <div>
+            <h2>Как понять, что работа получилась?</h2>
+
+            <p class="subtitle">
+              Проверяем результат и сохраняем
+              два разных файла.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-two">
+
+          <article class="tile lilac">
+
+            <span class="emoji">🗂️</span>
+
+            <h3>XCF — проект GIMP</h3>
+
+            <p>
+              Нужен для продолжения редактирования:
+              сохраняет слои и другую рабочую
+              информацию проекта.
+            </p>
+
+          </article>
+
+          <article class="tile mint">
+
+            <span class="emoji">🖼️</span>
+
+            <h3>PNG — итоговое изображение</h3>
+
+            <p>
+              Подходит для просмотра и отправки.
+
+              Поддерживает прозрачность,
+              но не сохраняет структуру
+              редактируемого проекта GIMP.
+            </p>
+
+          </article>
+
+        </div>
+
+        <h3>Частые ошибки</h3>
+
+        <div class="grid-three">
+
+          <article class="tile">
+
+            <h3>Слишком широкая кисть</h3>
+
+            <p>
+              Уменьши размер инструмента,
+              если мелкие детали сливаются.
+            </p>
+
+          </article>
+
+          <article class="tile">
+
+            <h3>Сильная коррекция</h3>
+
+            <p>
+              Понизь силу размытия, резкости,
+              осветления или затемнения.
+            </p>
+
+          </article>
+
+          <article class="tile">
+
+            <h3>Не тот слой</h3>
+
+            <p>
+              Перед работой проверяй выбранный слой
+              и наличие нужных пикселей.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="callout mint">
+
+          <strong>Критерии успеха:</strong>
+
+          пейзаж завершён;
+          все девять изученных действий
+          использованы по назначению;
+          нет случайных штрихов;
+          свет и тени выглядят убедительно;
+          сохранены оба файла.
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 8. ИТОГ УРОКА
+      ==================================================== -->
+
+      <section class="section" id="summary">
+
+        <div class="section-head">
+          <span class="section-number">08</span>
+
+          <div>
+            <h2>
+              От линии — к выразительному изображению
+            </h2>
+
+            <p class="subtitle">
+              Обобщаем главное перед вопросами.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+
+          <strong>
+            Карандаш, кисть, аэрограф и перо
+          </strong>
+          создают разные штрихи.
+
+          <strong>Ластик</strong> удаляет лишнее.
+
+          <strong>Размывание и резкость</strong>
+          изменяют характер деталей, а
+
+          <strong>осветление и затемнение</strong>
+          помогают управлять светотенью.
+
+        </p>
+
+        <div class="callout">
+
+          <strong>Вывод:</strong>
+
+          качественный результат зависит
+          не от количества эффектов,
+          а от правильного выбора инструмента,
+          умеренных настроек и последовательной
+          работы со слоями.
+
+        </div>
+
+        <p>
+          <strong>Для самостоятельного наблюдения:</strong>
+          выбери фотографию или рисунок пейзажа
+          и определи, какими инструментами GIMP
+          можно усилить глубину, мягкость фона
+          и освещение объектов.
+        </p>
+
+      </section>
+
+      <!-- ===================================================
+           РАЗДЕЛ 9. РОВНО 12 ВОПРОСОВ В КОНЦЕ
+
+           Учащиеся с ПК выполняют практическую работу.
+           Без ПК — отвечают на эти 12 вопросов.
+      ==================================================== -->
+
+      <section class="section" id="questions">
+
+        <div class="section-head">
+          <span class="section-number">09</span>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+
+            <p class="subtitle">
+              Если нет компьютера —
+              ответь на все 12 вопросов
+              вместо практической работы.
+            </p>
+          </div>
+        </div>
+
+        <ol class="questions">
+
+          <li>
+            Чем инструмент «Карандаш»
+            отличается от «Кисти»?
+          </li>
+
+          <li>
+            Для чего используется «Аэрограф»?
+          </li>
+
+          <li>
+            Какие особенности имеет инструмент «Перо»?
+          </li>
+
+          <li>
+            Как непрозрачность влияет
+            на внешний вид штриха?
+          </li>
+
+          <li>
+            Чем удаление пикселей ластиком
+            отличается от закрашивания
+            их цветом фона?
+          </li>
+
+          <li>
+            Когда полезно применять
+            размытие изображения?
+          </li>
+
+          <li>
+            Как действует режим «Резкость»
+            и почему нельзя чрезмерно его использовать?
+          </li>
+
+          <li>
+            Для чего осветляют
+            отдельные участки рисунка?
+          </li>
+
+          <li>
+            Как затемнение помогает
+            передать объём и глубину?
+          </li>
+
+          <li>
+            Почему корректирующие инструменты
+            желательно применять умеренно?
+          </li>
+
+          <li>
+            Зачем при рисовании в GIMP
+            используют отдельные слои?
+          </li>
+
+          <li>
+            Чем сохранение проекта в XCF
+            отличается от экспорта в PNG?
+          </li>
+
+        </ol>
+
+      </section>
+
+    </main>
+
+    <!-- ===================================================
+         ПОДВАЛ САЙТА
+    ==================================================== -->
+
+    <footer>
+      GIMP ART LAB · Информатика ·
+      10–11 класс · Практическое занятие
+    </footer>
+
+  </div>
+
+  <script>
+    /* =====================================================
+       ИНТЕРАКТИВНЫЙ ЧЕК-ЛИСТ ПРАКТИЧЕСКОЙ РАБОТЫ
+
+       Работает локально, без Интернета и библиотек.
+       При отметке заданий обновляется индикатор.
+       Кнопка сброса очищает все отметки.
+    ====================================================== */
+
+    (function () {
+      "use strict";
+
+      // Получаем элементы страницы.
+
+      const checks = Array.from(
+        document.querySelectorAll(".task-check")
+      );
+
+      const progress = document.getElementById(
+        "task-progress"
+      );
+
+      const label = document.getElementById(
+        "progress-label"
+      );
+
+      const reset = document.getElementById(
+        "reset-checklist"
+      );
+
+      // Подсчитываем выполненные этапы.
+
+      function updateProgress() {
+
+        const done = checks.filter(
+          input => input.checked
+        ).length;
+
+        progress.value = done;
+
+        label.textContent = `${done} из ${checks.length}`;
+      }
+
+      // Обновляем шкалу после изменения отметки.
+
+      checks.forEach(input => {
+        input.addEventListener(
+          "change",
+          updateProgress
+        );
+      });
+
+      // Сбрасываем результаты по кнопке.
+
+      reset.addEventListener("click", function () {
+
+        checks.forEach(input => {
+          input.checked = false;
+        });
+
+        updateProgress();
+      });
+
+      // Устанавливаем исходное состояние.
+
+      updateProgress();
+
+    })();
+  </script>
+
+</body>
+</html>
