@@ -1,0 +1,1630 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Информатика, 5 класс. Линейные алгоритмы, часть 1 из 4: команды, исполнители, блок-схемы, алгоритмы из жизни и Робот.">
+  <title>Линейные алгоритмы — 5 класс, часть 1 из 4</title>
+
+  <style>
+    /* =======================================================
+       1. ПАЛИТРА, ТИПОГРАФИКА И ОСНОВНЫЕ ЭЛЕМЕНТЫ
+       Вся страница работает без JavaScript и Интернета.
+    ======================================================= */
+
+    :root {
+      --bg: #f5f7fc;
+      --white: #ffffff;
+      --ink: #24354d;
+      --muted: #60738c;
+      --navy: #16365f;
+      --blue: #3477d5;
+      --blue-soft: #edf4ff;
+      --green: #16856d;
+      --green-soft: #e8f8f0;
+      --orange: #e89e47;
+      --orange-soft: #fff3e3;
+      --purple: #7155bb;
+      --purple-soft: #f1edff;
+      --line: #dfe8f3;
+      --shadow: 0 14px 36px rgba(26, 60, 98, .07);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      overflow-wrap: break-word;
+    }
+
+    h1, h2, h3, p, figure {
+      margin-top: 0;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.23;
+    }
+
+    p {
+      margin-bottom: 13px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #265fa7;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #f7bd62;
+      outline-offset: 3px;
+    }
+
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    strong {
+      font-weight: 760;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 36px));
+      margin: auto;
+      padding: 20px 0 45px;
+    }
+
+    .skip {
+      position: absolute;
+      top: -100px;
+      left: 12px;
+      z-index: 10;
+      padding: 10px;
+      background: white;
+    }
+
+    .skip:focus {
+      top: 10px;
+    }
+
+    /* =======================================================
+       2. ОБЛОЖКА С МАРШРУТОМ ИЗ ЧЕТЫРЁХ КОМАНД
+    ======================================================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      color: white;
+      background: linear-gradient(
+        125deg,
+        #15345d 0%,
+        #245ea9 65%,
+        #3188a0 100%
+      );
+      box-shadow: 0 20px 45px rgba(30, 75, 130, .17);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -175px;
+      right: -150px;
+      width: 395px;
+      height: 395px;
+      border: 60px solid rgba(255,255,255,.06);
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.14fr) minmax(270px, .86fr);
+      gap: 26px;
+      align-items: center;
+      padding: 44px 41px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 6px 13px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 30px;
+      background: rgba(255,255,255,.12);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .hero h1 {
+      margin-bottom: 17px;
+      font-size: clamp(34px, 4.9vw, 55px);
+      letter-spacing: -.03em;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #ffe0a0;
+    }
+
+    .hero p {
+      color: #e7f1ff;
+      font-size: 17px;
+    }
+
+    .parts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 21px;
+    }
+
+    .parts span {
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.23);
+      color: #d8e8ff;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .parts .active {
+      background: white;
+      color: #24598d;
+      border-color: white;
+    }
+
+    .hero-art {
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 21px;
+      background: rgba(255,255,255,.13);
+    }
+
+    .hero-art > p {
+      margin-bottom: 9px;
+      color: #f0f6ff;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .art-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      gap: 7px;
+    }
+
+    .art-step {
+      padding: 14px 4px;
+      min-width: 0;
+      background: #fff;
+      border-radius: 13px;
+      text-align: center;
+      color: #30649a;
+    }
+
+    .art-step span {
+      display: block;
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .art-step small {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .art-step:last-child {
+      background: #dbf7e9;
+      color: #168168;
+    }
+
+    .art-arrow {
+      color: #ffdc9e;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .hero-art .mini-track {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .mini-track b {
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #dcecff;
+      color: #255895;
+      font-size: 15px;
+    }
+
+    .mini-track b:last-child {
+      background: #d8f8e8;
+      color: #177459;
+    }
+
+    /* =======================================================
+       3. НАВИГАЦИЯ И СЕКЦИИ
+    ======================================================= */
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .toc a {
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: white;
+      text-decoration: none;
+      color: #516b86;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .toc a:hover {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 33px 38px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 21px;
+    }
+
+    .number {
+      flex: 0 0 43px;
+      display: grid;
+      place-items: center;
+      height: 43px;
+      border-radius: 13px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .section h2 {
+      margin: 2px 0 5px;
+      font-size: clamp(23px, 3vw, 31px);
+    }
+
+    .section h3 {
+      margin: 25px 0 11px;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .definition {
+      margin: 18px 0;
+      padding: 16px 19px;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 13px 13px 0;
+      background: var(--blue-soft);
+    }
+
+    .definition.green {
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .note {
+      margin: 17px 0;
+      padding: 15px 18px;
+      border: 1px solid #f0debe;
+      border-radius: 14px;
+      background: var(--orange-soft);
+    }
+
+    .grid2, .grid3 {
+      display: grid;
+      gap: 14px;
+      margin: 19px 0;
+    }
+
+    .grid2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: #fafcff;
+    }
+
+    .card.blue {
+      background: #edf4ff;
+      border-color: #d8e7fc;
+    }
+
+    .card.mint {
+      background: #eaf8f1;
+      border-color: #d5ede0;
+    }
+
+    .card.purple {
+      background: #f3efff;
+      border-color: #e5ddfa;
+    }
+
+    .card .emoji {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 30px;
+    }
+
+    .card h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =======================================================
+       4. ЛЕНТА КОМАНД И АРИФМЕТИЧЕСКИЙ ПРИМЕР
+    ======================================================= */
+
+    .command-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 19px 0;
+    }
+
+    .command-flow .command {
+      padding: 12px 14px;
+      background: #eaf3ff;
+      color: #285b9c;
+      border: 1px solid #d4e3f7;
+      border-radius: 12px;
+      font-weight: 800;
+    }
+
+    .command-flow .command.finish {
+      background: #e6f7ed;
+      color: #166d52;
+      border-color: #cae7d6;
+    }
+
+    .command-flow .arrow {
+      color: #8093ae;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .math-demo {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: center;
+      gap: 11px;
+      margin: 19px 0;
+    }
+
+    .math-step {
+      height: 100%;
+      padding: 18px 13px;
+      border: 1px solid #dce7f7;
+      border-radius: 16px;
+      background: #f1f7ff;
+      text-align: center;
+    }
+
+    .math-step strong {
+      display: block;
+      font-size: 23px;
+      color: #2d5e9e;
+    }
+
+    .math-step small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .math-step:last-child {
+      background: #e9f9ef;
+      border-color: #cde9d8;
+    }
+
+    .math-step:last-child strong {
+      color: var(--green);
+    }
+
+    /* =======================================================
+       5. СЛОВЕСНАЯ ЗАПИСЬ, КОМАНДЫ, БЛОК-СХЕМА
+    ======================================================= */
+
+    .method {
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: #fbfcff;
+      min-width: 0;
+    }
+
+    .method h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .method ol {
+      margin: 0;
+      padding-left: 21px;
+      font-size: 14px;
+    }
+
+    .method li {
+      margin: 5px 0;
+    }
+
+    .method .chips {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .method .chips b {
+      padding: 7px 10px;
+      background: var(--blue-soft);
+      color: #3065ac;
+      border-radius: 8px;
+    }
+
+    .method .chips i {
+      color: #7e92af;
+      font-style: normal;
+    }
+
+    .scheme {
+      max-width: 580px;
+      margin: 19px auto;
+      padding: 19px 13px;
+      border: 1px solid #dce6f4;
+      border-radius: 18px;
+      background: #f7faff;
+    }
+
+    .scheme-item {
+      width: min(100%, 290px);
+      margin: auto;
+      padding: 11px 14px;
+      text-align: center;
+      color: #2f578b;
+      font-weight: 800;
+    }
+
+    .scheme-item.oval {
+      border: 3px solid #66a0e1;
+      border-radius: 60px;
+      background: #eaf4ff;
+    }
+
+    .scheme-item.action {
+      border: 3px solid #74c9af;
+      border-radius: 10px;
+      background: #e9faf3;
+    }
+
+    .scheme-item.finish {
+      background: #e9f3ff;
+    }
+
+    .scheme-arrow {
+      margin: 4px auto;
+      color: #6486af;
+      text-align: center;
+      font-size: 25px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .scheme-caption {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* =======================================================
+       6. РОБОТ НА КЛЕТЧАТОМ ПОЛЕ
+    ======================================================= */
+
+    .robot-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 430px) minmax(0, 1fr);
+      gap: 25px;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .board-shell {
+      padding: 14px;
+      border-radius: 19px;
+      background: #f0f7ff;
+      border: 1px solid #d5e5f6;
+    }
+
+    .board-title {
+      text-align: center;
+      color: #506e91;
+      font-size: 12px;
+      font-weight: 850;
+      margin-bottom: 7px;
+    }
+
+    .board {
+      width: 100%;
+      border-spacing: 5px;
+      table-layout: fixed;
+    }
+
+    .board th {
+      color: #66809c;
+      font-size: 12px;
+    }
+
+    .board td {
+      width: 20%;
+      height: 61px;
+      border: 2px solid #d9e5f3;
+      border-radius: 10px;
+      background: white;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .board td.start {
+      background: #dcedff;
+      border-color: #91beeb;
+    }
+
+    .board td.path {
+      background: #fef1d9;
+      border-color: #f4d39f;
+      color: #9f6a29;
+    }
+
+    .board td.goal {
+      background: #dff7e9;
+      border-color: #97d5ae;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .legend span {
+      padding: 4px 8px;
+      background: #fff;
+      border-radius: 7px;
+      border: 1px solid #dce6f2;
+      font-size: 12px;
+    }
+
+    .robot-cmd {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .robot-cmd b {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #e8f2ff;
+      color: #2e69b1;
+      font-size: 24px;
+    }
+
+    .robot-cmd b:nth-child(2n) {
+      background: #e7f8ef;
+      color: #18795a;
+    }
+
+    /* =======================================================
+       7. ИТОГОВЫЕ КАРТОЧКИ И ВОПРОСЫ
+    ======================================================= */
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+      margin: 20px 0;
+    }
+
+    .compare .card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .recap {
+      padding: 21px;
+      border: 1px solid #cfe7de;
+      border-radius: 17px;
+      background: linear-gradient(112deg, #e8f8ef, #ecf3ff);
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      padding: 0;
+      margin: 20px 0 0;
+      counter-reset: question;
+      list-style: none;
+    }
+
+    .questions li {
+      position: relative;
+      min-height: 80px;
+      padding: 16px 15px 16px 57px;
+      border: 1px solid #dfe8f4;
+      border-radius: 14px;
+      background: #f9fbff;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .questions li::before {
+      position: absolute;
+      top: 15px;
+      left: 13px;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #e5efff;
+      color: #2967bd;
+      font-size: 12px;
+      font-weight: 900;
+      counter-increment: question;
+      content: counter(question, decimal-leading-zero);
+    }
+
+    footer {
+      padding: 24px 5px 0;
+      text-align: center;
+      font-size: 12px;
+      color: #798ca3;
+    }
+
+    /* =======================================================
+       8. АДАПТИВНОСТЬ И ПЕЧАТЬ
+    ======================================================= */
+
+    @media (max-width: 850px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 34px 28px;
+      }
+
+      .hero-art {
+        max-width: 570px;
+      }
+
+      .robot-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .board-shell {
+        max-width: 440px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        width: calc(100% - 20px);
+        padding-top: 10px;
+      }
+
+      .hero {
+        border-radius: 21px;
+      }
+
+      .hero-inner {
+        padding: 28px 19px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 9vw, 42px);
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .section {
+        margin-top: 15px;
+        padding: 23px 17px;
+        border-radius: 20px;
+      }
+
+      .section-head {
+        gap: 10px;
+      }
+
+      .number {
+        flex-basis: 36px;
+        height: 36px;
+      }
+
+      .section h2 {
+        font-size: 23px;
+      }
+
+      .grid2,
+      .grid3,
+      .math-demo,
+      .compare,
+      .questions {
+        grid-template-columns: 1fr;
+      }
+
+      .command-flow {
+        gap: 6px;
+      }
+
+      .command-flow .command {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+
+      .board td {
+        height: 56px;
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .section {
+        padding: 20px 13px;
+      }
+
+      .board {
+        border-spacing: 3px;
+      }
+
+      .board td {
+        height: 44px;
+      }
+
+      .art-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        width: 100%;
+      }
+
+      .hero,
+      .section {
+        box-shadow: none;
+      }
+
+      .toc {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#lesson">Перейти к уроку</a>
+
+  <div class="page">
+
+    <!-- ===================================================
+         ОБЛОЖКА: ЧЕТЫРЕ ЧАСТИ ТЕМЫ
+    ==================================================== -->
+
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 5 КЛАСС · ЧАСТЬ 1 ИЗ 4
+          </span>
+
+          <h1>Линейные <em>алгоритмы</em></h1>
+
+          <p>
+            Как выполнить задачу шаг за шагом,
+            не запутаться в командах и заранее понять,
+            каким получится результат?
+          </p>
+
+          <p>
+            Сегодня узнаем, что такое линейный алгоритм,
+            научимся читать простые блок-схемы
+            и управлять Роботом.
+          </p>
+
+          <div class="parts" aria-label="Первая часть из четырёх">
+            <span class="active">Часть 1 · Знакомство</span>
+            <span>Часть 2</span>
+            <span>Часть 3 · ПЗ</span>
+            <span>Часть 4 · ПЗ</span>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <p>От команды к результату</p>
+
+          <div
+            class="art-steps"
+            aria-label="Четыре последовательных шага"
+          >
+            <div class="art-step">
+              <span>📋</span>
+              <small>Команда 1</small>
+            </div>
+
+            <div class="art-step">
+              <span>⚙️</span>
+              <small>Команда 2</small>
+            </div>
+
+            <div class="art-step">
+              <span>🧩</span>
+              <small>Команда 3</small>
+            </div>
+
+            <div class="art-step">
+              <span>✅</span>
+              <small>Результат</small>
+            </div>
+          </div>
+
+          <div class="mini-track" aria-label="Пример команд Роботу">
+            <b>→</b>
+            <b>→</b>
+            <b>↑</b>
+            <b>↑</b>
+            <b>🏁</b>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Навигация по содержанию -->
+
+    <nav class="toc" aria-label="Разделы урока">
+      <a href="#recall">🧠 Вспоминаем</a>
+      <a href="#linear">➡️ Линейный алгоритм</a>
+      <a href="#example">🧮 Пример вычислений</a>
+      <a href="#record">🔷 Запись алгоритма</a>
+      <a href="#daily">🏠 Примеры из жизни</a>
+      <a href="#robot">🤖 Робот</a>
+      <a href="#check">🔍 Проверка ошибок</a>
+      <a href="#questions">❓ 12 вопросов</a>
+    </nav>
+
+    <main id="lesson">
+
+      <!-- =================================================
+           РАЗДЕЛ 1. ОСНОВНЫЕ ПОНЯТИЯ
+      ================================================== -->
+
+      <section class="section" id="recall">
+        <div class="section-head">
+          <span class="number">01</span>
+
+          <div>
+            <h2>Вспомним: алгоритм, команда, исполнитель</h2>
+            <p class="subtitle">
+              Эти понятия помогут понять новую тему.
+            </p>
+          </div>
+        </div>
+
+        <div class="definition">
+          <strong>Алгоритм</strong> — понятная исполнителю
+          последовательность точных команд,
+          направленная на решение задачи.
+        </div>
+
+        <div class="grid3">
+          <article class="card blue">
+            <span class="emoji">📝</span>
+            <h3>Команда</h3>
+            <p>
+              Указание, какое конкретное действие
+              нужно выполнить.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">🤖</span>
+            <h3>Исполнитель</h3>
+            <p>
+              Человек, устройство или программа,
+              которые выполняют команды.
+            </p>
+          </article>
+
+          <article class="card purple">
+            <span class="emoji">🎯</span>
+            <h3>Результат</h3>
+            <p>
+              То, что мы получаем после правильного
+              выполнения алгоритма.
+            </p>
+          </article>
+        </div>
+
+        <p>
+          Команды должны быть <strong>понятными</strong>
+          исполнителю, а порядок их выполнения —
+          определённым. Например, Робот умеет двигаться
+          по клеткам, но не может выполнить команду
+          «Сделай красиво», потому что она недостаточно точная.
+        </p>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 2. ОПРЕДЕЛЕНИЕ ЛИНЕЙНОГО АЛГОРИТМА
+      ================================================== -->
+
+      <section class="section" id="linear">
+        <div class="section-head">
+          <span class="number">02</span>
+
+          <div>
+            <h2>Что такое линейный алгоритм?</h2>
+            <p class="subtitle">
+              Один путь выполнения — команда за командой.
+            </p>
+          </div>
+        </div>
+
+        <div class="definition green">
+          <strong>Линейный алгоритм</strong> — алгоритм,
+          в котором команды выполняются последовательно,
+          одна за другой, без ветвлений и циклов.
+        </div>
+
+        <div
+          class="command-flow"
+          aria-label="Порядок выполнения четырёх команд"
+        >
+          <span class="command">Шаг 1</span>
+          <span class="arrow">→</span>
+
+          <span class="command">Шаг 2</span>
+          <span class="arrow">→</span>
+
+          <span class="command">Шаг 3</span>
+          <span class="arrow">→</span>
+
+          <span class="command finish">Результат ✓</span>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <span class="emoji">1️⃣</span>
+            <h3>По порядку</h3>
+            <p>После одной команды выполняется следующая.</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">🚫</span>
+            <h3>Без выбора</h3>
+            <p>
+              Не нужно выбирать между двумя
+              вариантами действий.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">➡️</span>
+            <h3>Без цикла</h3>
+            <p>
+              Нет команды, которая возвращает
+              выполнение к предыдущим шагам.
+            </p>
+          </div>
+        </div>
+
+        <div class="note">
+          💡 <strong>Важно:</strong>
+          если поменять шаги местами, результат может
+          измениться. Даже правильные команды не помогут,
+          если выполнить их в неправильном порядке.
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 3. ПРИМЕР С ВЫЧИСЛЕНИЯМИ
+      ================================================== -->
+
+      <section class="section" id="example">
+        <div class="section-head">
+          <span class="number">03</span>
+
+          <div>
+            <h2>Линейный алгоритм в математике</h2>
+            <p class="subtitle">
+              Сначала сложение, затем умножение.
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          Вычислим значение выражения
+          <strong>(5 + 3) × 2</strong>.
+          Для этого достаточно выполнить несколько
+          действий в нужном порядке.
+        </p>
+
+        <div class="math-demo">
+          <div class="math-step">
+            <strong>5 + 3 = 8</strong>
+            <small>1. Сложить числа</small>
+          </div>
+
+          <div class="math-step">
+            <strong>8 × 2 = 16</strong>
+            <small>2. Умножить результат</small>
+          </div>
+
+          <div class="math-step">
+            <strong>Ответ: 16</strong>
+            <small>3. Записать результат</small>
+          </div>
+        </div>
+
+        <p>
+          Каждый шаг здесь выполняется один раз,
+          по порядку, без выбора и повторения.
+          Поэтому алгоритм <strong>линейный</strong>.
+        </p>
+
+        <div class="note">
+          🔎 <strong>Подумай:</strong>
+          если сначала умножить 3 на 2, а затем
+          прибавить 5, получится 11, а не 16.
+          Значит, менять порядок шагов нельзя.
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 4. СПОСОБЫ ЗАПИСИ АЛГОРИТМА
+      ================================================== -->
+
+      <section class="section" id="record">
+        <div class="section-head">
+          <span class="number">04</span>
+
+          <div>
+            <h2>Как можно записать алгоритм?</h2>
+            <p class="subtitle">
+              Словами, командами и графическими блоками.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="method">
+            <h3>📝 Словесная запись</h3>
+
+            <ol>
+              <li>Сложить 5 и 3.</li>
+              <li>Полученную сумму умножить на 2.</li>
+              <li>Записать ответ 16.</li>
+            </ol>
+          </div>
+
+          <div class="method">
+            <h3>🤖 Последовательность команд</h3>
+
+            <p>
+              Для исполнителя, который понимает стрелки,
+              команды можно записать кратко:
+            </p>
+
+            <div
+              class="chips"
+              aria-label="Направления для Робота"
+            >
+              <b>→</b>
+              <i>→</i>
+              <b>→</b>
+              <i>→</i>
+              <b>↑</b>
+              <i>→</i>
+              <b>↑</b>
+            </div>
+          </div>
+        </div>
+
+        <h3>🔷 Блок-схема линейного алгоритма</h3>
+
+        <p>
+          <strong>Блок-схема</strong> — графическое
+          представление алгоритма.
+          Овал обозначает начало или конец,
+          прямоугольник — действие, а стрелки
+          показывают последовательность выполнения.
+        </p>
+
+        <figure
+          class="scheme"
+          aria-label="Блок-схема вычисления выражения: начало, сложить 5 и 3, умножить сумму на 2, записать ответ 16, конец"
+        >
+          <div class="scheme-item oval">Начало</div>
+
+          <div class="scheme-arrow" aria-hidden="true">↓</div>
+
+          <div class="scheme-item action">
+            Сложить 5 и 3
+          </div>
+
+          <div class="scheme-arrow" aria-hidden="true">↓</div>
+
+          <div class="scheme-item action">
+            Умножить сумму на 2
+          </div>
+
+          <div class="scheme-arrow" aria-hidden="true">↓</div>
+
+          <div class="scheme-item action">
+            Записать ответ 16
+          </div>
+
+          <div class="scheme-arrow" aria-hidden="true">↓</div>
+
+          <div class="scheme-item oval finish">Конец</div>
+
+          <figcaption class="scheme-caption">
+            У линейного алгоритма блоки образуют
+            одну последовательную цепочку.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 5. АЛГОРИТМЫ В ПОВСЕДНЕВНОЙ ЖИЗНИ
+      ================================================== -->
+
+      <section class="section" id="daily">
+        <div class="section-head">
+          <span class="number">05</span>
+
+          <div>
+            <h2>Линейные алгоритмы вокруг нас</h2>
+            <p class="subtitle">
+              Их можно встретить не только в компьютере.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <article class="card blue">
+            <span class="emoji">🎒</span>
+            <h3>Собираем портфель</h3>
+
+            <p>
+              1. Открыть рюкзак.<br>
+              2. Положить учебники.<br>
+              3. Положить тетради и пенал.<br>
+              4. Закрыть рюкзак.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">💻</span>
+            <h3>Работаем на компьютере</h3>
+
+            <p>
+              1. Включить компьютер.<br>
+              2. Дождаться загрузки.<br>
+              3. Открыть нужную программу.<br>
+              4. Создать новый документ.
+            </p>
+          </article>
+        </div>
+
+        <p>
+          Алгоритмы могут отличаться количеством шагов,
+          но линейные алгоритмы объединяет одно:
+          <strong>
+            заданные команды выполняются последовательно
+          </strong>.
+          Например, нельзя сначала закрыть портфель,
+          а затем положить туда учебники,
+          не открывая его снова.
+        </p>
+
+        <div class="definition">
+          Попробуй мысленно заменить исполнителя:
+          человек может догадаться, что нужно открыть
+          рюкзак, а формальному исполнителю необходимо
+          дать точную команду.
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 6. ФОРМАЛЬНЫЙ ИСПОЛНИТЕЛЬ РОБОТ
+      ================================================== -->
+
+      <section class="section" id="robot">
+        <div class="section-head">
+          <span class="number">06</span>
+
+          <div>
+            <h2>Робот выполняет команды по порядку</h2>
+            <p class="subtitle">
+              Четыре шага — один маршрут до финиша.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Представим Робота, который умеет перемещаться
+          по клетчатому полю. Его система команд:
+          <strong>
+            ↑ вверх, ↓ вниз, ← влево, → вправо
+          </strong>.
+          Каждая команда перемещает его на одну клетку.
+        </p>
+
+        <div class="robot-layout">
+          <div class="board-shell">
+            <div class="board-title">
+              Поле 4 × 4 · строки сверху вниз
+            </div>
+
+            <table
+              class="board"
+              aria-label="Робот стартует в строке 4 столбце 1, идёт дважды вправо и дважды вверх, завершает в строке 2 столбце 3"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">№</th>
+                  <th scope="col">1</th>
+                  <th scope="col">2</th>
+                  <th scope="col">3</th>
+                  <th scope="col">4</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th scope="row">2</th>
+                  <td></td>
+                  <td></td>
+                  <td class="goal" aria-label="Финиш: шаг 4">🏁</td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th scope="row">3</th>
+                  <td></td>
+                  <td></td>
+                  <td class="path" aria-label="Шаг 3">3</td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th scope="row">4</th>
+                  <td class="start" aria-label="Старт">🤖</td>
+                  <td class="path" aria-label="Шаг 1">1</td>
+                  <td class="path" aria-label="Шаг 2">2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="legend">
+              <span>🤖 Старт</span>
+              <span>1, 2, 3 — пройденные клетки</span>
+              <span>🏁 Финиш</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>Команды Роботу</h3>
+
+            <div
+              class="robot-cmd"
+              aria-label="Вправо, вправо, вверх, вверх"
+            >
+              <b>→</b>
+              <b>→</b>
+              <b>↑</b>
+              <b>↑</b>
+            </div>
+
+            <p>
+              Робот начинает движение из клетки
+              <strong>(строка 4, столбец 1)</strong>.
+            </p>
+
+            <p>
+              После двух команд «Вправо» он находится
+              в клетке (4, 3). Затем дважды поднимается
+              вверх и достигает финиша — клетки
+              <strong>(2, 3)</strong>.
+            </p>
+
+            <div class="definition green">
+              <strong>Почему алгоритм линейный?</strong>
+              Робот не выбирает дорогу самостоятельно.
+              Он просто выполняет четыре команды
+              в заданном порядке.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 7. ПРОВЕРКА И ИСПРАВЛЕНИЕ ОШИБОК
+      ================================================== -->
+
+      <section class="section" id="check">
+        <div class="section-head">
+          <span class="number">07</span>
+
+          <div>
+            <h2>Как проверить алгоритм и найти ошибку?</h2>
+            <p class="subtitle">
+              Проверяем каждый шаг, а не только итог.
+            </p>
+          </div>
+        </div>
+
+        <div class="compare">
+          <div class="card blue">
+            <strong>✅ Правильная последовательность</strong>
+
+            <p>
+              Для выражения (5 + 3) × 2 сначала вычисляем
+              сумму, затем умножаем её на 2.
+              Получаем 16.
+            </p>
+          </div>
+
+          <div class="card purple">
+            <strong>⚠️ Изменённый порядок</strong>
+
+            <p>
+              Если сначала вычислить 3 × 2,
+              а затем прибавить 5, получится 11.
+              Это уже другая последовательность действий.
+            </p>
+          </div>
+        </div>
+
+        <h3>На что обращать внимание?</h3>
+
+        <div class="grid3">
+          <div class="card">
+            <span class="emoji">🔢</span>
+            <h3>Порядок</h3>
+            <p>Команды не перепутаны местами?</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">🧩</span>
+            <h3>Полнота</h3>
+            <p>Нет ли пропущенного необходимого шага?</p>
+          </div>
+
+          <div class="card">
+            <span class="emoji">🎯</span>
+            <h3>Результат</h3>
+            <p>Получено ли то, что требовалось в задаче?</p>
+          </div>
+        </div>
+
+        <div class="note">
+          💡 <strong>Способ проверки:</strong>
+          начни с исходных данных и мысленно выполни
+          каждую команду по очереди. Если результат
+          неправильный, найди шаг, на котором возникла
+          ошибка, исправь его и повтори проверку.
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 8. ИТОГИ УРОКА
+      ================================================== -->
+
+      <section class="section" id="summary">
+        <div class="section-head">
+          <span class="number">08</span>
+
+          <div>
+            <h2>Главное за урок</h2>
+            <p class="subtitle">
+              Три идеи, которые стоит запомнить.
+            </p>
+          </div>
+        </div>
+
+        <div class="recap">
+          <p>
+            <strong>1.</strong> Линейный алгоритм —
+            последовательность команд без ветвлений и циклов.
+          </p>
+
+          <p>
+            <strong>2.</strong> Алгоритм можно записать словами,
+            командами или показать в виде блок-схемы.
+          </p>
+
+          <p>
+            <strong>3.</strong> Порядок команд важен:
+            чтобы проверить алгоритм, нужно пройти
+            все шаги и оценить результат.
+          </p>
+        </div>
+
+        <div class="note">
+          <strong>Домашнее задание:</strong>
+          придумай линейный алгоритм из 5–7 команд
+          для одного повседневного действия.
+          Запиши команды по порядку и укажи исполнителя.
+        </div>
+      </section>
+
+      <!-- =================================================
+           РАЗДЕЛ 9. РОВНО 12 ВОПРОСОВ
+           Теоретическое занятие: практики на ПК нет.
+      ================================================== -->
+
+      <section class="section" id="questions">
+        <div class="section-head">
+          <span class="number">09</span>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+            <p class="subtitle">
+              Ответь устно или запиши ответы в тетрадь.
+            </p>
+          </div>
+        </div>
+
+        <ol class="questions">
+          <li>Что называют алгоритмом?</li>
+
+          <li>Кто может быть исполнителем алгоритма?</li>
+
+          <li>Что такое команда исполнителя?</li>
+
+          <li>Какой алгоритм называется линейным?</li>
+
+          <li>
+            Какие основные признаки линейного алгоритма
+            ты знаешь?
+          </li>
+
+          <li>
+            Почему порядок команд в алгоритме важен?
+          </li>
+
+          <li>
+            Какими способами можно записать
+            линейный алгоритм?
+          </li>
+
+          <li>
+            Какие фигуры обозначают начало,
+            конец и действие в блок-схеме?
+          </li>
+
+          <li>
+            Чем словесная запись алгоритма
+            отличается от блок-схемы?
+          </li>
+
+          <li>
+            Приведи пример линейного алгоритма
+            из повседневной жизни.
+          </li>
+
+          <li>
+            Куда попадёт Робот после команд
+            → → ↑ ↑, если стартует
+            в строке 4, столбце 1?
+          </li>
+
+          <li>
+            Как обнаружить и исправить ошибку
+            в последовательности команд?
+          </li>
+        </ol>
+      </section>
+
+    </main>
+
+    <!-- ===================================================
+         ПОДВАЛ САЙТА
+    ==================================================== -->
+
+    <footer>
+      Информатика · 5 класс · Линейные алгоритмы · Часть 1 из 4
+    </footer>
+  </div>
+</body>
+</html>
