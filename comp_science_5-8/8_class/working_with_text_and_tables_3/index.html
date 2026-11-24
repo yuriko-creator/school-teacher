@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Информатика, 8 класс. Практическая работа: объявление о школьной ярмарке в Word/Writer и расчёт стоимости в Excel/Calc.">
+  <title>Школьная ярмарка — практическая работа, 8 класс</title>
+  <style>
+    /* 1. Общий стиль: автономная страница без внешних ресурсов */
+    :root {
+      --bg:#f3f7fa; --paper:#fff; --ink:#20344c; --muted:#60758c;
+      --navy:#163451; --teal:#087f77; --teal-soft:#e5f7f2;
+      --blue:#3573c6; --blue-soft:#eaf2ff; --orange:#e99545;
+      --orange-soft:#fff1df; --line:#dce6ee; --shadow:0 14px 36px #223c6010;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+    h1,h2,h3,p,figure{margin-top:0}h1,h2,h3{line-height:1.22}p{margin-bottom:13px}
+    a{color:#2568ad}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #efaa4d;outline-offset:3px}
+    button,input{font:inherit}code{padding:2px 5px;border-radius:5px;background:#eaf2fd;color:#235b97;font:700 .93em Consolas,monospace}
+    .wrap{width:min(1120px,calc(100% - 32px));margin:auto;padding:18px 0 42px}
+    .skip{position:absolute;left:10px;top:-100px;background:white;padding:10px;z-index:9}.skip:focus{top:10px}
+    /* 2. Обложка */
+    .hero{position:relative;overflow:hidden;border-radius:27px;background:linear-gradient(120deg,#153653,#245d87 62%,#16867b);color:white;box-shadow:0 20px 44px #12395629}
+    .hero::after{content:"";position:absolute;width:320px;height:320px;border:50px solid #ffffff0d;border-radius:50%;top:-170px;right:-90px;pointer-events:none}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:28px;padding:42px}
+    .eyebrow{display:inline-block;margin-bottom:14px;padding:6px 12px;border:1px solid #ffffff4d;border-radius:40px;background:#ffffff19;font-size:12px;font-weight:850;letter-spacing:.05em}
+    .hero h1{font-size:clamp(34px,5vw,54px);letter-spacing:-.035em;margin-bottom:16px}.hero h1 em{font-style:normal;color:#ffe0a5}
+    .hero p{color:#e4f1f8;font-size:17px}.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.tag-row span{padding:6px 10px;border:1px solid #ffffff3c;border-radius:9px;font-weight:750;font-size:12px}
+    .hero-art{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+    .hero-file{min-width:0;padding:20px 15px;border-radius:18px;background:white;color:var(--ink);box-shadow:0 10px 25px #07273b30}
+    .hero-file:nth-child(2){transform:translateY(20px)}.file-icon{display:grid;place-items:center;width:57px;height:57px;border-radius:15px;background:var(--blue-soft);color:var(--blue);font-size:29px;margin-bottom:14px}
+    .hero-file:nth-child(2) .file-icon{background:var(--teal-soft);color:var(--teal)}.hero-file strong{display:block;font-size:15px}.hero-file small{display:block;color:var(--muted);font-size:12px}
+    /* 3. Разделы, навигация, карточки */
+    .toc{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0 0}.toc a{padding:7px 12px;border:1px solid var(--line);border-radius:30px;background:white;text-decoration:none;color:#4c6982;font-size:13px;font-weight:750}.toc a:hover{background:var(--teal-soft)}
+    .section{margin-top:22px;padding:32px 36px;border:1px solid var(--line);border-radius:23px;background:var(--paper);box-shadow:var(--shadow)}
+    .head{display:flex;gap:13px;align-items:flex-start;margin-bottom:22px}.num{flex:0 0 41px;height:41px;display:grid;place-items:center;border-radius:12px;background:var(--blue-soft);color:var(--blue);font-size:14px;font-weight:850}
+    .section h2{font-size:clamp(23px,3vw,30px);margin:3px 0 5px}.section h3{font-size:20px;margin:22px 0 10px}.sub{margin:0;color:var(--muted);font-size:14px}.lead{font-size:17px}
+    .note{padding:16px 19px;border-left:5px solid var(--blue);border-radius:0 13px 13px 0;background:var(--blue-soft);margin:17px 0}.note.green{border-color:var(--teal);background:var(--teal-soft)}.note.orange{border-color:var(--orange);background:var(--orange-soft)}
+    .grid2,.grid3{display:grid;gap:13px;margin:17px 0}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{min-width:0;padding:18px;border:1px solid var(--line);border-radius:16px;background:#f9fbfe}.card h3{font-size:17px;margin:0 0 7px}.card p{font-size:14px;color:var(--muted)}.card b{color:#226b91}
+    .step-list{list-style:none;counter-reset:steps;padding:0;margin:16px 0;display:grid;gap:10px}.step-list li{position:relative;counter-increment:steps;padding:13px 15px 13px 50px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.step-list li::before{content:counter(steps);position:absolute;left:13px;top:12px;display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#def2ec;color:var(--teal);font-weight:850;font-size:13px}
+    /* 4. Имитация документа Word / Writer */
+    .window{overflow:hidden;border:1px solid #cedbe8;border-radius:17px;background:#eaf0f7;margin:19px 0;box-shadow:0 12px 28px #203e6111}
+    .windowbar{padding:10px 15px;background:#315e99;color:white;font-size:13px;font-weight:800}.ribbon{display:flex;flex-wrap:wrap;gap:9px;padding:10px 13px;background:white;border-bottom:1px solid #dbe4ee;color:#5a7290;font-size:12px}.ribbon span{padding:4px 8px;border-radius:6px;background:#f2f6fc}
+    .paper-area{padding:23px;background:#e8edf4}.paper{max-width:660px;margin:auto;padding:29px 33px;min-height:290px;background:white;box-shadow:0 5px 18px #263c5f1c;color:#283646}
+    .paper h3{text-align:center;font-size:23px;margin:0 0 17px}.paper .doc-text{text-indent:24px;text-align:justify;line-height:1.65;font-size:15px}.paper h4{font-size:16px;margin:15px 0 5px}.paper ul{padding-left:25px;margin:5px 0 14px}.paper li{margin:2px 0;font-size:14px}
+    .caption{margin:0;padding:9px 13px;color:#60758a;font-size:12px;background:#f7faff}
+    /* 5. Таблицы и макет Excel / Calc */
+    .table-scroll{overflow-x:auto;max-width:100%;margin:16px 0}.data-table{border-collapse:collapse;width:100%;min-width:440px;font-size:14px}.data-table th,.data-table td{padding:10px 12px;border:1px solid #d7e2eb;text-align:left}.data-table th{background:#eaf2ff;color:#2c5d95}.data-table tbody tr:nth-child(even){background:#f8fbfe}.data-table td.numcell{text-align:right;font-variant-numeric:tabular-nums}.data-table tfoot td{background:#e2f5eb;font-weight:850}
+    .excel .windowbar{background:#197451}.formula-line{display:flex;gap:10px;align-items:center;padding:9px 13px;border-bottom:1px solid #dce6dd;background:#f6fbf7;font-size:13px}.cell-name{padding:4px 9px;border:1px solid #c4ded0;border-radius:5px;background:white;color:#237451;font-weight:800}.fx{color:#16845a;font-weight:900}.formula-text{flex:1;padding:4px 9px;background:white;border:1px solid #dce8df;border-radius:5px;color:#2f6551;font-family:Consolas,monospace}
+    .sheet{width:100%;min-width:550px;border-collapse:collapse;table-layout:fixed;font-size:13px}.sheet th,.sheet td{border:1px solid #d8e4dc;padding:10px 6px;text-align:center}.sheet thead th,.sheet .rowhead{background:#eaf3ec;color:#5a7665;font-weight:750}.sheet .rowhead{width:43px}.sheet td{background:white}.sheet td.titlecell{background:#e5f5e9;font-weight:800;color:#256548}.sheet td.total{background:#e5f7eb;font-weight:850}.sheet td.active{box-shadow:inset 0 0 0 2px #1f8d61;background:#f4fff7;font-weight:850}.sheet .nowrap{white-space:nowrap}.window .sheet-scroll{overflow-x:auto}
+    /* 6. Мини-демонстрация пересчёта */
+    .sim{border:1px solid #cce9db;border-radius:18px;background:#f4fbf7;padding:21px;margin:20px 0}.sim h3{margin:0 0 8px}.sim-row{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:10px;margin:17px 0}.sim-cell{min-width:0;padding:15px 11px;border:1px solid #d4e7db;border-radius:13px;background:white;text-align:center}.sim-cell small{display:block;color:#647c70;font-size:12px}.sim-cell strong{display:block;color:#1b7854;font-size:25px;font-variant-numeric:tabular-nums}.sim-controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center}.sim-controls button,.reset{padding:10px 14px;border:1px solid #83bca5;border-radius:10px;background:white;color:#1c7656;font-weight:800;cursor:pointer}.sim-controls button[aria-pressed="true"]{background:#187f5b;color:white;border-color:#187f5b}.sim-result{margin:13px 0 0;color:#2b624d;font-size:14px}.sim-result strong{color:#086e4c}
+    /* 7. Контроль выполнения */
+    .check-area{padding:20px;border:1px solid #d6e3ed;border-radius:17px;background:#f8fbff;margin:17px 0}.check-header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:850}.check-header span{color:#236b85}.meter{display:block;width:100%;height:14px;margin:11px 0 15px;accent-color:var(--teal)}.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid #dde8f0;border-radius:10px;background:white;cursor:pointer;font-size:14px}.check input{width:17px;height:17px;flex:0 0 auto;margin-top:4px;accent-color:var(--teal)}.check:has(input:checked){background:#e7f8f0;border-color:#b6e3cf}.reset{margin-top:13px;background:#eef5fc;color:#3e6386;border-color:#cbddea}
+    /* 8. Итоговые вопросы */
+    .questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;list-style:none;counter-reset:q;padding:0;margin:18px 0 0}.questions li{counter-increment:q;position:relative;min-height:76px;padding:14px 13px 14px 52px;border:1px solid #dce7f0;border-radius:13px;background:#f9fbfe;font-size:14px}.questions li::before{content:counter(q,decimal-leading-zero);position:absolute;left:12px;top:14px;width:29px;height:29px;display:grid;place-items:center;background:#e5f0ff;color:#2c65ab;border-radius:9px;font-weight:900;font-size:12px}
+    footer{padding:25px 5px 5px;color:#758ba2;font-size:12px;text-align:center}
+    /* 9. Адаптивность и печать */
+    @media(max-width:850px){.hero-inner{grid-template-columns:1fr;padding:34px 29px}.hero-art{max-width:520px}.section{padding:27px 25px}}
+    @media(max-width:600px){.wrap{width:calc(100% - 20px);padding-top:10px}.hero{border-radius:20px}.hero-inner{padding:27px 19px}.hero h1{font-size:34px}.hero p{font-size:15px}.hero-file:nth-child(2){transform:none}.section{margin-top:15px;padding:22px 16px;border-radius:19px}.head{gap:9px}.num{flex-basis:35px;height:35px}.section h2{font-size:23px}.grid2,.grid3,.questions,.check-grid{grid-template-columns:1fr}.paper-area{padding:12px}.paper{padding:23px 17px}.sim-row{grid-template-columns:1fr 1fr}.sim-cell:first-child{grid-column:1/-1}}
+    @media(max-width:360px){.hero-art{grid-template-columns:1fr}.section{padding:20px 13px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{body{background:white}.wrap{width:100%}.toc,.sim-controls,.reset{display:none}.hero,.section{box-shadow:none}.section{break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <a href="#content" class="skip">Перейти к заданиям</a>
+  <div class="wrap">
+    <!-- ОБЛОЖКА -->
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow">ИНФОРМАТИКА · 8 КЛАСС · ЧАСТЬ 3 ИЗ 4 · ПЗ</span>
+          <h1>Школьная <em>ярмарка</em></h1>
+          <p>Одна задача — две программы. Создадим объявление в текстовом процессоре, а затем рассчитаем стоимость товаров в электронной таблице.</p>
+          <p>Учимся оформлять документы, вводить формулы и проверять автоматический пересчёт.</p>
+          <div class="tag-row"><span>📝 Word / Writer</span><span>📊 Excel / Calc</span><span>💾 Два готовых файла</span></div>
+        </div>
+        <div class="hero-art" aria-label="Два файла — результат занятия">
+          <div class="hero-file"><div class="file-icon">📝</div><strong>Школьная ярмарка</strong><small>Объявление · DOCX или ODT</small></div>
+          <div class="hero-file"><div class="file-icon">📊</div><strong>Расчёт стоимости</strong><small>Таблица · XLSX или ODS</small></div>
+        </div>
+      </div>
+    </header>
+    <nav class="toc" aria-label="Содержание урока">
+      <a href="#start">🎯 Цель</a><a href="#word">📝 Объявление</a><a href="#wordtable">📋 Таблица в документе</a>
+      <a href="#excel">📊 Электронная таблица</a><a href="#formulas">🧮 Формулы</a><a href="#recount">🔄 Пересчёт</a>
+      <a href="#save">💾 Сохранение</a><a href="#check">✅ Проверка</a><a href="#questions">❓ 12 вопросов</a>
+    </nav>
+    <main id="content">
+      <!-- 1. ПОДГОТОВКА -->
+      <section class="section" id="start">
+        <div class="head"><span class="num">01</span><div><h2>Что мы будем делать?</h2><p class="sub">Вспомним изученное и подготовим рабочее место.</p></div></div>
+        <p class="lead">На школьной ярмарке продаются тетради, ручки и папки. Нам понадобится <strong>объявление для посетителей</strong> и <strong>таблица, которая считает стоимость покупок</strong>.</p>
+        <div class="grid3">
+          <article class="card"><h3>✍️ Редактирование</h3><p>Изменяет содержание документа: ввод, исправление, копирование и удаление текста.</p></article>
+          <article class="card"><h3>🎨 Форматирование</h3><p>Меняет внешний вид: шрифт, размер, выравнивание, списки и границы таблиц.</p></article>
+          <article class="card"><h3>🧮 Формулы</h3><p>Начинаются со знака <code>=</code> и могут использовать адреса ячеек: <code>=B2*C2</code>.</p></article>
+        </div>
+        <div class="note"><strong>Перед работой:</strong> открой Word или LibreOffice Writer, а также Excel или LibreOffice Calc. Подготовь папку для двух итоговых файлов. Соблюдай правила работы за компьютером.</div>
+      </section>
+      <!-- 2. ТЕКСТОВЫЙ ДОКУМЕНТ -->
+      <section class="section" id="word">
+        <div class="head"><span class="num">02</span><div><h2>Задание 1. Создай объявление</h2><p class="sub">Текстовый процессор · заголовок и основной текст.</p></div></div>
+        <ol class="step-list">
+          <li>Создай новый документ и напечатай заголовок <strong>«Школьная ярмарка»</strong>.</li>
+          <li>Введи текст: «В нашей школе состоится ярмарка школьных принадлежностей. Участники смогут познакомиться с ассортиментом товаров и их стоимостью».</li>
+          <li>Оформи заголовок: <strong>18 пт, полужирный, по центру</strong>.</li>
+          <li>Оформи основной текст: <strong>14 пт, по ширине, с отступом первой строки</strong>.</li>
+        </ol>
+        <div class="window" aria-label="Пример объявления в текстовом процессоре">
+          <div class="windowbar">📄 Школьная ярмарка — текстовый процессор</div>
+          <div class="ribbon"><span>Главная</span><span>Шрифт: 14</span><span>Полужирный</span><span>Выравнивание</span><span>Вставка</span></div>
+          <div class="paper-area"><div class="paper">
+            <h3>Школьная ярмарка</h3>
+            <p class="doc-text">В нашей школе состоится ярмарка школьных принадлежностей. Участники смогут познакомиться с ассортиментом товаров и их стоимостью.</p>
+            <h4>Товары ярмарки</h4>
+            <ul><li>Тетради</li><li>Ручки</li><li>Папки</li></ul>
+            <table class="data-table" style="min-width:0" aria-label="Товары в объявлении">
+              <thead><tr><th>Товар</th><th>Количество</th><th>Цена за штуку</th></tr></thead>
+              <tbody><tr><td>Тетрадь</td><td>3</td><td>25 руб.</td></tr><tr><td>Ручка</td><td>2</td><td>20 руб.</td></tr><tr><td>Папка</td><td>1</td><td>60 руб.</td></tr></tbody>
+            </table>
+          </div></div>
+          <p class="caption">Учебный образец конечного документа. Расположение кнопок зависит от программы.</p>
+        </div>
+        <div class="note green"><strong>Проверь:</strong> заголовок выделяется, основной текст легко читается, а отступ первой строки относится именно к абзацу, а не создаётся пробелами.</div>
+      </section>
+      <!-- 3. СПИСОК И ТАБЛИЦА В WORD -->
+      <section class="section" id="wordtable">
+        <div class="head"><span class="num">03</span><div><h2>Задание 2. Добавь список и таблицу</h2><p class="sub">Продолжаем работать в том же документе.</p></div></div>
+        <ol class="step-list">
+          <li>Ниже объявления напечатай подзаголовок <strong>«Товары ярмарки»</strong>.</li>
+          <li>Создай маркированный список: <strong>тетради, ручки, папки</strong>.</li>
+          <li>Вставь таблицу <strong>3 столбца × 4 строки</strong>.</li>
+          <li>Заполни её по образцу, выдели заголовки столбцов полужирным, настрой границы и выравнивание.</li>
+        </ol>
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th>Товар</th><th>Количество</th><th>Цена за штуку</th></tr></thead>
+          <tbody><tr><td>Тетрадь</td><td class="numcell">3</td><td class="numcell">25 руб.</td></tr><tr><td>Ручка</td><td class="numcell">2</td><td class="numcell">20 руб.</td></tr><tr><td>Папка</td><td class="numcell">1</td><td class="numcell">60 руб.</td></tr></tbody>
+        </table></div>
+        <div class="note orange"><strong>Не путай:</strong> эта таблица находится внутри текстового документа и нужна прежде всего для удобного представления сведений. Для автоматических расчётов мы создадим отдельную электронную таблицу.</div>
+      </section>
+      <!-- 4. ЭЛЕКТРОННАЯ ТАБЛИЦА -->
+      <section class="section" id="excel">
+        <div class="head"><span class="num">04</span><div><h2>Задание 3. Введи данные в электронную таблицу</h2><p class="sub">Excel / Calc · столбцы, строки и адреса ячеек.</p></div></div>
+        <p>Создай новую книгу. В строке 1 введи заголовки, а в строках 2–4 — исходные данные. Столбец D оставь для вычислений.</p>
+        <div class="grid2">
+          <article class="card"><h3>Заголовки</h3><p><b>A1</b> — Товар<br><b>B1</b> — Количество<br><b>C1</b> — Цена<br><b>D1</b> — Стоимость</p></article>
+          <article class="card"><h3>Оформление</h3><p>Выдели первую строку полужирным, подбери ширину столбцов, добавь границы и установи числовой или денежный формат для цен.</p></article>
+        </div>
+        <div class="window excel" aria-label="Пример электронной таблицы школьной ярмарки">
+          <div class="windowbar">📊 Расчёт стоимости — табличный процессор</div>
+          <div class="ribbon"><span>Главная</span><span>Вставка</span><span>Формулы</span><span>Формат ячеек</span></div>
+          <div class="formula-line"><span class="cell-name">D5</span><span class="fx">fx</span><span class="formula-text">=D2+D3+D4</span></div>
+          <div class="sheet-scroll"><table class="sheet">
+            <thead><tr><th class="rowhead"></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+            <tbody>
+              <tr><th class="rowhead" scope="row">1</th><td class="titlecell">Товар</td><td class="titlecell">Количество</td><td class="titlecell">Цена</td><td class="titlecell">Стоимость</td></tr>
+              <tr><th class="rowhead" scope="row">2</th><td>Тетрадь</td><td>3</td><td>25</td><td>75</td></tr>
+              <tr><th class="rowhead" scope="row">3</th><td>Ручка</td><td>2</td><td>20</td><td>40</td></tr>
+              <tr><th class="rowhead" scope="row">4</th><td>Папка</td><td>1</td><td>60</td><td>60</td></tr>
+              <tr><th class="rowhead" scope="row">5</th><td class="total">Итого</td><td></td><td></td><td class="total active">175</td></tr>
+            </tbody>
+          </table></div>
+          <p class="caption">Здесь показан ожидаемый результат после ввода формул на следующем этапе.</p>
+        </div>
+        <div class="note"><strong>Адрес ячейки</strong> состоит из буквы столбца и номера строки. Например, <code>C3</code> — цена ручки, а <code>B2</code> — количество тетрадей.</div>
+      </section>
+      <!-- 5. ФОРМУЛЫ -->
+      <section class="section" id="formulas">
+        <div class="head"><span class="num">05</span><div><h2>Задание 4. Рассчитай стоимость</h2><p class="sub">Вводим формулы со ссылками на ячейки.</p></div></div>
+        <p class="lead">В электронной таблице формула начинается со знака <code>=</code>. Знак <code>*</code> означает умножение, знак <code>+</code> — сложение.</p>
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th>Ячейка</th><th>Формула</th><th>Что вычисляет</th><th>Результат</th></tr></thead>
+          <tbody>
+            <tr><td><strong>D2</strong></td><td><code>=B2*C2</code></td><td>3 × 25</td><td class="numcell">75 руб.</td></tr>
+            <tr><td><strong>D3</strong></td><td><code>=B3*C3</code></td><td>2 × 20</td><td class="numcell">40 руб.</td></tr>
+            <tr><td><strong>D4</strong></td><td><code>=B4*C4</code></td><td>1 × 60</td><td class="numcell">60 руб.</td></tr>
+          </tbody>
+          <tfoot><tr><td><strong>D5</strong></td><td><code>=D2+D3+D4</code></td><td>75 + 40 + 60</td><td class="numcell">175 руб.</td></tr></tfoot>
+        </table></div>
+        <ol class="step-list">
+          <li>Введи формулы в <strong>D2, D3 и D4</strong>.</li>
+          <li>В ячейку <strong>A5</strong> напиши «Итого», а в <strong>D5</strong> — <code>=D2+D3+D4</code>.</li>
+          <li>Убедись, что общая стоимость составляет <strong>175 рублей</strong>.</li>
+        </ol>
+        <div class="note green"><strong>Почему не вводим 75 вручную?</strong> Формула берёт количество и цену из других ячеек. Если их изменить, табличный процессор автоматически пересчитает результат.</div>
+      </section>
+      <!-- 6. ИНТЕРАКТИВНАЯ ДЕМОНСТРАЦИЯ -->
+      <section class="section" id="recount">
+        <div class="head"><span class="num">06</span><div><h2>Проверь автоматический пересчёт</h2><p class="sub">Сначала попробуй на странице, затем повтори в Excel или Calc.</p></div></div>
+        <p>В конспекте нужно изменить количество тетрадей с <strong>3 на 4</strong>. Нажми кнопку — посмотри, как меняются стоимость тетрадей и итог. Остальные товары не изменяются.</p>
+        <div class="sim">
+          <h3>🔄 Мини-модель таблицы</h3>
+          <div class="sim-controls" aria-label="Количество тетрадей">
+            <button type="button" id="qty-three" aria-pressed="true">3 тетради</button>
+            <button type="button" id="qty-four" aria-pressed="false">4 тетради</button>
+          </div>
+          <div class="sim-row" aria-live="polite">
+            <div class="sim-cell"><small>Количество · B2</small><strong id="quantity">3</strong></div>
+            <div class="sim-cell"><small>Стоимость · D2</small><strong id="notebook-total">75 ₽</strong></div>
+            <div class="sim-cell"><small>Итого · D5</small><strong id="grand-total">175 ₽</strong></div>
+          </div>
+          <p class="sim-result" id="sim-explain">Формулы: <strong>=B2*C2</strong> → 3 × 25 = 75; <strong>=D2+D3+D4</strong> → 75 + 40 + 60 = 175.</p>
+        </div>
+        <ol class="step-list">
+          <li>В своей электронной таблице замени значение <strong>B2: 3 → 4</strong>.</li>
+          <li>Проверь: <strong>D2 = 100</strong>, <strong>D5 = 200</strong>.</li>
+          <li>Верни <strong>B2 = 3</strong>. Итог должен снова стать <strong>175</strong>.</li>
+        </ol>
+      </section>
+      <!-- 7. СОХРАНЕНИЕ -->
+      <section class="section" id="save">
+        <div class="head"><span class="num">07</span><div><h2>Сохрани оба результата</h2><p class="sub">Файлы нужны для проверки выполненной работы.</p></div></div>
+        <div class="grid2">
+          <article class="card"><h3>📝 Текстовый документ</h3><p><strong>Имя:</strong> Школьная ярмарка<br><strong>Формат:</strong> DOCX или ODT<br><strong>Содержимое:</strong> объявление, список, таблица.</p></article>
+          <article class="card"><h3>📊 Электронная таблица</h3><p><strong>Имя:</strong> Расчёт стоимости<br><strong>Формат:</strong> XLSX или ODS<br><strong>Содержимое:</strong> данные, формулы, итог 175 руб.</p></article>
+        </div>
+        <div class="note orange"><strong>Важно:</strong> сохрани файлы в указанную учителем папку и проверь их названия. Не заменяй формулы обычными числами перед сохранением.</div>
+      </section>
+      <!-- 8. САМОПРОВЕРКА -->
+      <section class="section" id="check">
+        <div class="head"><span class="num">08</span><div><h2>Проверка практической работы</h2><p class="sub">Отмечай только действительно выполненные действия.</p></div></div>
+        <div class="check-area">
+          <div class="check-header"><strong>Твой прогресс</strong><span id="progress-text" aria-live="polite">0 из 6</span></div>
+          <progress class="meter" id="progress" value="0" max="6">0 из 6</progress>
+          <div class="check-grid">
+            <label class="check"><input type="checkbox" class="done">Объявление введено и отформатировано</label>
+            <label class="check"><input type="checkbox" class="done">В документ добавлены список и таблица</label>
+            <label class="check"><input type="checkbox" class="done">Текстовый документ сохранён</label>
+            <label class="check"><input type="checkbox" class="done">Данные в Excel/Calc введены и оформлены</label>
+            <label class="check"><input type="checkbox" class="done">Формулы верны, пересчёт проверен</label>
+            <label class="check"><input type="checkbox" class="done">Электронная таблица сохранена</label>
+          </div>
+          <button type="button" class="reset" id="reset-checks">Сбросить отметки</button>
+        </div>
+        <h3>Частые ошибки</h3>
+        <div class="grid3">
+          <article class="card"><h3>⚠️ Нет знака =</h3><p>Запись <code>B2*C2</code> без <code>=</code> не является обычной формулой электронной таблицы.</p></article>
+          <article class="card"><h3>⚠️ Неправильный адрес</h3><p>В <code>=B2*C2</code> используются ячейки именно второй строки.</p></article>
+          <article class="card"><h3>⚠️ Число как текст</h3><p>Для вычислений вводи 25, а не текст «25 руб.»: валюту показывают с помощью формата ячейки.</p></article>
+        </div>
+        <div class="note green"><strong>Критерии готовности:</strong> два корректно оформленных файла, правильные формулы, итог <strong>175 руб.</strong> после возврата исходных данных и успешная проверка автоматического пересчёта.</div>
+      </section>
+      <!-- 9. ИТОГИ -->
+      <section class="section" id="summary">
+        <div class="head"><span class="num">09</span><div><h2>Что мы закрепили?</h2><p class="sub">Один проект — разные инструменты обработки информации.</p></div></div>
+        <div class="note"><strong>Текстовый процессор</strong> помог подготовить объявление, маркированный список и таблицу. <strong>Электронная таблица</strong> позволила автоматически посчитать стоимость товаров с помощью формул и ссылок на ячейки.</div>
+        <p>На следующем занятии можно будет развить эти навыки: использовать функции и диаграммы, а также объединять материалы в итоговый документ.</p>
+      </section>
+      <!-- 10. ВОПРОСЫ ВМЕСТО РАБОТЫ НА ПК -->
+      <section class="section" id="questions">
+        <div class="head"><span class="num">10</span><div><h2>12 вопросов для закрепления</h2><p class="sub">Если нет возможности работать за компьютером, ответь на все вопросы в тетради.</p></div></div>
+        <ol class="questions">
+          <li>Чем редактирование текста отличается от форматирования?</li>
+          <li>Как оформить заголовок «Школьная ярмарка» по условиям задания?</li>
+          <li>Как создать маркированный список в текстовом процессоре?</li>
+          <li>Для чего нужна таблица внутри текстового документа?</li>
+          <li>Сколько столбцов и строк должно быть в таблице товаров в объявлении?</li>
+          <li>Как определяется адрес ячейки электронной таблицы?</li>
+          <li>Какие данные находятся в ячейках B2 и C2 нашего примера?</li>
+          <li>С какого знака начинается формула в Excel или Calc?</li>
+          <li>Что вычисляет формула <code>=B2*C2</code>?</li>
+          <li>Какой результат даст формула <code>=D2+D3+D4</code> при исходных значениях?</li>
+          <li>Как изменится общая стоимость, если количество тетрадей увеличить с трёх до четырёх? Почему?</li>
+          <li>В каких форматах нужно сохранить оба файла и почему важно не заменять формулы числами?</li>
+        </ol>
+      </section>
+    </main>
+    <footer>Информатика · 8 класс · Работа с текстовыми редакторами и электронными таблицами · Часть 3 из 4 · ПЗ</footer>
+  </div>
+  <script>
+    // Автономная демонстрация пересчёта формул.
+    (function () {
+      'use strict';
+      const three = document.getElementById('qty-three');
+      const four = document.getElementById('qty-four');
+      function setQuantity(qty) {
+        const notebook = qty * 25;
+        const total = notebook + 40 + 60;
+        document.getElementById('quantity').textContent = qty;
+        document.getElementById('notebook-total').textContent = notebook + ' ₽';
+        document.getElementById('grand-total').textContent = total + ' ₽';
+        document.getElementById('sim-explain').textContent =
+          '=B2*C2 → ' + qty + ' × 25 = ' + notebook +
+          '; =D2+D3+D4 → ' + notebook + ' + 40 + 60 = ' + total + '.';
+        three.setAttribute('aria-pressed', String(qty === 3));
+        four.setAttribute('aria-pressed', String(qty === 4));
+      }
+      three.addEventListener('click', () => setQuantity(3));
+      four.addEventListener('click', () => setQuantity(4));
+
+      // Чек-лист выполненных заданий.
+      const boxes = Array.from(document.querySelectorAll('.done'));
+      const progress = document.getElementById('progress');
+      const progressText = document.getElementById('progress-text');
+      function updateProgress() {
+        const completed = boxes.filter(box => box.checked).length;
+        progress.value = completed;
+        progressText.textContent = completed + ' из ' + boxes.length;
+      }
+      boxes.forEach(box => box.addEventListener('change', updateProgress));
+      document.getElementById('reset-checks').addEventListener('click', () => {
+        boxes.forEach(box => { box.checked = false; });
+        updateProgress();
+      });
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
