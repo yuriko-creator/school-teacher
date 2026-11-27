@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Информатика, 7 класс. Конструирование из мозаики: три практических задания в Paint, образцы композиций, тренажёр и 12 вопросов.">
+  <title>МОЗАИКА / Мастерская форм — Информатика, 7 класс</title>
+  <style>
+    /* ============================================================
+       МОЗАИЧНАЯ МАСТЕРСКАЯ · ЕДИНЫЙ АВТОНОМНЫЙ HTML-ФАЙЛ
+       Никаких внешних шрифтов, библиотек и изображений.
+    ============================================================ */
+    :root {
+      --bg:#f4f0e9;--paper:#fffdf8;--ink:#202c35;--muted:#62717b;
+      --dark:#1e323c;--teal:#147c75;--aqua:#bce8da;--coral:#ec7655;
+      --yellow:#f7c75d;--blue:#5c9cc4;--border:#ddd8cd;
+      --shadow:5px 6px 0 rgba(32,44,53,.09);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.66 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;overflow-wrap:break-word}
+    h1,h2,h3,p,figure{margin-top:0}figure{margin-left:0;margin-right:0;margin-bottom:0}
+    h1,h2,h3{line-height:1.18}p{margin-bottom:13px}
+    a{color:#096d69}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+    button{font:inherit}svg{display:block;max-width:100%}
+    kbd{padding:2px 6px;background:#eef2ec;border:1px solid #d3ddd7;border-bottom-width:3px;border-radius:5px;font:700 .9em ui-monospace,Consolas,monospace;white-space:nowrap}
+    .wrap{width:min(1130px,calc(100% - 32px));margin:auto;padding:18px 0 44px}
+    .skip{position:absolute;top:-90px;left:10px;z-index:5;padding:9px 12px;background:white}.skip:focus{top:9px}
+    /* 1. Выразительная обложка: журнальный заголовок и геометрия */
+    .hero{position:relative;overflow:hidden;background:var(--dark);border-radius:26px;color:white;isolation:isolate}
+    .hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.13;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:31px 31px}
+    .hero-inner{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);gap:25px;align-items:center;padding:45px 43px}
+    .eyebrow{display:inline-block;color:#ffe1ae;border:1px solid #ffdc9e7a;padding:6px 10px;font-size:12px;letter-spacing:.1em;font-weight:850;margin-bottom:18px}
+    .hero h1{font-size:clamp(42px,6.4vw,76px);letter-spacing:-.06em;text-transform:uppercase;margin-bottom:8px}
+    .hero h1 span{display:block;color:var(--yellow)}
+    .hero p{max-width:550px;font-size:17px;color:#deebe7}
+    .hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+    .hero-tags span{padding:7px 10px;background:#ffffff15;border:1px solid #ffffff40;font-size:12px;font-weight:750}
+    .hero-art{min-width:0;padding:12px;transform:rotate(2deg);background:#fffcf3;border:5px solid #fffcf3;box-shadow:10px 12px 0 #0004;color:var(--ink)}
+    .hero-art svg{width:100%;height:auto}
+    .hero-art figcaption{display:flex;justify-content:space-between;gap:8px;margin:6px 5px 2px;font-size:11px;font-weight:800;letter-spacing:.06em;color:#45535b}
+    .nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+    .nav a{padding:8px 12px;background:var(--paper);border:1px solid var(--border);text-decoration:none;border-radius:30px;color:#405962;font-size:13px;font-weight:800}
+    .nav a:hover{background:#dbf3e9;color:#075c55}
+    /* 2. Учебные разделы */
+    .section{margin-top:22px;padding:32px 36px;border:1px solid var(--border);border-radius:18px;background:var(--paper);box-shadow:var(--shadow)}
+    .section-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+    .index{flex:0 0 45px;height:45px;display:grid;place-items:center;background:var(--yellow);border:2px solid var(--ink);font-size:15px;font-weight:950}
+    .section h2{font-size:clamp(25px,3.3vw,33px);margin:2px 0 5px;letter-spacing:-.025em}
+    .section h3{font-size:19px;margin:21px 0 10px}.muted{color:var(--muted);font-size:14px;margin:0}.lead{font-size:17px}
+    .grid2,.grid3{display:grid;gap:14px;margin:17px 0}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .tilecard{padding:20px;border:1px solid var(--border);background:#f7f8f2;min-width:0}.tilecard:nth-child(3n+2){background:#fef1e6}.tilecard:nth-child(3n+3){background:#e9f5f1}
+    .tilecard .big{display:block;font-size:29px;margin-bottom:9px}.tilecard h3{margin:0 0 7px;font-size:18px}.tilecard p{color:#596973;font-size:14px}
+    .note{margin:18px 0;padding:16px 18px;background:#e7f5ed;border-left:5px solid var(--teal)}
+    .note.warn{background:#fff0d9;border-color:#e6a33b}.note strong{color:#175d58}
+    .chipline{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chipline span{padding:7px 10px;border:1px solid #bbd4ca;background:white;font-size:13px;font-weight:750}
+    .fig-key{display:flex;flex-wrap:wrap;gap:11px;align-items:center;padding:10px 0}.fig-key span{display:flex;gap:7px;align-items:center;font-size:14px;font-weight:800}.mini-shape{display:inline-block;width:23px;height:23px;background:var(--teal)}.mini-shape.triangle{clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--coral)}.mini-shape.circle{border-radius:50%;background:var(--yellow)}.mini-shape.rect{width:39px;height:18px;background:var(--blue)}
+    /* 3. Практические карточки: схема слева, шаги справа */
+    .assignment{margin:18px 0 25px;border:2px solid var(--ink);background:white}
+    .assignment:last-child{margin-bottom:0}
+    .task-title{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 17px;background:var(--dark);color:white}
+    .task-title h3{margin:0;font-size:19px;color:white}.task-title span{font-size:12px;white-space:nowrap;font-weight:850;color:#ffe2a3}
+    .task-body{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:21px;padding:20px}
+    .example{min-width:0;padding:11px;background:#f2f6f2;border:1px solid #cdded4;align-self:start}
+    .example svg{width:100%;height:auto;background:white}.example figcaption{text-align:center;font-size:12px;color:#587068;margin-top:9px}
+    .instructions{counter-reset:instructions;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .instructions li{position:relative;counter-increment:instructions;padding-left:39px;font-size:15px}
+    .instructions li::before{content:counter(instructions);position:absolute;left:0;top:2px;width:27px;height:27px;background:#e1f3eb;border:1px solid #a7ccc0;color:#116b61;font-size:13px;font-weight:900;display:grid;place-items:center}
+    .task-foot{border-top:1px solid #dce8e0;padding:12px 17px;background:#f2f9f5;font-size:13px;color:#466a5d}
+    details{margin-top:16px;border:1px solid var(--border);background:#fcfaf5;padding:11px 14px}summary{cursor:pointer;font-weight:800;color:#1a7267}details p{font-size:14px;margin:10px 0 0}
+    /* 4. Мастерская: интерактивные клетки с фигурами */
+    .workshop{margin-top:17px;border:2px solid var(--ink);background:#e9f0ed}
+    .workshop-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--dark);color:white;padding:14px 18px}
+    .workshop-head strong{font-size:17px}.workshop-head small{color:#d5ece4;font-size:12px}
+    .workshop-body{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);align-items:start;gap:16px;padding:17px}
+    .board-wrap{min-width:0;background:#fff;padding:8px;border:1px solid #c2d2c9}
+    .board{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));width:100%;aspect-ratio:12 / 10;user-select:none;touch-action:manipulation}
+    .cell{position:relative;width:100%;aspect-ratio:1;border:1px solid #dce7dd;background:#fbfcfa;cursor:crosshair;padding:0;min-width:0}
+    .cell:hover{background:#e9f9ef}.cell::after{content:"";position:absolute;inset:9%;background:var(--paint,var(--teal));border-radius:2px}
+    .cell[data-shape="empty"]::after{display:none}.cell[data-shape="circle"]::after{border-radius:50%}.cell[data-shape="triangle"]::after{clip-path:polygon(50% 0%,100% 100%,0 100%);border-radius:0}
+    .cell[data-shape="rectangle"]::after{top:27%;bottom:27%;border-radius:1px}
+    .tools-panel{min-width:0}.tools-panel h3{font-size:16px;margin:0 0 8px}
+    .palettes{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 15px}
+    .swatch{width:38px;height:38px;border:2px solid #49635d;background:var(--swatch);cursor:pointer}
+    .swatch[aria-pressed="true"]{outline:3px solid #102b31;outline-offset:2px}
+    .shape-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:7px 0 15px}
+    .shape-picks button{cursor:pointer;border:1px solid #aac6ba;background:white;padding:9px 7px;font-size:12px;font-weight:800;color:#355950}
+    .shape-picks button[aria-pressed="true"]{background:#194d47;color:white;border-color:#194d47}
+    .controls{display:grid;gap:8px}.controls button{cursor:pointer;border:1px solid #2e5d55;background:#fff;padding:10px;color:#1d5b51;font-size:13px;font-weight:800}
+    .controls .primary{background:#1e756a;color:white}.studio-status{margin-top:12px;font-size:13px;color:#486a60;min-height:24px}
+    .smallprint{font-size:13px;color:var(--muted);margin-top:13px}
+    /* 5. Проверка и завершающие вопросы */
+    .check-panel{border:1px solid #bcd9c7;background:#ecf8f0;padding:19px;margin:17px 0}
+    .check-head{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;font-weight:850}.check-head span{color:#176f63}
+    progress{width:100%;height:15px;margin:13px 0 15px;accent-color:var(--teal)}
+    .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.check{display:flex;align-items:flex-start;gap:10px;background:white;padding:12px;border:1px solid #d4e2d8;font-size:14px;cursor:pointer}.check input{width:17px;height:17px;flex-shrink:0;margin:3px 0 0;accent-color:var(--teal)}.check:has(input:checked){background:#d9f3e6}
+    .reset{cursor:pointer;margin-top:12px;background:white;border:1px solid #a5c5b3;color:#146a5e;font-weight:800;padding:8px 12px;font-size:13px}
+    .questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding:0;list-style:none;counter-reset:q;margin:18px 0 0}
+    .questions li{counter-increment:q;position:relative;min-height:77px;padding:14px 12px 14px 55px;background:#f9faf6;border:1px solid #e0e4d9;font-size:14px}
+    .questions li::before{content:counter(q,decimal-leading-zero);position:absolute;left:12px;top:13px;width:32px;height:32px;background:var(--yellow);color:var(--dark);display:grid;place-items:center;font-size:12px;font-weight:950}
+    footer{text-align:center;padding:26px 6px 2px;color:#68777e;font-size:12px}
+    /* 6. Планшет / телефон / печать */
+    @media(max-width:950px){.hero-inner{grid-template-columns:1fr;padding:36px 31px}.hero-art{width:min(100%,510px)}.task-body{grid-template-columns:1fr}.example{max-width:520px}}
+    @media(max-width:750px){.workshop-body{grid-template-columns:1fr}.tools-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}.tools-panel .palettes,.tools-panel .shape-picks,.tools-panel .controls,.tools-panel .studio-status{grid-column:auto}.board-wrap{max-width:620px}}
+    @media(max-width:620px){.wrap{width:calc(100% - 20px);padding-top:10px}.hero{border-radius:17px}.hero-inner{padding:27px 19px}.hero h1{font-size:clamp(39px,10vw,53px)}.hero p{font-size:15px}.section{padding:22px 16px;border-radius:13px;margin-top:15px}.section-top{gap:9px}.index{flex-basis:36px;height:36px}.section h2{font-size:24px}.grid2,.grid3,.questions,.checks{grid-template-columns:1fr}.task-body{padding:13px;gap:14px}.task-title{padding:12px;align-items:start}.task-title h3{font-size:17px}.workshop-body{padding:9px}.tools-panel{display:block}.cell{border-width:.5px}.shape-picks{grid-template-columns:repeat(4,minmax(0,1fr))}.shape-picks button{font-size:11px;padding:8px 3px}}
+    @media(max-width:355px){.section{padding:18px 12px}.hero-inner{padding:24px 15px}.shape-picks{grid-template-columns:repeat(2,minmax(0,1fr))}.task-title span{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{body{background:#fff}.wrap{width:100%}.hero,.section{box-shadow:none}.nav,.workshop,.reset{display:none}.section{break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Перейти к уроку</a>
+  <div class="wrap">
+    <!-- ОБЛОЖКА -->
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow">ИНФОРМАТИКА / 7 КЛАСС / ПРАКТИЧЕСКАЯ РАБОТА</span>
+          <h1>МОЗАИКА<span>МАСТЕРСКАЯ</span></h1>
+          <p>На предыдущем уроке мы изучили меню готовых форм в Paint. Теперь попробуем стать конструкторами: создадим собственные детали и соберём из них настоящие изображения.</p>
+          <div class="hero-tags"><span>01 · Набор деталей</span><span>02 · Мозаичный робот</span><span>03 · Своя композиция</span></div>
+        </div>
+        <figure class="hero-art">
+          <svg viewBox="0 0 470 340" role="img" aria-label="Мозаичный робот из квадратных и прямоугольных деталей на чертёжной сетке">
+            <defs><pattern id="heroGrid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#d4ddd6" stroke-width="1"/></pattern></defs>
+            <rect width="470" height="340" fill="#faf9ef"/><rect width="470" height="340" fill="url(#heroGrid)"/>
+            <g stroke="#fffdf8" stroke-width="4" stroke-linejoin="round">
+              <rect x="173" y="37" width="125" height="112" fill="#263d46"/>
+              <rect x="184" y="48" width="103" height="90" fill="#5d9fba"/>
+              <rect x="199" y="76" width="24" height="24" fill="#f9cf70"/><rect x="260" y="76" width="24" height="24" fill="#f9cf70"/>
+              <rect x="215" y="114" width="52" height="12" fill="#243843"/>
+              <rect x="194" y="151" width="87" height="112" fill="#147c75"/>
+              <rect x="163" y="163" width="30" height="83" fill="#f0a26b"/><rect x="281" y="163" width="30" height="83" fill="#f0a26b"/>
+              <rect x="129" y="163" width="32" height="63" fill="#5c9cc4"/><rect x="313" y="163" width="32" height="63" fill="#5c9cc4"/>
+              <rect x="205" y="186" width="65" height="44" fill="#b9e2d3"/>
+              <circle cx="236" cy="206" r="11" fill="#ee8059"/>
+              <rect x="198" y="266" width="32" height="45" fill="#263d46"/><rect x="246" y="266" width="32" height="45" fill="#263d46"/>
+              <rect x="189" y="309" width="52" height="20" fill="#ed785a"/><rect x="237" y="309" width="52" height="20" fill="#ed785a"/>
+              <rect x="228" y="14" width="14" height="22" fill="#273e46"/><circle cx="235" cy="12" r="9" fill="#ec7655"/>
+            </g>
+            <path d="M95 65H153 M315 75H380 M345 184H409" stroke="#52736f" stroke-dasharray="6 5" stroke-width="2"/>
+            <text x="26" y="59" font-size="14" font-weight="800" fill="#1c5d56">ГОЛОВА</text>
+            <text x="369" y="70" font-size="14" font-weight="800" fill="#1c5d56">КВАДРАТ</text>
+            <text x="373" y="179" font-size="14" font-weight="800" fill="#1c5d56">КОПИЯ</text>
+          </svg>
+          <figcaption><span>ОБРАЗЕЦ / РОБОТ</span><span>СОБРАНО ИЗ ФОРМ</span></figcaption>
+        </figure>
+      </div>
+    </header>
+    <nav class="nav" aria-label="Содержание урока">
+      <a href="#recall">↗ Повторяем Paint</a><a href="#theory">◇ Что такое мозаика</a>
+      <a href="#assignment1">01 · Детали</a><a href="#assignment2">02 · Робот</a>
+      <a href="#assignment3">03 · Своя работа</a><a href="#studio">▦ Конструктор</a>
+      <a href="#check">✓ Проверка</a><a href="#questions">? 12 вопросов</a>
+    </nav>
+    <main id="content">
+      <!-- ПОВТОРЕНИЕ ПРЕДЫДУЩИХ УРОКОВ -->
+      <section class="section" id="recall">
+        <div class="section-top"><span class="index">01</span><div><h2>Что нам уже знакомо?</h2><p class="muted">Вспоминаем инструменты Paint и меню готовых форм.</p></div></div>
+        <div class="grid3">
+          <article class="tilecard"><span class="big">▢</span><h3>Готовые формы</h3><p>Прямоугольники, овалы, линии и другие фигуры помогают создавать ровные детали рисунка.</p></article>
+          <article class="tilecard"><span class="big">🎨</span><h3>Контур и заливка</h3><p>Выбираем цвет, толщину линии и способ заполнения фигуры.</p></article>
+          <article class="tilecard"><span class="big">✂️</span><h3>Работа с фрагментом</h3><p>Выделяем, копируем, вставляем, перемещаем, поворачиваем и отражаем части изображения.</p></article>
+        </div>
+        <div class="note"><strong>Связь с прошлым уроком:</strong> раньше мы строили готовые фигуры по одной. Сегодня научимся превращать их в повторно используемые детали для сложной композиции.</div>
+      </section>
+      <!-- ТЕОРИЯ: МОЗАИКА И ТИПОВЫЕ ЭЛЕМЕНТЫ -->
+      <section class="section" id="theory">
+        <div class="section-top"><span class="index">02</span><div><h2>Из простого — сложное</h2><p class="muted">Три понятия, необходимых для практической работы.</p></div></div>
+        <div class="grid3">
+          <article class="tilecard"><span class="big">🧩</span><h3>Мозаика</h3><p>Изображение, составленное из отдельных деталей — элементов.</p></article>
+          <article class="tilecard"><span class="big">🏗️</span><h3>Конструирование</h3><p>Создание сложного объекта из более простых деталей по замыслу или образцу.</p></article>
+          <article class="tilecard"><span class="big">◆</span><h3>Типовой элемент</h3><p>Деталь-заготовка, которую удобно многократно использовать в изображении.</p></article>
+        </div>
+        <h3>Наш набор типовых элементов</h3>
+        <div class="fig-key" aria-label="Геометрические детали мозаики"><span><i class="mini-shape"></i>Квадрат</span><span><i class="mini-shape rect"></i>Прямоугольник</span><span><i class="mini-shape triangle"></i>Треугольник</span><span><i class="mini-shape circle"></i>Круг</span></div>
+        <p>Если детали имеют согласованные размеры, их проще соединять. Например, два квадрата одинаковой ширины можно поставить рядом; несколько копий одной детали сохраняют одинаковые пропорции.</p>
+        <div class="chipline"><span>1. Создай заготовку</span><span>2. Скопируй</span><span>3. Поверни или отрази</span><span>4. Собери композицию</span></div>
+      </section>
+      <!-- ПРАКТИКА 1 -->
+      <section class="section" id="assignment1">
+        <div class="section-top"><span class="index">03</span><div><h2>Практическая работа: создаём набор</h2><p class="muted">Задание 1 · «Меню мозаики».</p></div></div>
+        <article class="assignment">
+          <div class="task-title"><h3>01 / Меню деталей</h3><span>PAINT · ЗАГОТОВКИ</span></div>
+          <div class="task-body">
+            <figure class="example">
+              <svg viewBox="0 0 440 300" role="img" aria-label="Меню из четырёх геометрических элементов с названиями: квадрат, прямоугольник, треугольник, круг">
+                <rect width="440" height="300" fill="#fcfdf7"/>
+                <path d="M0 50H440 M0 100H440 M0 150H440 M0 200H440 M0 250H440 M50 0V300 M100 0V300 M150 0V300 M200 0V300 M250 0V300 M300 0V300 M350 0V300 M400 0V300" stroke="#e3ebe2" stroke-width="1"/>
+                <rect x="42" y="68" width="110" height="110" fill="#168678" stroke="#1d4c47" stroke-width="3"/>
+                <rect x="207" y="81" width="185" height="83" fill="#5c9cc4" stroke="#264b5e" stroke-width="3"/>
+                <path d="M96 197L150 268H42Z" fill="#ed7655" stroke="#994a35" stroke-width="3"/>
+                <circle cx="300" cy="230" r="43" fill="#f6c65f" stroke="#927133" stroke-width="3"/>
+                <g fill="#294550" font-size="15" text-anchor="middle" font-weight="800"><text x="97" y="42">КВАДРАТ</text><text x="300" y="42">ПРЯМОУГОЛЬНИК</text><text x="95" y="291">ТРЕУГОЛЬНИК</text><text x="300" y="291">КРУГ</text></g>
+              </svg>
+              <figcaption>Пример набора деталей в отдельном файле.</figcaption>
+            </figure>
+            <div>
+              <ol class="instructions">
+                <li>Открой Paint и создай новый рисунок.</li>
+                <li>Построй квадрат и используй его размер как ориентир.</li>
+                <li>Добавь прямоугольник, треугольник и окружность с помощью готовых форм и линий.</li>
+                <li>Расположи элементы рядом, оставив между ними промежутки.</li>
+                <li>Настрой одинаковую толщину контуров и подходящие цвета.</li>
+                <li>Выдели несколько деталей по очереди, создай их копии.</li>
+                <li>Сохрани файл <strong>«Меню мозаики.png»</strong>.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="task-foot"><strong>Результат:</strong> отдельный файл с четырьмя типами фигур, пригодных для дальнейшего копирования.</div>
+        </article>
+      </section>
+      <!-- ПРАКТИКА 2 -->
+      <section class="section" id="assignment2">
+        <div class="section-top"><span class="index">04</span><div><h2>Собираем мозаичного робота</h2><p class="muted">Задание 2 · изображение по образцу.</p></div></div>
+        <article class="assignment">
+          <div class="task-title"><h3>02 / Мозаичный робот</h3><span>PAINT · СБОРКА</span></div>
+          <div class="task-body">
+            <figure class="example">
+              <svg viewBox="0 0 440 320" role="img" aria-label="Робот из простых геометрических фигур, имеющий голову, туловище, симметричные руки и ноги">
+                <rect width="440" height="320" fill="#f4f8f3"/>
+                <g stroke="#fcfdf8" stroke-width="4">
+                  <rect x="156" y="25" width="128" height="104" fill="#5c9cc4"/><rect x="163" y="17" width="114" height="15" fill="#243b46"/>
+                  <circle cx="187" cy="72" r="16" fill="#f6c65f"/><circle cx="252" cy="72" r="16" fill="#f6c65f"/>
+                  <rect x="191" y="102" width="59" height="12" fill="#233d46"/>
+                  <rect x="174" y="131" width="92" height="118" fill="#147c75"/>
+                  <rect x="131" y="145" width="39" height="90" fill="#ed7655"/><rect x="270" y="145" width="39" height="90" fill="#ed7655"/>
+                  <rect x="99" y="146" width="29" height="58" fill="#f6c65f"/><rect x="312" y="146" width="29" height="58" fill="#f6c65f"/>
+                  <rect x="183" y="250" width="36" height="51" fill="#334a5b"/><rect x="226" y="250" width="36" height="51" fill="#334a5b"/>
+                  <rect x="175" y="298" width="54" height="19" fill="#ed7655"/><rect x="218" y="298" width="54" height="19" fill="#ed7655"/>
+                  <rect x="192" y="163" width="55" height="58" fill="#bce8da"/><circle cx="220" cy="191" r="15" fill="#ec7655"/>
+                </g>
+                <g font-size="12" fill="#59766e" font-weight="800"><text x="25" y="68">голова</text><path d="M77 65H146" stroke="#59766e" stroke-width="2" stroke-dasharray="4 3"/><text x="352" y="172">копия</text><path d="M340 176H383" stroke="#59766e" stroke-width="2" stroke-dasharray="4 3"/></g>
+              </svg>
+              <figcaption>Образец: руки и ноги создаются из копий деталей.</figcaption>
+            </figure>
+            <div>
+              <ol class="instructions">
+                <li>Открой <strong>«Меню мозаики.png»</strong> и выбери <strong>«Сохранить как»</strong>, чтобы исходный набор остался неизменным.</li>
+                <li>Из квадратов и прямоугольников создай голову и туловище робота.</li>
+                <li>Выдели одну руку, скопируй и размести вторую симметрично.</li>
+                <li>По такому же принципу добавь две ноги.</li>
+                <li>При необходимости используй поворот или отражение фрагментов.</li>
+                <li>Добавь круглые глаза, кнопки и другие детали.</li>
+                <li>Раскрась изображение, проверь расположение элементов.</li>
+                <li>Сохрани <strong>«Мозаичный робот.png»</strong>.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="task-foot"><strong>Проверка:</strong> робот узнаваем, повторяющиеся детали совпадают по размерам, композиция аккуратная.</div>
+        </article>
+        <details><summary>Что делать, если при копировании появляется белый прямоугольник?</summary><p>В Paint при вставке растрового фрагмента может копироваться и его фон. Проверь режим выделения: при подходящем однотонном фоне помогает «Прозрачное выделение». При необходимости исправь фрагмент ластиком или отменой действия <kbd>Ctrl</kbd> + <kbd>Z</kbd>. Названия команд могут отличаться в разных версиях Paint.</p></details>
+      </section>
+      <!-- ПРАКТИКА 3 -->
+      <section class="section" id="assignment3">
+        <div class="section-top"><span class="index">05</span><div><h2>Создай свою композицию</h2><p class="muted">Задание 3 · самостоятельное конструирование.</p></div></div>
+        <article class="assignment">
+          <div class="task-title"><h3>03 / Моя мозаика</h3><span>PAINT · ТВОРЧЕСТВО</span></div>
+          <div class="task-body">
+            <figure class="example">
+              <svg viewBox="0 0 440 310" role="img" aria-label="Образец мозаичного цветка, составленного из повторяющихся круглых и треугольных фигур">
+                <rect width="440" height="310" fill="#f9fbf3"/>
+                <path d="M0 280H440" stroke="#d4e4d6" stroke-width="4"/>
+                <g stroke="#fffdf8" stroke-width="3">
+                  <rect x="211" y="145" width="19" height="115" fill="#147c75"/>
+                  <path d="M212 195L139 171L177 223L212 215Z" fill="#60b799"/>
+                  <path d="M230 216L284 171L276 239L230 240Z" fill="#60b799"/>
+                  <circle cx="220" cy="112" r="36" fill="#f7c75d"/>
+                  <circle cx="220" cy="53" r="39" fill="#ed7655"/>
+                  <circle cx="220" cy="170" r="39" fill="#ed7655"/>
+                  <circle cx="161" cy="112" r="39" fill="#ed7655"/>
+                  <circle cx="279" cy="112" r="39" fill="#ed7655"/>
+                  <circle cx="178" cy="70" r="36" fill="#f5ae61"/>
+                  <circle cx="262" cy="70" r="36" fill="#f5ae61"/>
+                  <circle cx="178" cy="154" r="36" fill="#f5ae61"/>
+                  <circle cx="262" cy="154" r="36" fill="#f5ae61"/>
+                  <circle cx="220" cy="112" r="37" fill="#f7c75d"/>
+                  <circle cx="208" cy="103" r="4" fill="#354753" stroke="none"/><circle cx="233" cy="103" r="4" fill="#354753" stroke="none"/>
+                  <path d="M206 122Q220 136 235 122" stroke="#354753" fill="none" stroke-width="4"/>
+                </g>
+                <g fill="#48645c" font-size="13" font-weight="800"><text x="20" y="35">Повторяем</text><text x="20" y="51">лепестки</text><path d="M95 47L153 70" stroke="#48645c" stroke-width="2" stroke-dasharray="5 4"/><text x="310" y="278">Стебель —</text><text x="310" y="294">прямоугольник</text></g>
+              </svg>
+              <figcaption>Один из вариантов: цветок из типовых элементов.</figcaption>
+            </figure>
+            <div>
+              <ol class="instructions">
+                <li>Открой сохранённое меню деталей и создай отдельный файл для новой композиции.</li>
+                <li>Выбери объект: цветок, рыбу, дерево, птицу или собственный вариант.</li>
+                <li>Определи, какие типовые детали будут нужны.</li>
+                <li>Собери изображение с помощью выделения, копирования, перемещения, поворота и отражения.</li>
+                <li>Оформи цвета и проверь, повторяются ли детали.</li>
+                <li>Сохрани рисунок под именем <strong>«Моя мозаика.png»</strong>.</li>
+              </ol>
+              <div class="note"><strong>Главное условие:</strong> не просто нарисовать объект, а <strong>сконструировать</strong> его из повторяющихся элементов.</div>
+            </div>
+          </div>
+        </article>
+      </section>
+      <!-- НЕОБЯЗАТЕЛЬНЫЙ ТРЕНАЖЁР -->
+      <section class="section" id="studio">
+        <div class="section-top"><span class="index">06</span><div><h2>Мини-конструктор мозаики</h2><p class="muted">Необязательный тренажёр для планирования своего рисунка.</p></div></div>
+        <p>Выбери цвет и форму детали, затем нажимай на клетки. Попробуй изменить образец робота или придумать собственный узор. Можно сохранить эскиз в PNG, а затем повторить свою задумку в Paint.</p>
+        <div class="workshop">
+          <div class="workshop-head"><strong>▦ ПОЛЕ КОНСТРУКТОРА</strong><small>12 × 10 клеток · эскиз, а не замена Paint</small></div>
+          <div class="workshop-body">
+            <div class="board-wrap"><div class="board" id="mosaic-board" role="group" aria-label="Интерактивная мозаика из 120 клеток"></div></div>
+            <div class="tools-panel">
+              <h3>Цвет детали</h3>
+              <div class="palettes" id="color-palette" role="group" aria-label="Выбор цвета">
+                <button type="button" class="swatch" data-color="teal" style="--swatch:#147c75" aria-label="Бирюзовый" aria-pressed="true"></button>
+                <button type="button" class="swatch" data-color="coral" style="--swatch:#ec7655" aria-label="Коралловый" aria-pressed="false"></button>
+                <button type="button" class="swatch" data-color="yellow" style="--swatch:#f7c75d" aria-label="Жёлтый" aria-pressed="false"></button>
+                <button type="button" class="swatch" data-color="blue" style="--swatch:#5c9cc4" aria-label="Голубой" aria-pressed="false"></button>
+                <button type="button" class="swatch" data-color="dark" style="--swatch:#243e49" aria-label="Тёмный" aria-pressed="false"></button>
+              </div>
+              <h3>Форма детали</h3>
+              <div class="shape-picks" id="shape-palette" role="group" aria-label="Выбор формы">
+                <button type="button" data-shape="square" aria-pressed="true">■ Квадрат</button>
+                <button type="button" data-shape="circle" aria-pressed="false">● Круг</button>
+                <button type="button" data-shape="triangle" aria-pressed="false">▲ Треугольник</button>
+                <button type="button" data-shape="rectangle" aria-pressed="false">▬ Прямоуг.</button>
+                <button type="button" data-shape="empty" aria-pressed="false">⌫ Ластик</button>
+              </div>
+              <div class="controls">
+                <button type="button" id="example-robot">↺ Загрузить робота</button>
+                <button type="button" id="clear-mosaic">✕ Очистить поле</button>
+                <button type="button" class="primary" id="save-mosaic">↓ Сохранить эскиз PNG</button>
+              </div>
+              <p class="studio-status" id="studio-status" role="status" aria-live="polite">Образец робота загружен. Выбери клетку для изменения.</p>
+            </div>
+          </div>
+        </div>
+        <div class="note warn"><strong>Практическая работа выполняется именно в Paint.</strong> Конструктор на этой странице — дополнительная демонстрация того, как простые фигуры образуют сложное изображение.</div>
+      </section>
+      <!-- ПОДВЕДЕНИЕ ИТОГОВ -->
+      <section class="section" id="check">
+        <div class="section-top"><span class="index">07</span><div><h2>Проверь готовую работу</h2><p class="muted">Отмечай результаты, выполненные в Paint.</p></div></div>
+        <div class="check-panel">
+          <div class="check-head"><strong>Мой результат</strong><span id="check-count" aria-live="polite">0 из 6</span></div>
+          <progress id="check-progress" value="0" max="6">0 из 6</progress>
+          <div class="checks">
+            <label class="check"><input type="checkbox" class="done">Созданы четыре типовых элемента</label>
+            <label class="check"><input type="checkbox" class="done">Меню мозаики сохранено отдельно</label>
+            <label class="check"><input type="checkbox" class="done">Мозаичный робот собран из деталей</label>
+            <label class="check"><input type="checkbox" class="done">При работе использовались копирование и преобразования</label>
+            <label class="check"><input type="checkbox" class="done">Создана самостоятельная композиция</label>
+            <label class="check"><input type="checkbox" class="done">Все три файла PNG сохранены</label>
+          </div>
+          <button class="reset" type="button" id="reset-checks">Сбросить отметки</button>
+        </div>
+        <div class="grid2">
+          <div class="tilecard"><h3>⚠️ Частые ошибки</h3><p>Разные размеры одинаковых деталей, случайный белый фон при копировании, несоразмерные руки и ноги, зазоры между элементами, потеря исходного набора.</p></div>
+          <div class="tilecard"><h3>🛠️ Как проверить?</h3><p>Сравни размеры, проверь симметрию и порядок наложения деталей, удали лишний фон и убедись, что все файлы открываются.</p></div>
+        </div>
+        <div class="note"><strong>Итог:</strong> из небольшого набора простых графических элементов можно создать множество сложных изображений. Именно на этом принципе основано конструирование из мозаики.</div>
+        <p><strong>Домашнее задание:</strong> нарисовать в тетради эскиз мозаичной композиции не менее чем из трёх типов геометрических деталей.</p>
+        <p class="smallprint"><strong>Если нет компьютера:</strong> составь эскиз из квадрата, треугольника и прямоугольника в тетради, отметь повторяющиеся детали и ответь на вопросы ниже.</p>
+      </section>
+      <!-- ПОСЛЕДНИЙ РАЗДЕЛ: РОВНО 12 ВОПРОСОВ -->
+      <section class="section" id="questions">
+        <div class="section-top"><span class="index">08</span><div><h2>12 вопросов для закрепления</h2><p class="muted">Для класса — устно; для учащихся без ПК — письменно.</p></div></div>
+        <ol class="questions">
+          <li>Что называют мозаикой?</li>
+          <li>Что такое конструирование графического изображения?</li>
+          <li>Какую деталь можно назвать типовым элементом?</li>
+          <li>Почему важно согласовывать размеры деталей мозаики?</li>
+          <li>Какие инструменты Paint нужны для создания геометрических фигур?</li>
+          <li>Для чего создают собственное меню типовых деталей?</li>
+          <li>Как в Paint получить несколько одинаковых деталей?</li>
+          <li>Для чего используют поворот и отражение фрагментов рисунка?</li>
+          <li>Как избежать появления лишнего фона при копировании деталей?</li>
+          <li>Как проверить симметрию мозаичного робота?</li>
+          <li>Каким образом небольшой набор фигур позволяет создавать разные композиции?</li>
+          <li>Зачем сохранять исходное меню деталей отдельно от готового рисунка?</li>
+        </ol>
+      </section>
+    </main>
+    <footer>Информатика · 7 класс · Конструирование из мозаики · Практическая работа в Paint</footer>
+  </div>
+  <script>
+    /* ============================================================
+       НЕБОЛЬШОЙ ИНТЕРАКТИВНЫЙ КОНСТРУКТОР
+       Работает целиком локально: без внешних библиотек.
+       Эскиз сохраняется через встроенный Canvas API.
+    ============================================================ */
+    (() => {
+      "use strict";
+      const W=12,H=10;
+      const colors={teal:"#147c75",coral:"#ec7655",yellow:"#f7c75d",blue:"#5c9cc4",dark:"#243e49"};
+      const colorNames={teal:"бирюзовая",coral:"коралловая",yellow:"жёлтая",blue:"голубая",dark:"тёмная"};
+      const shapeNames={square:"квадрат",circle:"круг",triangle:"треугольник",rectangle:"прямоугольник",empty:"пусто"};
+      const board=document.getElementById("mosaic-board");
+      const status=document.getElementById("studio-status");
+      let selectedColor="teal",selectedShape="square";
+      const cells=[];
+      const model=Array.from({length:W*H},()=>({shape:"empty",color:"teal"}));
+      function indexOfCell(x,y){return y*W+x;}
+      function message(t){status.textContent=t;}
+      function updateCell(i){
+        const cell=cells[i],data=model[i];
+        cell.dataset.shape=data.shape;
+        cell.style.setProperty("--paint",colors[data.color]);
+        const x=i%W,y=Math.floor(i/W);
+        cell.setAttribute("aria-label",`Столбец ${x+1}, строка ${y+1}: ${data.shape==="empty"?"пусто":shapeNames[data.shape]+", "+colorNames[data.color]}`);
+      }
+      function paint(i,shape=selectedShape,color=selectedColor){model[i]={shape,color};updateCell(i);}
+      function clear(){for(let i=0;i<model.length;i++)paint(i,"empty");}
+      function rectangle(x0,y0,x1,y1,color,shape="square"){
+        for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)paint(indexOfCell(x,y),shape,color);
+      }
+      function loadRobot(){
+        clear();
+        rectangle(4,1,7,4,"dark");
+        rectangle(5,2,6,2,"yellow","circle");
+        rectangle(5,3,6,3,"coral","rectangle");
+        rectangle(3,5,8,7,"teal");
+        rectangle(4,6,7,6,"blue");
+        rectangle(1,5,2,6,"blue");rectangle(9,5,10,6,"blue");
+        rectangle(4,8,5,9,"coral");rectangle(7,8,8,9,"coral");
+        message("Образец робота загружен. Выбери клетку для изменения.");
+      }
+      for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+        const b=document.createElement("button");
+        b.type="button";b.className="cell";board.appendChild(b);
+        const i=indexOfCell(x,y);cells.push(b);updateCell(i);
+        b.addEventListener("click",()=>{paint(i);message(`Изменена клетка: столбец ${x+1}, строка ${y+1}.`);});
+      }
+      const colorBtns=[...document.querySelectorAll("[data-color]")];
+      colorBtns.forEach(b=>b.addEventListener("click",()=>{
+        selectedColor=b.dataset.color;
+        colorBtns.forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+        message("Выбран цвет: "+colorNames[selectedColor]+".");
+      }));
+      const shapeBtns=[...document.querySelectorAll("#shape-palette [data-shape]")];
+      shapeBtns.forEach(b=>b.addEventListener("click",()=>{
+        selectedShape=b.dataset.shape;
+        shapeBtns.forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+        message("Выбрана фигура: "+shapeNames[selectedShape]+".");
+      }));
+      document.getElementById("example-robot").addEventListener("click",loadRobot);
+      document.getElementById("clear-mosaic").addEventListener("click",()=>{clear();message("Поле очищено. Создай собственную мозаику!");});
+      document.getElementById("save-mosaic").addEventListener("click",()=>{
+        const size=60,canvas=document.createElement("canvas");
+        canvas.width=W*size;canvas.height=H*size;
+        const ctx=canvas.getContext("2d");
+        if(!ctx){message("Не удалось создать PNG в этом браузере.");return;}
+        ctx.fillStyle="#fbfcfa";ctx.fillRect(0,0,canvas.width,canvas.height);
+        for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+          const data=model[indexOfCell(x,y)],bx=x*size,by=y*size,p=5;
+          ctx.strokeStyle="#e0e8df";ctx.lineWidth=1;ctx.strokeRect(bx+.5,by+.5,size-1,size-1);
+          if(data.shape==="empty")continue;
+          ctx.fillStyle=colors[data.color];ctx.beginPath();
+          if(data.shape==="circle"){
+            ctx.arc(bx+size/2,by+size/2,size/2-p,0,Math.PI*2);
+          }else if(data.shape==="triangle"){
+            ctx.moveTo(bx+size/2,by+p);ctx.lineTo(bx+size-p,by+size-p);
+            ctx.lineTo(bx+p,by+size-p);ctx.closePath();
+          }else if(data.shape==="rectangle"){
+            ctx.rect(bx+p,by+size*.27,size-2*p,size*.46);
+          }else{
+            ctx.rect(bx+p,by+p,size-2*p,size-2*p);
+          }
+          ctx.fill();
+        }
+        const a=document.createElement("a");a.href=canvas.toDataURL("image/png");
+        a.download="Эскиз мозаики.png";document.body.appendChild(a);a.click();a.remove();
+        message("Эскиз подготовлен для сохранения в PNG.");
+      });
+      loadRobot();
+      /* Самопроверка реальной работы в Paint. */
+      const checks=[...document.querySelectorAll(".done")];
+      const progress=document.getElementById("check-progress"),counter=document.getElementById("check-count");
+      function updateProgress(){const done=checks.filter(c=>c.checked).length;progress.value=done;counter.textContent=done+" из "+checks.length;}
+      checks.forEach(c=>c.addEventListener("change",updateProgress));
+      document.getElementById("reset-checks").addEventListener("click",()=>{checks.forEach(c=>{c.checked=false;});updateProgress();});
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
