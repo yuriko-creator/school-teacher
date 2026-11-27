@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Информатика 10–11 класс. Практическая работа в GIMP: плоская заливка, градиент, яркость-контраст, тон-насыщенность и цветовой баланс. Проект «Город на закате».">
+  <title>GIMP COLOR LAB — Заливка и инструменты цвета · 10–11 класс</title>
+  <style>
+    /* ==========================================================
+       COLOR LAB. Полностью автономный сайт: HTML + CSS + SVG.
+       JavaScript и внешние файлы не используются.
+    ========================================================== */
+    :root {
+      --page:#f5f2fa; --paper:#ffffff; --ink:#25283f;
+      --muted:#5d647c; --line:#e1dfed; --night:#181a37;
+      --violet:#6d4fbd; --lilac:#efe9ff; --pink:#e96e95;
+      --orange:#f6a454; --gold:#ffda88; --cyan:#63b8dd;
+      --mint:#23836f; --mintsoft:#e5f6ef;
+      --shadow:0 16px 45px rgba(33,27,75,.075);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--page);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;overflow-wrap:break-word}
+    h1,h2,h3,p,figure{margin-top:0}h1,h2,h3{line-height:1.2}p{margin-bottom:13px}
+    p:last-child{margin-bottom:0}a{color:#5149a8}svg{display:block;max-width:100%}
+    a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+    code{padding:2px 6px;border-radius:5px;background:#f0edfa;color:#5240a2;font:700 .92em Consolas,"Liberation Mono",monospace}
+    kbd{padding:2px 6px;border:1px solid #cfd0e1;border-bottom-width:3px;border-radius:5px;background:white;font:800 .84em Consolas,monospace}
+    .wrap{width:min(1130px,calc(100% - 32px));margin:auto;padding:18px 0 44px}
+    .skip{position:absolute;left:10px;top:-100px;z-index:10;padding:10px 14px;background:#fff}.skip:focus{top:10px}
+
+    /* Обложка: студия цифрового цвета */
+    .hero{position:relative;isolation:isolate;overflow:hidden;border-radius:29px;background:radial-gradient(circle at 90% 10%,#93519c88,transparent 39%),linear-gradient(128deg,#181a37 0%,#393064 62%,#81536e 100%);color:white;box-shadow:0 21px 53px #17163628}
+    .hero::before{content:"";position:absolute;z-index:-1;inset:0;background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);background-size:36px 36px;opacity:.24}
+    .hero-inner{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(270px,.98fr);gap:30px;align-items:center;padding:43px 42px}
+    .eyebrow{display:inline-block;padding:7px 12px;margin-bottom:17px;border:1px solid #ffffff55;border-radius:30px;background:#ffffff16;font-size:12px;font-weight:850;letter-spacing:.04em}
+    .hero h1{margin:0 0 13px;font-size:clamp(39px,5.5vw,67px);letter-spacing:-.047em;line-height:1.04}
+    .hero h1 span{display:block;color:#ffd88e}.hero p{font-size:17px;color:#ebdef4}
+    .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .hero-pills span{padding:7px 10px;border:1px solid #ffffff38;border-radius:9px;background:#ffffff14;color:#fff0f6;font-size:12px;font-weight:800}
+    .preview-frame{padding:12px;border:1px solid #ffffff54;border-radius:19px;background:#ffffff15;box-shadow:0 14px 28px #11122a36}
+    .preview-frame .window-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:5px 7px 12px;color:#fff2f2;font-size:12px;font-weight:850}
+    .dots{display:flex;gap:5px}.dots i{width:9px;height:9px;border-radius:50%;background:#ffb3a0}.dots i:nth-child(2){background:#fddd92}.dots i:nth-child(3){background:#92e9d6}
+    .preview-frame svg{width:100%;height:auto;border:5px solid white;border-radius:8px;background:#fff}
+    .preview-frame figcaption{margin-top:9px;text-align:center;color:#eee0f3;font-size:12px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.nav a{padding:8px 12px;border:1px solid var(--line);border-radius:30px;background:white;color:#5a5476;text-decoration:none;font-size:13px;font-weight:800}.nav a:hover{background:var(--lilac)}
+
+    /* Основные разделы */
+    .section{margin-top:21px;padding:33px 37px;border-radius:24px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow)}
+    .head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+    .count{flex:0 0 43px;height:43px;display:grid;place-items:center;border-radius:13px;background:var(--lilac);color:var(--violet);font-size:14px;font-weight:900}
+    .section h2{margin:2px 0 5px;font-size:clamp(24px,3.5vw,32px)}.section h3{margin:22px 0 10px;font-size:19px}
+    .sub{font-size:14px;color:var(--muted)}.lead{font-size:17px}
+    .grid2,.grid3{display:grid;gap:14px;margin:18px 0}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{min-width:0;padding:18px;border:1px solid var(--line);border-radius:16px;background:#faf9fe}.card.violet{background:#f1edff}.card.warm{background:#fff2e7}.card.mint{background:#e9f8f2}
+    .card .emoji{display:block;font-size:29px;margin-bottom:8px}.card h3{margin:0 0 8px;font-size:18px}.card p{font-size:14px;color:var(--muted)}
+    .note{margin:18px 0;padding:16px 19px;border-left:5px solid var(--violet);border-radius:0 12px 12px 0;background:#f2eeff}
+    .note.mint{border-color:var(--mint);background:var(--mintsoft)}.note.orange{border-color:var(--orange);background:#fff2e2}
+    .label{display:inline-block;margin-bottom:11px;padding:4px 9px;border-radius:7px;background:#eee9ff;color:#5b46a6;font-size:11px;font-weight:900;letter-spacing:.07em}
+    .steps{counter-reset:step;list-style:none;display:grid;gap:10px;padding:0;margin:17px 0}
+    .steps li{position:relative;counter-increment:step;padding:12px 14px 12px 48px;border:1px solid #e4e1ed;border-radius:12px;background:#fcfbff;font-size:15px}
+    .steps li::before{content:counter(step,decimal-leading-zero);position:absolute;top:12px;left:11px;width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#eae3ff;color:#5c41a6;font-size:12px;font-weight:900}
+    details{margin:15px 0;border:1px solid #e3dfed;border-radius:12px;padding:12px 15px;background:#fcfbff}
+    summary{cursor:pointer;font-size:14px;font-weight:830;color:#604ca1}details p{font-size:14px;margin-top:10px}
+
+    /* Теория: образцы плоской заливки и градиентов */
+    .sample{overflow:hidden;margin:16px 0;border:1px solid #dcd9e6;border-radius:17px;background:#faf9fc}
+    .sample-image{height:145px;position:relative;overflow:hidden}
+    .sample-image.flat{background:#314766}.sample-image.gradient{background:linear-gradient(to bottom,#292850,#744978 52%,#f6ac68 100%)}
+    .sample-image.radial{background:radial-gradient(circle at 50% 80%,#ffdf95 0%,#f4987d 30%,#583b77 68%,#2b2c59 100%)}
+    .sample-image:after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(90deg,#171c32 0 13%,transparent 13% 16%,#171c32 16% 36%,transparent 36% 42%,#171c32 42% 56%,transparent 56% 61%,#171c32 61% 80%,transparent 80% 85%,#171c32 85% 100%)}
+    .sample-label{padding:11px 13px;font-size:13px;color:#5a6079}.sample-label b{color:#3b345d}
+    .color-line{display:flex;overflow:hidden;height:21px;border-radius:20px;margin:16px 0 5px}.color-line span{flex:1}.color-line span:nth-child(1){background:#272b59}.color-line span:nth-child(2){background:#684978}.color-line span:nth-child(3){background:#b96b86}.color-line span:nth-child(4){background:#f2a374}.color-line span:nth-child(5){background:#ffda95}
+    .tool-table{overflow-x:auto;margin:17px 0}.tool-table table{border-collapse:collapse;width:100%;min-width:530px;font-size:14px}.tool-table th,.tool-table td{border:1px solid #e0deea;padding:11px 12px;text-align:left}.tool-table th{background:#ede8fa;color:#4e4087}.tool-table tr:nth-child(even) td{background:#fbfaff}
+    .layer-stack{display:grid;gap:8px;margin:15px 0;max-width:430px}
+    .layer{padding:12px 14px;border:1px solid #dcdbe8;border-radius:12px;background:white;display:flex;gap:12px;align-items:center;font-size:14px;font-weight:780}
+    .layer:before{content:"";display:block;flex:0 0 45px;height:29px;border:1px solid #c8c5dc;border-radius:5px;background:repeating-conic-gradient(#fff 0 25%,#d6d6e8 0 50%) 50% / 15px 15px}
+    .layer.sky:before{background:linear-gradient(#343058,#f7af72)}
+    .layer.city:before{background:linear-gradient(transparent 30%,#22243d 30% 100%),repeating-conic-gradient(#fff 0 25%,#d6d6e8 0 50%) 50% / 15px 15px}
+    .layer small{display:block;color:var(--muted);font-weight:500}
+    .correction-art{display:flex;gap:0;overflow:hidden;border-radius:14px;height:110px;margin:14px 0 10px}
+    .correction-art i{flex:1;background:linear-gradient(#313456,#a26783 62%,#e5ad88);position:relative}
+    .correction-art i:after{content:"";position:absolute;bottom:0;left:0;right:0;height:34%;background:#292b40;clip-path:polygon(0 40%,20% 40%,20% 2%,42% 2%,42% 48%,60% 48%,60% 15%,85% 15%,85% 44%,100% 44%,100% 100%,0 100%)}
+    .correction-art i+ i{border-left:4px solid white}.correction-art .brighter{filter:brightness(1.23) contrast(1.13)}.correction-art .saturated{filter:saturate(1.65)}.correction-art .warmer{filter:sepia(.26) saturate(1.3)}
+    .beforeafter{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+    /* Практическая работа */
+    .task{overflow:hidden;margin-top:19px;border:1px solid #dcd9e8;border-radius:18px;background:#fff}
+    .taskbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 18px;background:var(--night);color:white}.taskbar h3{margin:0;font-size:19px}.taskbar span{font-size:12px;font-weight:850;color:#ffda94}
+    .taskbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.87fr);gap:17px;align-items:start;padding:19px}
+    .taskbody .steps{margin:0}.taskvisual{min-width:0;padding:12px;background:#f3eff9;border:1px solid #e2daee;border-radius:12px}
+    .taskvisual svg{width:100%;height:auto;background:white;border-radius:6px}.taskvisual figcaption{margin-top:8px;color:#626078;text-align:center;font-size:12px}
+    .taskbottom{padding:12px 17px;border-top:1px solid #e2dfed;background:#f5f2fc;color:#5b5380;font-size:13px}
+    .file-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:17px 0}
+    .file{padding:17px;border-radius:14px;border:1px solid #dcd9eb;background:#faf9fd}.file b{display:block;font-size:17px}.file small{color:var(--muted)}
+    .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:17px 0}
+    .check{display:flex;align-items:start;gap:10px;padding:13px;border:1px solid #d9e4de;background:#f7fcf9;border-radius:11px;cursor:pointer;font-size:14px}
+    .check input{width:17px;height:17px;flex:0 0 auto;margin-top:3px;accent-color:var(--mint)}.check:has(input:checked){background:#e2f6eb;border-color:#a7d8c1}
+    .questions{counter-reset:q;list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .questions li{counter-increment:q;position:relative;min-height:75px;padding:15px 13px 15px 55px;border:1px solid #e0deeb;border-radius:13px;background:#faf9fe;font-size:14px}
+    .questions li:before{content:counter(q,decimal-leading-zero);position:absolute;top:14px;left:13px;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#e8e1ff;color:#6046b0;font-size:12px;font-weight:900}
+    footer{padding:24px 5px 5px;text-align:center;color:#77748c;font-size:12px}
+
+    /* Адаптация и печать */
+    @media(max-width:920px){.hero-inner{grid-template-columns:1fr;padding:36px 30px}.preview-frame{max-width:590px}.taskbody{grid-template-columns:1fr}.taskvisual{max-width:620px}}
+    @media(max-width:650px){.wrap{width:calc(100% - 20px);padding-top:10px}.hero{border-radius:20px}.hero-inner{padding:28px 19px}.hero h1{font-size:clamp(37px,10vw,50px)}.hero p{font-size:15px}.section{margin-top:15px;padding:23px 17px;border-radius:18px}.head{gap:10px}.count{flex-basis:36px;height:36px}.section h2{font-size:23px}.grid2,.grid3,.questions,.checklist,.file-row{grid-template-columns:1fr}.taskbody{padding:13px}.taskbar{align-items:flex-start}.taskbar h3{font-size:17px}.sample-image{height:125px}}
+    @media(max-width:360px){.section{padding:20px 13px}.hero-inner{padding:25px 15px}.hero h1{font-size:36px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{body{background:white}.wrap{width:100%;padding:0}.hero,.section{box-shadow:none}.nav{display:none}.section,.task{break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <a href="#content" class="skip">Перейти к уроку</a>
+  <div class="wrap">
+    <!-- Обложка и итоговый образец -->
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow">ИНФОРМАТИКА · 10–11 КЛАСС · ПРАКТИЧЕСКАЯ РАБОТА</span>
+          <h1>GIMP <span>COLOR LAB</span></h1>
+          <p><strong>Заливка и инструменты цвета.</strong> Изучаем плоскую заливку, градиент и цветокоррекцию на одном проекте — «Город на закате».</p>
+          <p>От простых геометрических силуэтов к выразительному вечернему пейзажу.</p>
+          <div class="hero-pills"><span>01 · Плоская заливка</span><span>02 · Градиент</span><span>03 · Цветокоррекция</span></div>
+        </div>
+        <figure class="preview-frame">
+          <div class="window-top"><span>ГОРОД НА ЗАКАТЕ · ОБРАЗЕЦ</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <svg viewBox="0 0 900 600" role="img" aria-label="Пример городского пейзажа на закате с фиолетово-оранжевым небом, солнцем и тёмными зданиями">
+            <defs>
+              <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#252854"/><stop offset=".43" stop-color="#805078"/><stop offset=".78" stop-color="#e8897b"/><stop offset="1" stop-color="#ffc17a"/></linearGradient>
+              <linearGradient id="sun-disc" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe89a"/><stop offset="1" stop-color="#ffb36e"/></linearGradient>
+            </defs>
+            <rect width="900" height="600" fill="url(#sunset)"/>
+            <circle cx="675" cy="320" r="87" fill="#ffdd9b" opacity=".18"/>
+            <circle cx="675" cy="320" r="66" fill="url(#sun-disc)"/>
+            <path d="M0 405H100V335H176V378H245V282H323V355H375V317H462V411H525V365H603V397H665V349H738V384H807V325H900V600H0Z" fill="#29283f"/>
+            <path d="M0 448H49V375H115V424H181V350H236V410H287V362H350V445H410V388H474V437H540V393H595V430H649V379H712V429H778V374H830V406H900V600H0Z" fill="#1b2037"/>
+            <g fill="#ffcd88" opacity=".83"><rect x="195" y="370" width="10" height="17"/><rect x="215" y="370" width="10" height="17"/><rect x="303" y="386" width="9" height="15"/><rect x="326" y="386" width="9" height="15"/><rect x="428" y="416" width="11" height="16"/><rect x="453" y="416" width="11" height="16"/><rect x="555" y="421" width="10" height="15"/><rect x="581" y="421" width="10" height="15"/><rect x="676" y="401" width="10" height="16"/><rect x="700" y="401" width="10" height="16"/><rect x="800" y="423" width="10" height="15"/></g>
+            <path d="M0 546Q255 519 450 546T900 545V600H0Z" fill="#13192e"/>
+          </svg>
+          <figcaption>Учебная иллюстрация — результат, к которому стремимся</figcaption>
+        </figure>
+      </div>
+    </header>
+    <nav class="nav" aria-label="Разделы урока">
+      <a href="#repeat">↶ Повторение</a><a href="#fill">▣ Заливка</a><a href="#gradient">◐ Градиент</a><a href="#color">🎛️ Инструменты цвета</a><a href="#task1">01 · Силуэты</a><a href="#task2">02 · Небо</a><a href="#task3">03 · Коррекция</a><a href="#check">✓ Проверка</a><a href="#questions">? 12 вопросов</a>
+    </nav>
+    <main id="content">
+      <!-- 01. Повторение -->
+      <section class="section" id="repeat">
+        <div class="head"><span class="count">01</span><div><h2>Что мы уже умеем?</h2><p class="sub">Связь с предыдущим занятием по инструментам рисования GIMP.</p></div></div>
+        <div class="grid3">
+          <article class="card"><span class="emoji">🖌️</span><h3>Рисование</h3><p>Карандаш, кисть, аэрограф и другие инструменты позволяют создавать линии, мазки и детали.</p></article>
+          <article class="card violet"><span class="emoji">◫</span><h3>Слои</h3><p>Слои позволяют независимо работать с фоном и отдельными частями изображения.</p></article>
+          <article class="card warm"><span class="emoji">⬚</span><h3>Выделение</h3><p>Ограничивает область обработки: можно изменить только нужную часть активного слоя.</p></article>
+        </div>
+        <div class="note"><strong>Сегодняшняя задача:</strong> вместо закрашивания больших областей кистью используем инструменты заливки. Затем настроим настроение изображения с помощью меню «Цвет».</div>
+      </section>
+      <!-- 02. Плоская заливка -->
+      <section class="section" id="fill">
+        <div class="head"><span class="count">02</span><div><h2>Плоская заливка</h2><p class="sub">Быстро заполняем область одним цветом или текстурой.</p></div></div>
+        <p class="lead"><strong>Плоская заливка</strong> заполняет заданную область выбранным цветом или текстурой. В настройках доступны цвет переднего плана, цвет фона и текстура.</p>
+        <div class="grid2">
+          <article class="card violet"><span class="label">ВЫДЕЛЕННАЯ ОБЛАСТЬ</span><h3>Залить всё выделение</h3><p>Выдели прямоугольник здания, затем заполни всю выделенную область. Это удобно для чётких геометрических силуэтов.</p><div class="sample"><div class="sample-image flat"></div><div class="sample-label"><b>Результат:</b> ровный однотонный фрагмент</div></div></article>
+          <article class="card warm"><span class="label">ПОХОЖИЕ ЦВЕТА</span><h3>Залить близкие по цвету пиксели</h3><p>Инструмент определяет область по сходству цветов. Параметр <strong>«Порог»</strong> влияет на то, насколько сильно могут различаться исходные пиксели.</p><div class="note orange"><strong>Важно:</strong> высокий порог может затронуть лишние участки изображения.</div></article>
+        </div>
+        <div class="note mint"><strong>Проверь перед заливкой:</strong> активный слой, наличие выделения, цвет переднего плана и выбранный режим заполнения. Если заливка не появилась, сначала проверь именно эти условия.</div>
+      </section>
+      <!-- 03. Градиент -->
+      <section class="section" id="gradient">
+        <div class="head"><span class="count">03</span><div><h2>Градиент: плавный переход цветов</h2><p class="sub">Используем для неба, освещения и атмосферных эффектов.</p></div></div>
+        <p class="lead"><strong>Градиент</strong> — плавное изменение цвета. Направление линии градиента определяет расположение перехода, а выбранная форма — его характер.</p>
+        <div class="grid2">
+          <article class="card"><h3>↕ Линейный градиент</h3><p>Цвета переходят вдоль прямой линии. Подходит для закатного неба от тёмного верха к светлому горизонту.</p><figure class="sample"><div class="sample-image gradient"></div><figcaption class="sample-label"><b>Сверху вниз:</b> фиолетовый → оранжевый</figcaption></figure></article>
+          <article class="card"><h3>◎ Радиальный градиент</h3><p>Цвета расходятся от центральной области. Можно использовать для схематичного изображения свечения вокруг солнца.</p><figure class="sample"><div class="sample-image radial"></div><figcaption class="sample-label"><b>От центра к краям:</b> светлый → тёмный</figcaption></figure></article>
+        </div>
+        <div class="color-line" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <p class="sub">Пример палитры для вечернего неба. Подбирай цвета так, чтобы тёмные здания хорошо выделялись на фоне.</p>
+        <div class="note orange"><strong>Последовательность:</strong> выбери слой «Небо» → сними ненужное выделение → выбери градиент от переднего плана к фону → протяни линию сверху вниз → подтверди результат.</div>
+      </section>
+      <!-- 04. Инструменты цвета -->
+      <section class="section" id="color">
+        <div class="head"><span class="count">04</span><div><h2>Инструменты цвета</h2><p class="sub">Изменяем оттенки и выразительность изображения.</p></div></div>
+        <p>В меню <strong>«Цвет»</strong> находятся команды цветокоррекции. Они позволяют изменить общее впечатление от изображения, не перерисовывая каждый объект.</p>
+        <div class="grid3">
+          <article class="card violet"><span class="emoji">☀️</span><h3>Яркость-контраст</h3><p>Яркость изменяет общую светлоту, а контраст — различие между светлыми и тёмными участками.</p><div class="correction-art" aria-hidden="true"><i></i><i class="brighter"></i></div><div class="beforeafter"><span>До</span><span>После</span></div></article>
+          <article class="card warm"><span class="emoji">🎨</span><h3>Тон-насыщенность</h3><p>Позволяет менять оттенок, насыщенность и светлоту цветовых составляющих.</p><div class="correction-art" aria-hidden="true"><i></i><i class="saturated"></i></div><div class="beforeafter"><span>До</span><span>После</span></div></article>
+          <article class="card mint"><span class="emoji">⚖️</span><h3>Цветовой баланс</h3><p>Смещает соотношение цветовых составляющих, помогая усилить тёплые или холодные оттенки.</p><div class="correction-art" aria-hidden="true"><i></i><i class="warmer"></i></div><div class="beforeafter"><span>До</span><span>После</span></div></article>
+        </div>
+        <p class="sub">Иллюстрации показывают направление изменений схематично, а не воспроизводят точные настройки GIMP.</p>
+        <div class="note"><strong>Запомни:</strong> инструменты цвета применяются к выбранному слою или его выделенной части. Перед изменениями удобно сделать копию слоя, чтобы можно было сравнить варианты.</div>
+      </section>
+      <!-- 05. Задание 1 -->
+      <section class="section" id="task1">
+        <div class="head"><span class="count">05</span><div><h2>Практика № 1. Силуэты города</h2><p class="sub">Создаём геометрию и используем сплошную заливку.</p></div></div>
+        <div class="task"><div class="taskbar"><h3>01 / Силуэты города</h3><span>GIMP · ЗАЛИВКА</span></div><div class="taskbody">
+          <ol class="steps">
+            <li>Создай новое изображение размером <strong>900 × 600 пикселей</strong>.</li>
+            <li>Переименуй исходный слой в <strong>«Небо»</strong> и добавь новый прозрачный слой <strong>«Город»</strong> над ним.</li>
+            <li>На слое «Город» прямоугольным выделением создай область первого здания.</li>
+            <li>Выбери тёмный цвет переднего плана и инструмент <strong>«Плоская заливка»</strong>. Заполни всё выделение.</li>
+            <li>Сними выделение и таким же способом создай несколько зданий разной высоты.</li>
+            <li>Эллиптическим выделением создай круг солнца в свободной части неба и залей его жёлтым или оранжевым цветом.</li>
+          </ol>
+          <figure class="taskvisual"><svg viewBox="0 0 450 300" role="img" aria-label="Упрощённый город: однотонное небо, круг солнца и тёмные прямоугольные здания"><rect width="450" height="300" fill="#e0c4b5"/><circle cx="335" cy="90" r="44" fill="#ffda8a"/><path d="M0 203H60V170H110V205H154V118H217V185H263V145H320V206H364V163H405V182H450V300H0Z" fill="#29293f"/><g fill="#ffd18c"><rect x="170" y="139" width="11" height="17"/><rect x="190" y="139" width="11" height="17"/><rect x="279" y="171" width="10" height="16"/><rect x="299" y="171" width="10" height="16"/></g></svg><figcaption>Промежуточный результат: плоские заливки зданий и солнца.</figcaption></figure>
+        </div><div class="taskbottom"><strong>Результат:</strong> на отдельном слое находятся тёмные силуэты и солнце; небо пока однотонное.</div></div>
+        <details><summary>Почему важно снимать выделение?</summary><p>Активное выделение ограничивает последующие действия. Если оставить выделенным первое здание, попытка нарисовать другое может не дать ожидаемого результата. Используй команду «Выделение → Снять».</p></details>
+      </section>
+      <!-- 06. Задание 2 -->
+      <section class="section" id="task2">
+        <div class="head"><span class="count">06</span><div><h2>Практика № 2. Закатное небо</h2><p class="sub">Добавляем линейный градиент на отдельный слой.</p></div></div>
+        <div class="task"><div class="taskbar"><h3>02 / Закатное небо</h3><span>GIMP · ГРАДИЕНТ</span></div><div class="taskbody">
+          <ol class="steps">
+            <li>Выбери слой <strong>«Небо»</strong> и сними активное выделение, если оно осталось.</li>
+            <li>Установи цвет переднего плана <strong>тёмно-синий или фиолетовый</strong>, а цвет фона — <strong>оранжевый</strong>.</li>
+            <li>Выбери инструмент <strong>«Градиент»</strong>, переход от цвета переднего плана к цвету фона.</li>
+            <li>Установи <strong>линейную</strong> форму.</li>
+            <li>Протяни линию сверху вниз, чтобы получить тёмный верх неба и светлый горизонт.</li>
+            <li>Подтверди применение градиента. При необходимости измени длину или направление перехода.</li>
+          </ol>
+          <figure class="taskvisual"><svg viewBox="0 0 450 300" role="img" aria-label="Градиентное небо с переходом от тёмно-фиолетового к оранжевому и чёрными силуэтами зданий"><defs><linearGradient id="tasksky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#28274c"/><stop offset=".6" stop-color="#9a607e"/><stop offset="1" stop-color="#f5b07a"/></linearGradient></defs><rect width="450" height="300" fill="url(#tasksky)"/><circle cx="335" cy="90" r="44" fill="#ffda8a"/><path d="M0 203H60V170H110V205H154V118H217V185H263V145H320V206H364V163H405V182H450V300H0Z" fill="#29293f"/><g fill="#ffd18c"><rect x="170" y="139" width="11" height="17"/><rect x="190" y="139" width="11" height="17"/><rect x="279" y="171" width="10" height="16"/><rect x="299" y="171" width="10" height="16"/></g></svg><figcaption>Небо с вертикальным градиентом.</figcaption></figure>
+        </div><div class="taskbottom"><strong>Проверь:</strong> меняется только фон, силуэты остаются тёмными и хорошо различимыми.</div></div>
+        <div class="note mint"><strong>Слои проекта:</strong><div class="layer-stack"><div class="layer city"><span>Город <small>Прозрачный слой с силуэтами и солнцем</small></span></div><div class="layer sky"><span>Небо <small>Нижний слой с градиентным фоном</small></span></div></div>Если хочешь разместить солнце <strong>за зданиями</strong>, можно дополнительно создать отдельный слой «Солнце» между «Городом» и «Небом».</div>
+      </section>
+      <!-- 07. Задание 3 -->
+      <section class="section" id="task3">
+        <div class="head"><span class="count">07</span><div><h2>Практика № 3. Цветовая атмосфера</h2><p class="sub">Экспериментируем с меню «Цвет», сравниваем результат.</p></div></div>
+        <div class="task"><div class="taskbar"><h3>03 / Цветокоррекция</h3><span>GIMP · ЦВЕТ</span></div><div class="taskbody">
+          <ol class="steps">
+            <li>Выбери слой <strong>«Небо»</strong>.</li>
+            <li>Открой <strong>«Цвет → Яркость-контраст»</strong>, попробуй небольшие изменения и оцени результат.</li>
+            <li>Выбери <strong>«Цвет → Тон-насыщенность»</strong> и настрой интенсивность цветов.</li>
+            <li>Открой <strong>«Цвет → Цветовой баланс»</strong> и попробуй усилить тёплые или холодные оттенки.</li>
+            <li>Сравни изображение до и после обработки. Выбери вариант, где детали и цвета хорошо различимы.</li>
+            <li>Сохрани проект как <strong>«Город на закате.xcf»</strong> и экспортируй изображение как <strong>«Город на закате.png»</strong>.</li>
+          </ol>
+          <figure class="taskvisual"><svg viewBox="0 0 450 300" role="img" aria-label="Закатный город с насыщенными фиолетовым и оранжевым оттенками"><defs><linearGradient id="colorfinal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262659"/><stop offset=".5" stop-color="#995282"/><stop offset="1" stop-color="#ffae67"/></linearGradient></defs><rect width="450" height="300" fill="url(#colorfinal)"/><circle cx="335" cy="90" r="49" fill="#ffdf98" opacity=".16"/><circle cx="335" cy="90" r="40" fill="#ffe19d"/><path d="M0 203H60V170H110V205H154V118H217V185H263V145H320V206H364V163H405V182H450V300H0Z" fill="#20233d"/><path d="M0 228H40V200H78V238H134V182H165V226H230V200H275V233H344V193H387V222H450V300H0Z" fill="#161b31"/><g fill="#ffd38c"><rect x="144" y="203" width="8" height="12"/><rect x="181" y="221" width="8" height="12"/><rect x="194" y="221" width="8" height="12"/><rect x="293" y="246" width="8" height="12"/><rect x="361" y="224" width="8" height="12"/></g></svg><figcaption>Пример итогового результата после настройки оттенков.</figcaption></figure>
+        </div><div class="taskbottom"><strong>Задача:</strong> подобрать цветовое настроение, не теряя разборчивости городских силуэтов.</div></div>
+        <div class="tool-table"><table><thead><tr><th>Инструмент</th><th>Что меняется</th><th>Что проверить</th></tr></thead><tbody><tr><td><strong>Яркость-контраст</strong></td><td>Светлота и контраст</td><td>Силуэты не сливаются с небом</td></tr><tr><td><strong>Тон-насыщенность</strong></td><td>Оттенок и интенсивность цветов</td><td>Цвета остаются различимыми</td></tr><tr><td><strong>Цветовой баланс</strong></td><td>Соотношение цветовых составляющих</td><td>Тёплые и холодные оттенки сочетаются</td></tr></tbody></table></div>
+      </section>
+      <!-- 08. Самопроверка и сохранение -->
+      <section class="section" id="check">
+        <div class="head"><span class="count">08</span><div><h2>Проверка практической работы</h2><p class="sub">Отметь то, что действительно выполнено в GIMP.</p></div></div>
+        <div class="checklist">
+          <label class="check"><input type="checkbox">Создано изображение 900 × 600 пикселей</label>
+          <label class="check"><input type="checkbox">Есть слои «Небо» и «Город»</label>
+          <label class="check"><input type="checkbox">Здания и солнце залиты нужными цветами</label>
+          <label class="check"><input type="checkbox">На небе создан плавный линейный градиент</label>
+          <label class="check"><input type="checkbox">Проверены три инструмента цветокоррекции</label>
+          <label class="check"><input type="checkbox">Файлы XCF и PNG сохранены</label>
+        </div>
+        <h3>Два формата — две задачи</h3>
+        <div class="file-row"><div class="file"><b>🗂️ Город на закате.xcf</b><small>Проект GIMP: сохраняет слои и другие данные для дальнейшего редактирования.</small></div><div class="file"><b>🖼️ Город на закате.png</b><small>Готовое изображение для просмотра и передачи; слои проекта не сохраняются.</small></div></div>
+        <div class="grid2"><div class="card warm"><h3>⚠️ Типичные ошибки</h3><p>Выбран не тот слой; осталось активное выделение; градиент направлен не туда; насыщенность или контраст увеличены слишком сильно.</p></div><div class="card mint"><h3>✓ Как исправить?</h3><p>Проверь слой и границу выделения, настрой направление градиента, сравни цветовые варианты и при необходимости отмени неудачное действие.</p></div></div>
+        <div class="note orange"><strong>Если нет компьютера:</strong> нарисуй в тетради схему городского пейзажа, обозначь области плоской заливки и направление градиента. Затем письменно ответь на вопросы ниже.</div>
+        <p><strong>Главный вывод:</strong> плоская заливка помогает создавать однородные цветовые области, градиент — плавные переходы, а инструменты цвета — корректировать внешний вид готового изображения.</p>
+      </section>
+      <!-- 09. Ровно 12 вопросов; последний раздел -->
+      <section class="section" id="questions">
+        <div class="head"><span class="count">09</span><div><h2>12 вопросов для закрепления</h2><p class="sub">Для обсуждения в классе или письменной работы без ПК.</p></div></div>
+        <ol class="questions">
+          <li>Для чего предназначен инструмент «Плоская заливка» в GIMP?</li>
+          <li>Какие типы заполнения доступны для плоской заливки?</li>
+          <li>Чем заполнение всего выделения отличается от заливки похожих цветов?</li>
+          <li>Как параметр «Порог» влияет на результат заливки?</li>
+          <li>Что называют градиентом?</li>
+          <li>Чем линейный градиент отличается от радиального?</li>
+          <li>Как используются цвета переднего плана и фона при заливке?</li>
+          <li>Для чего предназначены инструменты цветокоррекции?</li>
+          <li>Чем изменение яркости отличается от изменения насыщенности?</li>
+          <li>Как инструмент «Цветовой баланс» меняет изображение?</li>
+          <li>Почему перед цветокоррекцией важно выбрать нужный слой?</li>
+          <li>Чем сохранение проекта XCF отличается от экспорта в PNG?</li>
+        </ol>
+      </section>
+    </main>
+    <footer>GIMP COLOR LAB · Информатика · 10–11 классы · Заливка и инструменты цвета · Практическое занятие</footer>
+  </div>
+</body>
+</html>
