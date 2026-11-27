@@ -1,0 +1,2397 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Информатика, 6 класс. Коррекция знаний, отношения объектов и их множеств. Практическая работа № 4 в Paint.">
+  <title>Лаборатория объектов — Информатика, 6 класс</title>
+
+  <style>
+    /* 1. Основа: учебная лаборатория с клетчатой подложкой */
+
+    :root {
+      --bg: #edf3ef;
+      --paper: #fffefa;
+      --ink: #183641;
+      --muted: #60747a;
+      --forest: #143d44;
+      --teal: #178d7f;
+      --mint: #ddf5ec;
+      --yellow: #ffd47e;
+      --peach: #fff0de;
+      --purple: #eee9ff;
+      --line: #d5e5de;
+      --shadow: 0 14px 35px rgba(17,56,55,.08);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(#26756d0a 1px, transparent 1px),
+        linear-gradient(90deg, #26756d0a 1px, transparent 1px);
+      background-size: 26px 26px;
+      overflow-wrap: anywhere;
+    }
+
+    h1, h2, h3, p, figure {
+      margin-top: 0;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.23;
+    }
+
+    p {
+      margin-bottom: 13px;
+    }
+
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: #176d7e;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #e7aa35;
+      outline-offset: 3px;
+    }
+
+    .page {
+      width: min(1110px, calc(100% - 32px));
+      margin: auto;
+      padding: 20px 0 40px;
+    }
+
+    .skip {
+      position: absolute;
+      top: -100px;
+      left: 12px;
+      padding: 10px;
+      background: white;
+      z-index: 10;
+    }
+
+    .skip:focus {
+      top: 10px;
+    }
+
+    /* 2. Обложка и иллюстрация */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background: var(--forest);
+      border-radius: 27px;
+      box-shadow: 0 20px 45px #194b502e;
+    }
+
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 92% 10%, #80e6b52e, transparent 43%),
+        radial-gradient(circle at 15% 90%, #74a4e01a, transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 32px;
+      align-items: center;
+      padding: 44px 42px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 11px;
+      border: 1px solid #ffffff55;
+      border-radius: 40px;
+      background: #ffffff16;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .05em;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(37px, 5.3vw, 61px);
+      letter-spacing: -.045em;
+      margin-bottom: 15px;
+      line-height: 1.07;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--yellow);
+    }
+
+    .hero p {
+      color: #ddf2ef;
+      font-size: 16px;
+      max-width: 510px;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 19px;
+    }
+
+    .hero-tags span {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: #ffffff14;
+      border: 1px solid #ffffff30;
+    }
+
+    .hero-paper {
+      padding: 15px;
+      border-radius: 21px;
+      background: #fffdf4;
+      color: var(--ink);
+      transform: rotate(2deg);
+      box-shadow: 0 15px 25px #061f2345;
+    }
+
+    .paper-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #688078;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .07em;
+      border-bottom: 1px dashed #c5dad0;
+      padding-bottom: 8px;
+    }
+
+    .hero-paper svg {
+      width: 100%;
+      height: auto;
+      margin: 4px 0;
+    }
+
+    .paper-bottom {
+      font-size: 12px;
+      text-align: center;
+      color: #4e736b;
+      font-weight: 750;
+    }
+
+    /* 3. Навигация и основные контейнеры */
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .nav a {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 50px;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #38645f;
+      font-size: 13px;
+      font-weight: 780;
+    }
+
+    .nav a:hover {
+      background: var(--mint);
+    }
+
+    .section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 22px;
+      padding: 32px 35px;
+      margin-top: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin-bottom: 19px;
+    }
+
+    .section-num {
+      flex: 0 0 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: #dff2eb;
+      color: #167c70;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .section h2 {
+      margin: 2px 0 4px;
+      font-size: clamp(24px, 3.5vw, 31px);
+    }
+
+    .section h3 {
+      font-size: 19px;
+      margin: 21px 0 10px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lead {
+      font-size: 17px;
+    }
+
+    .grid2, .grid3 {
+      display: grid;
+      gap: 13px;
+      margin: 17px 0;
+    }
+
+    .grid2 {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+
+    .grid3 {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+
+    .card {
+      min-width: 0;
+      background: #f9fcf9;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      margin: 0 0 6px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card .emoji {
+      display: block;
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .card.yellow {
+      background: #fff7e5;
+      border-color: #f4e4bd;
+    }
+
+    .card.mint {
+      background: #e8f9f0;
+    }
+
+    .card.purple {
+      background: #f4f1ff;
+      border-color: #e4dcfa;
+    }
+
+    .callout {
+      padding: 16px 19px;
+      margin: 17px 0;
+      border-left: 5px solid var(--teal);
+      border-radius: 0 12px 12px 0;
+      background: var(--mint);
+    }
+
+    .callout.warn {
+      background: var(--peach);
+      border-color: #e4a354;
+    }
+
+    .callout.purple {
+      background: var(--purple);
+      border-color: #9074bd;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #e5f5ee;
+      color: #166a60;
+      font-weight: 800;
+      font-size: .93em;
+    }
+
+    /* 4. Схемы отношений и переключатель */
+
+    .relationship-studio {
+      border: 1px solid #c9ddd5;
+      border-radius: 19px;
+      overflow: hidden;
+      background: #eff8f3;
+      margin: 20px 0;
+    }
+
+    .studio-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 13px;
+      padding: 15px 18px;
+      background: #def1e9;
+    }
+
+    .studio-head strong {
+      font-size: 15px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .tabs button {
+      border: 1px solid #aacfc1;
+      border-radius: 9px;
+      padding: 7px 10px;
+      background: #fff;
+      color: #31695d;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .tabs button[aria-pressed="true"] {
+      background: var(--forest);
+      border-color: var(--forest);
+      color: white;
+    }
+
+    .studio-body {
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(220px,.85fr);
+      gap: 12px;
+      align-items: center;
+      padding: 19px;
+    }
+
+    .diagram-stage {
+      background: #fff;
+      border: 1px solid #d8e6de;
+      border-radius: 14px;
+      min-width: 0;
+      padding: 6px;
+    }
+
+    .diagram-stage svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .relation-case {
+      display: none;
+    }
+
+    .relation-case.active {
+      display: block;
+    }
+
+    .studio-explain {
+      font-size: 15px;
+    }
+
+    .studio-explain strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .studio-explain p {
+      color: #4f6963;
+    }
+
+    .legend {
+      font-size: 12px;
+      color: #627b73;
+    }
+
+    .relationship-minis {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin: 12px 0 0;
+    }
+
+    .relationship-minis span {
+      font-size: 12px;
+      font-weight: 760;
+      padding: 5px 8px;
+      background: #fff;
+      border: 1px solid #d3e6dc;
+      border-radius: 7px;
+    }
+
+    /* 5. Инструменты Paint и иллюстрации */
+
+    .toolbelt {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin: 19px 0;
+    }
+
+    .tool {
+      padding: 13px 8px;
+      border: 1px solid #dae8df;
+      border-radius: 13px;
+      text-align: center;
+      background: #f7fcfa;
+      font-size: 13px;
+      font-weight: 770;
+    }
+
+    .tool b {
+      display: block;
+      font-size: 25px;
+      margin-bottom: 4px;
+    }
+
+    .task {
+      border: 1px solid #d6e3df;
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 19px 0;
+      background: #fff;
+    }
+
+    .task-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      background: #173e44;
+      color: white;
+      padding: 13px 17px;
+    }
+
+    .task-bar h3 {
+      margin: 0;
+      color: white;
+      font-size: 19px;
+    }
+
+    .task-bar span {
+      font-size: 11px;
+      font-weight: 850;
+      color: #e5ffe8;
+      letter-spacing: .05em;
+    }
+
+    .task-body {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,.93fr);
+      gap: 18px;
+      align-items: start;
+      padding: 19px;
+    }
+
+    .task ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .task li {
+      padding-left: 2px;
+      margin: 6px 0;
+      font-size: 15px;
+    }
+
+    .preview {
+      border: 1px solid #d8e8df;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #edf6f1;
+    }
+
+    .preview svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .preview figcaption {
+      padding: 10px 11px;
+      text-align: center;
+      color: #53766b;
+      font-size: 12px;
+      background: #f8fcf8;
+    }
+
+    .task-tips {
+      padding: 13px 18px;
+      border-top: 1px solid #e1ede5;
+      background: #f1faf5;
+      font-size: 13px;
+      color: #416e60;
+    }
+
+    details {
+      margin: 13px 0;
+      border: 1px solid #d7e7de;
+      border-radius: 11px;
+      padding: 11px 14px;
+      background: #f9fcfa;
+    }
+
+    summary {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 830;
+      color: #136f62;
+    }
+
+    details p {
+      font-size: 14px;
+      margin: 10px 0 0;
+      color: #4c6661;
+    }
+
+    /* 6. Чек-лист и вопросы */
+
+    .check-panel {
+      background: #f0f8f4;
+      border: 1px solid #d6e8de;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 17px 0;
+    }
+
+    .check-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 9px;
+      font-weight: 850;
+    }
+
+    .check-top span {
+      color: #168573;
+    }
+
+    progress {
+      display: block;
+      width: 100%;
+      height: 14px;
+      accent-color: #168f7f;
+      margin: 10px 0 15px;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      border: 1px solid #d7e8df;
+      background: #fff;
+      padding: 11px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .check input {
+      width: 17px;
+      height: 17px;
+      margin: 4px 0 0;
+      flex: 0 0 auto;
+      accent-color: var(--teal);
+    }
+
+    .check:has(input:checked) {
+      background: #e0f7ed;
+      border-color: #a5d8c3;
+    }
+
+    .reset {
+      cursor: pointer;
+      margin-top: 12px;
+      background: #fff;
+      border: 1px solid #afd2c4;
+      border-radius: 9px;
+      padding: 8px 13px;
+      color: #246e61;
+      font-weight: 780;
+      font-size: 13px;
+    }
+
+    .questions {
+      list-style: none;
+      counter-reset: q;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 11px;
+      padding: 0;
+      margin: 18px 0 0;
+    }
+
+    .questions li {
+      position: relative;
+      counter-increment: q;
+      min-height: 76px;
+      padding: 15px 13px 15px 56px;
+      border: 1px solid #dce8e0;
+      border-radius: 12px;
+      background: #f9fcfa;
+      font-size: 14px;
+    }
+
+    .questions li:before {
+      content: counter(q,decimal-leading-zero);
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      width: 31px;
+      height: 31px;
+      border-radius: 10px;
+      background: #dff1e9;
+      color: #15796a;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: #71867f;
+      padding: 23px 8px 0;
+      font-size: 12px;
+    }
+
+    /* 7. Планшеты, телефоны и печать */
+
+    @media (max-width:850px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        padding: 33px 28px;
+      }
+
+      .hero-paper {
+        max-width: 530px;
+        transform: none;
+      }
+
+      .studio-body,
+      .task-body {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-stage,
+      .task .preview {
+        max-width: 550px;
+      }
+
+      .section {
+        padding: 27px 24px;
+      }
+    }
+
+    @media (max-width:610px) {
+      .page {
+        width: calc(100% - 20px);
+        padding-top: 10px;
+      }
+
+      .hero {
+        border-radius: 21px;
+      }
+
+      .hero-grid {
+        padding: 28px 19px;
+      }
+
+      .hero h1 {
+        font-size: 37px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .section {
+        padding: 22px 16px;
+        border-radius: 18px;
+        margin-top: 15px;
+      }
+
+      .section-head {
+        gap: 9px;
+      }
+
+      .section-num {
+        flex-basis: 36px;
+        height: 36px;
+      }
+
+      .section h2 {
+        font-size: 23px;
+      }
+
+      .grid2,
+      .grid3,
+      .questions,
+      .check-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbelt {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .studio-body {
+        padding: 12px;
+      }
+
+      .task-body {
+        padding: 15px;
+      }
+
+      .studio-head {
+        padding: 12px;
+      }
+
+      .tabs button {
+        font-size: 11px;
+        padding: 7px 8px;
+      }
+    }
+
+    @media (max-width:350px) {
+      .section {
+        padding: 19px 12px;
+      }
+
+      .hero-grid {
+        padding: 25px 15px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        width: 100%;
+      }
+
+      .nav,
+      .tabs,
+      .reset {
+        display: none;
+      }
+
+      .hero,
+      .section {
+        box-shadow: none;
+      }
+
+      .section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#content">Перейти к уроку</a>
+
+  <div class="page">
+
+    <!-- ОБЛОЖКА -->
+
+    <header class="hero" id="top">
+      <div class="hero-grid">
+
+        <div>
+          <span class="eyebrow">
+            ИНФОРМАТИКА · 6 КЛАСС · ПРАКТИЧЕСКАЯ РАБОТА № 4
+          </span>
+
+          <h1>Лаборатория <em>объектов</em></h1>
+
+          <p>
+            Исправим пробелы в знаниях, разберёмся,
+            как связаны объекты и множества,
+            а затем нарисуем эти отношения
+            в графическом редакторе Paint.
+          </p>
+
+          <div class="hero-tags">
+            <span>🧠 Повторяем</span>
+            <span>◎ Круги Эйлера</span>
+            <span>🎨 Работаем в Paint</span>
+          </div>
+        </div>
+
+        <div class="hero-paper">
+
+          <div class="paper-top">
+            <span>ЛАБОРАТОРНАЯ КАРТОЧКА</span>
+            <span>№ 04</span>
+          </div>
+
+          <svg
+            viewBox="0 0 450 270"
+            role="img"
+            aria-label="Схема: большой круг школьных принадлежностей и маленький круг письменных принадлежностей внутри"
+          >
+
+            <defs>
+              <pattern
+                id="graphpaper"
+                width="18"
+                height="18"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M18 0H0V18"
+                  fill="none"
+                  stroke="#dcece4"
+                  stroke-width="1"
+                />
+              </pattern>
+            </defs>
+
+            <rect
+              width="450"
+              height="270"
+              fill="url(#graphpaper)"
+            />
+
+            <ellipse
+              cx="218"
+              cy="136"
+              rx="178"
+              ry="112"
+              fill="#dff5ea"
+              stroke="#1d9e8b"
+              stroke-width="4"
+            />
+
+            <ellipse
+              cx="218"
+              cy="162"
+              rx="100"
+              ry="61"
+              fill="#fff0c7"
+              stroke="#c18b36"
+              stroke-width="4"
+            />
+
+            <text
+              x="218" y="55"
+              font-size="18"
+              text-anchor="middle"
+              fill="#23665c"
+              font-weight="800"
+            >
+              Школьные принадлежности
+            </text>
+
+            <text
+              x="218" y="137"
+              font-size="15"
+              text-anchor="middle"
+              fill="#7b5924"
+              font-weight="800"
+            >
+              Письменные
+            </text>
+
+            <text
+              x="218" y="154"
+              font-size="15"
+              text-anchor="middle"
+              fill="#7b5924"
+              font-weight="800"
+            >
+              принадлежности
+            </text>
+
+            <text
+              x="218" y="181"
+              font-size="14"
+              text-anchor="middle"
+              fill="#6a5c3a"
+            >
+              ✏ карандаш · ручка
+            </text>
+
+            <text
+              x="102" y="128"
+              font-size="16"
+              text-anchor="middle"
+              fill="#356a62"
+            >
+              тетрадь
+            </text>
+
+            <text
+              x="335" y="132"
+              font-size="16"
+              text-anchor="middle"
+              fill="#356a62"
+            >
+              линейка
+            </text>
+
+            <path
+              d="M110 237 Q218 261 325 237"
+              fill="none"
+              stroke="#46a493"
+              stroke-width="2"
+              stroke-dasharray="5 5"
+            />
+          </svg>
+
+          <div class="paper-bottom">
+            Наглядная связь двух множеств
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- НАВИГАЦИЯ -->
+
+    <nav class="nav" aria-label="Разделы урока">
+      <a href="#revision">🧠 Повторение</a>
+      <a href="#concepts">🔎 Объекты и отношения</a>
+      <a href="#sets">◎ Круги Эйлера</a>
+      <a href="#tools">🎨 Paint</a>
+      <a href="#practice">💻 Задания</a>
+      <a href="#check">✅ Проверка</a>
+      <a href="#questions">❓ 12 вопросов</a>
+    </nav>
+
+    <main id="content">
+
+      <!-- 01. КОРРЕКЦИЯ ЗНАНИЙ -->
+
+      <section class="section" id="revision">
+
+        <div class="section-head">
+          <span class="section-num">01</span>
+
+          <div>
+            <h2>Вернёмся к изученному</h2>
+            <p class="sub">
+              Повторение после темы
+              «Теоретические основы информатики».
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Вспомним понятия, которые изучали ранее.
+          Если в контрольной работе возникли затруднения,
+          разберём соответствующие примеры и исправим ошибки.
+        </p>
+
+        <div class="grid3">
+
+          <article class="card">
+            <span class="emoji">🔄</span>
+            <h3>Информационные процессы</h3>
+
+            <p>
+              Получение, хранение, передача
+              и обработка информации.
+            </p>
+          </article>
+
+          <article class="card yellow">
+            <span class="emoji">🔐</span>
+            <h3>Кодирование</h3>
+
+            <p>
+              Представление информации
+              с помощью условных знаков и правил.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="emoji">0️⃣1️⃣</span>
+            <h3>Двоичный код</h3>
+
+            <p>
+              Для представления данных компьютер
+              использует последовательности нулей и единиц.
+            </p>
+          </article>
+
+          <article class="card mint">
+            <span class="emoji">📏</span>
+            <h3>Измерение информации</h3>
+
+            <p>
+              Бит и байт — единицы измерения
+              объёма информации. 1 байт = 8 бит.
+            </p>
+          </article>
+
+          <article class="card purple">
+            <span class="emoji">📊</span>
+            <h3>Формы представления</h3>
+
+            <p>
+              Текст, таблица, схема, рисунок и диаграмма
+              помогают представлять сведения.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="emoji">🛠️</span>
+            <h3>Исправляем ошибки</h3>
+
+            <p>
+              Находим неверный шаг, выясняем причину
+              и повторяем решение правильно.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="callout warn">
+          <strong>Важно:</strong>
+          разбор ошибок зависит от результатов вашей
+          контрольной работы. Учитель поможет повторить
+          именно те вопросы, которые оказались сложными.
+        </div>
+
+      </section>
+
+      <!-- 02. ОБЪЕКТ И МНОЖЕСТВО -->
+
+      <section class="section" id="concepts">
+
+        <div class="section-head">
+          <span class="section-num">02</span>
+
+          <div>
+            <h2>Объекты, множества и отношения</h2>
+
+            <p class="sub">
+              Различаем предметы и связи между ними.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid2">
+
+          <article class="card mint">
+            <span class="emoji">📘</span>
+            <h3>Объект</h3>
+
+            <p>
+              Предмет, явление или процесс, который
+              мы рассматриваем. Например:
+              тетрадь, дерево, компьютер.
+            </p>
+          </article>
+
+          <article class="card yellow">
+            <span class="emoji">🗂️</span>
+            <h3>Множество</h3>
+
+            <p>
+              Совокупность объектов, рассматриваемых вместе.
+              Например: множество школьных принадлежностей.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="callout">
+          <strong>Отношение</strong> — связь между объектами,
+          объектом и множеством или двумя множествами.
+        </div>
+
+        <div class="grid3">
+
+          <article class="card">
+            <h3>↔ Между объектами</h3>
+
+            <p>
+              Карандаш длиннее ластика.
+              Книга лежит на столе.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>∈ Объект и множество</h3>
+
+            <p>
+              Ручка принадлежит множеству
+              школьных принадлежностей.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>◎ Между множествами</h3>
+
+            <p>
+              Множество письменных принадлежностей
+              входит в более широкое множество
+              школьных принадлежностей.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="callout purple">
+          <strong>Не путай:</strong>
+          окно <strong>входит в состав</strong> дома
+          как его часть, а ручка
+          <strong>принадлежит множеству</strong>
+          школьных принадлежностей как один из элементов.
+        </div>
+
+      </section>
+
+      <!-- 03. КРУГИ ЭЙЛЕРА -->
+
+      <section class="section" id="sets">
+
+        <div class="section-head">
+          <span class="section-num">03</span>
+
+          <div>
+            <h2>Как изобразить отношения множеств?</h2>
+
+            <p class="sub">
+              Круги Эйлера помогают увидеть связи на схеме.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Множества можно изображать замкнутыми контурами.
+          Положение кругов показывает, как связаны
+          их элементы. Выбери тип отношения
+          и сравни примеры.
+        </p>
+
+        <div class="relationship-studio">
+
+          <div class="studio-head">
+            <strong>◎ Атлас отношений</strong>
+
+            <div
+              class="tabs"
+              role="group"
+              aria-label="Тип отношения между множествами"
+            >
+
+              <button
+                type="button"
+                data-relation="inside"
+                aria-pressed="true"
+              >
+                Вложение
+              </button>
+
+              <button
+                type="button"
+                data-relation="overlap"
+                aria-pressed="false"
+              >
+                Пересечение
+              </button>
+
+              <button
+                type="button"
+                data-relation="separate"
+                aria-pressed="false"
+              >
+                Нет общих
+              </button>
+
+            </div>
+          </div>
+
+          <div class="studio-body">
+
+            <div class="diagram-stage">
+
+              <svg
+                viewBox="0 0 460 275"
+                role="img"
+                aria-label="Интерактивные схемы отношений между множествами"
+              >
+
+                <!-- ВЛОЖЕНИЕ -->
+
+                <g
+                  class="relation-case active"
+                  data-case="inside"
+                >
+
+                  <ellipse
+                    cx="230" cy="137"
+                    rx="184" ry="113"
+                    fill="#d9f4e7"
+                    stroke="#1c9784"
+                    stroke-width="4"
+                  />
+
+                  <ellipse
+                    cx="230" cy="162"
+                    rx="100" ry="60"
+                    fill="#fff0c6"
+                    stroke="#cb9842"
+                    stroke-width="4"
+                  />
+
+                  <text
+                    x="230" y="59"
+                    text-anchor="middle"
+                    fill="#235d55"
+                    font-size="18"
+                    font-weight="800"
+                  >
+                    Школьные принадлежности
+                  </text>
+
+                  <text
+                    x="230" y="139"
+                    text-anchor="middle"
+                    fill="#805e28"
+                    font-size="16"
+                    font-weight="800"
+                  >
+                    Письменные
+                  </text>
+
+                  <text
+                    x="230" y="158"
+                    text-anchor="middle"
+                    fill="#805e28"
+                    font-size="16"
+                    font-weight="800"
+                  >
+                    принадлежности
+                  </text>
+
+                  <text
+                    x="230" y="182"
+                    text-anchor="middle"
+                    fill="#685c43"
+                    font-size="14"
+                  >
+                    ручка, карандаш
+                  </text>
+
+                  <text
+                    x="96" y="133"
+                    text-anchor="middle"
+                    font-size="15"
+                    fill="#316e63"
+                  >
+                    тетрадь
+                  </text>
+
+                  <text
+                    x="355" y="133"
+                    text-anchor="middle"
+                    font-size="15"
+                    fill="#316e63"
+                  >
+                    линейка
+                  </text>
+
+                </g>
+
+                <!-- ПЕРЕСЕЧЕНИЕ -->
+
+                <g
+                  class="relation-case"
+                  data-case="overlap"
+                >
+
+                  <circle
+                    cx="176" cy="142"
+                    r="112"
+                    fill="#bde9d7"
+                    fill-opacity=".79"
+                    stroke="#1c9784"
+                    stroke-width="4"
+                  />
+
+                  <circle
+                    cx="284" cy="142"
+                    r="112"
+                    fill="#ffdda7"
+                    fill-opacity=".65"
+                    stroke="#cb9842"
+                    stroke-width="4"
+                  />
+
+                  <text
+                    x="119" y="93"
+                    text-anchor="middle"
+                    font-size="18"
+                    fill="#205d53"
+                    font-weight="800"
+                  >
+                    Школьники
+                  </text>
+
+                  <text
+                    x="338" y="93"
+                    text-anchor="middle"
+                    font-size="18"
+                    fill="#8a6023"
+                    font-weight="800"
+                  >
+                    Футболисты
+                  </text>
+
+                  <text
+                    x="230" y="149"
+                    text-anchor="middle"
+                    font-size="14"
+                    fill="#314d49"
+                    font-weight="800"
+                  >
+                    Школьники,
+                  </text>
+
+                  <text
+                    x="230" y="166"
+                    text-anchor="middle"
+                    font-size="14"
+                    fill="#314d49"
+                    font-weight="800"
+                  >
+                    играющие
+                  </text>
+
+                  <text
+                    x="230" y="183"
+                    text-anchor="middle"
+                    font-size="14"
+                    fill="#314d49"
+                    font-weight="800"
+                  >
+                    в футбол
+                  </text>
+
+                </g>
+
+                <!-- БЕЗ ОБЩИХ ЭЛЕМЕНТОВ -->
+
+                <g
+                  class="relation-case"
+                  data-case="separate"
+                >
+
+                  <circle
+                    cx="122" cy="138"
+                    r="94"
+                    fill="#c6eddf"
+                    stroke="#1c9784"
+                    stroke-width="4"
+                  />
+
+                  <circle
+                    cx="338" cy="138"
+                    r="94"
+                    fill="#ffe0b4"
+                    stroke="#cb9842"
+                    stroke-width="4"
+                  />
+
+                  <text
+                    x="122" y="145"
+                    text-anchor="middle"
+                    fill="#205f54"
+                    font-size="20"
+                    font-weight="800"
+                  >
+                    Кошки
+                  </text>
+
+                  <text
+                    x="338" y="145"
+                    text-anchor="middle"
+                    fill="#865e2a"
+                    font-size="20"
+                    font-weight="800"
+                  >
+                    Собаки
+                  </text>
+
+                </g>
+
+              </svg>
+
+            </div>
+
+            <div
+              class="studio-explain"
+              aria-live="polite"
+            >
+
+              <strong id="relation-title">
+                Одно множество входит в другое
+              </strong>
+
+              <p id="relation-description">
+                Все письменные принадлежности из этого
+                примера относятся к школьным принадлежностям,
+                но не каждая школьная принадлежность
+                является письменной.
+              </p>
+
+              <div class="relationship-minis">
+                <span>Зелёный — множество A</span>
+                <span>Жёлтый — множество B</span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="callout green">
+          <strong>Для практической работы:</strong>
+          нам потребуется первый вариант — один овал
+          полностью внутри другого. Именно так мы покажем
+          отношение двух множеств школьных принадлежностей.
+        </div>
+
+      </section>
+
+      <!-- 04. ИНСТРУМЕНТЫ PAINT -->
+
+      <section class="section" id="tools">
+
+        <div class="section-head">
+          <span class="section-num">04</span>
+
+          <div>
+            <h2>Вспомним инструменты Paint</h2>
+
+            <p class="sub">
+              Повторяем действия, которые уже умеем выполнять.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Графический редактор помогает не только рисовать
+          предметы, но и делать понятные схемы.
+          Для сегодняшней работы понадобятся
+          основные инструменты:
+        </p>
+
+        <div class="toolbelt">
+
+          <div class="tool">
+            <b>✏️</b>Карандаш
+          </div>
+
+          <div class="tool">
+            <b>🖌️</b>Кисть
+          </div>
+
+          <div class="tool">
+            <b>▭</b>Прямоугольник
+          </div>
+
+          <div class="tool">
+            <b>◯</b>Овал
+          </div>
+
+          <div class="tool">
+            <b>／</b>Линия
+          </div>
+
+          <div class="tool">
+            <b>🪣</b>Заливка
+          </div>
+
+          <div class="tool">
+            <b>🔤</b>Текст
+          </div>
+
+          <div class="tool">
+            <b>▧</b>Выделение
+          </div>
+
+        </div>
+
+        <div class="grid2">
+
+          <div class="card">
+            <h3>Копирование и перемещение</h3>
+
+            <p>
+              Выделенный фрагмент можно скопировать
+              и поместить в другую часть рисунка,
+              например повторить окно.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Цвет и исправление</h3>
+
+            <p>
+              Выбирай цвет контура, применяй заливку;
+              ошибки можно исправить ластиком
+              или командой отмены.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="callout warn">
+          <strong>Перед началом:</strong>
+          проверь, какой цвет и тип заливки выбран
+          для овала. Чтобы один контур не перекрывал
+          другой, удобно использовать фигуры
+          без внутренней заливки.
+        </div>
+
+      </section>
+
+      <!-- 05. ПРАКТИЧЕСКАЯ РАБОТА -->
+
+      <section class="section" id="practice">
+
+        <div class="section-head">
+          <span class="section-num">05</span>
+
+          <div>
+            <h2>Практическая работа № 4</h2>
+
+            <p class="sub">
+              «Повторяем возможности графического редактора».
+            </p>
+          </div>
+        </div>
+
+        <p class="lead">
+          Выполни задания в <strong>Paint</strong>.
+          В первом рисунке покажи отношение
+          «часть — целое», во втором —
+          отношение между множествами.
+        </p>
+
+        <!-- ЗАДАНИЕ 1: ДОМ И ЕГО ЧАСТИ -->
+
+        <article class="task">
+
+          <div class="task-bar">
+            <h3>🏠 Задание 1. «Дом и его части»</h3>
+            <span>РИСУНОК 1</span>
+          </div>
+
+          <div class="task-body">
+
+            <div>
+
+              <ol>
+                <li>Создай новый рисунок в Paint.</li>
+
+                <li>
+                  Нарисуй прямоугольные стены и крышу
+                  с помощью линий или многоугольника.
+                </li>
+
+                <li>
+                  Добавь окна, дверь и другие детали.
+                </li>
+
+                <li>
+                  Раскрась элементы инструментом «Заливка».
+                </li>
+
+                <li>
+                  Добавь подписи «Крыша», «Окно», «Дверь»
+                  инструментом «Текст».
+                </li>
+
+                <li>
+                  Объясни, как части связаны с домом.
+                </li>
+              </ol>
+
+              <details>
+                <summary>Подсказка</summary>
+
+                <p>
+                  Крыша, окно и дверь входят в состав дома.
+                  Это отношение между целым объектом
+                  и его частями.
+                </p>
+              </details>
+
+            </div>
+
+            <figure class="preview">
+
+              <svg
+                viewBox="0 0 440 295"
+                role="img"
+                aria-label="Образец домика с подписями крыша, окно, дверь"
+              >
+
+                <rect
+                  width="440"
+                  height="295"
+                  fill="#e9f5ff"
+                />
+
+                <rect
+                  y="235"
+                  width="440"
+                  height="60"
+                  fill="#cbeccf"
+                />
+
+                <rect
+                  x="114" y="127"
+                  width="208" height="118"
+                  fill="#ffdfac"
+                  stroke="#a56a45"
+                  stroke-width="4"
+                />
+
+                <path
+                  d="M92 132 L218 38 L345 132 Z"
+                  fill="#d87865"
+                  stroke="#a14e48"
+                  stroke-width="5"
+                  stroke-linejoin="round"
+                />
+
+                <rect
+                  x="140" y="158"
+                  width="55" height="51"
+                  fill="#c0edfb"
+                  stroke="#587d9b"
+                  stroke-width="4"
+                />
+
+                <path
+                  d="M167 158 V209 M140 184 H195"
+                  stroke="#587d9b"
+                  stroke-width="3"
+                />
+
+                <rect
+                  x="240" y="168"
+                  width="53" height="77"
+                  fill="#a57863"
+                  stroke="#745143"
+                  stroke-width="4"
+                />
+
+                <circle
+                  cx="280" cy="208"
+                  r="4"
+                  fill="#f8e1a5"
+                />
+
+                <g
+                  stroke="#436f71"
+                  stroke-width="2"
+                  fill="none"
+                  stroke-linecap="round"
+                >
+
+                  <path d="M219 45 L327 17 H373"/>
+                  <path d="M168 182 L64 161 H23"/>
+                  <path d="M290 206 L362 223 H421"/>
+
+                </g>
+
+                <g
+                  fill="#315e64"
+                  font-size="16"
+                  font-weight="800"
+                >
+
+                  <text x="334" y="14">Крыша</text>
+                  <text x="18" y="155">Окно</text>
+                  <text x="356" y="218">Дверь</text>
+
+                </g>
+
+              </svg>
+
+              <figcaption>
+                Пример: дом состоит из отдельных элементов.
+              </figcaption>
+
+            </figure>
+
+          </div>
+        </article>
+
+        <!-- ЗАДАНИЕ 2: ОТНОШЕНИЯ МНОЖЕСТВ -->
+
+        <article class="task">
+
+          <div class="task-bar">
+            <h3>◎ Задание 2. «Отношения множеств»</h3>
+            <span>РИСУНОК 2</span>
+          </div>
+
+          <div class="task-body">
+
+            <div>
+
+              <ol>
+                <li>
+                  Создай новый рисунок для схемы множеств,
+                  чтобы сохранить её в отдельный файл.
+                </li>
+
+                <li>
+                  Нарисуй большой овал и подпиши
+                  «Школьные принадлежности».
+                </li>
+
+                <li>
+                  Внутри большого овала нарисуй меньший
+                  с подписью «Письменные принадлежности».
+                </li>
+
+                <li>
+                  В малом овале напиши
+                  «Ручка» и «Карандаш».
+                </li>
+
+                <li>
+                  В большом овале за пределами малого
+                  напиши «Тетрадь» и «Линейка».
+                </li>
+
+                <li>
+                  Объясни, почему меньший овал
+                  находится внутри большего.
+                </li>
+              </ol>
+
+              <details>
+                <summary>Подсказка</summary>
+
+                <p>
+                  Ручка и карандаш относятся к обеим группам;
+                  тетрадь и линейка в нашей схеме относятся
+                  к большому множеству, но не входят
+                  в выбранное множество письменных
+                  принадлежностей.
+                </p>
+              </details>
+
+            </div>
+
+            <figure class="preview">
+
+              <svg
+                viewBox="0 0 440 295"
+                role="img"
+                aria-label="Схема в Paint: маленький овал письменных принадлежностей внутри большого овала школьных принадлежностей"
+              >
+
+                <rect
+                  width="440"
+                  height="295"
+                  fill="#f7fcf9"
+                />
+
+                <ellipse
+                  cx="218" cy="148"
+                  rx="193" ry="131"
+                  fill="#d9f4e6"
+                  stroke="#1a9383"
+                  stroke-width="4"
+                />
+
+                <ellipse
+                  cx="218" cy="177"
+                  rx="107" ry="73"
+                  fill="#fff0c9"
+                  stroke="#c28d3b"
+                  stroke-width="4"
+                />
+
+                <text
+                  x="218" y="53"
+                  font-size="19"
+                  font-weight="800"
+                  fill="#276a60"
+                  text-anchor="middle"
+                >
+                  Школьные принадлежности
+                </text>
+
+                <text
+                  x="218" y="148"
+                  font-size="17"
+                  font-weight="800"
+                  fill="#84602d"
+                  text-anchor="middle"
+                >
+                  Письменные
+                </text>
+
+                <text
+                  x="218" y="166"
+                  font-size="17"
+                  font-weight="800"
+                  fill="#84602d"
+                  text-anchor="middle"
+                >
+                  принадлежности
+                </text>
+
+                <text
+                  x="218" y="192"
+                  font-size="15"
+                  fill="#755d39"
+                  text-anchor="middle"
+                >
+                  Ручка · Карандаш
+                </text>
+
+                <text
+                  x="80" y="148"
+                  font-size="17"
+                  fill="#356e64"
+                  text-anchor="middle"
+                >
+                  Тетрадь
+                </text>
+
+                <text
+                  x="365" y="148"
+                  font-size="17"
+                  fill="#356e64"
+                  text-anchor="middle"
+                >
+                  Линейка
+                </text>
+
+              </svg>
+
+              <figcaption>
+                Пример: одно множество включено в другое.
+              </figcaption>
+
+            </figure>
+
+          </div>
+        </article>
+
+        <!-- ЗАДАНИЕ 3: РЕДАКТИРОВАНИЕ -->
+
+        <article class="task">
+
+          <div class="task-bar">
+            <h3>✂️ Задание 3. «Отредактируй и сохрани»</h3>
+            <span>ПРОВЕРКА</span>
+          </div>
+
+          <div class="task-body">
+
+            <div>
+
+              <ol>
+                <li>
+                  Вернись к рисунку дома.
+                </li>
+
+                <li>
+                  Выдели окно и скопируй его,
+                  чтобы добавить второе.
+                </li>
+
+                <li>
+                  При необходимости измени размер
+                  или расположение фрагментов.
+                </li>
+
+                <li>
+                  Исправь неточности и проверь подписи.
+                </li>
+
+                <li>
+                  Сохрани два файла:
+                  <strong>«Дом и его части.png»</strong>
+                  и
+                  <strong>«Отношения множеств.png»</strong>.
+                </li>
+              </ol>
+
+              <details>
+                <summary>Подсказка по копированию</summary>
+
+                <p>
+                  Используй инструмент «Выделение»,
+                  затем скопируй выделенный фрагмент
+                  и вставь его. На растровом рисунке
+                  при копировании важно учитывать
+                  фон вокруг окна.
+                </p>
+              </details>
+
+            </div>
+
+            <div class="card mint">
+              <span class="emoji">💾</span>
+
+              <h3>Что нужно сдать?</h3>
+
+              <p>
+                Два файла PNG: рисунок дома с подписями
+                и схема вложенных множеств.
+
+                Проверь, что оба файла открываются
+                и рисунки не обрезаны.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="task-tips">
+            <strong>Критерии:</strong>
+            правильность отношений, использование
+            инструментов Paint, аккуратность
+            и сохранение результата.
+          </div>
+
+        </article>
+
+      </section>
+
+      <!-- 06. САМОПРОВЕРКА -->
+
+      <section class="section" id="check">
+
+        <div class="section-head">
+          <span class="section-num">06</span>
+
+          <div>
+            <h2>Проверка работы</h2>
+
+            <p class="sub">
+              Отметь то, что действительно
+              выполнил за компьютером.
+            </p>
+          </div>
+        </div>
+
+        <div class="check-panel">
+
+          <div class="check-top">
+            <strong>Мой прогресс</strong>
+
+            <span id="check-count" aria-live="polite">
+              0 из 6
+            </span>
+          </div>
+
+          <progress
+            id="check-progress"
+            value="0"
+            max="6"
+          >
+            0 из 6
+          </progress>
+
+          <div class="check-grid">
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Нарисован дом из геометрических фигур
+            </label>
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Дом раскрашен, все части подписаны
+            </label>
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Построены вложенные круги Эйлера
+            </label>
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Названия предметов расположены правильно
+            </label>
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Второе окно добавлено копированием
+            </label>
+
+            <label class="check">
+              <input type="checkbox" class="done">
+              Оба рисунка сохранены в PNG
+            </label>
+
+          </div>
+
+          <button
+            class="reset"
+            type="button"
+            id="check-reset"
+          >
+            Сбросить отметки
+          </button>
+
+        </div>
+
+        <div class="grid2">
+
+          <div class="card yellow">
+            <h3>⚠️ Что часто идёт не так?</h3>
+
+            <p>
+              Внутренний круг выходит за границу внешнего,
+              заливка скрывает контуры,
+              а текст оказывается не внутри нужной области.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>🔧 Как исправить?</h3>
+
+            <p>
+              Проверь размеры и расположение,
+              выдели нужную область,
+              используй отмену действия
+              и при необходимости перестрой фигуру.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="callout warn">
+          <strong>Без компьютера:</strong>
+          нарисуй в тетради схему двух множеств
+          с подписями и ответь на 12 вопросов ниже.
+
+          Для примера можешь изобразить также дом
+          и подписать его части.
+        </div>
+
+      </section>
+
+      <!-- 07. ИТОГ -->
+
+      <section class="section" id="summary">
+
+        <div class="section-head">
+          <span class="section-num">07</span>
+
+          <div>
+            <h2>Итог лаборатории</h2>
+
+            <p class="sub">
+              Что связывает информатику
+              и работу в графическом редакторе?
+            </p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Главное:</strong>
+          объекты можно объединять во множества
+          и описывать их отношения.
+
+          Круги Эйлера позволяют показать
+          эти связи наглядно, а Paint —
+          самостоятельно создать такую схему.
+        </div>
+
+        <p>
+          <strong>Домашнее задание:</strong>
+          приведи три примера отношений между объектами
+          и нарисуй два множества с помощью кругов Эйлера
+          в тетради.
+        </p>
+
+      </section>
+
+      <!-- 08. РОВНО 12 ВОПРОСОВ -->
+
+      <section class="section" id="questions">
+
+        <div class="section-head">
+          <span class="section-num">08</span>
+
+          <div>
+            <h2>12 вопросов для закрепления</h2>
+
+            <p class="sub">
+              Ответь устно или письменно.
+              При отсутствии компьютера — в тетради.
+            </p>
+          </div>
+        </div>
+
+        <ol class="questions">
+
+          <li>Что называют объектом в информатике?</li>
+
+          <li>Что такое множество объектов?</li>
+
+          <li>Что называют отношением между объектами?</li>
+
+          <li>
+            Приведи два примера отношений
+            между отдельными объектами.
+          </li>
+
+          <li>
+            Что означает принадлежность объекта множеству?
+          </li>
+
+          <li>
+            Чем отношение «входит в состав»
+            отличается от принадлежности множеству?
+          </li>
+
+          <li>
+            В каких отношениях могут находиться
+            два множества?
+          </li>
+
+          <li>Для чего используют круги Эйлера?</li>
+
+          <li>
+            Почему множество письменных принадлежностей
+            изображено внутри множества
+            школьных принадлежностей?
+          </li>
+
+          <li>
+            Какие инструменты Paint позволяют
+            создавать прямоугольники и овалы?
+          </li>
+
+          <li>
+            Как скопировать отдельный фрагмент рисунка?
+          </li>
+
+          <li>
+            В каком формате нужно сохранить готовые
+            изображения и что следует проверить
+            перед сохранением?
+          </li>
+
+        </ol>
+
+      </section>
+
+    </main>
+
+    <footer>
+      Информатика · 6 класс · Отношения объектов
+      и их множеств · Практическая работа № 4
+    </footer>
+
+  </div>
+
+  <script>
+    /* Переключение схем и чек-лист.
+       Интернет и внешние библиотеки не используются. */
+
+    (function () {
+      "use strict";
+
+      const cases = {
+        inside: {
+          title: "Одно множество входит в другое",
+          description:
+            "Все письменные принадлежности из этого " +
+            "примера относятся к школьным принадлежностям, " +
+            "но не каждая школьная принадлежность " +
+            "является письменной."
+        },
+
+        overlap: {
+          title: "Множества пересекаются",
+          description:
+            "Некоторые школьники играют в футбол. " +
+            "Есть школьники, которые не являются футболистами, " +
+            "и футболисты, которые не относятся " +
+            "к множеству школьников."
+        },
+
+        separate: {
+          title: "Множества не имеют общих элементов",
+          description:
+            "Ни один объект не может одновременно " +
+            "быть кошкой и собакой. " +
+            "Поэтому круги не пересекаются."
+        }
+      };
+
+      const buttons = [
+        ...document.querySelectorAll("[data-relation]")
+      ];
+
+      const diagramCases = [
+        ...document.querySelectorAll("[data-case]")
+      ];
+
+      // Переключатель типов отношений.
+
+      buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          const mode = button.dataset.relation;
+
+          buttons.forEach(b => {
+            b.setAttribute(
+              "aria-pressed",
+              String(b.dataset.relation === mode)
+            );
+          });
+
+          diagramCases.forEach(group => {
+            group.classList.toggle(
+              "active",
+              group.dataset.case === mode
+            );
+          });
+
+          document.getElementById(
+            "relation-title"
+          ).textContent = cases[mode].title;
+
+          document.getElementById(
+            "relation-description"
+          ).textContent = cases[mode].description;
+
+        });
+
+      });
+
+      // Интерактивный чек-лист.
+
+      const checks = [
+        ...document.querySelectorAll(".done")
+      ];
+
+      const progress = document.getElementById(
+        "check-progress"
+      );
+
+      const count = document.getElementById(
+        "check-count"
+      );
+
+      function update() {
+
+        const completed = checks.filter(
+          c => c.checked
+        ).length;
+
+        progress.value = completed;
+
+        count.textContent =
+          completed + " из " + checks.length;
+      }
+
+      checks.forEach(c => {
+        c.addEventListener("change", update);
+      });
+
+      document.getElementById(
+        "check-reset"
+      ).addEventListener("click", () => {
+
+        checks.forEach(c => {
+          c.checked = false;
+        });
+
+        update();
+
+      });
+
+      update();
+
+    })();
+  </script>
+</body>
+</html>
